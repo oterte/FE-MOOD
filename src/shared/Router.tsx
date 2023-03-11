@@ -1,14 +1,13 @@
-import React from "react";
-import { Route, Routes } from "react-router";
-import { BrowserRouter } from "react-router-dom";
-import Main from "../pages/main/Main";
-import Header from "../components/Header";
-import Recommend from "../pages/recommend/Recommend";
-import Login from "../pages/login/Login";
-import SignUp from "../pages/signup/SignUp";
-import MusicDetail from "../pages/musicDetail/MusicDetail";
-import Composer from "../pages/composer/Composer";
-import Footer from "../components/Footer";
+import React from 'react'
+import { Route, Routes } from 'react-router'
+import { BrowserRouter } from 'react-router-dom'
+import Main from '../pages/main/Main'
+import Recommend from '../pages/recommend/Recommend'
+import Login from '../pages/login/Login'
+import SignUp from '../pages/signup/SignUp'
+import MusicDetail from '../pages/musicDetail/MusicDetail'
+import Composer from '../pages/composer/Composer'
+import MusicPost from '../pages/musicPost/MusicPost'
 
 function Router() {
   return (
@@ -20,9 +19,10 @@ function Router() {
         <Route path="/recommend" element={<Recommend />} />
         <Route path="/recommend/music/:id" element={<MusicDetail />} />
         <Route path="/composer" element={<Composer />} />
+        <Route path="/musicpost" element={<MusicPost />} />
       </Routes>
     </BrowserRouter>
-  );
+  )
 }
 
-export default Router;
+export default Router
