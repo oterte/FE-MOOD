@@ -1,16 +1,9 @@
-import { useMutation, useQuery } from '@tanstack/react-query'
-import React, { useEffect, useState } from 'react'
-import { QueryClient } from 'react-query'
-import { useParams } from 'react-router-dom'
-import { getMusic } from '../../api/recommendApi'
-import Footer from '../../components/Footer'
-import Header from '../../components/Header'
-import {
-  StDivMoodWrap,
-  StDivMoodContainer,
-  StDivWrap,
-  StDIvMusicPlayer,
-} from './RecommendSt'
+import { QueryClient, useMutation } from "@tanstack/react-query";
+import { useParams } from "react-router";
+import { getMusic } from "../../api/recommendApi";
+import Footer from "../../components/footer/Footer";
+import Header from "../../components/header/Header";
+import { StDivWrap, StDivMoodWrap, StDivMoodContainer, StDIvMusicPlayer } from './RecommendSt'
 
 function Recommend() {
   const param = useParams()

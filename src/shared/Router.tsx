@@ -1,13 +1,13 @@
-import React from 'react'
-import { Route, Routes } from 'react-router'
-import { BrowserRouter } from 'react-router-dom'
-import Main from '../pages/main/Main'
-import Recommend from '../pages/recommend/Recommend'
-import Login from '../pages/login/Login'
-import SignUp from '../pages/signup/SignUp'
-import MusicDetail from '../pages/musicDetail/MusicDetail'
-import Composer from '../pages/composer/Composer'
-import MusicPost from '../pages/musicPost/MusicPost'
+
+import { Route, Routes } from "react-router";
+import { BrowserRouter } from "react-router-dom";
+import Main from "../pages/main/Main";
+import Recommend from "../pages/recommend/Recommend";
+import Login from "../pages/login/Login";
+import SignUp from "../pages/signup/SignUp";
+import MusicDetail from "../pages/musicDetail/MusicDetail";
+import Composer from "../pages/composer/Composer";
+import MusicPost from "../pages/musicPost/MusicPost";
 
 function Router() {
   return (
