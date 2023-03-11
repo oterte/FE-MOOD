@@ -13,8 +13,13 @@ function Header() {
     
       <Right>
         <SearchBox>돋보기</SearchBox>
-        <ComposerBtn>작곡가별 음악 추천받기</ComposerBtn>
-        <LoginBtn>로그인</LoginBtn>
+        <Link to="/composer">
+           <ComposerBtn>작곡가별 음악 추천받기</ComposerBtn>
+        </Link>
+     
+        <Link to="/login">
+          <LoginBtn>로그인</LoginBtn>
+        </Link>
       </Right>
     </Wrap>
   )
