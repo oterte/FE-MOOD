@@ -2,13 +2,13 @@ import React from "react";
 import { Route, Routes } from "react-router";
 import { BrowserRouter } from "react-router-dom";
 import Main from "../pages/main/Main";
-import Header from "../components/Header";
+import Header from "../components/header/Header";
 import Recommend from "../pages/recommend/Recommend";
 import Login from "../pages/login/Login";
 import SignUp from "../pages/signup/SignUp";
 import MusicDetail from "../pages/musicDetail/MusicDetail";
 import Composer from "../pages/composer/Composer";
-import Footer from "../components/Footer";
+import Footer from "../components/footer/Footer";
 
 function Router() {
   return (
