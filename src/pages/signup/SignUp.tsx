@@ -16,7 +16,9 @@ function SignUp() {
   const checkIdHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     let regExp: RegExp = /^[a-zA-Z0-9]{4,}$/
     if (regExp.test(e.target.value) === false) {
-      alert('아이디는 영어 대소문자와 숫자를 포함한 4글자 이상이어야 합니다.')
+      console.log(
+        '아이디는 영어 대소문자와 숫자를 포함한 4글자 이상이어야 합니다.'
+      )
       return
     }
   }
@@ -26,7 +28,7 @@ function SignUp() {
     let regExp: RegExp =
       /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
     if (regExp.test(e.target.value) === false) {
-      alert('알맞은 이메일 형식이 아닙니다.')
+      console.log('알맞은 이메일 형식이 아닙니다.')
       return
     }
   }
@@ -36,7 +38,7 @@ function SignUp() {
     let regExp: RegExp =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+~\-={}[\]:;\"'<>?,./]).{8,}$/
     if (regExp.test(e.target.value) === false) {
-      alert(
+      console.log(
         '비밀번호는 영문 대소문자 및 특수문자를 포함한 8글자 이상이어야 합니다.'
       )
       return
@@ -46,7 +48,7 @@ function SignUp() {
   // 닉네임 : 두글자 이상
   const checkNicknameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.length < 2) {
-      alert('닉네임은 두글자 이상이어야 합니다.')
+      console.log('닉네임은 두글자 이상이어야 합니다.')
       return
     }
   }
@@ -59,7 +61,7 @@ function SignUp() {
       console.log('password :' + password)
       console.log('nickname :' + nickname)
     } else {
-      alert('비밀번호가 동일하지 않습니다.')
+      console.log('비밀번호가 동일하지 않습니다.')
     }
   }
   return (
