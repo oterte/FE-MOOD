@@ -1,6 +1,6 @@
 import { CookiesProvider } from 'react-cookie'
-import { QueryClientProvider } from '@tanstack/react-query'
-import { QueryClient } from '@tanstack/react-query'
+import { QueryClientProvider } from 'react-query'
+import { QueryClient } from 'react-query'
 import Router from './shared/Router'
 
 function App() {
