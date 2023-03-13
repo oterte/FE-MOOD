@@ -1,12 +1,18 @@
-import { QueryClient, useMutation } from "@tanstack/react-query";
-import { useParams } from "react-router";
-import { getMusic } from "../../api/recommendApi";
-import Footer from "../../components/footer/Footer";
-import Header from "../../components/header/Header";
-import { StDivWrap, StDivMoodWrap, StDivMoodContainer, StDIvMusicPlayer } from './RecommendSt'
+import { QueryClient, useMutation } from '@tanstack/react-query'
+import { useNavigate, useParams } from 'react-router'
+import { getMusic } from '../../api/recommendApi'
+import Footer from '../../components/footer/Footer'
+import Header from '../../components/header/Header'
+import {
+  StDivWrap,
+  StDivMoodWrap,
+  StDivMoodContainer,
+  StDIvMusicPlayer,
+} from './RecommendSt'
 
 function Recommend() {
   const param = useParams()
+  const navigate = useNavigate()
 
   const moodNumberArray = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
@@ -31,14 +37,14 @@ function Recommend() {
       // quertClient.invalidateQueries('recommendMusic')
       console.log(data)
     },
-    // error 반환시 error 콘솔 -> 나중에 error 뜰 때마다 확인해보기
     onError: (error) => {
       console.log(error)
     },
   })
 
-  const quertClient = new QueryClient()
+  const queryClient = new QueryClient()
   const onClickGetMusicHandler = (id: number) => {
+    queryClient.invalidateQueries(['recommendMusic'])
     getMusicMutation.mutate(id)
   }
 
@@ -46,7 +52,6 @@ function Recommend() {
     <>
       <Header />
       <StDivWrap>
-        {/* 기분 파악 영역 */}
         <StDivMoodWrap>
           {moodNumberArray.map((item: number) => {
             return (
@@ -60,10 +65,16 @@ function Recommend() {
           })}
         </StDivMoodWrap>
         <div>
-          {/* 좋아요 리스트 */}
-          <div></div>
-          {/* 음악 재생영역 */}
-          <StDIvMusicPlayer>음악 플레이어 나오는 곳</StDIvMusicPlayer>
+          <StDIvMusicPlayer>
+            <audio
+              controls
+              src="https://mozz-bucket.s3.ap-northeast-2.amazonaws.com/01-Copland-Danzon_Cubano-Bernstein1963.mp3"
+              // src={musicData.musicUrl}
+            >
+              오디오
+            </audio>
+            {/* <button onClick={() => navigate(`recommend/music/${musicData.id}`)}>댓글 남기기</button> */}
+          </StDIvMusicPlayer>
         </div>
       </StDivWrap>
       <Footer />
