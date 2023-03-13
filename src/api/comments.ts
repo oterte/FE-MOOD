@@ -47,4 +47,16 @@ const editComment = async ({
   return response
 }
 
-export { getComment, addComment, removeComment, editComment }
+// 음악 상세 조회
+const musicDetail = async ({
+  musicId,
+}: {
+  musicId: string
+}) => {
+  const response = await instance.get(
+    `/api/music/${musicId}`,
+  )
+  return response
+}
+
+export { getComment, addComment, removeComment, editComment, musicDetail }

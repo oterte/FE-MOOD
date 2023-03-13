@@ -73,4 +73,5 @@ export const CommentBtn = styled.button`
   width: 200px;
   height: 50px;
   text-align: center;
+  cursor:pointer;
 `
