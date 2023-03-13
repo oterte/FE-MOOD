@@ -48,16 +48,22 @@ const editComment = async ({
 }
 
 // 음악 상세 조회
-const musicDetail = async ({
-  musicId,
-}: {
-  musicId: string
-}) => {
-  const response = await instance.get(
-    `/api/music/${musicId}`,
-  )
+const musicDetail = async ({ musicId }: { musicId: string }) => {
+  const response = await instance.get(`/api/music/${musicId}`)
   return response
 }
 
+// 작곡가 조회
+const composerList = async ({ composer }: { composer: string }) => {
+  const response = await instance.get(`/api/music/?composer=${composer}`)
+  return response
+}
 
-export { getComment, addComment, removeComment, editComment, musicDetail}
+export {
+  getComment,
+  addComment,
+  removeComment,
+  editComment,
+  musicDetail,
+  composerList,
+}

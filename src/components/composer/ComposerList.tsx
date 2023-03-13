@@ -1,67 +1,62 @@
-import React, { useState } from 'react'
-import { Con1, Contents, Desc, H3, Li, P } from './ComposerListSt'
+import React, { useEffect, useState } from 'react';
+import { composerList } from '../../api/comments';
+import { Con1, Contents, Desc, H3, Li, P } from './ComposerListSt';
+
+interface Music {
+  id: number;
+  name: string;
+  title: string;
+  description: string;
+}
 
 const ComposerList = () => {
-  const [tab, setTab] = useState(0)
+  const [tab, setTab] = useState<number | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [composer, setComposer] = useState('');
+  const [tabArr, setTabArr] = useState<Music[]>([]);
 
-  const tabArr = [
-    {
-      name: <Li>프레데리크 쇼팽</Li>,
-      content: (
-        <Con1>
-          <H3>녹턴</H3>
-          <P>녹턴은 녹턴 녹턴 녹턴</P>
-        </Con1>
-      ),
-    },
-    {
-      name: <Li>안토니오 비발디</Li>,
-      content: (
-        <Con1>
-          <H3>사계</H3>
-          <P>봄, 여름, 가을, 겨울</P>
-        </Con1>
-      ),
-    },
-    {
-      name: <Li>루트비히 판 베토벤</Li>,
-      content: (
-        <Con1>
-          <H3>교향곡</H3>
-          <P>베토벤 바이러스</P>
-        </Con1>
-      ),
-    },
-    {
-      name: <Li>볼프강 아마데우스 모차르트</Li>,
-      content: (
-        <Con1>
-          <H3>피겨의 결혼</H3>
-          <P>모차르트 모차르트 모차르트</P>
-        </Con1>
-      ),
-    },
-  ]
+  const selectTabHandler = (id: number) => {
+    setTab(id);
+  };
 
-  const selectTabHandler = (index: any) => {
-    setTab(index)
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      const response = await composerList({ composer });
+      setTabArr(response.data);
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, [composer]);
 
   return (
     <Contents>
-      {tabArr.map((el, index) => (
-        <li
-          className={index === tab ? 'submenu focused' : 'submenu'}
-          onClick={() => selectTabHandler(index)}
-        >
-          {el.name}
-        </li>
-      ))}
-      <Desc>
-        <p>{tabArr[tab].content}</p>
-      </Desc>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <>
+          {tabArr.map((music) => (
+            <Li
+              key={music.id}
+              className={music.id === tab ? 'submenu focused' : 'submenu'}
+              onClick={() => selectTabHandler(music.id)}
+            >
+              {music.name}
+            </Li>
+          ))}
+          {tabArr.length > 0 && (
+            <Desc>
+              <Con1>
+                <H3>{tabArr.find((music) => music.id === tab)?.title}</H3>
+                <P>{tabArr.find((music) => music.id === tab)?.description}</P>
+              </Con1>
+            </Desc>
+          )}
+        </>
+      )}
     </Contents>
-  )
-}
+  );
+};
 
-export default ComposerList
+export default ComposerList;
