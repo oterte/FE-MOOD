@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { instance } from './instance'
 
-interface UserInfo {
+export interface UserInfo {
   id?: string
   email?: string
   nickname?: string
@@ -9,32 +9,17 @@ interface UserInfo {
   confirm?: string
 }
 
-const register = async ({
-  id,
-  email,
-  nickname,
-  password,
-  confirm,
-}: UserInfo) => {
-  console.log(id, email, nickname, password, confirm)
-  const response = await instance.post('/api/signup', {
-    id,
-    password,
-    email,
-    nickname,
-    confirm,
-  })
-  console.log(response)
+export const register = async (body: UserInfo) => {
+  const response = await axios.post('http://15.165.18.86:3000/api/signup', body)
   return response
 }
 
-const checkId = async (id?: string) => {
-  console.log(id)
+export const checkId = async (id?: string) => {
   const response = await instance.post('/api/idcheck', id)
   return response
 }
 
-const checkNickname = async (nickname?: string) => {
+export const checkNickname = async (nickname?: string) => {
   const response = await instance.post('/api/nicknamecheck', nickname)
   return response
 }
