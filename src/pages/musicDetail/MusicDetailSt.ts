@@ -46,7 +46,7 @@ export const PlayBtn = styled.button`
 export const CommentBox = styled.div`
   position: absolute;
   left: 50%;
-  bottom: 180px;
+  bottom: 0;
   transform: translateX(-50%);
   width: 50%;
   height: 570px;
@@ -60,7 +60,7 @@ export const CommentBox = styled.div`
 export const CommentInput = styled.input`
   position: absolute;
   left: 9%;
-  bottom: 20px;
+  bottom: 100px;
   width: 60%;
   height: 50px;
   padding-left: 1.2rem;
@@ -68,8 +68,8 @@ export const CommentInput = styled.input`
 
 export const CommentBtn = styled.button`
   position: absolute;
-  right: 9%;
-  bottom: 20px;
+  right: 10%;
+  bottom: 100px;
   width: 200px;
   height: 50px;
   text-align: center;

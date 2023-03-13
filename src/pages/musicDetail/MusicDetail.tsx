@@ -1,15 +1,14 @@
 import Header from '../../components/header/Header'
 import Footer from '../../components/footer/Footer'
+import AddComment from '../../components/musicdetail/AddComment'
+import CommentsList from '../../components/musicdetail/CommentsList'
 import {
   Info,
   ComposerImg,
   ComposerName,
   MusicDesc,
   PlayBtn,
-  CommentBox,
-  CommentInput,
   Wrap,
-  CommentBtn,
 } from './MusicDetailSt'
 
 function MusicDetail() {
@@ -22,10 +21,8 @@ function MusicDetail() {
         <MusicDesc>곡 설명입니다~~~~~~~~</MusicDesc>
         <PlayBtn>재생버튼</PlayBtn>
       </Info>
-      <CommentBox>
-        <CommentInput></CommentInput>
-        <CommentBtn>댓글 작성</CommentBtn>
-      </CommentBox>
+      <CommentsList />
+      <AddComment />
       <Footer />
     </Wrap>
   )
