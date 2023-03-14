@@ -25,10 +25,10 @@ function Survey() {
   })
   const [modalState, setModalState] = useState<boolean>(false)
   const onClickModalOpenHandler = () => {
-    if (Number(average)) {
+    if (average) {
       setModalState(!modalState)
     } else {
-      alert('설문을 모두 작성해주세요!')
+      alert('설문을 모두 선택해주세요!')
     }
   }
 

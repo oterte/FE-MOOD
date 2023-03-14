@@ -1,7 +1,5 @@
 import styled from 'styled-components'
 import { useEffect } from 'react'
-import { useQuery } from 'react-query'
-import { getSurveyMusic } from '../../api/recommendApi'
 import { useNavigate } from 'react-router-dom'
 
 type Props = {
@@ -14,9 +12,9 @@ function SurveyModal({ average, modalState, setModalState }: Props) {
   const onClickCloseModalHandler = () => {
     setModalState(!modalState)
   }
-  //   const { isLoading, isError, data } = useQuery(['surveyMusic'], () =>
-  //     getSurveyMusic(musicNumber)
-  //   )
+//   const { isLoading, isError, data } = useQuery(['surveyMusic'], () =>
+//     getSurveyMusic(musicNumber)
+//   )
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -49,7 +47,7 @@ function SurveyModal({ average, modalState, setModalState }: Props) {
     musicNumber = 2
   } else {
     condition = '기분 좋은 하루를 보내셨군요'
-    musicNumber = 31
+    musicNumber = 3
   }
   //   if (isLoading) return <h1>Loading</h1>
   //   if (isError) return <h1>Error 발생</h1>
