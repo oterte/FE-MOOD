@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState } from 'react'
-import Footer from '../../components/footer/Footer'
+import SurveyModal from '../../components/surveyModal/SurveyModal'
 import Point from '../../components/surveyRadioPoint/Point'
 
 export interface SurveyData {
@@ -23,9 +23,17 @@ function Survey() {
     number6: undefined,
     number7: undefined,
   })
+  const [modalState, setModalState] = useState<boolean>(false)
+  const onClickModalOpenHandler = () => {
+    if (Number(average)) {
+      setModalState(!modalState)
+    } else {
+      alert('설문을 모두 작성해주세요!')
+    }
+  }
 
-  let average: number = 0
-  let sum: number = 50
+  let average = 0
+  let sum: number = 100
 
   for (let i = 0; i < 7; i++) {
     if (i % 2 === 0 || i === 0) {
@@ -35,11 +43,12 @@ function Survey() {
     }
     average = sum / 7
   }
+  console.log(average)
 
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
   }
-  console.log(survey)
+
   return (
     <>
       <div>
@@ -65,10 +74,16 @@ function Survey() {
           <h1>질문 7</h1>
           <span>Shall We Dance?</span>
           <Point number={Object.keys(survey)[6]} setSurvey={setSurvey} />
-          <button>완료</button>
+          <button onClick={onClickModalOpenHandler}>완료</button>
         </form>
       </div>
-      <Footer />
+      {modalState === true ? (
+        <SurveyModal
+          average={average}
+          modalState={modalState}
+          setModalState={setModalState}
+        />
+      ) : null}
     </>
   )
 }
