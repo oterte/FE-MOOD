@@ -3,13 +3,15 @@ import React, { useState } from 'react'
 import { useMutation, useQuery } from 'react-query'
 import { getComment, removeComment, editComment } from '../../api/comments'
 import { CommentBox } from '../../pages/musicDetail/MusicDetailSt'
+import { useParams } from 'react-router-dom'
 
 function CommentsList() {
+  const params = useParams()
   const queryClient = new QueryClient()
-  const [edit, setEdit] = useState('')
+  const [edit, setEdit] = useState(0)
 
   const { isLoading, isError, data } = useQuery(['comments'], () =>
-    getComment({ musicId: '1' })
+    getComment({ musicId: 1 })
   )
 
   const deleteMutation = useMutation(removeComment, {
@@ -24,26 +26,26 @@ function CommentsList() {
     },
   })
 
-  const onClickEditButtonHandler = (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    musicId: string
-  ) => {
-    e.preventDefault()
+  const onClickEditButtonHandler = (musicId: number) => {
     setEdit(musicId)
   }
 
   const onChangeEditHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEdit(e.target.value)
+    setEdit(Number(e.target.value))
   }
 
   const onSubmitEditHandler = (
     e: React.FormEvent<HTMLFormElement>,
-    musicId: string,
-    newComment: string
+    musicId: number,
+    reviewId: number
   ) => {
     e.preventDefault()
-    editMutation.mutate({ musicId, newComment })
-    setEdit('')
+    editMutation.mutate({ musicId, reviewId, newComment: edit.toString() })
+    setEdit(0)
+  }
+
+  const onClickDeleteButtonHandler = (musicId: number, reviewId: number) => {
+    deleteMutation.mutate({ musicId, reviewId })
   }
 
   if (isLoading) {
@@ -54,13 +56,17 @@ function CommentsList() {
     return <h1>오류가 발생하였습니다..!</h1>
   }
 
+  console.log(data)
+
   return (
     <>
-      {data?.data.map(function (item: any) {
+      {data.map(function (item: any) {
         return (
-          <CommentBox key={item.id}>
+          <CommentBox key={item.reviewId}>
             {edit === item.id ? (
-              <form onSubmit={(e) => onSubmitEditHandler(e, item.id, edit)}>
+              <form
+                onSubmit={(e) => onSubmitEditHandler(e, item.music_id, item.id)}
+              >
                 <input
                   type="text"
                   value={edit}
@@ -70,17 +76,17 @@ function CommentsList() {
               </form>
             ) : (
               <>
-                <p>{item.comment}</p>
+                <p>{item.review}</p>
                 <button
                   onClick={() => {
-                    deleteMutation.mutate(item.id)
+                    onClickDeleteButtonHandler(item.musicId, item.reviewId)
                   }}
                 >
                   삭제
                 </button>
                 <button
-                  onClick={(e) => {
-                    onClickEditButtonHandler(e, item.id)
+                  onClick={() => {
+                    onClickEditButtonHandler(item.reviewId)
                   }}
                 >
                   수정하기
