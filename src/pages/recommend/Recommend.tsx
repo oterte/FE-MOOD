@@ -1,5 +1,5 @@
-import { QueryClient, useMutation } from '@tanstack/react-query'
 import { useNavigate, useParams } from 'react-router'
+import { QueryClient, useMutation } from 'react-query'
 import { getMusic } from '../../api/recommendApi'
 import Footer from '../../components/footer/Footer'
 import Header from '../../components/header/Header'
