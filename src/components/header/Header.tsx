@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { ComposerBtn, H1, Left, Right,  LoginBtn, SearchBox, Wrap } from './HeaderSt'
+import Search from '../../pages/search/SearchBar'
+import { ComposerBtn, H1, Left, Right,  LoginBtn, Wrap } from './HeaderSt'
 
 
 function Header() {
@@ -12,7 +13,7 @@ function Header() {
       </Left>
     
       <Right>
-        <SearchBox>돋보기</SearchBox>
+        <Search />
         <Link to="/composer">
            <ComposerBtn>작곡가별 음악 추천받기</ComposerBtn>
         </Link>

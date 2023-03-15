@@ -22,12 +22,6 @@ export const H1 = styled.h1`
 
 ` 
 
-export const SearchBox = styled.button`
-    width:180px; height:30px;
-    margin-right:30px;   
-    cursor:pointer;
-` 
-
 export const ComposerBtn = styled.button`
     width:180px; height:30px;
     margin-right:30px;    
