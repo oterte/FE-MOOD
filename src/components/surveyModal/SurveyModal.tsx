@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useQuery } from 'react-query'
+import { getSurveyMusic } from '../../api/recommendApi'
 
 type Props = {
   average: number
@@ -12,9 +14,9 @@ function SurveyModal({ average, modalState, setModalState }: Props) {
   const onClickCloseModalHandler = () => {
     setModalState(!modalState)
   }
-//   const { isLoading, isError, data } = useQuery(['surveyMusic'], () =>
-//     getSurveyMusic(musicNumber)
-//   )
+  const { isLoading, isError, data } = useQuery(['surveyMusic'], () =>
+    getSurveyMusic(musicNumber)
+  )
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -49,8 +51,9 @@ function SurveyModal({ average, modalState, setModalState }: Props) {
     condition = '기분 좋은 하루를 보내셨군요'
     musicNumber = 3
   }
-  //   if (isLoading) return <h1>Loading</h1>
-  //   if (isError) return <h1>Error 발생</h1>
+    if (isLoading) return <h1>Loading</h1>
+    if (isError) return <h1>Error 발생</h1>
+    console.log(data)
   return (
     <ModalContainer>
       <StModalContents>
@@ -58,12 +61,12 @@ function SurveyModal({ average, modalState, setModalState }: Props) {
           <button onClick={onClickCloseModalHandler}>X</button>
           <p>{condition}</p>
           <p>
-            {/* data.composer */}의 {/* data.musicTitle */}를 들어보시는건
+            {/* {data.composer}의 {data.musicTitle}를 들어보시는건 */}
             어떠세요?
           </p>
           <div>
             <button onClick={onClickMoveMusicDetailPageHandler}>
-              {/* data.musicTitle */} 노래 들으러 가기
+              {/* {data.musicTitle} 노래 들으러 가기 */}
             </button>
           </div>
           <div>

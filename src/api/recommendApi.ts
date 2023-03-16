@@ -7,7 +7,8 @@ export const getMusic = async (id: number) => {
 }
 
 export const getSurveyMusic = async (id: number) => {
-  const musicData = await axios.get(`api/survey/${id}`)
+  const musicData = await axios.get(`${process.env.REACT_APP_SERVER}/api/survey/${id}`)
+  return musicData
 }
 
 // export const addMusic = async (formData: string | Blob) => {
