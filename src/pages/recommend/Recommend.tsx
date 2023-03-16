@@ -72,7 +72,7 @@ function Recommend() {
           })}
         </StDivMoodWrap>
         <div>
-          {musicTitle === '' ? null : (
+          {/* {musicTitle === '' ? null : ( */}
             <StDIvMusicPlayer>
               <p>{musicTitle}</p>
               <p>{musicComposer}</p>
@@ -83,7 +83,7 @@ function Recommend() {
                 댓글 남기기
               </button>
             </StDIvMusicPlayer>
-          )}
+          {/* )} */}
         </div>
       </StDivWrap>
       <Footer />
