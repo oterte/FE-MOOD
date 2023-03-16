@@ -9,32 +9,39 @@ import {
   StDivMoodContainer,
   StDIvMusicPlayer,
 } from './RecommendSt'
+import { useState } from 'react'
+
+interface getMusicData {
+  musicTitle: string | undefined
+  composer: string | undefined
+  musicUrl: string | undefined
+}
+
+const musicData: getMusicData = {
+  musicTitle: undefined,
+  composer: undefined,
+  musicUrl: undefined,
+}
 
 function Recommend() {
   const param = useParams()
   const navigate = useNavigate()
+  const [musicTitle, setMusicTitle] = useState<string>('')
+  const [musicComposer, setMusicComposer] = useState<string>('')
+  const [musicUrl, setMusicUrl] = useState<string>('')
+  const [musicId, setMusicId] = useState<number | undefined>()
 
   const moodNumberArray = [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-  interface getMusicData {
-    musicTitle?: string
-    composer?: string
-    musicUrl?: string
-  }
-
-  const musicData: getMusicData = {
-    musicTitle: undefined,
-    composer: undefined,
-    musicUrl: undefined,
-  }
   const getNumber: number = 1
   const getMusicMutation = useMutation(['recommendMusic'], getMusic, {
     onSuccess: (data) => {
       // data만 잘 받아오면 musicData에 값을 넣어줌
-      // musicData.musicTitle =  data.musicTitle,
-      // musicData.composer = data.composer,
-      // musicData.musicUrl = data.musicUrl,
-      // quertClient.invalidateQueries('recommendMusic')
+      setMusicTitle(data.musicTitle)
+      setMusicComposer(data.composer)
+      setMusicUrl(data.musicUrl)
+      setMusicId(data.musicId)
+      queryClient.invalidateQueries('recommendMusic')
       console.log(data)
     },
     onError: (error) => {
@@ -65,16 +72,18 @@ function Recommend() {
           })}
         </StDivMoodWrap>
         <div>
-          <StDIvMusicPlayer>
-            <audio
-              controls
-              src="https://mozz-bucket.s3.ap-northeast-2.amazonaws.com/01-Copland-Danzon_Cubano-Bernstein1963.mp3"
-              // src={musicData.musicUrl}
-            >
-              오디오
-            </audio>
-            {/* <button onClick={() => navigate(`recommend/music/${musicData.id}`)}>댓글 남기기</button> */}
-          </StDIvMusicPlayer>
+          {musicTitle === '' ? null : (
+            <StDIvMusicPlayer>
+              <p>{musicTitle}</p>
+              <p>{musicComposer}</p>
+              <audio controls src={musicUrl}>
+                오디오
+              </audio>
+              <button onClick={() => navigate(`/recommend/music/${musicId}`)}>
+                댓글 남기기
+              </button>
+            </StDIvMusicPlayer>
+          )}
         </div>
       </StDivWrap>
       <Footer />
