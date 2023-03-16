@@ -8,10 +8,8 @@ import MusicDetail from '../pages/musicDetail/MusicDetail'
 import Composer from '../pages/composer/Composer'
 import MusicPost from '../pages/musicPost/MusicPost'
 import Survey from '../pages/survey/Survey'
-
 import SearchBar from '../pages/search/SearchBar'
 import SearchResultPage from '../pages/search/SearchResultPage'
-
 import Auth from '../pages/auth/Auth'
 import MyPage from '../pages/mypage/MyPage'
 
@@ -27,10 +25,8 @@ function Router() {
         <Route path="/composer" element={<Composer />} />
         <Route path="/musicpost" element={<MusicPost />} />
         <Route path="/survey" element={<Survey />} />
-
         <Route path="/search" element={<SearchBar />} />
         <Route path="/searchresultpage" element={<SearchResultPage />} />
-
         <Route path="/user/kakao/callback" element={<Auth />} />
         <Route path="/mypage" element={<MyPage />} />
       </Routes>
