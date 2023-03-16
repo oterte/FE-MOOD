@@ -1,50 +1,44 @@
-import { QueryClient } from 'react-query'
-import { useState } from 'react'
-import { useMutation, useQuery } from 'react-query'
-import { addComment, getComment } from '../../api/comments'
-import { CommentBtn, CommentInput } from '../../pages/musicDetail/MusicDetailSt'
+import { useState } from 'react';
+import { useMutation, useQueryClient } from 'react-query';
+import { addComment } from '../../api/comments';
+import { CommentBtn, CommentInput } from '../../pages/musicDetail/MusicDetailSt';
+import { useParams } from 'react-router-dom';
 
 function AddComment() {
-  const [comment, setComment] = useState<string>('')
-
-  const queryClient = new QueryClient()
+  const params = useParams();
+  const [review, setReview] = useState<string>('');
+  const queryClient = useQueryClient();
   const mutation = useMutation(addComment, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['comments'])
+      queryClient.invalidateQueries(['comments']);
     },
-  })
-
-  const { data } = useQuery(['comments'], () =>
-    getComment({ musicId: 'myMusicId' })
-  )
-  console.log(data)
+  });
 
   const onChangeCommentHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setComment(e.target.value)
-  }
+    setReview(e.target.value);
+  };
 
-  const onClickAddButtonHandler = () => {
-    if (comment === '') return
+  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (review === '') return;
+    const id = Number(params.id);
+    mutation.mutate({ id, review });
 
-    const newComment = {
-      musicId: 'myMusicId',
-      newComment: comment,
-    }
-
-    mutation.mutate(newComment)
-    setComment('')
-  }
+    setReview('');
+  };
 
   return (
     <>
-      <CommentInput
-        value={comment}
-        onChange={onChangeCommentHandler}
-        placeholder="댓글을 작성해 주세요."
-      />
-      <CommentBtn onClick={onClickAddButtonHandler}>댓글 작성</CommentBtn>
+      <form onSubmit={onSubmitHandler}>
+        <CommentInput
+          value={review}
+          onChange={onChangeCommentHandler}
+          placeholder="Write your comment here."
+        />
+        <CommentBtn type="submit">Submit Comment</CommentBtn>
+      </form>
     </>
-  )
+  );
 }
 
-export default AddComment
+export default AddComment;

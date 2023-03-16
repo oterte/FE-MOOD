@@ -8,6 +8,8 @@ import MusicDetail from '../pages/musicDetail/MusicDetail'
 import Composer from '../pages/composer/Composer'
 import MusicPost from '../pages/musicPost/MusicPost'
 import Survey from '../pages/survey/Survey'
+import SearchBar from '../pages/search/SearchBar'
+import SearchResultPage from '../pages/search/SearchResultPage'
 
 function Router() {
   return (
@@ -21,6 +23,8 @@ function Router() {
         <Route path="/composer" element={<Composer />} />
         <Route path="/musicpost" element={<MusicPost />} />
         <Route path="/survey" element={<Survey />} />
+        <Route path="/search" element={<SearchBar />} />
+        <Route path="/searchresultpage" element={<SearchResultPage />} />
       </Routes>
     </BrowserRouter>
   )

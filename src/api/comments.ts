@@ -1,69 +1,53 @@
 import { instance } from './instance'
 
 // 조회
-const getComment = async ({ musicId }: { musicId: string }) => {
+const getComment = async ({ musicId }: { musicId: number }) => {
   const response = await instance.get(`/api/music/${musicId}/review`)
-  console.log(response.data)
-  return response
+  return response.data.reviews
 }
 
 // 추가
-const addComment = async ({
-  musicId,
-  newComment,
-}: {
-  musicId: string
-  newComment: string
-}) => {
-  await instance.post(`/api/music/${musicId}/review`, {
-    musicId,
-    newComment,
+const addComment = async ({ id, review }: { id: number; review: string }) => {
+  console.log(review)
+  await instance.post(`/api/music/${id}/review`, {
+    review,
   })
 }
 
 // 삭제
 const removeComment = async ({
   musicId,
-  newComment,
+  reviewId,
 }: {
-  musicId: string
-  newComment: string
+  musicId: number
+  reviewId: number
 }) => {
-  await instance.delete(`/api/music/${musicId}/review/${newComment}`)
+  const musicNumber = String(musicId)
+  const reviewNumber = String(reviewId)
+  await instance.delete(`/api/music/${musicNumber}/review/${reviewNumber}`)
 }
 
 // 수정
 const editComment = async ({
   musicId,
+  reviewId,
   newComment,
 }: {
-  musicId: string
+  musicId: number
+  reviewId: number
   newComment: string
 }) => {
   const response = await instance.put(
-    `/api/music/${musicId}/review/${newComment}`,
-    { newComment }
+    `/api/music/${musicId}/review/${reviewId}`,
+    { review: newComment }
   )
   return response
 }
 
 // 음악 상세 조회
-const musicDetail = async ({ musicId }: { musicId: string }) => {
+const musicDetail = async ({ musicId }: { musicId: number }) => {
   const response = await instance.get(`/api/music/${musicId}`)
   return response
 }
 
-// 작곡가 조회
-const composerList = async ({ composer }: { composer: string }) => {
-  const response = await instance.get(`/api/music/?composer=${composer}`)
-  return response
-}
-
-export {
-  getComment,
-  addComment,
-  removeComment,
-  editComment,
-  musicDetail,
-  composerList,
-}
+export { getComment, addComment, removeComment, editComment, musicDetail }

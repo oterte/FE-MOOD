@@ -1,62 +1,67 @@
-import React, { useEffect, useState } from 'react';
-import { composerList } from '../../api/comments';
-import { Con1, Contents, Desc, H3, Li, P } from './ComposerListSt';
+import React, { useEffect, useState } from 'react'
+import { composerList } from '../../api/composerApi'
+import { Contents, Desc, H3, P } from './ComposerListSt'
 
-interface Music {
-  id: number;
-  name: string;
-  title: string;
-  description: string;
+type MusicInfo = {
+  musicTitle: string
+  musicContent: string
+  fileName: string
+  musicUrl: string
 }
 
 const ComposerList = () => {
-  const [tab, setTab] = useState<number | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [composer, setComposer] = useState('');
-  const [tabArr, setTabArr] = useState<Music[]>([]);
+  const [tab, setTab] = useState(0)
+  const [composer, setComposer] = useState('')
+  const [musicInfos, setMusicInfos] = useState<MusicInfo[]>([])
 
-  const selectTabHandler = (id: number) => {
-    setTab(id);
-  };
+  const composers = ['Beethoven', 'Mozart', 'Chopin', 'Vivaldi']
+
+  const selectTabHandler = (index: any) => {
+    setTab(index)
+    setComposer(composers[index])
+  }
 
   useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      const response = await composerList({ composer });
-      setTabArr(response.data);
-      setIsLoading(false);
-    };
+    if (!composer) {
+      setComposer(composers[0])
+      return
+    }
 
-    fetchData();
-  }, [composer]);
+    const fetchData = async () => {
+      const response = await composerList({ composer })
+      console.log(response.data)
+
+      if (Array.isArray(response.data)) {
+        setMusicInfos(response.data)
+      }
+    }
+
+    fetchData()
+  }, [composer])
 
   return (
     <Contents>
-      {isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <>
-          {tabArr.map((music) => (
-            <Li
-              key={music.id}
-              className={music.id === tab ? 'submenu focused' : 'submenu'}
-              onClick={() => selectTabHandler(music.id)}
-            >
-              {music.name}
-            </Li>
-          ))}
-          {tabArr.length > 0 && (
-            <Desc>
-              <Con1>
-                <H3>{tabArr.find((music) => music.id === tab)?.title}</H3>
-                <P>{tabArr.find((music) => music.id === tab)?.description}</P>
-              </Con1>
-            </Desc>
-          )}
-        </>
+      {composers.map((composerName, index) => (
+        <li
+          key={index}
+          className={index === tab ? 'submenu focused' : 'submenu'}
+          onClick={() => selectTabHandler(index)}
+        >
+          {composerName}
+        </li>
+      ))}
+      {musicInfos.length > 0 && (
+        <Desc>
+          <H3>{musicInfos[tab].musicTitle}</H3>
+          <P>{musicInfos[tab].musicContent}</P>
+          <audio controls>
+            <source src={musicInfos[tab].musicUrl} type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
+        </Desc>
       )}
     </Contents>
-  );
-};
+  )
+}
 
-export default ComposerList;
+export default ComposerList

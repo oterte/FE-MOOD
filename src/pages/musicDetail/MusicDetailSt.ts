@@ -44,17 +44,17 @@ export const PlayBtn = styled.button`
 `
 
 export const CommentBox = styled.div`
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  transform: translateX(-50%);
-  width: 50%;
-  height: 570px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid #000000;
+  // position: absolute;
+  // left: 50%;
+  // bottom: 0;
+  // transform: translateX(-50%);
+  // width: 50%;
+  // height: 570px;
+  // display: flex;
+  // flex-direction: column;
+  // align-items: center;
+  // justify-content: center;
+  // border: 1px solid #000000;
 `
 
 export const CommentInput = styled.input`
