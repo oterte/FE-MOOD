@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom'
 
 function CommentsList() {
   const params = useParams()
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient() //쿼리 클라이언트 인스턴스를 가져옵
   const [edit, setEdit] = useState(0)
   const [inputValues, setInputValues] = useState<{ [key: number]: string }>({})
 
