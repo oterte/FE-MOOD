@@ -23,9 +23,6 @@ export const Contents = styled.div`
     background: gray;
     font-weight: bold;
   }
-
-  & div.desc {
-  }
 `
 
 export const Desc = styled.div`
@@ -48,3 +45,5 @@ export const H3 = styled.h3`
 export const P = styled.p`
   font-size: 1rem;
 `
+
+export const PlayButton = styled.button``

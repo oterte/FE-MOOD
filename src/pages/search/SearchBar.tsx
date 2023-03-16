@@ -22,8 +22,7 @@ function SearchBar() {
 
   const onClickSearchHandler = () => {
     const query = encodeURIComponent(searchTerm)
-    // navigate(`/search?query=${query}`)
-    navigate(`/SearchResultPage`)
+    navigate(`/SearchResultPage?query=${query}`)
   }
 
   const onKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {

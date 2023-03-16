@@ -1,17 +1,17 @@
-import { QueryClient } from 'react-query'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
 import React, { useState } from 'react'
-import { useMutation, useQuery } from 'react-query'
 import { getComment, removeComment, editComment } from '../../api/comments'
 import { CommentBox } from '../../pages/musicDetail/MusicDetailSt'
 import { useParams } from 'react-router-dom'
 
 function CommentsList() {
   const params = useParams()
-  const queryClient = new QueryClient()
+  const queryClient = useQueryClient()
   const [edit, setEdit] = useState(0)
+  const [inputValues, setInputValues] = useState<{ [key: number]: string }>({})
 
   const { isLoading, isError, data } = useQuery(['comments'], () =>
-    getComment({ musicId: 1 })
+    getComment({ musicId: Number(params.id) })
   )
 
   const deleteMutation = useMutation(removeComment, {
@@ -26,12 +26,18 @@ function CommentsList() {
     },
   })
 
-  const onClickEditButtonHandler = (musicId: number) => {
-    setEdit(musicId)
+  const onClickEditButtonHandler = (reviewId: number) => {
+    setEdit(reviewId)
   }
 
-  const onChangeEditHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEdit(Number(e.target.value))
+  const onChangeEditHandler = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    reviewId: number
+  ) => {
+    setInputValues({
+      ...inputValues,
+      [reviewId]: e.target.value,
+    })
   }
 
   const onSubmitEditHandler = (
@@ -40,7 +46,8 @@ function CommentsList() {
     reviewId: number
   ) => {
     e.preventDefault()
-    editMutation.mutate({ musicId, reviewId, newComment: edit.toString() })
+    const newComment = inputValues[reviewId] || ''
+    editMutation.mutate({ musicId, reviewId, newComment })
     setEdit(0)
   }
 
@@ -49,34 +56,45 @@ function CommentsList() {
   }
 
   if (isLoading) {
-    return <h1>로딩중 ..!</h1>
+    return <h1>loading</h1>
   }
 
   if (isError) {
-    return <h1>오류가 발생하였습니다..!</h1>
+    return <h1>error</h1>
   }
 
   console.log(data)
 
   return (
     <>
-      {data.map(function (item: any) {
+      {data.map((item: any) => {
         return (
           <CommentBox key={item.reviewId}>
-            {edit === item.id ? (
+            {edit === item.reviewId ? (
               <form
-                onSubmit={(e) => onSubmitEditHandler(e, item.music_id, item.id)}
+                onSubmit={(e) =>
+                  onSubmitEditHandler(e, item.musicId, item.reviewId)
+                }
               >
                 <input
                   type="text"
-                  value={edit}
-                  onChange={onChangeEditHandler}
+                  value={inputValues[item.reviewId] || item.review}
+                  onChange={(e) => onChangeEditHandler(e, item.reviewId)}
                 />
                 <button type="submit">수정하기</button>
               </form>
             ) : (
               <>
-                <p>{item.review}</p>
+                <input
+                  type="text"
+                  value={inputValues[item.reviewId] || item.review}
+                  onChange={(e) => {
+                    setInputValues({
+                      ...inputValues,
+                      [item.reviewId]: e.target.value,
+                    })
+                  }}
+                />
                 <button
                   onClick={() => {
                     onClickDeleteButtonHandler(item.musicId, item.reviewId)
