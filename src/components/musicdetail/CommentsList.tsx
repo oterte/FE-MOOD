@@ -1,8 +1,13 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import React, { useState } from 'react'
 import { getComment, removeComment, editComment } from '../../api/comments'
-import { CommentBox } from '../../pages/musicDetail/MusicDetailSt'
+import {
+  CommentBox,
+  CommentInput,
+  EditCommentInput,
+} from '../../pages/musicDetail/MusicDetailSt'
 import { useParams } from 'react-router-dom'
+import { Wrap } from '../header/HeaderSt'
 
 function CommentsList() {
   const params = useParams()
@@ -66,7 +71,7 @@ function CommentsList() {
   console.log(data)
 
   return (
-    <>
+    <Wrap>
       {data.map((item: any) => {
         return (
           <CommentBox key={item.reviewId}>
@@ -76,7 +81,7 @@ function CommentsList() {
                   onSubmitEditHandler(e, item.musicId, item.reviewId)
                 }
               >
-                <input
+                <CommentInput
                   type="text"
                   value={inputValues[item.reviewId] || item.review}
                   onChange={(e) => onChangeEditHandler(e, item.reviewId)}
@@ -85,7 +90,7 @@ function CommentsList() {
               </form>
             ) : (
               <>
-                <input
+                <EditCommentInput
                   type="text"
                   value={inputValues[item.reviewId] || item.review}
                   onChange={(e) => {
@@ -114,7 +119,7 @@ function CommentsList() {
           </CommentBox>
         )
       })}
-    </>
+    </Wrap>
   )
 }
 

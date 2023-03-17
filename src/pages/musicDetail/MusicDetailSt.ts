@@ -1,12 +1,13 @@
 import styled from 'styled-components'
 
 export const Wrap = styled.div`
-  position: relative;
   width: 100%;
-  height: 100%;
   min-height: 100vh;
   box-sizing: border-box;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 `
 
 export const Info = styled.div`
@@ -44,23 +45,21 @@ export const PlayBtn = styled.button`
 `
 
 export const CommentBox = styled.div`
-  // position: absolute;
-  // left: 50%;
-  // bottom: 0;
-  // transform: translateX(-50%);
-  // width: 50%;
-  // height: 570px;
-  // display: flex;
-  // flex-direction: column;
-  // align-items: center;
-  // justify-content: center;
-  // border: 1px solid #000000;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px;
+  margin-bottom: 10px;
+  border:1px solid gray;
 `
 
-export const CommentInput = styled.input`
+export const InputBox = styled.div`
+
+`
+
+export const AddCommentInput = styled.input`
   position: absolute;
   left: 9%;
-  bottom: 100px;
+  bottom: 150px;
   width: 60%;
   height: 50px;
   padding-left: 1.2rem;
@@ -69,9 +68,21 @@ export const CommentInput = styled.input`
 export const CommentBtn = styled.button`
   position: absolute;
   right: 10%;
-  bottom: 100px;
+  bottom: 150px;
   width: 200px;
   height: 50px;
   text-align: center;
-  cursor:pointer;
+  cursor: pointer;
+`
+
+export const CommentInput = styled.input`
+  width: 700px;
+  height: 30px;
+  margin: 10px;
+`
+
+export const EditCommentInput = styled.input`
+  width: 700px;
+  height: 30px;
+  margin: 10px;
 `

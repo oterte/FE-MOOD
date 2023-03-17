@@ -6,13 +6,15 @@ const getComment = async ({ musicId }: { musicId: number }) => {
   return response.data.reviews
 }
 
-// 추가
+// 댓글 추가
 const addComment = async ({ id, review }: { id: number; review: string }) => {
   console.log(review)
   await instance.post(`/api/music/${id}/review`, {
     review,
   })
 }
+
+
 
 // 삭제
 const removeComment = async ({
