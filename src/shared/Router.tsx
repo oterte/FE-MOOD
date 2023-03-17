@@ -12,6 +12,9 @@ import SearchBar from '../pages/search/SearchBar'
 import SearchResultPage from '../pages/search/SearchResultPage'
 import Auth from '../pages/auth/Auth'
 import MyPage from '../pages/mypage/MyPage'
+import ChatRoom from '../pages/chatRoom/ChatRoom'
+import SelectChat from '../pages/chatRoom/SelectChat'
+
 
 function Router() {
   return (
@@ -27,8 +30,13 @@ function Router() {
         <Route path="/survey" element={<Survey />} />
         <Route path="/search" element={<SearchBar />} />
         <Route path="/searchresultpage" element={<SearchResultPage />} />
+
         <Route path="/user/kakao/callback" element={<Auth />} />
         <Route path="/mypage" element={<MyPage />} />
+
+        <Route path="/selectroom" element={<SelectChat />} />
+        <Route path="/chatroom/:id" element={<ChatRoom />} />
+
       </Routes>
     </BrowserRouter>
   )
