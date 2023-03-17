@@ -1,30 +1,27 @@
 import { Link } from 'react-router-dom'
 import Search from '../../pages/search/SearchBar'
-import { ComposerBtn, H1, Left, Right,  LoginBtn, Wrap } from './HeaderSt'
-
+import MenuBar from '../navigation/MenuBar'
+import { H1, Left, Right, Wrap, Center } from './HeaderSt'
 
 function Header() {
+  const menuItems = ['Home', 'About', 'Contact']
   return (
     <Wrap>
       <Left>
-        <Link to="/" style={{ textDecoration:"none" }}>
+        <MenuBar items={menuItems} />
+      </Left>
+
+      <Center>
+        <Link to="/">
           <H1>MOOD</H1>
         </Link>
-      </Left>
-    
+      </Center>
+
       <Right>
         <Search />
-        <Link to="/composer">
-           <ComposerBtn>작곡가별 음악 추천받기</ComposerBtn>
-        </Link>
-     
-        <Link to="/login">
-          <LoginBtn>로그인</LoginBtn>
-        </Link>
       </Right>
     </Wrap>
   )
 }
 
 export default Header
-
