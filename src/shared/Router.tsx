@@ -10,6 +10,8 @@ import MusicPost from '../pages/musicPost/MusicPost'
 import Survey from '../pages/survey/Survey'
 import SearchBar from '../pages/search/SearchBar'
 import SearchResultPage from '../pages/search/SearchResultPage'
+import ChatRoom from '../pages/chatRoom/ChatRoom'
+import SelectChat from '../pages/chatRoom/SelectChat'
 
 function Router() {
   return (
@@ -25,6 +27,8 @@ function Router() {
         <Route path="/survey" element={<Survey />} />
         <Route path="/search" element={<SearchBar />} />
         <Route path="/searchresultpage" element={<SearchResultPage />} />
+        <Route path="/selectroom" element={<SelectChat />} />
+        <Route path="/chatroom/:id" element={<ChatRoom />} />
       </Routes>
     </BrowserRouter>
   )
