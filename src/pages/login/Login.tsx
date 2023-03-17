@@ -1,17 +1,16 @@
-import axios from 'axios'
-import queryString from 'query-string'
 import { useState, useEffect } from 'react'
 import { Cookies, useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
 import { kakaoLogin, login } from '../../api/loginapi'
 import Footer from '../../components/footer/Footer'
 import kakao from '../../assets/kakao_login_large_narrow.png'
+import jwtDecode from 'jwt-decode'
 
 function Login() {
   // const REST_API_KEY = `${process.env.REACT_APP_KAKAO_REST_API_KEY}`
   // const REDIRECT_URI = `${process.env.REACT_APP_KAKAO_REDIRECT_URI}`
   const REST_API_KEY = `6cf4e324bddd5eed7f3aea4e47c14425`
-  const REDIRECT_URI = `http://15.165.18.86:3000/api/kakao/callback`
+  const REDIRECT_URI = `http://localhost:3000/api/kakao/callback`
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`
   
   
@@ -29,7 +28,9 @@ function Login() {
       .then((res) => {
         console.log(res)
         const authId = res.data.token
+        const decodedToken:any = jwtDecode(authId)
         setCookies('authorization', authId)
+        localStorage.setItem("token", decodedToken)
         console.log('로그인에 성공했습니다.')
       })
       .catch((error) => {
@@ -39,8 +40,8 @@ function Login() {
 
   const onKakaoLoginHandler = async () => {
     // window.location.href = `http://15.165.18.86:3000/api/kakao/callback`
-    window.location.href = 'http://15.165.18.86:3000/api/kakao/'
-    
+    window.location.href = KAKAO_AUTH_URL
+    // kakaoLogin()
   }
 
   const onGoogleLoginHanlder= () => {

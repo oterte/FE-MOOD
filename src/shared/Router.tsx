@@ -27,7 +27,7 @@ function Router() {
         <Route path="/survey" element={<Survey />} />
         <Route path="/search" element={<SearchBar />} />
         <Route path="/searchresultpage" element={<SearchResultPage />} />
-        <Route path="/user/kakao/callback" element={<Auth />} />
+        <Route path="/api/kakao/callback" element={<Auth />} />
         <Route path="/mypage" element={<MyPage />} />
       </Routes>
     </BrowserRouter>

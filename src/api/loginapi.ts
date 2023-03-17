@@ -14,7 +14,7 @@ export const login = async ({ id, password }: UserInfo) => {
 
 
 export const kakaoLogin  = async () => {
-  const response = await axios.get('http://15.165.18.86:3000/api/kakao/callback')
+  const response = await instance.get('/api/kakao/callback')
   console.log(response)
-  // return response
+  return response
 }
