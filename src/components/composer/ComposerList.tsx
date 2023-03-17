@@ -56,7 +56,6 @@ const ComposerList = () => {
           <P>{musicInfos[tab].musicContent}</P>
           <audio controls>
             <source src={musicInfos[tab].musicUrl} type="audio/mpeg" />
-            Your browser does not support the audio element.
           </audio>
         </Desc>
       )}
