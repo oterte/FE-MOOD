@@ -50,7 +50,7 @@ export const MenuItems = styled.ul<{ isOpen: boolean }>`
   width: 360px;
   height: 100%;
   background: #ffffff;
-  border-right: 1px solid #cccccc;
+  border-right: 1px solid black;
   list-style-type: none;
   padding: 0;
   margin: 0;
