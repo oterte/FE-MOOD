@@ -27,7 +27,9 @@ interface BeforeChatData {
   updatedAt: string
 }
 
-const socket = io(`${process.env.REACT_APP_SERVER}`)
+const socket = io(`${process.env.REACT_APP_SERVER}`, {
+  transports: ['websocket'],
+})
 const initSocketConnection = () => {
   socket.connect()
 }
@@ -51,9 +53,10 @@ function FirstTest() {
     }
   }
 
+  // userInfo가 구현 되면 다시 기능 수정
   const nickname: string = 'jaeuk'
   const roomId: number = Number(param.id)
-  // 들어왔을 때 socket을 연결하고 unmount 되면 socket을 disconnect
+
   useEffect(() => {
     initSocketConnection()
     socket.emit('roomId', roomId)
@@ -96,6 +99,14 @@ function FirstTest() {
     })
   }, [userList])
 
+  // 내일 동윤님 코드 보면서 추가 하기
+  useEffect(() => {
+    socket.on('offUser', (nickname) => {
+      console.log(userList)
+      setUserList(userList.filter((userList: string) => userList !== nickname))
+    })
+  }, [userList])
+
   useEffect(() => {
     socket.on('receive', (data) => {
       setBeforeChatData(data)
@@ -104,7 +115,6 @@ function FirstTest() {
 
   useEffect(() => {
     socket.on('receiveMessage', (data) => {
-      console.log('receiveMessage', data)
       setRecieveData([...recieveData, data])
     })
   }, [recieveData])
