@@ -10,8 +10,9 @@ import {
 } from './singup'
 
 import Footer from '../../components/footer/Footer'
-import { register } from '../../api/signup'
+import { checkId, checkNickname, register } from '../../api/signup'
 import { useNavigate } from 'react-router-dom'
+import Header from '../../components/header/Header'
 
 function SignUp() {
   const [id, setId] = useState('')
@@ -125,8 +126,35 @@ function SignUp() {
       alert('회원가입에 실패했습니다.')
     }
   }
+  const onCheckExistId = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    if (id !== '') {
+      checkId(id)
+        .then((res) => {
+          console.log(res)
+          return res
+        })
+        .catch((error) => {
+          return console.log(error)
+        })
+    }
+  }
+  const onCheckExistNickName = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    if (nickname !== '') {
+      checkNickname(nickname)
+        .then((res) => {
+          console.log(res)
+          return res
+        })
+        .catch((error) => {
+          return console.log(error)
+        })
+    }
+  }
   return (
     <>
+      <Header />
       <SignupContainer>
         <h1>MOOD</h1>
         <SignupForm>
@@ -139,6 +167,7 @@ function SignUp() {
               value={id}
               onChange={onCheckIdHandler}
             />
+            <button onClick={onCheckExistId}>아이디 중복확인</button>
             <div>
               {idCheck === false ? (
                 <SignupErrorSpan style={{ color: 'red' }}>
@@ -183,6 +212,7 @@ function SignUp() {
               value={nickname}
               onChange={onCheckNicknameHandler}
             />
+            <button onClick={onCheckExistNickName}>닉네임 중복확인</button>
             <div>
               {nicknameCheck === false ? (
                 <SignupErrorSpan style={{ color: 'red' }}>

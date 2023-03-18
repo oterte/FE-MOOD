@@ -4,6 +4,7 @@ import { QueryClient } from 'react-query'
 import Router from './shared/Router'
 
 function App() {
+  
   const queryClient = new QueryClient()
 
   return (
