@@ -1,36 +1,72 @@
 import { instance } from './instance'
 
-// 조회
-const getComment = async ({ musicId }: { musicId: number }) => {
+// 댓글 조회
+export const getComment = async ({ musicId }: { musicId: number }) => {
   const response = await instance.get(`/api/music/${musicId}/review`)
   return response.data.reviews
 }
 
+// 대댓글 조회
+export const getRecomment = async ({ reviewId }: { reviewId: number }) => {
+  const response = await instance.get(`/api/review/${reviewId}/recomment`);
+  return response.data.comments;
+};
+
+
 // 댓글 추가
-const addComment = async ({ id, review }: { id: number; review: string }) => {
+export const addComment = async ({
+  id,
+  review,
+}: {
+  id: number
+  review: string
+}) => {
   console.log(review)
   await instance.post(`/api/music/${id}/review`, {
     review,
   })
 }
 
+// 대댓글 추가
+export const addRecomment = async ({
+  reviewId,
+  parentId,
+  body,
+}: {
+  reviewId: number
+  parentId: number
+  body: string
+}) => {
+  await instance.post(`/api/review/${reviewId}/recomment`, {
+    parentId,
+    body,
+  })
+}
 
-
-// 삭제
-const removeComment = async ({
+// 댓글 삭제
+export const removeComment = async ({
   musicId,
   reviewId,
 }: {
   musicId: number
   reviewId: number
 }) => {
-  const musicNumber = String(musicId)
-  const reviewNumber = String(reviewId)
-  await instance.delete(`/api/music/${musicNumber}/review/${reviewNumber}`)
+  await instance.delete(`/api/music/${musicId}/review/${reviewId}`)
 }
 
-// 수정
-const editComment = async ({
+// 대댓글 삭제
+export const removeRecomment = async ({
+  reviewId,
+  recommentId,
+}: {
+  reviewId: number
+  recommentId: number
+}) => {
+  await instance.delete(`/api/review/${reviewId}/recomment/${recommentId}`)
+}
+
+// 댓글 수정
+export const editComment = async ({
   musicId,
   reviewId,
   newComment,
@@ -41,15 +77,32 @@ const editComment = async ({
 }) => {
   const response = await instance.put(
     `/api/music/${musicId}/review/${reviewId}`,
-    { review: newComment }
+    {
+      review: newComment,
+    }
   )
   return response
 }
 
-// 음악 상세 조회
-const musicDetail = async ({ musicId }: { musicId: number }) => {
-  const response = await instance.get(`/api/music/${musicId}`)
+// 대댓글 수정
+export const editRecomment = async ({
+  reviewId,
+  recommentId,
+  newRecomment,
+}: {
+  reviewId: number
+  recommentId: number
+  newRecomment: string
+}) => {
+  const response = await instance.put(
+    `/api/review/${reviewId}/recomment/${recommentId}`,
+    { recomment: newRecomment }
+  )
   return response
 }
 
-export { getComment, addComment, removeComment, editComment, musicDetail }
+// 작곡가별 조회
+export const musicDetail = async ({ musicId }: { musicId: number }) => {
+  const response = await instance.get(`/api/music/${musicId}`)
+  return response
+}

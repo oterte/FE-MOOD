@@ -86,3 +86,11 @@ export const EditCommentInput = styled.input`
   height: 30px;
   margin: 10px;
 `
+export const AddCommentForm = styled.form`
+
+`
+export const ReAddComment = styled.input`
+
+`
+
+
