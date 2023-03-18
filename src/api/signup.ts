@@ -10,7 +10,7 @@ export interface UserInfo {
 }
 
 export const register = async (body: UserInfo) => {
-  const response = await axios.post('http://15.165.18.86:3000/api/signup', body)
+  const response = await axios.post(`${process.env.REACT_APP_SERVER_URL}/api/signup`, body)
   return response
 }
 
