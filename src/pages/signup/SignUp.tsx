@@ -12,6 +12,7 @@ import {
 import Footer from '../../components/footer/Footer'
 import { checkId, checkNickname, register } from '../../api/signup'
 import { useNavigate } from 'react-router-dom'
+import Header from '../../components/header/Header'
 
 function SignUp() {
   const [id, setId] = useState('')
@@ -125,32 +126,35 @@ function SignUp() {
       alert('회원가입에 실패했습니다.')
     }
   }
-  const onCheckExistId = (e:React.MouseEvent<HTMLButtonElement>) => {
+  const onCheckExistId = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    if(id !== ""){
+    if (id !== '') {
       checkId(id)
         .then((res) => {
           console.log(res)
           return res
-        }).catch((error) => {
+        })
+        .catch((error) => {
           return console.log(error)
         })
     }
   }
-  const onCheckExistNickName = (e:React.MouseEvent<HTMLButtonElement>) => {
+  const onCheckExistNickName = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    if(nickname !== "") {
+    if (nickname !== '') {
       checkNickname(nickname)
         .then((res) => {
           console.log(res)
           return res
-        }).catch((error) => {
+        })
+        .catch((error) => {
           return console.log(error)
         })
     }
   }
   return (
     <>
+      <Header />
       <SignupContainer>
         <h1>MOOD</h1>
         <SignupForm>
