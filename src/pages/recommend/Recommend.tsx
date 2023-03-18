@@ -7,13 +7,12 @@ import { useState, useRef } from 'react'
 import { StDivWrap, StDivMoodWrap, StDIvMusicPlayer } from './RecommendSt'
 
 export interface Coordinate {
-  coordinateX : number
-  coordinateY : number
+  coordinateX: number
+  coordinateY: number
 }
 
 function Recommend() {
   const navigate = useNavigate()
-  const conditionRef = useRef<HTMLDivElement>(null)
 
   const [musicTitle, setMusicTitle] = useState<string>('')
   const [musicComposer, setMusicComposer] = useState<string>('')
@@ -48,10 +47,7 @@ function Recommend() {
     <>
       <Header />
       <StDivWrap>
-        <StDivMoodWrap
-          onClick={onClickcoordinateHandler}
-          ref={conditionRef}
-        ></StDivMoodWrap>
+        <StDivMoodWrap onClick={onClickcoordinateHandler}></StDivMoodWrap>
         <div>
           <StDIvMusicPlayer>
             <p>{musicTitle}</p>
