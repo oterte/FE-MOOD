@@ -38,7 +38,7 @@ function Recommend() {
   const onClickcoordinateHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     const coorinate: Coordinate = {
       coordinateX: e.nativeEvent.offsetX,
-      coordinateY: -(e.nativeEvent.offsetY - 300),
+      coordinateY: (e.nativeEvent.offsetY - 300) * -1,
     }
     queryClient.invalidateQueries(['recommendMusic'])
     getMusicMutation.mutate(coorinate)
