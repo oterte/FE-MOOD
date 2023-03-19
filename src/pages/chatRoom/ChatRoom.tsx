@@ -42,10 +42,29 @@ function FirstTest() {
   const [recieveData, setRecieveData] = useState<RecieveData[]>([])
   const [beforeChatData, setBeforeChatData] = useState<BeforeChatData[]>([])
   const [userList, setUserList] = useState<string[]>([])
+  const [isLoading, setIsLoading] = useState<boolean>(false)
+  const [index, setIndex] = useState<number>(-1)
 
   const param = useParams()
 
+  const target = useRef<any>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
+
+  const options = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 1.0,
+  }
+  const callback = (entries: IntersectionObserverEntry[]) => {
+    const target = entries[0]
+    console.log('관측됨')
+
+    if (target.isIntersecting && !isLoading) {
+      socket.emit('scroll', index)
+      setIndex((prev) => prev + 1)
+    }
+  }
+  const observer = new IntersectionObserver(callback, options)
 
   const scrollToBottom = () => {
     if (scrollRef.current) {
@@ -53,6 +72,12 @@ function FirstTest() {
     }
   }
 
+  useEffect(() => {
+    observer.observe(target.current)
+    return () => {
+      observer.unobserve(target.current)
+    }
+  }, [])
   // userInfo가 구현 되면 다시 기능 수정
   const nickname: string = 'jaeuk'
   const roomId: number = Number(param.id)
@@ -78,7 +103,6 @@ function FirstTest() {
   const onChangeChatTextHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChatText(e.target.value)
   }
-
   const onClickSendMessageHandler = useCallback(() => {
     const noContent = chatText.trim() === ''
     if (noContent) {
@@ -91,7 +115,7 @@ function FirstTest() {
 
   useEffect(() => {
     scrollToBottom()
-  }, [chatData, recieveData])
+  }, [recieveData, beforeChatData])
 
   useEffect(() => {
     socket.on('onUser', (data) => {
@@ -99,10 +123,8 @@ function FirstTest() {
     })
   }, [userList])
 
-  // 내일 동윤님 코드 보면서 추가 하기
   useEffect(() => {
     socket.on('offUser', (nickname) => {
-      console.log(userList)
       setUserList(userList.filter((userList: string) => userList !== nickname))
     })
   }, [userList])
@@ -119,9 +141,20 @@ function FirstTest() {
     })
   }, [recieveData])
 
+  useEffect(() => {
+    socket.on('plusScroll', (data) => {
+      console.log(data)
+      setRecieveData([...recieveData, data])
+    })
+    console.log('plus scroll event가 작동되었습니다')
+  }, [index])
+
+  console.log(index)
+
   return (
     <StDivChatRoomWrap>
       <StDivChatRoomChatListWrap ref={scrollRef}>
+        <div ref={target}></div>
         {beforeChatData?.map((beforeChatData) => {
           return (
             <StDivChatRoomChatListContain key={beforeChatData.chatId}>
