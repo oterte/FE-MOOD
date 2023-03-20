@@ -140,6 +140,14 @@ function ChatRoom() {
     })
   }, [userList])
 
+  // 내일 동윤님 코드 보면서 추가 하기
+  useEffect(() => {
+    socket.on('offUser', (nickname) => {
+      console.log(userList)
+      setUserList(userList.filter((userList: string) => userList !== nickname))
+    })
+  }, [userList])
+
   useEffect(() => {
     socket.on('offUser', (nickname) => {
       setUserList(userList.filter((userList: string) => userList !== nickname))
