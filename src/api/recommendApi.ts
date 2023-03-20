@@ -10,10 +10,8 @@ export const getMusic = async (id: number) => {
   return musicData.data.data[0]
 }
 
-export const getSurveyMusic = async (id: number) => {
-  const musicData = await axios.get(
-    `${process.env.REACT_APP_SERVER}/api/survey/${id}`
-  )
+export const getSurveyMusic = async (status1: number, status2: number) => {
+  const musicData = await instance.get(`/api/survey/${status1}/${status2}`)
   return musicData
 }
 
