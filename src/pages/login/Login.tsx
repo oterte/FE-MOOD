@@ -5,6 +5,7 @@ import { login } from '../../api/loginapi'
 import Footer from '../../components/footer/Footer'
 import kakao from '../../assets/kakao_login_large_narrow.png'
 import Header from '../../components/header/Header'
+import jwt_Decode from 'jwt-decode'
 
 function Login() {
   const REST_API_KEY = `6cf4e324bddd5eed7f3aea4e47c14425`
@@ -24,11 +25,10 @@ function Login() {
     if (!id || !password) return
     login({ id: id, password: password })
       .then((res) => {
-        console.log(res)
         const authId = res.data.token
-        localStorage.setItem('loginToken', authId)
+        const decodeUserInfo = JSON.stringify(jwt_Decode(authId))
         setCookies('authorization', authId)
-        console.log('로그인에 성공했습니다.')
+        localStorage.setItem('userInfo', decodeUserInfo)
       })
       .catch((error) => {
         console.log(error)
