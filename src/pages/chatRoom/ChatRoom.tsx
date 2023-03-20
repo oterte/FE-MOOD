@@ -51,7 +51,6 @@ function ChatRoom() {
   const [beforeChatData, setBeforeChatData] = useState<BeforeChatData[]>([])
   const [scrollChatData, setScrollChatData] = useState<ScrollChatData[]>([])
   const [userList, setUserList] = useState<string[]>([])
-  const [isLoading, setIsLoading] = useState<boolean>(false)
   const [index, setIndex] = useState<number>(0)
 
   const param = useParams()
@@ -67,7 +66,7 @@ function ChatRoom() {
   const callback = (entries: IntersectionObserverEntry[]) => {
     const target = entries[0]
 
-    if (target.isIntersecting && !isLoading) {
+    if (target.isIntersecting) {
       setIndex((prev) => prev + 1)
     }
   }
@@ -102,10 +101,14 @@ function ChatRoom() {
   }, [])
 
   useEffect(() => {
-    console.log('scroll 이벤트 발생')
-    console.log(index)
     socket.emit('scroll', index)
   }, [index])
+
+  useEffect(() => {
+    socket.on('plusScroll', (data) => {
+      setScrollChatData([...data, ...scrollChatData])
+    })
+  }, [scrollChatData])
 
   const chatData: ChatData = {
     message: chatText,
@@ -155,20 +158,11 @@ function ChatRoom() {
     })
   }, [recieveData])
 
-  useEffect(() => {
-    socket.on('plusScroll', (data) => {
-      console.log(data)
-      setScrollChatData([...data, ...scrollChatData ])
-    })
-  }, [scrollChatData])
-  console.log("scroll Chat", scrollChatData)
-
   return (
     <StDivChatRoomWrap>
       <StDivChatRoomChatListWrap ref={scrollRef}>
         <div ref={target}></div>
-        {
-        scrollChatData?.map((scrollChatData) => {
+        {scrollChatData?.map((scrollChatData) => {
           return (
             <StDivChatRoomChatListContain key={scrollChatData.chatId}>
               <StPChatRoom>
