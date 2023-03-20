@@ -26,6 +26,14 @@ interface BeforeChatData {
   createdAt: string
   updatedAt: string
 }
+interface ScrollChatData {
+  chatId: number
+  roomId: number
+  nickname: string
+  message: string
+  createdAt: string
+  updatedAt: string
+}
 
 const socket = io(`${process.env.REACT_APP_SERVER}`, {
   transports: ['websocket'],
@@ -37,13 +45,14 @@ const disconnection = () => {
   socket.disconnect()
 }
 
-function FirstTest() {
+function ChatRoom() {
   const [chatText, setChatText] = useState<string>('')
   const [recieveData, setRecieveData] = useState<RecieveData[]>([])
   const [beforeChatData, setBeforeChatData] = useState<BeforeChatData[]>([])
+  const [scrollChatData, setScrollChatData] = useState<ScrollChatData[]>([])
   const [userList, setUserList] = useState<string[]>([])
   const [isLoading, setIsLoading] = useState<boolean>(false)
-  const [index, setIndex] = useState<number>(-1)
+  const [index, setIndex] = useState<number>(0)
 
   const param = useParams()
 
@@ -57,10 +66,8 @@ function FirstTest() {
   }
   const callback = (entries: IntersectionObserverEntry[]) => {
     const target = entries[0]
-    console.log('관측됨')
 
     if (target.isIntersecting && !isLoading) {
-      socket.emit('scroll', index)
       setIndex((prev) => prev + 1)
     }
   }
@@ -78,6 +85,7 @@ function FirstTest() {
       observer.unobserve(target.current)
     }
   }, [])
+
   // userInfo가 구현 되면 다시 기능 수정
   const nickname: string = 'jaeuk'
   const roomId: number = Number(param.id)
@@ -92,6 +100,12 @@ function FirstTest() {
       disconnection()
     }
   }, [])
+
+  useEffect(() => {
+    console.log('scroll 이벤트 발생')
+    console.log(index)
+    socket.emit('scroll', index)
+  }, [index])
 
   const chatData: ChatData = {
     message: chatText,
@@ -144,17 +158,25 @@ function FirstTest() {
   useEffect(() => {
     socket.on('plusScroll', (data) => {
       console.log(data)
-      setRecieveData([...recieveData, data])
+      setScrollChatData([...data, ...scrollChatData ])
     })
-    console.log('plus scroll event가 작동되었습니다')
-  }, [index])
-
-  console.log(index)
+  }, [scrollChatData])
+  console.log("scroll Chat", scrollChatData)
 
   return (
     <StDivChatRoomWrap>
       <StDivChatRoomChatListWrap ref={scrollRef}>
         <div ref={target}></div>
+        {
+        scrollChatData?.map((scrollChatData) => {
+          return (
+            <StDivChatRoomChatListContain key={scrollChatData.chatId}>
+              <StPChatRoom>
+                {scrollChatData.nickname} : {scrollChatData.message}
+              </StPChatRoom>
+            </StDivChatRoomChatListContain>
+          )
+        })}
         {beforeChatData?.map((beforeChatData) => {
           return (
             <StDivChatRoomChatListContain key={beforeChatData.chatId}>
@@ -202,4 +224,4 @@ function FirstTest() {
   )
 }
 
-export default FirstTest
+export default ChatRoom
