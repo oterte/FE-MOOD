@@ -26,8 +26,18 @@ interface BeforeChatData {
   createdAt: string
   updatedAt: string
 }
+interface ScrollChatData {
+  chatId: number
+  roomId: number
+  nickname: string
+  message: string
+  createdAt: string
+  updatedAt: string
+}
 
-const socket = io(`${process.env.REACT_APP_SERVER}`)
+const socket = io(`${process.env.REACT_APP_SERVER}`, {
+  transports: ['websocket'],
+})
 const initSocketConnection = () => {
   socket.connect()
 }
@@ -35,15 +45,32 @@ const disconnection = () => {
   socket.disconnect()
 }
 
-function FirstTest() {
+function ChatRoom() {
   const [chatText, setChatText] = useState<string>('')
   const [recieveData, setRecieveData] = useState<RecieveData[]>([])
   const [beforeChatData, setBeforeChatData] = useState<BeforeChatData[]>([])
+  const [scrollChatData, setScrollChatData] = useState<ScrollChatData[]>([])
   const [userList, setUserList] = useState<string[]>([])
+  const [index, setIndex] = useState<number>(0)
 
   const param = useParams()
 
+  const target = useRef<any>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
+
+  const options = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 1.0,
+  }
+  const callback = (entries: IntersectionObserverEntry[]) => {
+    const target = entries[0]
+
+    if (target.isIntersecting) {
+      setIndex((prev) => prev + 1)
+    }
+  }
+  const observer = new IntersectionObserver(callback, options)
 
   const scrollToBottom = () => {
     if (scrollRef.current) {
@@ -51,9 +78,17 @@ function FirstTest() {
     }
   }
 
+  useEffect(() => {
+    observer.observe(target.current)
+    return () => {
+      observer.unobserve(target.current)
+    }
+  }, [])
+
+  // userInfo가 구현 되면 다시 기능 수정
   const nickname: string = 'jaeuk'
   const roomId: number = Number(param.id)
-  // 들어왔을 때 socket을 연결하고 unmount 되면 socket을 disconnect
+
   useEffect(() => {
     initSocketConnection()
     socket.emit('roomId', roomId)
@@ -65,6 +100,16 @@ function FirstTest() {
     }
   }, [])
 
+  useEffect(() => {
+    socket.emit('scroll', index)
+  }, [index])
+
+  useEffect(() => {
+    socket.on('plusScroll', (data) => {
+      setScrollChatData([...data, ...scrollChatData])
+    })
+  }, [scrollChatData])
+
   const chatData: ChatData = {
     message: chatText,
     nickname: nickname,
@@ -75,7 +120,6 @@ function FirstTest() {
   const onChangeChatTextHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChatText(e.target.value)
   }
-
   const onClickSendMessageHandler = useCallback(() => {
     const noContent = chatText.trim() === ''
     if (noContent) {
@@ -88,11 +132,25 @@ function FirstTest() {
 
   useEffect(() => {
     scrollToBottom()
-  }, [chatData, recieveData])
+  }, [recieveData, beforeChatData])
 
   useEffect(() => {
     socket.on('onUser', (data) => {
       setUserList([...userList, data])
+    })
+  }, [userList])
+
+  // 내일 동윤님 코드 보면서 추가 하기
+  useEffect(() => {
+    socket.on('offUser', (nickname) => {
+      console.log(userList)
+      setUserList(userList.filter((userList: string) => userList !== nickname))
+    })
+  }, [userList])
+
+  useEffect(() => {
+    socket.on('offUser', (nickname) => {
+      setUserList(userList.filter((userList: string) => userList !== nickname))
     })
   }, [userList])
 
@@ -104,7 +162,6 @@ function FirstTest() {
 
   useEffect(() => {
     socket.on('receiveMessage', (data) => {
-      console.log('receiveMessage', data)
       setRecieveData([...recieveData, data])
     })
   }, [recieveData])
@@ -112,6 +169,16 @@ function FirstTest() {
   return (
     <StDivChatRoomWrap>
       <StDivChatRoomChatListWrap ref={scrollRef}>
+        <div ref={target}></div>
+        {scrollChatData?.map((scrollChatData) => {
+          return (
+            <StDivChatRoomChatListContain key={scrollChatData.chatId}>
+              <StPChatRoom>
+                {scrollChatData.nickname} : {scrollChatData.message}
+              </StPChatRoom>
+            </StDivChatRoomChatListContain>
+          )
+        })}
         {beforeChatData?.map((beforeChatData) => {
           return (
             <StDivChatRoomChatListContain key={beforeChatData.chatId}>
@@ -159,4 +226,4 @@ function FirstTest() {
   )
 }
 
-export default FirstTest
+export default ChatRoom
