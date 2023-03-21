@@ -18,7 +18,7 @@ const Point = ({ number, setSurvey }: Props) => {
         type="radio"
         id="1"
         name={number}
-        value={5}
+        value={0}
         onChange={(e) => onChangePoint2Handler(e)}
       />
       <label>아니다</label>
@@ -26,7 +26,7 @@ const Point = ({ number, setSurvey }: Props) => {
         type="radio"
         id="2"
         name={number}
-        value={10}
+        value={5}
         onChange={(e) => onChangePoint2Handler(e)}
       />
       <label>보통이다</label>
@@ -34,7 +34,7 @@ const Point = ({ number, setSurvey }: Props) => {
         type="radio"
         id="3"
         name={number}
-        value={15}
+        value={10}
         onChange={(e) => onChangePoint2Handler(e)}
       />
       <label>그렇다</label>
@@ -42,7 +42,7 @@ const Point = ({ number, setSurvey }: Props) => {
         type="radio"
         id="4"
         name={number}
-        value={20}
+        value={15}
         onChange={(e) => onChangePoint2Handler(e)}
       />
       <label>매우 그렇다</label>
@@ -50,7 +50,7 @@ const Point = ({ number, setSurvey }: Props) => {
         type="radio"
         id="5"
         name={number}
-        value={25}
+        value={20}
         onChange={(e) => onChangePoint2Handler(e)}
       />
     </div>

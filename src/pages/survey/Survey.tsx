@@ -31,7 +31,7 @@ function Survey() {
   })
   const [modalState, setModalState] = useState<boolean>(false)
   const onClickModalOpenHandler = () => {
-    if (status1 && status2) {
+    if (0 <= status1 &&  0 <= status2) {
       setModalState(!modalState)
     } else {
       alert('설문을 모두 선택해주세요!')
