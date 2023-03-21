@@ -20,3 +20,11 @@ export const onSetLocalStorageHandler = (
 ) => {
   return localStorage.setItem(name, decodedUserInfo)
 }
+
+export const onLogoutHandler = (name:string) => {
+    return cookie.remove(name)
+}
+
+export const onRemoveToken = (decodedUserInfo:any) => {
+  return localStorage.removeItem(decodedUserInfo)
+}

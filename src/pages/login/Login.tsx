@@ -28,7 +28,7 @@ function Login() {
         const decodeUserInfo = JSON.stringify(jwt_Decode(authId))
         onSetCookieHandler('authorization', authId)
         onSetLocalStorageHandler('userInfo', decodeUserInfo)
-        navigate('/')
+        navigate('/recommend')
       })
       .catch((error) => {
         console.log(error)
