@@ -9,10 +9,8 @@ const instance = axios.create({
 export const getMusic = async (coordinate: Coordinate) => {
   const x = coordinate.coordinateX
   const y = coordinate.coordinateY
-  const musicData = await instance.get(
-    `/api/mood/${x}/${y}`
-  )
-  return musicData.data.data[0]
+  const musicData = await instance.get(`/api/mood/${x}/${y}`)
+  return musicData.data.data
 }
 
 export const getSurveyMusic = async (id: number) => {
