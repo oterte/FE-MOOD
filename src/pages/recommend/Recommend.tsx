@@ -44,7 +44,7 @@ function Recommend() {
       const moodWidth = targetRef.current?.clientWidth
       const moodHeight = targetRef.current?.clientHeight
       coordinate.coordinateX = Math.trunc((e.nativeEvent.offsetX / moodWidth) * 100)
-      coordinate.coordinateY = Math.trunc(((e.nativeEvent.offsetY - 300) / moodHeight) * 100 * -1)
+      coordinate.coordinateY = Math.trunc(((e.nativeEvent.offsetY - moodHeight) / moodHeight) * 100 * -1)
     }
     
     queryClient.invalidateQueries(['recommendMusic'])
