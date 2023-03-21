@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const Wrap = styled.div`
   width: 100%;
-  min-height: 100vh;
+  height: auto;
   box-sizing: border-box;
   margin: 0 auto;
   display: flex;
@@ -18,10 +18,9 @@ export const Info = styled.div`
 
 export const ComposerImg = styled.img`
   position: absolute;
-  top: 120px;
+  top: 10px;
   left: 25%;
-  width: 250px;
-  height: 250px;
+  width: 200px;
   border-radius: 50%;
   background: #555555;
 `
@@ -49,17 +48,14 @@ export const CommentBox = styled.div`
   box-sizing: border-box;
   padding: 10px;
   margin-bottom: 10px;
-  border:1px solid gray;
 `
 
-export const InputBox = styled.div`
-
-`
+export const InputBox = styled.div``
 
 export const AddCommentInput = styled.input`
   position: absolute;
   left: 9%;
-  bottom: 150px;
+  bottom: 100px;
   width: 60%;
   height: 50px;
   padding-left: 1.2rem;
@@ -68,7 +64,7 @@ export const AddCommentInput = styled.input`
 export const CommentBtn = styled.button`
   position: absolute;
   right: 10%;
-  bottom: 150px;
+  bottom: 100px;
   width: 200px;
   height: 50px;
   text-align: center;
@@ -85,4 +81,25 @@ export const EditCommentInput = styled.input`
   width: 700px;
   height: 30px;
   margin: 10px;
+`
+export const AddCommentForm = styled.form``
+export const ReAddComment = styled.input``
+export const ReCommentInput = styled.input``
+export const EditReCommentInput = styled.input`
+  width: 700px;
+  height: 30px;
+  margin: 10px;
+`
+
+export const ReCommentBtn = styled.button`
+  width: 200px;
+  height: 30px;
+  margin-top: 16px;
+`
+
+export const AddReCommentInput = styled.input`
+  width: 600px;
+  height: 30px;
+  margin-right: 8px;
+  margin-bottom: 16px;
 `
