@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { getComment, removeComment, editComment } from '../../api/comments'
 import {
   CommentBox,
@@ -8,15 +8,25 @@ import {
 } from '../../pages/musicDetail/MusicDetailSt'
 import { useParams } from 'react-router-dom'
 import { Wrap } from '../header/HeaderSt'
+import ReCommentsList from './ReCommentsList'
+import AddRecomment from './AddRecomment'
 
-function CommentsList() {
-  const params = useParams()
-  const queryClient = useQueryClient() //쿼리 클라이언트 인스턴스를 가져옵
-  const [edit, setEdit] = useState(0)
+interface Comment {
+  reviewId: number
+  musicId: number
+  review: string
+  createdAt: string
+}
+
+function CommentsList({ musicId }: { musicId: number }) {
+  const params = useParams<{ id: string }>()
+  const queryClient = useQueryClient()
+  const [edit, setEdit] = useState<number>(0)
   const [inputValues, setInputValues] = useState<{ [key: number]: string }>({})
+  const [comments, setComments] = useState<Comment[]>([])
 
-  const { isLoading, isError, data } = useQuery(['comments'], () =>
-    getComment({ musicId: Number(params.id) })
+  const { isLoading, isError, data } = useQuery(['comments', musicId], () =>
+    getComment({ musicId })
   )
 
   const deleteMutation = useMutation(removeComment, {
@@ -39,10 +49,10 @@ function CommentsList() {
     e: React.ChangeEvent<HTMLInputElement>,
     reviewId: number
   ) => {
-    setInputValues({
-      ...inputValues,
+    setInputValues((prevState) => ({
+      ...prevState,
       [reviewId]: e.target.value,
-    })
+    }))
   }
 
   const onSubmitEditHandler = (
@@ -60,6 +70,12 @@ function CommentsList() {
     deleteMutation.mutate({ musicId, reviewId })
   }
 
+  useEffect(() => {
+    if (data) {
+      setComments(data.comments)
+    }
+  }, [data])
+
   if (isLoading) {
     return <h1>loading</h1>
   }
@@ -68,13 +84,13 @@ function CommentsList() {
     return <h1>error</h1>
   }
 
-  console.log(data)
-
   return (
     <Wrap>
-      {data.map((item: any) => {
+      <div>댓글 수: {data?.count}</div>
+      {comments.map((item) => {
         return (
           <CommentBox key={item.reviewId}>
+            <div>작성 시간: {new Date(item.createdAt).toLocaleString()}</div>
             {edit === item.reviewId ? (
               <form
                 onSubmit={(e) =>
@@ -83,23 +99,14 @@ function CommentsList() {
               >
                 <CommentInput
                   type="text"
-                  value={inputValues[item.reviewId] || item.review}
+                  value={inputValues[item.reviewId]}
                   onChange={(e) => onChangeEditHandler(e, item.reviewId)}
                 />
                 <button type="submit">수정하기</button>
               </form>
             ) : (
               <>
-                <EditCommentInput
-                  type="text"
-                  value={inputValues[item.reviewId] || item.review}
-                  onChange={(e) => {
-                    setInputValues({
-                      ...inputValues,
-                      [item.reviewId]: e.target.value,
-                    })
-                  }}
-                />
+                <EditCommentInput type="text" value={item.review} disabled />
                 <button
                   onClick={() => {
                     onClickDeleteButtonHandler(item.musicId, item.reviewId)
@@ -110,12 +117,20 @@ function CommentsList() {
                 <button
                   onClick={() => {
                     onClickEditButtonHandler(item.reviewId)
+                    setInputValues((prevState) => ({
+                      ...prevState,
+                      [item.reviewId]: item.review,
+                    }))
                   }}
                 >
                   수정하기
                 </button>
               </>
             )}
+            <div>
+              <AddRecomment reviewId={item.reviewId} />
+              <ReCommentsList reviewId={item.reviewId} />
+            </div>
           </CommentBox>
         )
       })}

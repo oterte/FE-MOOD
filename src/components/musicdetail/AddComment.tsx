@@ -1,15 +1,17 @@
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 import { addComment } from '../../api/comments'
 import {
   AddCommentInput,
   CommentBtn,
 } from '../../pages/musicDetail/MusicDetailSt'
-import { useParams } from 'react-router-dom'
 
-function AddComment({ parentId }: { parentId?: number }) {
-  const params = useParams()
-  const [review, setReview] = useState<string>('')
+interface Props {
+  musicId: number
+}
+
+function AddComment({ musicId }: Props) {
+  const [review, setReview] = useState('')
   const queryClient = useQueryClient()
   const mutation = useMutation(addComment, {
     onSuccess: () => {
@@ -17,18 +19,22 @@ function AddComment({ parentId }: { parentId?: number }) {
     },
   })
 
-  const onChangeCommentHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setReview(e.target.value)
-  }
+  const onChangeCommentHandler = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setReview(e.target.value)
+    },
+    []
+  )
 
-  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    if (review === '') return
-    const id = Number(params.id)
-    mutation.mutate({ id, review })
-
-    setReview('')
-  }
+  const onSubmitHandler = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      if (review === '') return
+      mutation.mutate({ musicId, review })
+      setReview('')
+    },
+    [mutation, musicId, review]
+  )
 
   return (
     <>
