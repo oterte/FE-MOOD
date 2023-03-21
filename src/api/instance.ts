@@ -1,11 +1,10 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios'
+import axios, { AxiosInstance } from 'axios'
 import { Cookies } from 'react-cookie'
 
 const cookies = new Cookies()
 
-// baseURL:`http://15.165.18.86:3000`,
 const instance: AxiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_SERVER,
+  baseURL: process.env.REACT_APP_SERVER_URL,
   headers: { Authorization: cookies.get('authorization') },
   withCredentials: true,
 })
