@@ -36,19 +36,19 @@ function Recommend() {
   const queryClient = new QueryClient()
 
   const onClickcoordinateHandler = (e: React.MouseEvent<HTMLDivElement>) => {
-    const coorinate: Coordinate = {
+    const coordinate: Coordinate = {
       coordinateX: 0,
       coordinateY: 0
     }
     if(targetRef.current) {
       const moodWidth = targetRef.current?.clientWidth
       const moodHeight = targetRef.current?.clientHeight
-      coorinate.coordinateX = (e.nativeEvent.offsetX / moodWidth) * 100
-      coorinate.coordinateY = ((e.nativeEvent.offsetY - 300) / moodHeight) * 100 * -1
+      coordinate.coordinateX = Math.trunc((e.nativeEvent.offsetX / moodWidth) * 100)
+      coordinate.coordinateY = Math.trunc(((e.nativeEvent.offsetY - 300) / moodHeight) * 100 * -1)
     }
     
     queryClient.invalidateQueries(['recommendMusic'])
-    getMusicMutation.mutate(coorinate)
+    getMusicMutation.mutate(coordinate)
   }
 
   return (
