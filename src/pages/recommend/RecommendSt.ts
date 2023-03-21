@@ -6,19 +6,12 @@ export const StDivWrap = styled.div`
   display: flex;
   margin: 50px;
 `
-
 export const StDivMoodWrap = styled.div`
   display: flex;
   flex-wrap: wrap;
   width: 600px;
   height: 300px;
   border: 1px solid red;
-`
-export const StDivMoodContainer = styled.div`
-  width: 200px;
-  height: 100px;
-  border: 1px solid blue;
-  box-sizing: border-box;
 `
 export const StDIvMusicPlayer = styled.div`
     width: 150px;
