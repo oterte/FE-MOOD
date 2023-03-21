@@ -18,6 +18,7 @@ function Recommend() {
   const [musicComposer, setMusicComposer] = useState<string>('')
   const [musicUrl, setMusicUrl] = useState<string>('')
   const [musicId, setMusicId] = useState<number | undefined>()
+  const targetRef = useRef<HTMLDivElement>(null)
 
   const getMusicMutation = useMutation(['recommendMusic'], getMusic, {
     onSuccess: (data) => {
@@ -36,9 +37,16 @@ function Recommend() {
 
   const onClickcoordinateHandler = (e: React.MouseEvent<HTMLDivElement>) => {
     const coorinate: Coordinate = {
-      coordinateX: e.nativeEvent.offsetX,
-      coordinateY: (e.nativeEvent.offsetY - 300) * -1,
+      coordinateX: 0,
+      coordinateY: 0
     }
+    if(targetRef.current) {
+      const moodWidth = targetRef.current?.clientWidth
+      const moodHeight = targetRef.current?.clientHeight
+      coorinate.coordinateX = (e.nativeEvent.offsetX / moodWidth) * 100
+      coorinate.coordinateY = ((e.nativeEvent.offsetY - 300) / moodHeight) * 100 * -1
+    }
+    
     queryClient.invalidateQueries(['recommendMusic'])
     getMusicMutation.mutate(coorinate)
   }
@@ -47,7 +55,10 @@ function Recommend() {
     <>
       <Header />
       <StDivWrap>
-        <StDivMoodWrap onClick={onClickcoordinateHandler}></StDivMoodWrap>
+        <StDivMoodWrap
+          ref={targetRef}
+          onClick={onClickcoordinateHandler}
+        ></StDivMoodWrap>
         <div>
           <StDIvMusicPlayer>
             <p>{musicTitle}</p>
