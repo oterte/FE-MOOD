@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 import { addRecomment } from '../../api/comments'
-import {
-  AddCommentInput,
-  CommentBtn,
-} from '../../pages/musicDetail/MusicDetailSt'
 import { useParams } from 'react-router-dom'
+import {
+  AddReCommentInput,
+  ReCommentBtn,
+} from '../../pages/musicDetail/MusicDetailSt'
 
-function AddRecomment({ parentId }: { parentId: number }) {
-  const params = useParams()
-  const [recomment, setRecomment] = useState<string>('')
+function AddRecomment({ reviewId }: { reviewId: number }) {
+  const { id: musicId } = useParams<{ id: string }>()
+  const [comment, setComment] = useState<string>('')
   const queryClient = useQueryClient()
   const mutation = useMutation(addRecomment, {
     onSuccess: () => {
@@ -17,28 +17,26 @@ function AddRecomment({ parentId }: { parentId: number }) {
     },
   })
 
-  const onChangeRecommentHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setRecomment(e.target.value)
+  const onChangeCommentHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setComment(e.target.value)
   }
 
-  const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmitCommentHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    if (recomment === '') return
-    const reviewId = Number(params.id)
-    mutation.mutate({ reviewId, parentId, body: recomment })
-
-    setRecomment('')
+    if (comment === '') return
+    mutation.mutate({ reviewId, comment })
+    setComment('')
   }
 
   return (
     <>
-      <form onSubmit={onSubmitHandler}>
-        <AddCommentInput
-          value={recomment}
-          onChange={onChangeRecommentHandler}
+      <form onSubmit={onSubmitCommentHandler}>
+        <AddReCommentInput
+          value={comment}
+          onChange={onChangeCommentHandler}
           placeholder="대댓글을 남겨주세요."
         />
-        <CommentBtn type="submit">대댓글 작성</CommentBtn>
+        <ReCommentBtn type="submit">대댓글 작성</ReCommentBtn>
       </form>
     </>
   )

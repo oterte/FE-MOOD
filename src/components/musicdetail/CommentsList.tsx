@@ -1,14 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import React, { useState } from 'react'
-import {
-  getComment,
-  removeComment,
-  editComment,
-  getRecomment,
-  addRecomment,
-  removeRecomment,
-  editRecomment,
-} from '../../api/comments'
+import React, { useEffect, useState } from 'react'
+import { getComment, removeComment, editComment } from '../../api/comments'
 import {
   CommentBox,
   CommentInput,
@@ -16,16 +8,25 @@ import {
 } from '../../pages/musicDetail/MusicDetailSt'
 import { useParams } from 'react-router-dom'
 import { Wrap } from '../header/HeaderSt'
-import AddRecomment from '../../components/musicdetail/AddRecomment'
+import ReCommentsList from './ReCommentsList'
+import AddRecomment from './AddRecomment'
 
-function CommentsList() {
-  const params = useParams()
+interface Comment {
+  reviewId: number
+  musicId: number
+  review: string
+  createdAt: string
+}
+
+function CommentsList({ musicId }: { musicId: number }) {
+  const params = useParams<{ id: string }>()
   const queryClient = useQueryClient()
-  const [edit, setEdit] = useState(0)
+  const [edit, setEdit] = useState<number>(0)
   const [inputValues, setInputValues] = useState<{ [key: number]: string }>({})
+  const [comments, setComments] = useState<Comment[]>([])
 
-  const { isLoading, isError, data } = useQuery(['comments'], () =>
-    getComment({ musicId: Number(params.id) })
+  const { isLoading, isError, data } = useQuery(['comments', musicId], () =>
+    getComment({ musicId })
   )
 
   const deleteMutation = useMutation(removeComment, {
@@ -48,10 +49,10 @@ function CommentsList() {
     e: React.ChangeEvent<HTMLInputElement>,
     reviewId: number
   ) => {
-    setInputValues({
-      ...inputValues,
+    setInputValues((prevState) => ({
+      ...prevState,
       [reviewId]: e.target.value,
-    })
+    }))
   }
 
   const onSubmitEditHandler = (
@@ -69,72 +70,27 @@ function CommentsList() {
     deleteMutation.mutate({ musicId, reviewId })
   }
 
-  // 대댓글 관련 추가 코드
-  const {
-    isLoading: isLoadingRecomments,
-    isError: isErrorRecomments,
-    data: recommentsData,
-  } = useQuery(['recomments'], () =>
-    getRecomment({ reviewId: Number(params.id) })
-  )
+  useEffect(() => {
+    if (data) {
+      setComments(data.comments)
+    }
+  }, [data])
 
-  const deleteRecommentMutation = useMutation(removeRecomment, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['recomments'])
-    },
-  })
-
-  const editRecommentMutation = useMutation(editRecomment, {
-    onSuccess: () => {
-      queryClient.invalidateQueries(['recomments'])
-    },
-  })
-
-  const onClickEditRecommentButtonHandler = (recommentId: number) => {
-    setEdit(recommentId)
-  }
-
-  const onChangeEditRecommentHandler = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    recommentId: number
-  ) => {
-    setInputValues({
-      ...inputValues,
-      [recommentId]: e.target.value,
-    })
-  }
-
-  const onSubmitEditRecommentHandler = (
-    e: React.FormEvent<HTMLFormElement>,
-    reviewId: number,
-    recommentId: number
-  ) => {
-    e.preventDefault()
-    const newRecomment = inputValues[recommentId] || ''
-    editRecommentMutation.mutate({ reviewId, recommentId, newRecomment })
-    setEdit(0)
-  }
-
-  const onClickDeleteRecommentButtonHandler = (
-    reviewId: number,
-    recommentId: number
-  ) => {
-    deleteRecommentMutation.mutate({ reviewId, recommentId })
-  }
-
-  if (isLoading || isLoadingRecomments) {
+  if (isLoading) {
     return <h1>loading</h1>
   }
 
-  if (isError || isErrorRecomments) {
+  if (isError) {
     return <h1>error</h1>
   }
 
   return (
     <Wrap>
-      {data.map((item: any) => {
+      <div>댓글 수: {data?.count}</div>
+      {comments.map((item) => {
         return (
           <CommentBox key={item.reviewId}>
+            <div>작성 시간: {new Date(item.createdAt).toLocaleString()}</div>
             {edit === item.reviewId ? (
               <form
                 onSubmit={(e) =>
@@ -143,23 +99,14 @@ function CommentsList() {
               >
                 <CommentInput
                   type="text"
-                  value={inputValues[item.reviewId] || item.review}
+                  value={inputValues[item.reviewId]}
                   onChange={(e) => onChangeEditHandler(e, item.reviewId)}
                 />
                 <button type="submit">수정하기</button>
               </form>
             ) : (
               <>
-                <EditCommentInput
-                  type="text"
-                  value={inputValues[item.reviewId] || item.review}
-                  onChange={(e) => {
-                    setInputValues({
-                      ...inputValues,
-                      [item.reviewId]: e.target.value,
-                    })
-                  }}
-                />
+                <EditCommentInput type="text" value={item.review} disabled />
                 <button
                   onClick={() => {
                     onClickDeleteButtonHandler(item.musicId, item.reviewId)
@@ -170,6 +117,10 @@ function CommentsList() {
                 <button
                   onClick={() => {
                     onClickEditButtonHandler(item.reviewId)
+                    setInputValues((prevState) => ({
+                      ...prevState,
+                      [item.reviewId]: item.review,
+                    }))
                   }}
                 >
                   수정하기
@@ -177,74 +128,8 @@ function CommentsList() {
               </>
             )}
             <div>
-              <AddRecomment parentId={item.reviewId} />
-              {recommentsData
-                .filter(
-                  (recomment: any) => recomment.parentId === item.reviewId
-                )
-                .map((recomment: any) => (
-                  <div key={recomment.recommentId}>
-                    {edit === recomment.recommentId ? (
-                      <form
-                        onSubmit={(e) =>
-                          onSubmitEditRecommentHandler(
-                            e,
-                            item.reviewId,
-                            recomment.recommentId
-                          )
-                        }
-                      >
-                        <CommentInput
-                          type="text"
-                          value={
-                            inputValues[recomment.recommentId] || recomment.body
-                          }
-                          onChange={(e) =>
-                            onChangeEditRecommentHandler(
-                              e,
-                              recomment.recommentId
-                            )
-                          }
-                        />
-                        <button type="submit">수정하기</button>
-                      </form>
-                    ) : (
-                      <>
-                        <EditCommentInput
-                          type="text"
-                          value={
-                            inputValues[recomment.recommentId] || recomment.body
-                          }
-                          onChange={(e) => {
-                            setInputValues({
-                              ...inputValues,
-                              [recomment.recommentId]: e.target.value,
-                            })
-                          }}
-                        />
-                        <button
-                          onClick={() => {
-                            onClickDeleteRecommentButtonHandler(
-                              item.reviewId,
-                              recomment.recommentId
-                            )
-                          }}
-                        >
-                          삭제
-                        </button>
-                        <button
-                          onClick={() => {
-                            onClickEditRecommentButtonHandler(
-                              recomment.recommentId
-                            )
-                          }}
-                        >
-                          수정하기
-                        </button>
-                      </>
-                    )}
-                  </div>
-                ))}
+              <AddRecomment reviewId={item.reviewId} />
+              <ReCommentsList reviewId={item.reviewId} />
             </div>
           </CommentBox>
         )

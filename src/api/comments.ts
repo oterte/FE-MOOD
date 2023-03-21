@@ -3,26 +3,29 @@ import { instance } from './instance'
 // 댓글 조회
 export const getComment = async ({ musicId }: { musicId: number }) => {
   const response = await instance.get(`/api/music/${musicId}/review`)
-  return response.data.reviews
+  return {
+    count: response.data.reviews.count,
+    comments: response.data.reviews.rows,
+  }
 }
 
 // 대댓글 조회
 export const getRecomment = async ({ reviewId }: { reviewId: number }) => {
-  const response = await instance.get(`/api/review/${reviewId}/recomment`);
-  return response.data.comments;
-};
-
+  const response = await instance.get(`/api/review/${reviewId}/recomment`)
+  return {
+    recomments: response.data.reComments.rows,
+  }
+}
 
 // 댓글 추가
 export const addComment = async ({
-  id,
+  musicId,
   review,
 }: {
-  id: number
+  musicId: number
   review: string
 }) => {
-  console.log(review)
-  await instance.post(`/api/music/${id}/review`, {
+  await instance.post(`/api/music/${musicId}/review`, {
     review,
   })
 }
@@ -30,16 +33,13 @@ export const addComment = async ({
 // 대댓글 추가
 export const addRecomment = async ({
   reviewId,
-  parentId,
-  body,
+  comment,
 }: {
   reviewId: number
-  parentId: number
-  body: string
+  comment: string
 }) => {
   await instance.post(`/api/review/${reviewId}/recomment`, {
-    parentId,
-    body,
+    comment,
   })
 }
 
@@ -101,7 +101,19 @@ export const editRecomment = async ({
   return response
 }
 
-// 작곡가별 조회
+// 작곡가 조회
+export const getComposer = async ({ composer }: { composer: string }) => {
+  const response = await instance.get(`/api/composer?composer=${composer}`)
+  return response.data.imageUrl
+}
+
+// 음악 상세 정보 조회
+export const getMusicDetail = async ({ musicId }: { musicId: number }) => {
+  const response = await instance.get(`/api/music/${musicId}`)
+  return response.data.data
+}
+
+// 작곡가별 추천
 export const musicDetail = async ({ musicId }: { musicId: number }) => {
   const response = await instance.get(`/api/music/${musicId}`)
   return response
