@@ -1,5 +1,22 @@
-import { Cookies } from "react-cookie";
+import { Cookies } from 'react-cookie'
 
-const cookie = new Cookies();
+const cookie = new Cookies()
 
-// getCookie 함수 작성
+export const onGetCookieHandler = (name: string) => {
+  return cookie.get(name)
+}
+
+export const onGetLocalStorage = (name: string) => {
+  return localStorage.getItem(name)
+}
+
+export const onSetCookieHandler = (name: string, authId: string) => {
+  return cookie.set(name, authId)
+}
+
+export const onSetLocalStorageHandler = (
+  name: string,
+  decodedUserInfo: any
+) => {
+  return localStorage.setItem(name, decodedUserInfo)
+}
