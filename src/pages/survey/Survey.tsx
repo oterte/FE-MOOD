@@ -48,7 +48,7 @@ function Survey() {
             {questionArr.map((question) => {
               return (
                 <div key={question.id}>
-                  <h1>질문 {question.id}</h1>
+                  <h1>질문 {question.questionNumber}</h1>
                   <span>{question.question}</span>
                   <Point
                     number={Object.keys(survey)[question.id]}
