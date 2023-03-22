@@ -8,7 +8,7 @@ interface Props {
 const Point = ({ number, setSurvey }: Props) => {
   const onChangePoint2Handler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSurvey((prevState: any) => {
-      return { ...prevState, [number]: e.target.value }
+      return { ...prevState, [number]: Number(e.target.value) }
     })
   }
   return (
