@@ -33,25 +33,28 @@ function Survey() {
   const [status1, setStatus1] = useState<number>(0)
   const [status2, setStatus2] = useState<number>(0)
   const onClickModalOpenHandler = () => {
-    if (0 <= status1 &&  0 <= status2) {
+    if (0 <= status1 && 0 <= status2) {
       setModalState(!modalState)
     } else {
       alert('설문을 모두 선택해주세요!')
     }
   }
 
-  // let status1: number = 0
-  // let status2: number = 0
-useEffect(() => {
-  for (let i = 0; i < 10; i++) {
-    if (i % 2 === 0 || i === 0) {
-      setStatus1((prev) => prev + Object.values(survey)[i])
-    } else {
-      setStatus2((prev) => prev + Object.values(survey)[i])
+  useEffect(() => {
+    for (let i = 0; i < 10; i++) {
+      if (Object.values(survey)[i] !== undefined) {
+        console.log(Object.values(survey)[i])
+        console.log("되니?");
+        
+        if (i % 2 === 0 || i === 0) {
+          console.log(Object.values(survey)[i])
+          setStatus1((prev) => prev + Object.values(survey)[i])
+        } else {
+          setStatus2((prev) => prev + Object.values(survey)[i])
+        }
+      }
     }
-  }
-}, [status1, status2])
-
+  }, [survey])
 
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
