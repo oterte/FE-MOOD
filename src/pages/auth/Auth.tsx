@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { onSetLocalStorageHandler } from '../../util/cookie'
 
 function Auth() {
   const code = new URL(window.location.href).searchParams.get('code')
@@ -11,8 +12,8 @@ function Auth() {
       .then((r) => {
         const data: string = r.data.access_token
         const nickname: string = r.data.nickname
-        localStorage.setItem('token', data)
-        localStorage.setItem('nickname', nickname)
+        onSetLocalStorageHandler('token', data)
+        onSetLocalStorageHandler('nickname', nickname)
         navigate('/')
       })
   }, [])
