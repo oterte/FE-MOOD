@@ -1,4 +1,4 @@
-import { SurveyData } from '../../pages/survey/Survey'
+import { SurveyData } from '../../pages/survey/surveyArray'
 
 interface Props {
   number: string
