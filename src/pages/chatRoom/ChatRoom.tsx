@@ -9,6 +9,7 @@ import {
   StPChatRoom,
 } from './ChatRoomSt'
 import { onGetCookieHandler } from '../../util/cookie'
+import { P } from '../../components/composer/ComposerListSt'
 
 interface ChatData {
   param?: string
@@ -107,7 +108,7 @@ function ChatRoom() {
     initSocketConnection()
     socket.emit('roomId', roomId)
     if (!token) return
-    socket.emit('newUser', `bearer ${token}`)
+    socket.emit('newUser', token)
     return () => {
       // socket.emit('offUser', `bearer ${cookie}`)
       disconnection()
@@ -116,8 +117,7 @@ function ChatRoom() {
   if (scrollRef.current) {
     console.log('scrollHeight', scrollRef.current.scrollHeight)
     console.log('scrollTop', scrollRef.current.scrollTop)
-    console.log('scrollClient', scrollRef.current.clientHeight);
-    
+    console.log('scrollClient', scrollRef.current.clientHeight)
   }
   useEffect(() => {
     if (scrollRef.current && index > 1) {
@@ -153,8 +153,14 @@ function ChatRoom() {
     if (noContent) {
       return
     } else {
-      socket.emit('sendMessage', chatData)
-      setChatText('')
+      if (!token) {
+        alert('채팅을 하려면 로그인이 필요합니다.')
+        setChatText('')
+        return
+      } else {
+        socket.emit('sendMessage', chatData)
+        setChatText('')
+      }
     }
   }, [chatData])
 
