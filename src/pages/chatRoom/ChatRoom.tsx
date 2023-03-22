@@ -8,11 +8,11 @@ import {
   StDivChatRoomWrap,
   StPChatRoom,
 } from './ChatRoomSt'
+import { onGetCookieHandler } from '../../util/cookie'
 
 interface ChatData {
   param?: string
   message: string
-  nickname: string
 }
 interface RecieveData {
   message: string | null
@@ -53,6 +53,8 @@ function ChatRoom() {
   const [userList, setUserList] = useState<string[]>([])
   const [index, setIndex] = useState<number>(0)
 
+  const [prevScrollheight, setPrevScrollHeight] = useState<number>(0)
+
   const param = useParams()
 
   const target = useRef<any>(null)
@@ -66,6 +68,12 @@ function ChatRoom() {
   const callback = (entries: IntersectionObserverEntry[]) => {
     const target = entries[0]
 
+    // for (const entry of entries) {
+    //   const { width, height, top, left } = entry.intersectionRect
+    //   console.log('width: ', width, 'height: ', height)
+    //   console.log('top', top, 'left', left)
+    // }
+
     if (target.isIntersecting) {
       setIndex((prev) => prev + 1)
     }
@@ -77,6 +85,13 @@ function ChatRoom() {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight
     }
   }
+  const onScrollTo = () => {
+    if (scrollRef.current && prevScrollheight) {
+      scrollRef.current.scrollTop =
+        scrollRef.current.scrollHeight - prevScrollheight
+      console.log(scrollRef.current.scrollHeight - prevScrollheight)
+    }
+  }
 
   useEffect(() => {
     observer.observe(target.current)
@@ -85,23 +100,37 @@ function ChatRoom() {
     }
   }, [])
 
-  // userInfo가 구현 되면 다시 기능 수정
-  const nickname: string = 'jaeuk'
   const roomId: number = Number(param.id)
+  const token = onGetCookieHandler('authorization')
 
   useEffect(() => {
     initSocketConnection()
     socket.emit('roomId', roomId)
-    socket.emit('newUser', nickname)
+    if (!token) return
+    socket.emit('newUser', `bearer ${token}`)
     return () => {
-      socket.emit('offUser', nickname)
-      setUserList(userList.filter((userList) => userList !== nickname))
+      // socket.emit('offUser', `bearer ${cookie}`)
       disconnection()
     }
   }, [])
-
+  if (scrollRef.current) {
+    console.log('scrollHeight', scrollRef.current.scrollHeight)
+    console.log('scrollTop', scrollRef.current.scrollTop)
+    console.log('scrollClient', scrollRef.current.clientHeight);
+    
+  }
   useEffect(() => {
+    if (scrollRef.current && index > 1) {
+      console.log(
+        'scrollRef.current.scrollHeight',
+        scrollRef.current.scrollHeight
+      )
+      setPrevScrollHeight(scrollRef.current.scrollHeight)
+      console.log('prevScrollheight', prevScrollheight)
+    }
+
     socket.emit('scroll', index)
+    onScrollTo()
   }, [index])
 
   useEffect(() => {
@@ -112,7 +141,6 @@ function ChatRoom() {
 
   const chatData: ChatData = {
     message: chatText,
-    nickname: nickname,
   }
   const onSubmitChattingHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -137,14 +165,6 @@ function ChatRoom() {
   useEffect(() => {
     socket.on('onUser', (data) => {
       setUserList([...userList, data])
-    })
-  }, [userList])
-
-  // 내일 동윤님 코드 보면서 추가 하기
-  useEffect(() => {
-    socket.on('offUser', (nickname) => {
-      console.log(userList)
-      setUserList(userList.filter((userList: string) => userList !== nickname))
     })
   }, [userList])
 
