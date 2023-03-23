@@ -69,12 +69,6 @@ function ChatRoom() {
   const callback = (entries: IntersectionObserverEntry[]) => {
     const target = entries[0]
 
-    // for (const entry of entries) {
-    //   const { width, height, top, left } = entry.intersectionRect
-    //   console.log('width: ', width, 'height: ', height)
-    //   console.log('top', top, 'left', left)
-    // }
-
     if (target.isIntersecting) {
       setIndex((prev) => prev + 1)
     }
@@ -84,13 +78,6 @@ function ChatRoom() {
   const scrollToBottom = () => {
     if (scrollRef.current) {
       scrollRef.current.scrollTop = scrollRef.current.scrollHeight
-    }
-  }
-  const onScrollTo = () => {
-    if (scrollRef.current && prevScrollheight) {
-      scrollRef.current.scrollTop =
-        scrollRef.current.scrollHeight - prevScrollheight
-      console.log(scrollRef.current.scrollHeight - prevScrollheight)
     }
   }
 
@@ -110,28 +97,30 @@ function ChatRoom() {
     if (!token) return
     socket.emit('newUser', token)
     return () => {
-      // socket.emit('offUser', `bearer ${cookie}`)
       disconnection()
     }
   }, [])
-  if (scrollRef.current) {
-    console.log('scrollHeight', scrollRef.current.scrollHeight)
-    console.log('scrollTop', scrollRef.current.scrollTop)
-    console.log('scrollClient', scrollRef.current.clientHeight)
+
+  const onScrollTo = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop =
+        scrollRef.current.scrollHeight - prevScrollheight
+    }
   }
   useEffect(() => {
-    if (scrollRef.current && index > 1) {
-      console.log(
-        'scrollRef.current.scrollHeight',
-        scrollRef.current.scrollHeight
-      )
-      setPrevScrollHeight(scrollRef.current.scrollHeight)
-      console.log('prevScrollheight', prevScrollheight)
-    }
-
+    setTimeout(() => {
+      if (scrollRef.current)
+        scrollRef.current.scrollTop =
+          scrollRef.current?.scrollHeight - prevScrollheight
+    }, 50)
     socket.emit('scroll', index)
     onScrollTo()
   }, [index])
+
+  setTimeout(() => {
+    if (scrollRef.current?.scrollHeight)
+      setPrevScrollHeight(scrollRef.current.scrollHeight)
+  }, 50)
 
   useEffect(() => {
     socket.on('plusScroll', (data) => {
