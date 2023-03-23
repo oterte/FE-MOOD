@@ -9,16 +9,18 @@ export interface UserInfo {
 }
 
 export const register = async (body: UserInfo) => {
-  const response = await instance.post(`/api/signup`, body)
+  const response = await instance.post(`/api/signUp`, body)
   return response
 }
 
 export const checkId = async (id?: string) => {
-  const response = await instance.post('/api/idCheck', id)
+  const value = {id: id}
+  const response = await instance.post('/api/idCheck', value)
   return response
 }
 
 export const checkNickname = async (nickname?: string) => {
-  const response = await instance.post('/api/nicknameCheck', nickname)
+  const value = {nickname:nickname}
+  const response = await instance.post('/api/nicknameCheck', value)
   return response
 }

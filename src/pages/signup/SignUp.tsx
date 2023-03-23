@@ -27,11 +27,11 @@ function SignUp() {
   const [passwordMessage, setPasswordMessage] = useState('')
   const [confirmCheckMessage, setConfirmCheckMessage] = useState('')
 
-  const [idCheck, setIdCheck] = useState(true)
-  const [passwordCheck, setPasswordCheck] = useState(true)
-  const [confirmCheck, setConfirmCheck] = useState(true)
-  const [emailCheck, setEmailCheck] = useState(true)
-  const [nicknameCheck, setNicknameCheck] = useState(true)
+  const [idCheck, setIdCheck] = useState(false)
+  const [passwordCheck, setPasswordCheck] = useState(false)
+  const [confirmCheck, setConfirmCheck] = useState(false)
+  const [emailCheck, setEmailCheck] = useState(false)
+  const [nicknameCheck, setNicknameCheck] = useState(false)
   const navigate = useNavigate()
 
   const onCheckIdHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -91,9 +91,6 @@ function SignUp() {
 
   const onCheckConfirmHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setConfirm(e.target.value)
-    console.log('비번', password)
-    console.log('동일', confirm)
-    console.log(password === confirm)
   }
   useEffect(() => {
     if (confirm === '') {
@@ -109,10 +106,9 @@ function SignUp() {
   }, [confirm, password])
   const onSubmitSignUpHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    console.log(id, email, nickname, password, confirm)
     const body = { id, password, confirm, email, nickname }
     if (!id || !email || !password || !confirm || !nickname) return
-    if (password === confirm) {
+    if (idCheck && nicknameCheck && emailCheck && passwordCheck && confirmCheck) {
       register(body)
         .then((res) => {
           alert('회원가입에 성공하셨습니다.')
@@ -129,13 +125,13 @@ function SignUp() {
   const onCheckExistId = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     if (id !== '') {
+
       checkId(id)
         .then((res) => {
-          console.log(res)
-          return res
+          alert('사용 가능한 아이디입니다.')
         })
         .catch((error) => {
-          return console.log(error)
+          alert(error.response.data.message)
         })
     }
   }
@@ -144,11 +140,10 @@ function SignUp() {
     if (nickname !== '') {
       checkNickname(nickname)
         .then((res) => {
-          console.log(res)
-          return res
+          alert('사용 가능한 닉네임입니다.')
         })
         .catch((error) => {
-          return console.log(error)
+          alert(error.response.data.message)
         })
     }
   }

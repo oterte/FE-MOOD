@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { onSetLocalStorageHandler } from '../../util/cookie'
+
 import jwtDecode from 'jwt-decode'
 
 function Auth() {
@@ -17,6 +18,7 @@ function Auth() {
         onSetLocalStorageHandler('authorization', data)
         onSetLocalStorageHandler('nickname', nickname)
         onSetLocalStorageHandler('userInfo', decodeUserInfo)
+
         navigate('/')
       })
   }, [])
