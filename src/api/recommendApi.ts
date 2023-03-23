@@ -13,8 +13,9 @@ export const getMusic = async (coordinate: Coordinate) => {
   return musicData.data.data
 }
 
-export const getSurveyMusic = async (id: number) => {
-  const musicData = await instance.get(`api/survey/${id}`)
+export const getSurveyMusic = async (status1: number, status2: number) => {
+  const musicData = await instance.get(`/api/survey/${status1}/${status2}`)
+  return musicData
 }
 
 // export const addMusic = async (formData: string | Blob) => {
