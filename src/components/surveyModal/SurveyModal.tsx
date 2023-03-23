@@ -11,7 +11,7 @@ type Props = {
   status2: number
 }
 
-function SurveyModal({ modalState, setModalState, status1, status2}: Props) {
+function SurveyModal({ modalState, setModalState, status1, status2 }: Props) {
   const onClickCloseModalHandler = () => {
     setModalState(!modalState)
   }
@@ -34,17 +34,14 @@ function SurveyModal({ modalState, setModalState, status1, status2}: Props) {
     }
   })
   const onClickMoveMusicDetailPageHandler = () => {
-    // navigate(`/recommend/music/${data.musicId}`)
+    navigate(`/recommend/music/${data.musicId}`)
   }
   const onClickMoveReccomendPageHandler = () => {
     navigate('/recommend')
   }
+  if (isLoading) return <h1>Loading</h1>
+  if (isError) return <h1>Error 발생</h1>
 
-  let condition: string
-
-    if (isLoading) return <h1>Loading</h1>
-    if (isError) return <h1>Error 발생</h1>
-    console.log(data)
   return (
     <ModalContainer>
       <StModalContents>
@@ -52,12 +49,12 @@ function SurveyModal({ modalState, setModalState, status1, status2}: Props) {
           <button onClick={onClickCloseModalHandler}>X</button>
           {/* <p>{condition}</p> */}
           <p>
-            {/* {data.composer}의 {data.musicTitle}를 들어보시는건 */}
+            {data.composer}의 {data.musicTitle}를 들어보시는건
             어떠세요?
           </p>
           <div>
             <button onClick={onClickMoveMusicDetailPageHandler}>
-              {/* {data.musicTitle} 노래 들으러 가기 */}
+              {data.musicTitle} 노래 들으러 가기
             </button>
           </div>
           <div>

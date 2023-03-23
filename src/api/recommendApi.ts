@@ -15,9 +15,5 @@ export const getMusic = async (coordinate: Coordinate) => {
 
 export const getSurveyMusic = async (status1: number, status2: number) => {
   const musicData = await instance.get(`/api/survey/${status1}/${status2}`)
-  return musicData
+  return musicData.data.data
 }
-
-// export const addMusic = async (formData: string | Blob) => {
-//   await axios.post('/api/music', formData)
-// }

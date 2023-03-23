@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import SurveyModal from '../../components/surveyModal/SurveyModal'
 import Point from '../../components/surveyRadioPoint/Point'
 import { questionArr, SurveyData } from './surveyArray'
@@ -38,7 +38,6 @@ function Survey() {
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
   }
-  console.log(status1, status2)
 
   return (
     <>
