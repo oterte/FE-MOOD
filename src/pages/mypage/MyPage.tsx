@@ -1,18 +1,34 @@
 import React from 'react'
+import { useNavigate } from 'react-router'
 import Footer from '../../components/footer/Footer'
 import Header from '../../components/header/Header'
 import {
-  MyPageContentCommentContainer,
-  MyPageContentMusicContainer,
-  MyPageContentsContainer,
   MyPageProfileBodyContainer,
   MyPageProfileContainer,
   MyPageProfileImg,
   MyPageProfileImgBox,
   MyPageProfileImgContainer,
 } from './mypageSC'
+import {
+  MyPageContentsContainer,
+  MyPageTab,
+  MyPageTabItem,
+} from './mypagecontentsSC'
+import { useQuery, useQueryClient } from 'react-query'
+import { showProfile } from '../../api/mypage'
 
 function MyPage() {
+  const navigate = useNavigate()
+  const queryClient = useQueryClient();
+  const {isLoading, isError, data} = useQuery(['profile'], showProfile)
+  if (isLoading) {
+    return <h1>로딩중</h1>
+  }
+  if (isError) {
+    return <h1>에러</h1>
+  }
+
+  console.log(data)
   return (
     <>
       <Header />
@@ -34,43 +50,47 @@ function MyPage() {
           </div>
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
+      <MyPageTab>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageScrap')
+          }}
+        >
+          스크랩 음악
+        </MyPageTabItem>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageComment')
+          }}
+        >
+          남긴 댓글
+        </MyPageTabItem>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypagerecomment')
+          }}
+        >
+          남긴 대댓글
+        </MyPageTabItem>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageScrap')
+          }}
+        >
+          좋아요
+        </MyPageTabItem>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageLike')
+          }}
+        >
+          감정 히스토리
+        </MyPageTabItem>
+        <MyPageTabItem>프로필 사진 변경</MyPageTabItem>
+        <MyPageTabItem>회원 탈퇴</MyPageTabItem>
+      </MyPageTab>
       <MyPageContentsContainer>
-        <MyPageContentCommentContainer>
-          <div>
-            <span>저장된 음악 보기</span>
-          </div>
-          <div>
-            <ul>
-              <li>
-                <span>음악 제목 1</span>
-              </li>
-              <li>
-                <span>음악 제목 2</span>
-              </li>
-              <li>
-                <span>음악 제목 3</span>
-              </li>
-            </ul>
-          </div>
-        </MyPageContentCommentContainer>
-        <MyPageContentMusicContainer>
-          <div>
-            <span>저장된 음악 보기</span>
-          </div>
-          <div>
-            <ul>
-              <li>
-                <span>음악 제목 1</span>
-              </li>
-              <li>
-                <span>음악 제목 2</span>
-              </li>
-              <li>
-                <span>음악 제목 3</span>
-              </li>
-            </ul>
-          </div>
-        </MyPageContentMusicContainer>
+
       </MyPageContentsContainer>
       <Footer />
     </>

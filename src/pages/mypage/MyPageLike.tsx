@@ -1,8 +1,8 @@
 import React from 'react'
 import { useQuery, useQueryClient } from 'react-query'
-import { scrappedMusic } from '../../api/mypage';
-import Header from '../../components/header/Header';
-import Footer from '../../components/footer/Footer';
+import { likedMusic } from '../../api/mypage'
+import Header from '../../components/header/Header'
+import Footer from '../../components/footer/Footer'
 import {
   MyPageProfileBodyContainer,
   MyPageProfileContainer,
@@ -15,21 +15,20 @@ import {
   MyPageTab,
   MyPageTabItem,
 } from './mypagecontentsSC'
-import { useNavigate } from 'react-router';
-function MyPageScrab() {
-  const navigate = useNavigate()
-  const queryClient = useQueryClient();
-  const {isLoading, isError, data} = useQuery(['scrap'], scrappedMusic)
+import { useNavigate } from 'react-router'
 
-  if(isLoading) {
+function MyPageLike() {
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
+  const { isLoading, isError, data } = useQuery(['like'], likedMusic)
+  if (isLoading) {
     return <h1>로딩중</h1>
   }
-  if(isError) {
+  if (isError) {
     return <h1>에러</h1>
   }
 
   console.log(data)
-
   return (
     <>
       <Header />
@@ -82,7 +81,7 @@ function MyPageScrab() {
         </MyPageTabItem>
         <MyPageTabItem
           onClick={() => {
-            navigate('/mypageLike')
+            navigate('/mypageScrap')
           }}
         >
           감정 히스토리
@@ -91,11 +90,11 @@ function MyPageScrab() {
         <MyPageTabItem>회원 탈퇴</MyPageTabItem>
       </MyPageTab>
       <MyPageContentsContainer>
-        <h1>스크랩</h1>
+        <h1>좋아요</h1>
       </MyPageContentsContainer>
       <Footer />
     </>
   )
 }
 
-export default MyPageScrab
+export default MyPageLike

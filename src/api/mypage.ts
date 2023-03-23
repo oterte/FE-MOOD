@@ -1,13 +1,36 @@
 import { instance } from './instance'
 
-export const showComment = async () => {}
 
-export const likedMusic = async () => {}
+export const showProfile = async () => {
+    const response = await instance.get('/api/user/userinfo')
+    return response.data.userInfo
+}
 
-export const scrappedMusic = async () => {}
+export const showComment = async () => {
+    const response = await instance.get('/api/user/reviewlist')
+    return response
+}
 
-export const editProfileImg = async () => {}
+export const showReComment = async () => {
+    const response = await instance.get('/api/user/recommentlist')
+    return response
+}
+export const likedMusic = async () => {
+    const response = await instance.get('/api/user/likelist')
+    return response.data.likeList
+}
 
-export const deleteAccount = async () => {}
+export const scrappedMusic = async () => {
+    const response = await instance.get('/api/user/scraplist')
+    return response.data.scrapList
+}
+
+export const editProfileImg = async () => {
+    await instance.patch('/api/user/uploadprofile')
+}
+
+export const deleteAccount = async () => {
+    
+}
 
 export const emotionHistory = async () => {}

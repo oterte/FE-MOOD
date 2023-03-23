@@ -27,6 +27,7 @@ function Login() {
         const authId = res.data.token
         const decodeUserInfo = JSON.stringify(jwt_Decode(authId))
         onSetCookieHandler('authorization', authId)
+        onSetLocalStorageHandler('authorization', authId)
         onSetLocalStorageHandler('userInfo', decodeUserInfo)
         navigate('/recommend')
       })
