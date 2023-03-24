@@ -58,7 +58,7 @@ function ChatRoom() {
 
   const param = useParams()
 
-  const target = useRef<any>(null)
+  const target = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
 
   const options = {
@@ -82,8 +82,10 @@ function ChatRoom() {
   }
 
   useEffect(() => {
+    if(target.current)
     observer.observe(target.current)
     return () => {
+      if(target.current)
       observer.unobserve(target.current)
     }
   }, [])
