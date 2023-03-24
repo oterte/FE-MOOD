@@ -1,17 +1,15 @@
 import axios, { AxiosInstance } from 'axios'
-import { Cookies } from 'react-cookie'
 
-const cookies = new Cookies()
 
 const instance: AxiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_SERVER_URL,
-  headers: { Authorization: cookies.get('authorization') },
+  baseURL: process.env.REACT_APP_KAKAO_SERVER,
+  headers: { Authorization: localStorage.getItem('authorization') },
   withCredentials: true,
 })
 
 instance.interceptors.request.use(
   function (config: any) {
-    const token = cookies.get('authorization')
+    const token = localStorage.getItem('authorization')
     config.headers['authorization'] = `Bearer ${token}`
     return config
   },

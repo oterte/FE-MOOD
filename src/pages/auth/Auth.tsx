@@ -3,6 +3,8 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { onSetLocalStorageHandler } from '../../util/cookie'
 
+import jwtDecode from 'jwt-decode'
+
 function Auth() {
   const code = new URL(window.location.href).searchParams.get('code')
   const navigate = useNavigate()
@@ -11,9 +13,12 @@ function Auth() {
       .post(`${process.env.REACT_APP_KAKAO_SERVER}/api/kakao/login`, { code })
       .then((r) => {
         const data: string = r.data.access_token
+        const decodeUserInfo = JSON.stringify(jwtDecode(data))
         const nickname: string = r.data.nickname
-        onSetLocalStorageHandler('token', data)
+        onSetLocalStorageHandler('authorization', data)
         onSetLocalStorageHandler('nickname', nickname)
+        onSetLocalStorageHandler('userInfo', decodeUserInfo)
+
         navigate('/')
       })
   }, [])
