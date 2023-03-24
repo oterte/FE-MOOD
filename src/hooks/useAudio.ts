@@ -1,6 +1,8 @@
 import { useRef, useState } from 'react'
 
-function useAudio() {
+export type UseAudioReturnType = [() => void, React.RefObject<HTMLAudioElement>]
+
+function useAudio(): UseAudioReturnType {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const [timer, setTimer] = useState<number>(0)
 
