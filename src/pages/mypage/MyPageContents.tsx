@@ -12,8 +12,12 @@ function MyPageContents() {
         <MyPageTabItem onClick={() => {navigate("/mypageLike")}}>남긴 댓글</MyPageTabItem>
         <MyPageTabItem onClick={() => {navigate("/mypageScrap")}}>좋아요</MyPageTabItem>
         <MyPageTabItem onClick={() => {navigate("/mypageScrap")}}>감정 히스토리</MyPageTabItem>
-        <MyPageTabItem>프로필 사진 변경</MyPageTabItem>
-        <MyPageTabItem>회원 탈퇴</MyPageTabItem>
+        <MyPageTabItem onClick={() => {
+            navigate('/mypageEditprofile')
+          }}>프로필 사진 변경</MyPageTabItem>
+        <MyPageTabItem onClick={() => {
+            navigate('/mypageDeleteaccount')
+          }}>회원 탈퇴</MyPageTabItem>
       </MyPageTab>
       <MyPageContentsContainer>
 

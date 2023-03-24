@@ -18,6 +18,8 @@ import MyPageScrab from '../pages/mypage/MyPageScrab'
 import MyPageLike from '../pages/mypage/MyPageLike'
 import MyPageComment from '../pages/mypage/MyPageComment'
 import MyPageRecomment from '../pages/mypage/MyPageRecomment'
+import MyPageEditProfile from '../pages/mypage/MyPageEditProfile'
+import MyPageDeleteAccount from '../pages/mypage/MyPageDeleteAccount'
 
 function Router() {
   return (
@@ -41,6 +43,8 @@ function Router() {
         <Route path='/mypageLike' element={<MyPageLike/>}/>
         <Route path='/mypageComment' element={<MyPageComment />}/>
         <Route path='/mypagerecomment' element={<MyPageRecomment />}/>
+        <Route path='/mypageEditprofile' element={<MyPageEditProfile />}/>
+        <Route path='/mypageDeleteaccount' element={<MyPageDeleteAccount />}/>
       </Routes>
     </BrowserRouter>
   )

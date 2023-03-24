@@ -1,8 +1,8 @@
 import React from 'react'
 import { useQuery, useQueryClient } from 'react-query'
-import { scrappedMusic } from '../../api/mypage';
-import Header from '../../components/header/Header';
-import Footer from '../../components/footer/Footer';
+import { scrappedMusic, showProfile } from '../../api/mypage'
+import Header from '../../components/header/Header'
+import Footer from '../../components/footer/Footer'
 import {
   MyPageProfileBodyContainer,
   MyPageProfileContainer,
@@ -15,20 +15,27 @@ import {
   MyPageTab,
   MyPageTabItem,
 } from './mypagecontentsSC'
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router'
 function MyPageScrab() {
   const navigate = useNavigate()
-  const queryClient = useQueryClient();
-  const {isLoading, isError, data} = useQuery(['scrap'], scrappedMusic)
+  const { isLoading, isError, data } = useQuery(['scrap'], scrappedMusic)
+  const { isLoading: profileLoading, data: profileData } = useQuery(
+    ['profile'],
+    showProfile
+  )
 
-  if(isLoading) {
+  if (isLoading) {
     return <h1>로딩중</h1>
   }
-  if(isError) {
+  if (profileLoading) {
+    return <h1>로딩중..</h1>
+  }
+  if (isError) {
     return <h1>에러</h1>
   }
 
   console.log(data)
+  console.log(profileData)
 
   return (
     <>
@@ -36,12 +43,12 @@ function MyPageScrab() {
       <MyPageProfileContainer>
         <MyPageProfileImgContainer>
           <MyPageProfileImgBox>
-            <MyPageProfileImg src="http://newsimg.hankookilbo.com/2019/04/29/201904291390027161_3.jpg" />
+            <MyPageProfileImg src={profileData.profileUrl} />
           </MyPageProfileImgBox>
         </MyPageProfileImgContainer>
         <MyPageProfileBodyContainer>
           <div>
-            <h1>누구누구 님 환영합니다</h1>
+            <h1>{profileData.nickname} 님 환영합니다</h1>
           </div>
           <div>
             <span>당신의 최근 감정 상태는 XXX 입니다.</span>
@@ -87,8 +94,20 @@ function MyPageScrab() {
         >
           감정 히스토리
         </MyPageTabItem>
-        <MyPageTabItem>프로필 사진 변경</MyPageTabItem>
-        <MyPageTabItem>회원 탈퇴</MyPageTabItem>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageEditprofile')
+          }}
+        >
+          프로필 사진 변경
+        </MyPageTabItem>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageDeleteaccount')
+          }}
+        >
+          회원 탈퇴
+        </MyPageTabItem>
       </MyPageTab>
       <MyPageContentsContainer>
         <h1>스크랩</h1>

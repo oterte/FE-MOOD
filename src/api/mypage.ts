@@ -8,12 +8,12 @@ export const showProfile = async () => {
 
 export const showComment = async () => {
     const response = await instance.get('/api/user/reviewlist')
-    return response
+    return response.data.reviesList
 }
 
 export const showReComment = async () => {
     const response = await instance.get('/api/user/recommentlist')
-    return response
+    return response.data.recommentList
 }
 export const likedMusic = async () => {
     const response = await instance.get('/api/user/likelist')
@@ -25,12 +25,17 @@ export const scrappedMusic = async () => {
     return response.data.scrapList
 }
 
-export const editProfileImg = async () => {
-    await instance.patch('/api/user/uploadprofile')
+export const editProfileImg = async (newProfile:any) => {
+    console.log(newProfile)
+    await instance.patch('/api/user/uploadprofile' , newProfile , {
+        headers : {
+            "Content-Type" : 'multipart/form-data'
+        }
+    })
 }
 
 export const deleteAccount = async () => {
-    
+    await instance.delete('/api/user/delete')
 }
 
 export const emotionHistory = async () => {}

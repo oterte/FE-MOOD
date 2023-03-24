@@ -14,31 +14,36 @@ import {
   MyPageTabItem,
 } from './mypagecontentsSC'
 import { useNavigate } from 'react-router'
-import { useQuery, useQueryClient } from 'react-query'
-import { showComment, showReComment } from '../../api/mypage'
+import { useQuery } from 'react-query'
+import { showComment, showProfile, showReComment } from '../../api/mypage'
 function MyPageRecomment() {
-  const queryClient = useQueryClient()
   const {isLoading, isError, data} = useQuery(['myComment'], showReComment)
+  const {isLoading:profileLoading,  data:profileData} = useQuery(['profile'], showProfile)
   const navigate = useNavigate()
-  if (isLoading) {
+  if(isLoading) {
     return <h1>로딩중</h1>
   }
-  if (isError) {
+  if(profileLoading){
+    return <h1>로딩중..</h1>
+  }
+  if(isError) {
     return <h1>에러</h1>
   }
+
   console.log(data)
+  console.log(profileData)
   return (
     <>
       <Header />
       <MyPageProfileContainer>
         <MyPageProfileImgContainer>
           <MyPageProfileImgBox>
-            <MyPageProfileImg src="http://newsimg.hankookilbo.com/2019/04/29/201904291390027161_3.jpg" />
+            <MyPageProfileImg src={profileData.profileUrl} />
           </MyPageProfileImgBox>
         </MyPageProfileImgContainer>
         <MyPageProfileBodyContainer>
           <div>
-            <h1>누구누구 님 환영합니다</h1>
+            <h1>{profileData.nickname} 님 환영합니다</h1>
           </div>
           <div>
             <span>당신의 최근 감정 상태는 XXX 입니다.</span>
@@ -84,11 +89,15 @@ function MyPageRecomment() {
         >
           감정 히스토리
         </MyPageTabItem>
-        <MyPageTabItem>프로필 사진 변경</MyPageTabItem>
-        <MyPageTabItem>회원 탈퇴</MyPageTabItem>
+        <MyPageTabItem onClick={() => {
+            navigate('/mypageEditprofile')
+          }}>프로필 사진 변경</MyPageTabItem>
+        <MyPageTabItem onClick={() => {
+            navigate('/mypageDeleteaccount')
+          }}>회원 탈퇴</MyPageTabItem>
       </MyPageTab>
       <MyPageContentsContainer>
-       <h1>댓글</h1>
+       <h1>대댓글</h1>
       </MyPageContentsContainer>
       <Footer />
     </>
