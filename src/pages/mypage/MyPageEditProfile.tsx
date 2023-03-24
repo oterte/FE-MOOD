@@ -1,6 +1,4 @@
-import React from 'react'
-import { useQuery, useQueryClient } from 'react-query'
-import { scrappedMusic, showProfile } from '../../api/mypage'
+import React,{useRef, useState} from 'react'
 import Header from '../../components/header/Header'
 import Footer from '../../components/footer/Footer'
 import {
@@ -16,27 +14,52 @@ import {
   MyPageTabItem,
 } from './mypagecontentsSC'
 import { useNavigate } from 'react-router'
-function MyPageScrab() {
+import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { editProfileImg, showComment, showProfile, showReComment } from '../../api/mypage'
+function MyPageEditProfile() {
+  const queryClient = useQueryClient()
+  const {isLoading, isError, data} = useQuery(['myComment'], showReComment)
+  const {isLoading:profileLoading,  data:profileData} = useQuery(['profile'], showProfile)
   const navigate = useNavigate()
-  const { isLoading, isError, data } = useQuery(['scrap'], scrappedMusic)
-  const { isLoading: profileLoading, data: profileData } = useQuery(
-    ['profile'],
-    showProfile
-  )
+  const imgRef:any = useRef<HTMLInputElement>(null)
+  const [imgUrl, setImgUrl] = useState<string | ArrayBuffer | null>()
+  const [imgFile, setImgFile] = useState<File>()
 
-  if (isLoading) {
+  const editMutation = useMutation(editProfileImg , {
+    onSuccess : () => {
+      queryClient.invalidateQueries()
+    }
+  })
+
+
+  const onChangeImageHandler = () => {
+    const reader = new FileReader();
+    const file = imgRef.current.files[0]
+    reader.readAsDataURL(file)
+    reader.onloadend = () => {
+      setImgUrl(reader.result)
+      setImgFile(file)
+    }
+  }
+
+  const onSubmitImageHandler = (e:React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    const data = new FormData()
+    data.append("image", imgFile as File)
+    editMutation.mutate(data)
+  }
+  if(isLoading) {
     return <h1>로딩중</h1>
   }
-  if (profileLoading) {
+  if(profileLoading){
     return <h1>로딩중..</h1>
   }
-  if (isError) {
+  if(isError) {
     return <h1>에러</h1>
   }
 
   console.log(data)
   console.log(profileData)
-
   return (
     <>
       <Header />
@@ -89,32 +112,33 @@ function MyPageScrab() {
         </MyPageTabItem>
         <MyPageTabItem
           onClick={() => {
-            navigate('/mypageLike')
+            navigate('/mypageScrap')
           }}
         >
           감정 히스토리
         </MyPageTabItem>
-        <MyPageTabItem
-          onClick={() => {
+        <MyPageTabItem onClick={() => {
             navigate('/mypageEditprofile')
-          }}
-        >
-          프로필 사진 변경
-        </MyPageTabItem>
-        <MyPageTabItem
-          onClick={() => {
+          }}>프로필 사진 변경</MyPageTabItem>
+        <MyPageTabItem onClick={() => {
             navigate('/mypageDeleteaccount')
-          }}
-        >
-          회원 탈퇴
-        </MyPageTabItem>
+          }}>회원 탈퇴</MyPageTabItem>
       </MyPageTab>
       <MyPageContentsContainer>
-        <h1>스크랩</h1>
+       <input 
+        ref={imgRef}
+        type='file'
+        accept='image/*'
+        onChange={onChangeImageHandler}
+       />
+       {
+        imgUrl ? <img src={imgUrl as string} alt="이미지"/> : null
+       }
+       <button onClick={onSubmitImageHandler}>프로필 이미지 수정</button>
       </MyPageContentsContainer>
       <Footer />
     </>
   )
 }
 
-export default MyPageScrab
+export default MyPageEditProfile

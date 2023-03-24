@@ -36,10 +36,10 @@ function SignUp() {
 
   const onCheckIdHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value)
-    let regExp: RegExp = /^[a-zA-Z0-9]{4,}$/
+    let regExp: RegExp = /^(?=.*[a-z])(?=.*\d)[a-z\d]{4,}$/
     if (regExp.test(e.target.value) === false) {
       setIdMessage(
-        '아이디는 영어 대소문자와 숫자를 포함한 4글자 이상이어야 합니다.'
+        '아이디는 영어 소문자와 숫자를 포함한 4글자 이상이어야 합니다.'
       )
       setIdCheck(false)
     } else {

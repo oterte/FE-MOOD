@@ -1,7 +1,8 @@
 import React from 'react'
-import { useNavigate } from 'react-router'
-import Footer from '../../components/footer/Footer'
+import { useQuery } from 'react-query'
+import { likedMusic, showProfile } from '../../api/mypage'
 import Header from '../../components/header/Header'
+import Footer from '../../components/footer/Footer'
 import {
   MyPageProfileBodyContainer,
   MyPageProfileContainer,
@@ -14,32 +15,39 @@ import {
   MyPageTab,
   MyPageTabItem,
 } from './mypagecontentsSC'
-import { useQuery } from 'react-query'
-import { showProfile } from '../../api/mypage'
+import { useNavigate } from 'react-router'
 
-function MyPage() {
+function MyPageLike() {
   const navigate = useNavigate()
-  const { isLoading, isError, data } = useQuery(['profile'], showProfile)
+  const { isLoading, isError, data: likedata } = useQuery(['like'], likedMusic)
+  const { isLoading: profileLoading, data: profileData } = useQuery(
+    ['profile'],
+    showProfile
+  )
   if (isLoading) {
     return <h1>로딩중</h1>
+  }
+  if (profileLoading) {
+    return <h1>로딩중..</h1>
   }
   if (isError) {
     return <h1>에러</h1>
   }
 
-  console.log(data)
+  console.log(likedata)
+  console.log(profileData)
   return (
     <>
       <Header />
       <MyPageProfileContainer>
         <MyPageProfileImgContainer>
           <MyPageProfileImgBox>
-            <MyPageProfileImg src={data.profileUrl} />
+            <MyPageProfileImg src={profileData.profileUrl} />
           </MyPageProfileImgBox>
         </MyPageProfileImgContainer>
         <MyPageProfileBodyContainer>
           <div>
-            <h1>{data.nickname} 님 환영합니다</h1>
+            <h1>{profileData.nickname} 님 환영합니다</h1>
           </div>
           <div>
             <span>당신의 최근 감정 상태는 XXX 입니다.</span>
@@ -73,14 +81,14 @@ function MyPage() {
         </MyPageTabItem>
         <MyPageTabItem
           onClick={() => {
-            navigate('/mypageScrap')
+            navigate('/mypageLike')
           }}
         >
           좋아요
         </MyPageTabItem>
         <MyPageTabItem
           onClick={() => {
-            navigate('/mypageLike')
+            navigate('/mypageScrap')
           }}
         >
           감정 히스토리
@@ -100,10 +108,12 @@ function MyPage() {
           회원 탈퇴
         </MyPageTabItem>
       </MyPageTab>
-      <MyPageContentsContainer></MyPageContentsContainer>
+      <MyPageContentsContainer>
+        <h1>좋아요</h1>
+      </MyPageContentsContainer>
       <Footer />
     </>
   )
 }
 
-export default MyPage
+export default MyPageLike
