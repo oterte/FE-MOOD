@@ -69,3 +69,46 @@ export const questionArr: QuestionArr[] = [
     question: '질문 10',
   },
 ]
+
+export const surveyButtonArr = [
+  {
+    number: 1,
+    point: 0,
+  },
+  {
+    number: 2,
+    point: 2,
+  },
+  {
+    number: 3,
+    point: 4,
+  },
+  {
+    number: 4,
+    point: 6,
+  },
+  {
+    number: 5,
+    point: 8,
+  },
+  {
+    number: 6,
+    point: 10,
+  },
+  {
+    number: 7,
+    point: 12,
+  },
+  {
+    number: 8,
+    point: 14,
+  },
+  {
+    number: 9,
+    point: 16,
+  },
+  {
+    number: 10,
+    point: 18,
+  },
+]
