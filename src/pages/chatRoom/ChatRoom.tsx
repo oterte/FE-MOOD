@@ -9,7 +9,6 @@ import {
   StPChatRoom,
 } from './ChatRoomSt'
 import { onGetCookieHandler } from '../../util/cookie'
-import { P } from '../../components/composer/ComposerListSt'
 
 interface ChatData {
   param?: string
@@ -56,7 +55,7 @@ function ChatRoom() {
 
   const [prevScrollheight, setPrevScrollHeight] = useState<number>(0)
 
-  const param = useParams()
+  const { id } = useParams()
 
   const target = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -82,15 +81,13 @@ function ChatRoom() {
   }
 
   useEffect(() => {
-    if(target.current)
-    observer.observe(target.current)
+    if (target.current) observer.observe(target.current)
     return () => {
-      if(target.current)
-      observer.unobserve(target.current)
+      if (target.current) observer.unobserve(target.current)
     }
   }, [])
 
-  const roomId: number = Number(param.id)
+  const roomId: number = Number(id)
   const token = onGetCookieHandler('authorization')
 
   useEffect(() => {
