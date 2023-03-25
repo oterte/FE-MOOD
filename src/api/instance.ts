@@ -2,7 +2,7 @@ import axios, { AxiosInstance } from 'axios'
 
 
 const instance: AxiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_KAKAO_SERVER,
+  baseURL: process.env.REACT_APP_SERVER,
   headers: { Authorization: localStorage.getItem('authorization') },
   withCredentials: true,
 })
