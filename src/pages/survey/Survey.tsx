@@ -38,7 +38,6 @@ function Survey() {
   const onSubmitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
   }
-  console.log(status1, status2)
 
   return (
     <>

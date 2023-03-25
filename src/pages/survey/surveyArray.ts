@@ -93,22 +93,22 @@ export const surveyButtonArr = [
   },
   {
     number: 6,
-    point: 10,
+    point: 11,
   },
   {
     number: 7,
-    point: 12,
+    point: 13,
   },
   {
     number: 8,
-    point: 14,
+    point: 15,
   },
   {
     number: 9,
-    point: 16,
+    point: 17,
   },
   {
     number: 10,
-    point: 18,
+    point: 20,
   },
 ]

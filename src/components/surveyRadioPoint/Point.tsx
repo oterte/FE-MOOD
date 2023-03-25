@@ -1,3 +1,4 @@
+import styled from 'styled-components'
 import { surveyButtonArr, SurveyData } from '../../pages/survey/surveyArray'
 
 interface Props {
@@ -7,27 +8,40 @@ interface Props {
 
 const Point = ({ number, setSurvey }: Props) => {
   const onClickPointHandler = (e: React.MouseEvent<HTMLDivElement>) => {
-    console.log(e.currentTarget.id)
     const point = Number(e.currentTarget.id)
     setSurvey((prevState: SurveyData) => {
       return { ...prevState, [number]: point }
     })
   }
   return (
-    <div>
+    <StDivPointWrap>
       {surveyButtonArr.map((buttonArr) => {
         return (
-          <div
+          <StDivPointNumber
             id={String(buttonArr.point)}
             onClick={onClickPointHandler}
             key={buttonArr.number}
           >
-            <p>{buttonArr.number}</p>
-          </div>
+            <span>{buttonArr.number}</span>
+          </StDivPointNumber>
         )
       })}
-    </div>
+    </StDivPointWrap>
   )
 }
 
 export default Point
+
+const StDivPointWrap = styled.div`
+  width: 500px;
+  margin: 20px auto;
+  display: flex;
+`
+const StDivPointNumber = styled.div`
+  width: 40px;
+  height: 40px;
+  border: 1px solid black;
+  box-sizing: border-box;
+  line-height: 40px;
+  text-align: center;
+`
