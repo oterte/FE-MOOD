@@ -10,7 +10,7 @@ function Auth() {
   const navigate = useNavigate()
   useEffect(() => {
     axios
-      .post(`${process.env.REACT_APP_KAKAO_SERVER}/api/kakao/login`, { code })
+      .post(`${process.env.REACT_APP_SERVER}/api/kakao/login`, { code })
       .then((r) => {
         const data: string = r.data.access_token
         const decodeUserInfo = JSON.stringify(jwtDecode(data))
