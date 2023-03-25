@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Coordinate } from '../pages/recommend/Recommend'
 
 const instance = axios.create({
-  baseURL: process.env.REACT_APP_SERVER,
+  baseURL: process.env.REACT_APP_KAKAO_SERVER,
 })
 
 export const getMusic = async (coordinate: Coordinate) => {
