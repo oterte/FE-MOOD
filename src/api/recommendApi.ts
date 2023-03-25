@@ -1,10 +1,7 @@
 // recommend Page API
-import axios from 'axios'
 import { Coordinate } from '../pages/recommend/Recommend'
+import { instance } from './instance'
 
-const instance = axios.create({
-  baseURL: process.env.REACT_APP_KAKAO_SERVER,
-})
 
 export const getMusic = async (coordinate: Coordinate) => {
   const x = coordinate.coordinateX
@@ -17,7 +14,3 @@ export const getSurveyMusic = async (status1: number, status2: number) => {
   const musicData = await instance.get(`/api/survey/${status1}/${status2}`)
   return musicData
 }
-
-// export const addMusic = async (formData: string | Blob) => {
-//   await axios.post('/api/music', formData)
-// }
