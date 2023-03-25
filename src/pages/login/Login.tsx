@@ -8,9 +8,7 @@ import jwt_Decode from 'jwt-decode'
 import { onSetCookieHandler, onSetLocalStorageHandler } from '../../util/cookie'
 
 function Login() {
-  const REST_API_KEY = `6cf4e324bddd5eed7f3aea4e47c14425`
-  const REDIRECT_URI = `http://localhost:3000/api/kakao/callback`
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`
 
   const googleClientId =
     '69130861350-pgdr2fuj0j6dha2b943ka9436jc0tm73.apps.googleusercontent.com'
