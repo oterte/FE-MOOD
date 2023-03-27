@@ -97,7 +97,6 @@ function ChatRoom() {
     initSocketConnection()
     socket.emit('roomId', roomId)
     socket.on('userList', (data) => {
-      console.log(data)
       let beforeUserList: any = []
       data.map((data: string[]) => {
         if (data !== null) {
@@ -172,7 +171,6 @@ function ChatRoom() {
 
   useEffect(() => {
     socket.on('onUser', (data) => {
-      console.log(data)
       setUserList([...userList, data.nickname])
     })
   }, [userList])
