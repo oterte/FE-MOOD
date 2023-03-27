@@ -20,6 +20,8 @@ import MyPageComment from '../pages/mypage/MyPageComment'
 import MyPageRecomment from '../pages/mypage/MyPageRecomment'
 import MyPageEditProfile from '../pages/mypage/MyPageEditProfile'
 import MyPageDeleteAccount from '../pages/mypage/MyPageDeleteAccount'
+import GoogleAuth from '../pages/auth/GoogleAuth'
+import NaverAuth from '../pages/auth/NaverAuth'
 
 function Router() {
   return (
@@ -36,6 +38,8 @@ function Router() {
         <Route path="/search" element={<SearchBar />} />
         <Route path="/searchresultpage" element={<SearchResultPage />} />
         <Route path="/api/kakao/callback" element={<Auth />} />
+        <Route path ="/api/google/callback" element={<GoogleAuth />}/>
+        <Route path='/api/naver/callback' element={<NaverAuth />}/>
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/selectroom" element={<SelectChat />} />
         <Route path="/chatroom/:id" element={<ChatRoom />} />

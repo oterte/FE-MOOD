@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { onLogoutHandler, onRemoveToken } from '../../util/cookie'
 import {
   ComposerBtn,
   HamburgerButton,
@@ -15,12 +16,17 @@ type Props = {
 }
 
 const MenuBar: React.FC<Props> = () => {
+  const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
 
   const toggleMenu = () => {
     setIsOpen(!isOpen)
   }
-
+  const onLogout = () => {
+    onRemoveToken()
+    onLogoutHandler('authorization')
+    navigate('/')
+  }
   return (
     <MenuWrapper>
       <HamburgerButton isOpen={isOpen} onClick={toggleMenu}>
@@ -50,7 +56,7 @@ const MenuBar: React.FC<Props> = () => {
             <ComposerBtn>채팅하러 가기</ComposerBtn>
           </Link>
 
-          <LogoutBtn>로그아웃</LogoutBtn>
+          <LogoutBtn onClick={onLogout}>로그아웃</LogoutBtn>
         </MenuItem>
       </MenuItems>
     </MenuWrapper>
