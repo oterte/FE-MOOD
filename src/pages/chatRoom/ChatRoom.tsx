@@ -9,7 +9,6 @@ import {
   StPChatRoom,
 } from './ChatRoomSt'
 import { onGetCookieHandler } from '../../util/cookie'
-import { P } from '../../components/composer/ComposerListSt'
 
 interface ChatData {
   param?: string
@@ -17,7 +16,10 @@ interface ChatData {
 }
 interface RecieveData {
   message: string | null
-  nickname: string | null
+  user: {
+    nickname: string,
+    UserInfo: string | null
+  }
 }
 interface BeforeChatData {
   chatId: number
@@ -56,9 +58,9 @@ function ChatRoom() {
 
   const [prevScrollheight, setPrevScrollHeight] = useState<number>(0)
 
-  const param = useParams()
+  const { id } = useParams()
 
-  const target = useRef<any>(null)
+  const target = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
 
   const options = {
@@ -82,18 +84,28 @@ function ChatRoom() {
   }
 
   useEffect(() => {
-    observer.observe(target.current)
+    if (target.current) observer.observe(target.current)
     return () => {
-      observer.unobserve(target.current)
+      if (target.current) observer.unobserve(target.current)
     }
   }, [])
 
-  const roomId: number = Number(param.id)
+  const roomId: number = Number(id)
   const token = onGetCookieHandler('authorization')
 
   useEffect(() => {
     initSocketConnection()
     socket.emit('roomId', roomId)
+    socket.on('userList', (data) => {
+      let beforeUserList: any = []
+      data.map((data: string[]) => {
+        if (data !== null) {
+          beforeUserList.push(data)
+        }
+      })
+
+      setUserList(beforeUserList)
+    })
     if (!token) return
     socket.emit('newUser', token)
     return () => {
@@ -159,7 +171,7 @@ function ChatRoom() {
 
   useEffect(() => {
     socket.on('onUser', (data) => {
-      setUserList([...userList, data])
+      setUserList([...userList, data.nickname])
     })
   }, [userList])
 
@@ -210,7 +222,7 @@ function ChatRoom() {
               key={`${recieveData.message} + ${index}`}
             >
               <StPChatRoom>
-                {recieveData.nickname} : {recieveData.message}
+                {recieveData.user.nickname} : {recieveData.message}
               </StPChatRoom>
             </StDivChatRoomChatListContain>
           )
