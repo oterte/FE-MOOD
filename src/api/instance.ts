@@ -4,7 +4,7 @@ import { Cookies } from 'react-cookie'
 const cookies = new Cookies()
 
 const instance: AxiosInstance = axios.create({
-  baseURL: process.env.REACT_APP_SERVER_URL,
+  baseURL: process.env.REACT_APP_SERVER,
   headers: { Authorization: cookies.get('authorization') },
   withCredentials: true,
 })
