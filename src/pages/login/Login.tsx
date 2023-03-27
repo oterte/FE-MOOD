@@ -10,9 +10,9 @@ import { onSetCookieHandler, onSetLocalStorageHandler } from '../../util/cookie'
 function Login() {
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`
 
-  const googleClientId =
-    '69130861350-pgdr2fuj0j6dha2b943ka9436jc0tm73.apps.googleusercontent.com'
-  const googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${googleClientId}&response_type=code&redirect_uri=http://localhost:3000&scope=https://www.googleapis.com/auth/userinfo.email`
+ 
+  const googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&response_type=token&redirect_uri=${process.env.REACT_APP_GOOGLE_REDIRECT_URI}&scope=https://www.googleapis.com/auth/userinfo.profile`
+  const naverLoginUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.REACT_APP_NAVER_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_NAVER_REDIRECT_URI}&state=random_string`
 
   const [id, setId] = useState('')
   const [password, setPassword] = useState('')
@@ -41,7 +41,9 @@ function Login() {
   const onGoogleLoginHanlder = () => {
     window.location.assign(googleLoginUrl)
   }
-
+  const onNaverLoginHandler = () => {
+    window.location.href = naverLoginUrl
+  }
   return (
     <>
       <Header />
@@ -71,6 +73,7 @@ function Login() {
         }}
       />
       <button onClick={onGoogleLoginHanlder}>구글 로그인</button>
+      <button onClick={onNaverLoginHandler}>네이버 로그인</button>
       <Footer />
     </>
   )
