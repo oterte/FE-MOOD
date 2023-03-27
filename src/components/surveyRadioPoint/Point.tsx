@@ -17,13 +17,14 @@ const Point = ({ number, setSurvey }: Props) => {
     <StDivPointWrap>
       {surveyButtonArr.map((buttonArr) => {
         return (
-          <StDivPointNumber
-            id={String(buttonArr.point)}
-            onClick={onClickPointHandler}
-            key={buttonArr.number}
-          >
-            <span>{buttonArr.number}</span>
-          </StDivPointNumber>
+          <div key={buttonArr.number}>
+            <StDivPointNumber
+              id={String(buttonArr.point)}
+              onClick={onClickPointHandler}
+            >
+              <span>{buttonArr.number}</span>
+            </StDivPointNumber>
+          </div>
         )
       })}
     </StDivPointWrap>
@@ -36,6 +37,7 @@ const StDivPointWrap = styled.div`
   width: 500px;
   margin: 20px auto;
   display: flex;
+  justify-content: center;
 `
 const StDivPointNumber = styled.div`
   width: 40px;
@@ -44,4 +46,5 @@ const StDivPointNumber = styled.div`
   box-sizing: border-box;
   line-height: 40px;
   text-align: center;
+  margin: auto;
 `

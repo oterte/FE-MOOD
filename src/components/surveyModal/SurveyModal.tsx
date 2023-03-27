@@ -47,13 +47,13 @@ function SurveyModal({ modalState, setModalState, status1, status2 }: Props) {
       <StModalContents>
         <div>
           <button onClick={onClickCloseModalHandler}>X</button>
-          <span>{data.condition}</span>
+          <span>{data.msg}</span>
           <p>
-            {data.composer}의 {data.musicTitle}를 들어보시는건 어떠세요?
+            {data.data.composer}의 {data.data.musicTitle}를 들어보시는건 어떠세요?
           </p>
           <div>
             <button onClick={onClickMoveMusicDetailPageHandler}>
-              {data.musicTitle} 노래 들으러 가기
+              {data.data.musicTitle} 노래 들으러 가기
             </button>
           </div>
           <div>
