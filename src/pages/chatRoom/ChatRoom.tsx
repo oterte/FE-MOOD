@@ -93,6 +93,10 @@ function ChatRoom() {
   useEffect(() => {
     initSocketConnection()
     socket.emit('roomId', roomId)
+    socket.on('userList', (data) => {
+      console.log(data)
+      setUserList(data)
+    })
     if (!token) return
     socket.emit('newUser', token)
     return () => {
