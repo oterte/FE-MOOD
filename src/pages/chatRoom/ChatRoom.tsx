@@ -94,8 +94,14 @@ function ChatRoom() {
     initSocketConnection()
     socket.emit('roomId', roomId)
     socket.on('userList', (data) => {
-      console.log(data)
-      setUserList(data)
+      let beforeUserList: any = []
+      data.map((data: string[]) => {
+        if (data !== null) {
+          beforeUserList.push(data)
+        }
+      })
+
+      setUserList(beforeUserList)
     })
     if (!token) return
     socket.emit('newUser', token)
