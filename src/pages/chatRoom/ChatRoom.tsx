@@ -16,7 +16,10 @@ interface ChatData {
 }
 interface RecieveData {
   message: string | null
-  nickname: string | null
+  user: {
+    nickname: string,
+    UserInfo: string | null
+  }
 }
 interface BeforeChatData {
   chatId: number
@@ -94,6 +97,7 @@ function ChatRoom() {
     initSocketConnection()
     socket.emit('roomId', roomId)
     socket.on('userList', (data) => {
+      console.log(data)
       let beforeUserList: any = []
       data.map((data: string[]) => {
         if (data !== null) {
@@ -168,7 +172,8 @@ function ChatRoom() {
 
   useEffect(() => {
     socket.on('onUser', (data) => {
-      setUserList([...userList, data])
+      console.log(data)
+      setUserList([...userList, data.nickname])
     })
   }, [userList])
 
@@ -219,7 +224,7 @@ function ChatRoom() {
               key={`${recieveData.message} + ${index}`}
             >
               <StPChatRoom>
-                {recieveData.nickname} : {recieveData.message}
+                {recieveData.user.nickname} : {recieveData.message}
               </StPChatRoom>
             </StDivChatRoomChatListContain>
           )
