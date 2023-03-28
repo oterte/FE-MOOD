@@ -1,12 +1,7 @@
 import { instance } from './instance'
 
-// 조회
-const getSearch = async ({ keyword }: { keyword: string }) => {
-  const response = await instance.get(
-    `/api/music/search?keyword=${encodeURIComponent(keyword)}`
-  )
-
-  console.log('Server response:', response.data)
+export const getSearch = async (keyword: string) => {
+  const response = await instance.get(`/api/music/search?keyword=${encodeURIComponent(keyword)}`)
 
   return {
     composerInfo: response.data.data.composerInfo,
@@ -14,6 +9,3 @@ const getSearch = async ({ keyword }: { keyword: string }) => {
     musicTitle: response.data.data.musicTitle,
   }
 }
-
-
-export { getSearch }
