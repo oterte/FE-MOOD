@@ -9,6 +9,7 @@ import { getlikedMusicList } from '../../api/chart'
 import LikeCount from '../../components/like/LikeCount'
 import ChartTab from '../../components/chart/ChartTab'
 import { Music } from '../../components/chart/LikeChart'
+import useAudio, { UseAudioReturnType } from '../../hooks/useAudio'
 
 export interface Coordinate {
   coordinateX: number
@@ -26,6 +27,8 @@ function Recommend() {
   const [likeStatus, setLikeStatus] = useState<boolean>(false)
   const [musicList, setMusicList] = useState<Music[]>([])
   const targetRef = useRef<HTMLDivElement>(null)
+  const [handleTimeUpdate, audioRef, setMusicNumber]: UseAudioReturnType =
+    useAudio()
 
   const getMusicMutation = useMutation(['recommendMusic'], getMusic, {
     onSuccess: (data) => {
@@ -63,6 +66,9 @@ function Recommend() {
     queryClient.invalidateQueries(['recommendMusic'])
     getMusicMutation.mutate(coordinate)
   }
+  useEffect(() => {
+    if (musicId) setMusicNumber(musicId)
+  }, [musicId])
 
   const handleLikeUpdate = (
     updatedMusicId: number,
@@ -117,7 +123,12 @@ function Recommend() {
           <StDIvMusicPlayer>
             <p>{musicTitle}</p>
             <p>{musicComposer}</p>
-            <audio controls src={musicUrl}>
+            <audio
+              controls
+              ref={audioRef}
+              src={musicUrl}
+              onTimeUpdate={handleTimeUpdate}
+            >
               오디오
             </audio>
             <LikeCount

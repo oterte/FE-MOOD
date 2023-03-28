@@ -10,17 +10,19 @@ export type UseAudioReturnType = [
 function useAudio(): UseAudioReturnType {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const [timer, setTimer] = useState<number>(0)
-  const [musicId, setMusicId] = useState(0)
+  const [musicNumber, setMusicNumber] = useState(0)
+  console.log(musicNumber)
 
   const handleTimeUpdate = () => {
-    if (audioRef.current?.currentTime && audioRef.current.currentTime >= 3) {
+    if (audioRef.current?.currentTime && audioRef.current.currentTime >= 0) {
       setTimer((prev) => prev + 1)
     }
   }
-  if (timer === 30) {
-    postStreaming(musicId)
+  if (timer === 10) {
+    postStreaming(musicNumber)
+    console.log("api 작동")
   }
-  return [handleTimeUpdate, audioRef, setMusicId]
+  return [handleTimeUpdate, audioRef, setMusicNumber]
 }
 
 export default useAudio

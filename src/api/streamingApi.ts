@@ -1,5 +1,5 @@
-import axios from 'axios'
+import { instance } from './instance'
 
 export const postStreaming = async (musicId: number) => {
-  await axios.post(`/api/misic/${musicId}/streaming`)
+  await instance.post(`/api/misic/${musicId}/streaming`)
 }
