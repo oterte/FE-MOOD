@@ -77,22 +77,27 @@ export const questionArr: QuestionArr[] = [
 
 export const surveyButtonArr = [
   {
+    id: 1,
     number: 1,
     point: 0,
   },
   {
+    id: 2,
     number: 2,
     point: 5,
   },
   {
+    id: 3,
     number: 3,
     point: 10,
   },
   {
+    id: 4,
     number: 4,
     point: 15,
   },
   {
+    id: 5,
     number: 5,
     point: 20,
   },

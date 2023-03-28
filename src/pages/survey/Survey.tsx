@@ -21,7 +21,7 @@ import {
   StDivCarouselWrap,
   StDivCarouselLeft,
   StDivCarouselRight,
-  StSpanCurrentSlide
+  StSpanCurrentSlide,
 } from './SurveySt'
 
 function Survey() {
@@ -77,6 +77,7 @@ function Survey() {
       alert('설문을 모두 선택해주세요!')
     }
   }
+  console.log(status1, status2)
 
   return (
     <>

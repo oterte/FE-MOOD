@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { surveyButtonArr, SurveyData } from '../../pages/survey/surveyArray'
 
@@ -7,20 +8,34 @@ interface Props {
 }
 
 const Point = ({ number, setSurvey }: Props) => {
-  const onClickPointHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+  const [btn, setBtn] = useState<any>(null)
+
+  const onClickPointHandler = (
+    id: number,
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
     const point = Number(e.currentTarget.id)
     setSurvey((prevState: SurveyData) => {
       return { ...prevState, [number]: point }
     })
+    setBtn(id)
+    console.log(e.target)
   }
+
   return (
     <StDivPointWrap>
       {surveyButtonArr.map((buttonArr) => {
         return (
           <StDivPointContain key={buttonArr.number}>
             <StDivPointNumber
+              // color={btn === buttonArr.id ? '#4B372E' : '#EFEFEF'}
+              // color={btn === buttonArr.id ? ''}
+              style={{
+                backgroundColor: btn === buttonArr.id ? '#4B372E' : '#EFEFEF',
+                color: btn === buttonArr.id ? '#EFEFEF' : '#888888',
+              }}
               id={String(buttonArr.point)}
-              onClick={onClickPointHandler}
+              onClick={(event) => onClickPointHandler(buttonArr.id, event)}
             >
               <StSpanPointNumber>{buttonArr.number}</StSpanPointNumber>
             </StDivPointNumber>
@@ -39,14 +54,16 @@ const StDivPointWrap = styled.div`
   display: flex;
   justify-content: center;
 `
-const StDivPointNumber = styled.div`
+const StDivPointNumber = styled.button`
   width: 48px;
   height: 48px;
-  border: 1px solid #D0D9D9;
+  border: 1px solid #d0d9d9;
   box-sizing: border-box;
   line-height: 48px;
   text-align: center;
   margin: auto;
+  background-color: ${(props) => props.color};
+  color: ${(props) => props.color};
 `
 const StDivPointContain = styled.div`
   margin-top: 48px;
