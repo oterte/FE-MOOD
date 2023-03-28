@@ -21,6 +21,10 @@ function Auth() {
 
         navigate('/')
       })
+      .catch((err) => {
+        alert(err.response.data.message)
+        navigate("/login")
+      })
   }, [])
 
   return <div>카카오 로그인</div>
