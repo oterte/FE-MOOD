@@ -1,20 +1,23 @@
 import styled from 'styled-components'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useQuery } from 'react-query'
+import { getSurveyMusic } from '../../api/recommendApi'
 
 type Props = {
-  average: number
   modalState: boolean
   setModalState: React.Dispatch<React.SetStateAction<boolean>>
+  status1: number
+  status2: number
 }
 
-function SurveyModal({ average, modalState, setModalState }: Props) {
+function SurveyModal({ modalState, setModalState, status1, status2 }: Props) {
   const onClickCloseModalHandler = () => {
     setModalState(!modalState)
   }
-//   const { isLoading, isError, data } = useQuery(['surveyMusic'], () =>
-//     getSurveyMusic(musicNumber)
-//   )
+  const { isLoading, isError, data } = useQuery(['surveyMusic'], () =>
+    getSurveyMusic(status1, status2)
+  )
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -31,39 +34,26 @@ function SurveyModal({ average, modalState, setModalState }: Props) {
     }
   })
   const onClickMoveMusicDetailPageHandler = () => {
-    // navigate(`/recommend/music/${data.musicId}`)
+    navigate(`/recommend/music/${data.musicId}`)
   }
   const onClickMoveReccomendPageHandler = () => {
     navigate('/recommend')
   }
+  if (isLoading) return <h1>Loading</h1>
+  if (isError) return <h1>Error 발생</h1>
 
-  let condition: string
-  let musicNumber: number
-  if (average < 13) {
-    condition = '오늘 힘든 하루를 보내셨군요'
-    musicNumber = 1
-  } else if (average < 20) {
-    condition = '무난한 하루를 보내셨군요'
-    musicNumber = 2
-  } else {
-    condition = '기분 좋은 하루를 보내셨군요'
-    musicNumber = 3
-  }
-  //   if (isLoading) return <h1>Loading</h1>
-  //   if (isError) return <h1>Error 발생</h1>
   return (
     <ModalContainer>
       <StModalContents>
         <div>
           <button onClick={onClickCloseModalHandler}>X</button>
-          <p>{condition}</p>
+          <span>{data.msg}</span>
           <p>
-            {/* data.composer */}의 {/* data.musicTitle */}를 들어보시는건
-            어떠세요?
+            {data.data.composer}의 {data.data.musicTitle}를 들어보시는건 어떠세요?
           </p>
           <div>
             <button onClick={onClickMoveMusicDetailPageHandler}>
-              {/* data.musicTitle */} 노래 들으러 가기
+              {data.data.musicTitle} 노래 들으러 가기
             </button>
           </div>
           <div>

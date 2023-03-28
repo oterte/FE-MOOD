@@ -1,4 +1,5 @@
-import { SurveyData } from '../../pages/survey/Survey'
+import styled from 'styled-components'
+import { surveyButtonArr, SurveyData } from '../../pages/survey/surveyArray'
 
 interface Props {
   number: string
@@ -6,55 +7,44 @@ interface Props {
 }
 
 const Point = ({ number, setSurvey }: Props) => {
-  const onChangePoint2Handler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSurvey((prevState: any) => {
-      return { ...prevState, [number]: e.target.value }
+  const onClickPointHandler = (e: React.MouseEvent<HTMLDivElement>) => {
+    const point = Number(e.currentTarget.id)
+    setSurvey((prevState: SurveyData) => {
+      return { ...prevState, [number]: point }
     })
   }
   return (
-    <div>
-      <label>전혀 아니다</label>
-      <input
-        type="radio"
-        id="1"
-        name={number}
-        value={5}
-        onChange={(e) => onChangePoint2Handler(e)}
-      />
-      <label>아니다</label>
-      <input
-        type="radio"
-        id="2"
-        name={number}
-        value={10}
-        onChange={(e) => onChangePoint2Handler(e)}
-      />
-      <label>보통이다</label>
-      <input
-        type="radio"
-        id="3"
-        name={number}
-        value={15}
-        onChange={(e) => onChangePoint2Handler(e)}
-      />
-      <label>그렇다</label>
-      <input
-        type="radio"
-        id="4"
-        name={number}
-        value={20}
-        onChange={(e) => onChangePoint2Handler(e)}
-      />
-      <label>매우 그렇다</label>
-      <input
-        type="radio"
-        id="5"
-        name={number}
-        value={25}
-        onChange={(e) => onChangePoint2Handler(e)}
-      />
-    </div>
+    <StDivPointWrap>
+      {surveyButtonArr.map((buttonArr) => {
+        return (
+          <div key={buttonArr.number}>
+            <StDivPointNumber
+              id={String(buttonArr.point)}
+              onClick={onClickPointHandler}
+            >
+              <span>{buttonArr.number}</span>
+            </StDivPointNumber>
+          </div>
+        )
+      })}
+    </StDivPointWrap>
   )
 }
 
 export default Point
+
+const StDivPointWrap = styled.div`
+  width: 500px;
+  margin: 20px auto;
+  display: flex;
+  justify-content: center;
+`
+const StDivPointNumber = styled.div`
+  width: 40px;
+  height: 40px;
+  border: 1px solid black;
+  box-sizing: border-box;
+  line-height: 40px;
+  text-align: center;
+  margin: auto;
+`

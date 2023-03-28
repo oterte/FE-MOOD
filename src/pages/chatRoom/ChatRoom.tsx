@@ -8,15 +8,18 @@ import {
   StDivChatRoomWrap,
   StPChatRoom,
 } from './ChatRoomSt'
+import { onGetCookieHandler } from '../../util/cookie'
 
 interface ChatData {
   param?: string
   message: string
-  nickname: string
 }
 interface RecieveData {
   message: string | null
-  nickname: string | null
+  user: {
+    nickname: string,
+    UserInfo: string | null
+  }
 }
 interface BeforeChatData {
   chatId: number
@@ -53,9 +56,11 @@ function ChatRoom() {
   const [userList, setUserList] = useState<string[]>([])
   const [index, setIndex] = useState<number>(0)
 
-  const param = useParams()
+  const [prevScrollheight, setPrevScrollHeight] = useState<number>(0)
 
-  const target = useRef<any>(null)
+  const { id } = useParams()
+
+  const target = useRef<HTMLDivElement>(null)
   const scrollRef = useRef<HTMLDivElement>(null)
 
   const options = {
@@ -79,30 +84,55 @@ function ChatRoom() {
   }
 
   useEffect(() => {
-    observer.observe(target.current)
+    if (target.current) observer.observe(target.current)
     return () => {
-      observer.unobserve(target.current)
+      if (target.current) observer.unobserve(target.current)
     }
   }, [])
 
-  // userInfo가 구현 되면 다시 기능 수정
-  const nickname: string = 'jaeuk'
-  const roomId: number = Number(param.id)
+  const roomId: number = Number(id)
+  const token = onGetCookieHandler('authorization')
 
   useEffect(() => {
     initSocketConnection()
     socket.emit('roomId', roomId)
-    socket.emit('newUser', nickname)
+    socket.on('userList', (data) => {
+      let beforeUserList: any = []
+      data.map((data: string[]) => {
+        if (data !== null) {
+          beforeUserList.push(data)
+        }
+      })
+
+      setUserList(beforeUserList)
+    })
+    if (!token) return
+    socket.emit('newUser', token)
     return () => {
-      socket.emit('offUser', nickname)
-      setUserList(userList.filter((userList) => userList !== nickname))
       disconnection()
     }
   }, [])
 
+  const onScrollTo = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTop =
+        scrollRef.current.scrollHeight - prevScrollheight
+    }
+  }
   useEffect(() => {
+    setTimeout(() => {
+      if (scrollRef.current)
+        scrollRef.current.scrollTop =
+          scrollRef.current?.scrollHeight - prevScrollheight
+    }, 50)
     socket.emit('scroll', index)
+    onScrollTo()
   }, [index])
+
+  setTimeout(() => {
+    if (scrollRef.current?.scrollHeight)
+      setPrevScrollHeight(scrollRef.current.scrollHeight)
+  }, 50)
 
   useEffect(() => {
     socket.on('plusScroll', (data) => {
@@ -112,7 +142,6 @@ function ChatRoom() {
 
   const chatData: ChatData = {
     message: chatText,
-    nickname: nickname,
   }
   const onSubmitChattingHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -125,8 +154,14 @@ function ChatRoom() {
     if (noContent) {
       return
     } else {
-      socket.emit('sendMessage', chatData)
-      setChatText('')
+      if (!token) {
+        alert('채팅을 하려면 로그인이 필요합니다.')
+        setChatText('')
+        return
+      } else {
+        socket.emit('sendMessage', chatData)
+        setChatText('')
+      }
     }
   }, [chatData])
 
@@ -136,15 +171,7 @@ function ChatRoom() {
 
   useEffect(() => {
     socket.on('onUser', (data) => {
-      setUserList([...userList, data])
-    })
-  }, [userList])
-
-  // 내일 동윤님 코드 보면서 추가 하기
-  useEffect(() => {
-    socket.on('offUser', (nickname) => {
-      console.log(userList)
-      setUserList(userList.filter((userList: string) => userList !== nickname))
+      setUserList([...userList, data.nickname])
     })
   }, [userList])
 
@@ -195,7 +222,7 @@ function ChatRoom() {
               key={`${recieveData.message} + ${index}`}
             >
               <StPChatRoom>
-                {recieveData.nickname} : {recieveData.message}
+                {recieveData.user.nickname} : {recieveData.message}
               </StPChatRoom>
             </StDivChatRoomChatListContain>
           )

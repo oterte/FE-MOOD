@@ -8,30 +8,33 @@ import jwt_Decode from 'jwt-decode'
 import { onSetCookieHandler, onSetLocalStorageHandler } from '../../util/cookie'
 
 function Login() {
-  const REST_API_KEY = `6cf4e324bddd5eed7f3aea4e47c14425`
-  const REDIRECT_URI = `http://localhost:3000/api/kakao/callback`
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`
 
-  const googleClientId =
-    '69130861350-pgdr2fuj0j6dha2b943ka9436jc0tm73.apps.googleusercontent.com'
-  const googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${googleClientId}&response_type=code&redirect_uri=http://localhost:3000&scope=https://www.googleapis.com/auth/userinfo.email`
+ 
+  const googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&response_type=token&redirect_uri=${process.env.REACT_APP_GOOGLE_REDIRECT_URI}&scope=https://www.googleapis.com/auth/userinfo.profile`
+  const naverLoginUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.REACT_APP_NAVER_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_NAVER_REDIRECT_URI}&state=random_string`
 
   const [id, setId] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
-  const onClickLoginHandler = () => {
-    if (!id || !password) return
+  const onClickLoginHandler = (e:React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     login({ id: id, password: password })
       .then((res) => {
-        const authId = res.data.token
+        console.log("res", res)
+        const authId = res.data.accessToken
         const decodeUserInfo = JSON.stringify(jwt_Decode(authId))
+        const refreshToken = res.data.refreshToken
         onSetCookieHandler('authorization', authId)
+        onSetCookieHandler("refresh", refreshToken)
+        onSetLocalStorageHandler('authorization', authId)
         onSetLocalStorageHandler('userInfo', decodeUserInfo)
+        alert(res.data.message)
         navigate('/recommend')
       })
       .catch((error) => {
-        console.log(error)
+        alert(error.response.data.message)
       })
   }
 
@@ -42,11 +45,13 @@ function Login() {
   const onGoogleLoginHanlder = () => {
     window.location.assign(googleLoginUrl)
   }
-
+  const onNaverLoginHandler = () => {
+    window.location.href = naverLoginUrl
+  }
   return (
     <>
       <Header />
-      <div>
+      <form>
         <input
           type="text"
           placeholder="아이디"
@@ -61,8 +66,8 @@ function Login() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button onClick={() => onClickLoginHandler()}>로그인</button>
-      </div>
+        <button onClick={(e) => onClickLoginHandler(e)}>로그인</button>
+      </form>
 
       <img
         src={kakao}
@@ -72,6 +77,7 @@ function Login() {
         }}
       />
       <button onClick={onGoogleLoginHanlder}>구글 로그인</button>
+      <button onClick={onNaverLoginHandler}>네이버 로그인</button>
       <Footer />
     </>
   )

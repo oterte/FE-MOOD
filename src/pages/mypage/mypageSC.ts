@@ -28,16 +28,6 @@ export const MyPageProfileBodyContainer = styled.div`
   height: 500px;
 `
 
-export const MyPageContentsContainer = styled.div`
-  width: 1200px;
-  height: 500px;
-
-  margin: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
 export const MyPageContentCommentContainer = styled.div`
   width: 50%;
   height: 500px;
