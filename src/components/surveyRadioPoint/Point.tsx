@@ -28,8 +28,6 @@ const Point = ({ number, setSurvey }: Props) => {
         return (
           <StDivPointContain key={buttonArr.number}>
             <StDivPointNumber
-              // color={btn === buttonArr.id ? '#4B372E' : '#EFEFEF'}
-              // color={btn === buttonArr.id ? ''}
               style={{
                 backgroundColor: btn === buttonArr.id ? '#4B372E' : '#EFEFEF',
                 color: btn === buttonArr.id ? '#EFEFEF' : '#888888',
