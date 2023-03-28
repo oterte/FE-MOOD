@@ -18,15 +18,19 @@ function Login() {
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
-  const onClickLoginHandler = () => {
-    if (!id || !password) return
+  const onClickLoginHandler = (e:React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     login({ id: id, password: password })
       .then((res) => {
-        const authId = res.data.token
+        console.log("res", res)
+        const authId = res.data.accessToken
         const decodeUserInfo = JSON.stringify(jwt_Decode(authId))
+        const refreshToken = res.data.refreshToken
         onSetCookieHandler('authorization', authId)
+        onSetCookieHandler("refresh", refreshToken)
         onSetLocalStorageHandler('authorization', authId)
         onSetLocalStorageHandler('userInfo', decodeUserInfo)
+        alert(res.data.message)
         navigate('/recommend')
       })
       .catch((error) => {
@@ -47,7 +51,7 @@ function Login() {
   return (
     <>
       <Header />
-      <div>
+      <form>
         <input
           type="text"
           placeholder="아이디"
@@ -62,8 +66,8 @@ function Login() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <button onClick={() => onClickLoginHandler()}>로그인</button>
-      </div>
+        <button onClick={(e) => onClickLoginHandler(e)}>로그인</button>
+      </form>
 
       <img
         src={kakao}

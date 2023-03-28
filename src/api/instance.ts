@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios'
+import { refresh, refreshErrorHandle } from './refresh'
 
 
 const instance: AxiosInstance = axios.create({
@@ -7,15 +8,6 @@ const instance: AxiosInstance = axios.create({
   withCredentials: true,
 })
 
-instance.interceptors.request.use(
-  function (config: any) {
-    const token = localStorage.getItem('authorization')
-    config.headers['authorization'] = `Bearer ${token}`
-    return config
-  },
-  (error) => {
-    return Promise.reject(error)
-  }
-)
+instance.interceptors.request.use(refresh, refreshErrorHandle)
 
 export { instance }

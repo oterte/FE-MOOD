@@ -116,11 +116,9 @@ function SignUp() {
           return res
         })
         .catch((error) => {
-          return console.log(error)
+          console.log(error)
         })
-    } else {
-      alert('회원가입에 실패했습니다.')
-    }
+    } 
   }
   const onCheckExistId = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
