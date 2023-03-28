@@ -9,7 +9,6 @@ export const toggleLike = async ({ musicId }: { musicId: number }) => {
 // 좋아요 갯수별 순위
 export const getlikedMusicList = async () => {
   const response = await instance.get(`api/music/likechart`)
-  console.log('좋아요 순위:', response.data.likeChart)
   return response.data
 }
 
@@ -22,6 +21,5 @@ export const streaming = async ({ musicId }: { musicId: number }) => {
 // 스트리밍 순 순위
 export const getstreamingMusicList = async () => {
   const response = await instance.get(`api/music/streamingchart`)
-  console.log('스트리밍 순위:', response.data.streamingChart)
   return response.data
 }
