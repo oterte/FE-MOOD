@@ -10,7 +10,6 @@ import { onSetCookieHandler, onSetLocalStorageHandler } from '../../util/cookie'
 function Login() {
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`
 
- 
   const googleLoginUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&response_type=token&redirect_uri=${process.env.REACT_APP_GOOGLE_REDIRECT_URI}&scope=https://www.googleapis.com/auth/userinfo.profile`
   const naverLoginUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=${process.env.REACT_APP_NAVER_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_NAVER_REDIRECT_URI}&state=random_string`
 
@@ -18,16 +17,16 @@ function Login() {
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
-  const onClickLoginHandler = (e:React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const onClickLoginHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
     login({ id: id, password: password })
       .then((res) => {
-        console.log("res", res)
+        console.log('res', res)
         const authId = res.data.accessToken
         const decodeUserInfo = JSON.stringify(jwt_Decode(authId))
         const refreshToken = res.data.refreshToken
         onSetCookieHandler('authorization', authId)
-        onSetCookieHandler("refresh", refreshToken)
+        onSetCookieHandler('refresh', refreshToken)
         onSetLocalStorageHandler('authorization', authId)
         onSetLocalStorageHandler('userInfo', decodeUserInfo)
         alert(res.data.message)
