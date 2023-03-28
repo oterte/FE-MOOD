@@ -33,18 +33,18 @@ function SearchBar() {
 
   return (
     <SearchContainer>
+      <SearchInput className={showInput ? 'show' : ''}>
+        <input
+          type="text"
+          placeholder="검색어를 입력하세요"
+          style={{ paddingLeft: '1rem' }}
+          value={searchTerm}
+          onChange={onChangeHandler}
+          onKeyDown={onKeyDownHandler}
+        />
+      </SearchInput>
       {showInput ? (
         <>
-          <SearchInput className="show">
-            <input
-              type="text"
-              placeholder="검색어를 입력하세요"
-              style={{ paddingLeft: '1rem' }}
-              value={searchTerm}
-              onChange={onChangeHandler}
-              onKeyDown={onKeyDownHandler}
-            />
-          </SearchInput>
           <SearchButton onClick={onClickSearchHandler}>검색</SearchButton>
           <CloseButton onClick={handleClose}>닫기</CloseButton>
         </>

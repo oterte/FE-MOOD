@@ -1,31 +1,33 @@
-import { useEffect, useState } from 'react';
-import { getstreamingMusicList } from '../../api/chart';
-import { Con, Wrap } from './ChartStyle';
-import { Music } from './LikeChart';
+import { useEffect, useState } from 'react'
+import { getstreamingMusicList } from '../../api/chart'
+import { Con, Wrap } from './ChartStyle'
+import { Music } from './LikeChart'
 
 function StreamingChart() {
-  const [streamingList, setStreamingList] = useState<Music[]>([]);
-  const [visibleRankStart, setVisibleRankStart] = useState(0);
+  const [streamingList, setStreamingList] = useState<Music[]>([])
+  const [visibleRankStart, setVisibleRankStart] = useState(0)
 
   useEffect(() => {
     const fetchStreamingList = async () => {
-      const response = await getstreamingMusicList();
+      const response = await getstreamingMusicList()
       if (Array.isArray(response.streamingChart)) {
-        setStreamingList(response.streamingChart);
+        setStreamingList(response.streamingChart)
       }
-    };
-    fetchStreamingList();
-  }, []);
+    }
+    fetchStreamingList()
+  }, [])
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setVisibleRankStart((prevVisibleRankStart) => (prevVisibleRankStart === 0 ? 5 : 0));
-    }, 5000);
+      setVisibleRankStart((prevVisibleRankStart) =>
+        prevVisibleRankStart === 0 ? 5 : 0
+      )
+    }, 5000)
 
     return () => {
-      clearTimeout(timer);
-    };
-  }, [visibleRankStart]);
+      clearTimeout(timer)
+    }
+  }, [visibleRankStart])
 
   return (
     <Wrap>
@@ -42,7 +44,7 @@ function StreamingChart() {
           </Con>
         ))}
     </Wrap>
-  );
+  )
 }
 
-export default StreamingChart;
+export default StreamingChart

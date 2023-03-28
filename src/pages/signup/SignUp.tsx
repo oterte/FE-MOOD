@@ -108,7 +108,13 @@ function SignUp() {
     e.preventDefault()
     const body = { id, password, confirm, email, nickname }
     if (!id || !email || !password || !confirm || !nickname) return
-    if (idCheck && nicknameCheck && emailCheck && passwordCheck && confirmCheck) {
+    if (
+      idCheck &&
+      nicknameCheck &&
+      emailCheck &&
+      passwordCheck &&
+      confirmCheck
+    ) {
       register(body)
         .then((res) => {
           alert('회원가입에 성공하셨습니다.')
@@ -118,12 +124,11 @@ function SignUp() {
         .catch((error) => {
           console.log(error)
         })
-    } 
+    }
   }
   const onCheckExistId = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     if (id !== '') {
-
       checkId(id)
         .then((res) => {
           alert('사용 가능한 아이디입니다.')
