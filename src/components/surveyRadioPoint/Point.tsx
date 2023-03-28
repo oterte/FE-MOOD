@@ -19,7 +19,6 @@ const Point = ({ number, setSurvey }: Props) => {
       return { ...prevState, [number]: point }
     })
     setBtn(id)
-    console.log(e.target)
   }
 
   return (
@@ -32,7 +31,6 @@ const Point = ({ number, setSurvey }: Props) => {
                 backgroundColor: btn === buttonArr.id ? '#4B372E' : '#EFEFEF',
                 color: btn === buttonArr.id ? '#EFEFEF' : '#888888',
               }}
-              id={String(buttonArr.point)}
               onClick={(event) => onClickPointHandler(buttonArr.id, event)}
             >
               <StSpanPointNumber>{buttonArr.number}</StSpanPointNumber>
@@ -60,8 +58,6 @@ const StDivPointNumber = styled.button`
   line-height: 48px;
   text-align: center;
   margin: auto;
-  background-color: ${(props) => props.color};
-  color: ${(props) => props.color};
 `
 const StDivPointContain = styled.div`
   margin-top: 48px;
