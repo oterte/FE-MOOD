@@ -87,16 +87,16 @@ export const editComment = async ({
 // 대댓글 수정
 export const editRecomment = async ({
   reviewId,
-  recommentId,
+  reCommentId,
   newRecomment,
 }: {
   reviewId: number
-  recommentId: number
+  reCommentId: number
   newRecomment: string
 }) => {
   const response = await instance.put(
-    `/api/review/${reviewId}/recomment/${recommentId}`,
-    { recomment: newRecomment }
+    `/api/review/${reviewId}/recomment/${reCommentId}`,
+    { comment: newRecomment }
   )
   return response
 }

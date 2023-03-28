@@ -14,8 +14,8 @@ export const StDivMoodWrap = styled.div`
   border: 1px solid red;
 `
 export const StDIvMusicPlayer = styled.div`
-    width: 150px;
-    height: 200px;
-    border: 1px solid black;
-    margin-left: 100px;
+  width: 150px;
+  height: 200px;
+  border: 1px solid black;
+  margin-left: 100px;
 `
