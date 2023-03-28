@@ -3,8 +3,12 @@ import { QueryClient, useMutation } from 'react-query'
 import { getMusic } from '../../api/recommendApi'
 import Footer from '../../components/footer/Footer'
 import Header from '../../components/header/Header'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { StDivWrap, StDivMoodWrap, StDIvMusicPlayer } from './RecommendSt'
+import { getlikedMusicList } from '../../api/chart'
+import LikeCount from '../../components/like/LikeCount'
+import ChartTab from '../../components/chart/ChartTab'
+import { Music } from '../../components/chart/LikeChart'
 
 export interface Coordinate {
   coordinateX: number
@@ -18,6 +22,9 @@ function Recommend() {
   const [musicComposer, setMusicComposer] = useState<string>('')
   const [musicUrl, setMusicUrl] = useState<string>('')
   const [musicId, setMusicId] = useState<number | undefined>()
+  const [likeCount, setLikeCount] = useState<number>(0)
+  const [likeStatus, setLikeStatus] = useState<boolean>(false)
+  const [musicList, setMusicList] = useState<Music[]>([])
   const targetRef = useRef<HTMLDivElement>(null)
 
   const getMusicMutation = useMutation(['recommendMusic'], getMusic, {
@@ -26,6 +33,8 @@ function Recommend() {
       setMusicComposer(data.composer)
       setMusicUrl(data.musicUrl)
       setMusicId(data.musicId)
+      setLikeCount(data.likeCount)
+      setLikeStatus(data.likeStatus)
       queryClient.invalidateQueries('recommendMusic')
     },
     onError: (error) => {
@@ -54,7 +63,47 @@ function Recommend() {
     queryClient.invalidateQueries(['recommendMusic'])
     getMusicMutation.mutate(coordinate)
   }
-  console.log(musicId)
+
+  const handleLikeUpdate = (
+    updatedMusicId: number,
+    updatedLikeStatus: boolean,
+    updatedLikeCount: number
+  ) => {
+    if (musicId === updatedMusicId) {
+      setLikeStatus(updatedLikeStatus)
+      setLikeCount(updatedLikeCount)
+    }
+
+    setMusicList((prevMusicList) =>
+      prevMusicList.map((music) =>
+        music.musicId === updatedMusicId
+          ? {
+              ...music,
+              likeStatus: updatedLikeStatus,
+              likesCount: updatedLikeCount,
+            }
+          : music
+      )
+    )
+  }
+
+  useEffect(() => {
+    const fetchMusicList = async () => {
+      const response = await getlikedMusicList()
+      if (Array.isArray(response.likeChart)) {
+        setMusicList(response.likeChart)
+      }
+    }
+    fetchMusicList()
+  }, [])
+
+  useEffect(() => {
+    const updatedMusic = musicList.find((music) => music.musicId === musicId)
+    if (updatedMusic) {
+      setLikeStatus(updatedMusic.likeStatus)
+      setLikeCount(updatedMusic.likesCount)
+    }
+  }, [musicList, musicId])
 
   return (
     <>
@@ -71,10 +120,22 @@ function Recommend() {
             <audio controls src={musicUrl}>
               오디오
             </audio>
+            <LikeCount
+              musicId={musicId}
+              likeCount={likeCount}
+              likeStatus={likeStatus}
+              onLikeUpdate={handleLikeUpdate}
+            />
             <button onClick={() => navigate(`/recommend/music/${musicId}`)}>
               댓글 남기기
             </button>
           </StDIvMusicPlayer>
+          <ChartTab
+            musicId={musicId}
+            likeStatus={likeStatus}
+            musicList={musicList}
+            onLikeUpdate={handleLikeUpdate}
+          />
         </div>
       </StDivWrap>
       <Footer />
