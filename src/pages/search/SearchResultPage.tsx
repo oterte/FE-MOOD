@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { getSearch } from '../../api/search'
 
@@ -36,7 +36,7 @@ function SearchResultPage() {
 
   useEffect(() => {
     if (searchTerm) {
-      getSearch({ keyword: searchTerm }).then((data) => {
+      getSearch(searchTerm).then((data) => {
         setComposerInfo(data.composerInfo)
         setComposerSongs(data.composer)
         setMusicTitles(data.musicTitle)
@@ -53,7 +53,7 @@ function SearchResultPage() {
             <p>이름: {composerInfo.composer}</p>
           </div>
         )}
-        {composerSongs.length > 0 && (
+        {composerSongs && composerSongs.length > 0 && (
           <div>
             <h4>곡 목록:</h4>
             <ul>
@@ -68,7 +68,7 @@ function SearchResultPage() {
             </ul>
           </div>
         )}
-        {musicTitles.length > 0 && (
+        {musicTitles && musicTitles.length > 0 && (
           <div>
             <h4>음악 제목:</h4>
             <ul>
@@ -79,11 +79,14 @@ function SearchResultPage() {
           </div>
         )}
         {!composerInfo &&
-          composerSongs.length === 0 &&
-          musicTitles.length === 0 && <p>검색에 대한 결과가 없습니다.</p>}
+          (!composerSongs || composerSongs.length === 0) &&
+          (!musicTitles || musicTitles.length === 0) && (
+            <p>검색에 대한 결과가 없습니다.</p>
+          )}
       </div>
     </div>
   )
+  
 }
 
 export default SearchResultPage

@@ -1,29 +1,29 @@
-import { useEffect, useState } from 'react';
-import LikeCount from '../like/LikeCount';
-import { Con, Wrap } from './ChartStyle';
+import { useEffect, useState } from 'react'
+import LikeCount from '../like/LikeCount'
+import { Con, Wrap } from './ChartStyle'
 
 export interface Music {
-  id: number;
-  title: string;
-  likeCount?: number;
-  musicId: number;
-  musicTitle: string;
-  composer: string;
-  musicUrl: string;
-  likesCount: number;
-  likeStatus: boolean;
-  streamCount?: number;
+  id: number
+  title: string
+  likeCount?: number
+  musicId: number
+  musicTitle: string
+  composer: string
+  musicUrl: string
+  likesCount: number
+  likeStatus: boolean
+  streamCount?: number
 }
 
 interface LikeChartProps {
-  musicId: number | undefined;
-  likeStatus: boolean;
+  musicId: number | undefined
+  likeStatus: boolean
   onLikeUpdate: (
     musicId: number,
     likeStatus: boolean,
     likeCount: number
-  ) => void;
-  musicList: Music[];
+  ) => void
+  musicList: Music[]
 }
 
 function LikeChart({
@@ -32,20 +32,20 @@ function LikeChart({
   onLikeUpdate,
   musicList,
 }: LikeChartProps) {
-  const [visibleRange, setVisibleRange] = useState({ start: 0, end: 5 });
+  const [visibleRange, setVisibleRange] = useState({ start: 0, end: 5 })
 
   useEffect(() => {
     const interval = setInterval(() => {
       setVisibleRange((prevRange) => {
-        const newIndex = prevRange.start === 0 ? 5 : 0;
-        return { start: newIndex, end: newIndex + 5 };
-      });
-    }, 5000);
+        const newIndex = prevRange.start === 0 ? 5 : 0
+        return { start: newIndex, end: newIndex + 5 }
+      })
+    }, 5000)
 
     return () => {
-      clearInterval(interval);
-    };
-  }, []);
+      clearInterval(interval)
+    }
+  }, [])
 
   return (
     <Wrap>
@@ -54,8 +54,12 @@ function LikeChart({
           .slice(visibleRange.start, visibleRange.end)
           .map((music, index) => (
             <Con key={music.musicId}>
-              <span style={{ flex: 0.2 }}>{index + visibleRange.start + 1}</span>
-              <span style={{ flex: 0.4, textAlign: 'left' }}>{music.musicTitle}</span>
+              <span style={{ flex: 0.2 }}>
+                {index + visibleRange.start + 1}
+              </span>
+              <span style={{ flex: 0.4, textAlign: 'left' }}>
+                {music.musicTitle}
+              </span>
               <p style={{ flex: 0.3, textAlign: 'left' }}>{music.composer}</p>
               <audio controls style={{ flex: 0.3 }}>
                 <source src={music.musicUrl} type="audio/mpeg" />
@@ -74,7 +78,7 @@ function LikeChart({
         <p>Loading...</p>
       )}
     </Wrap>
-  );
+  )
 }
 
-export default LikeChart;
+export default LikeChart
