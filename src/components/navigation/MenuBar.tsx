@@ -1,6 +1,10 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { onLogoutHandler, onRemoveToken } from '../../util/cookie'
+import {
+  onGetLocalStorage,
+  onLogoutHandler,
+  onRemoveToken,
+} from '../../util/cookie'
 import {
   ComposerBtn,
   HamburgerButton,
@@ -36,10 +40,16 @@ const MenuBar: React.FC<Props> = () => {
       </HamburgerButton>
       <MenuItems isOpen={isOpen}>
         <MenuItem>
-          <Link to="/login">
-            <LoginBtn>로그인</LoginBtn>
-          </Link>
-
+          {!onGetLocalStorage('authorization') ? (
+            <Link to="/login">
+              <LoginBtn>로그인</LoginBtn>
+            </Link>
+          ) : null}
+           {onGetLocalStorage('authorization') ? (
+            <Link to="/mypage">
+              <LoginBtn>마이페이지</LoginBtn>
+            </Link>
+          ) : null}
           <Link to="/recommend">
             <ComposerBtn>기분에 따라 노래 추천받기</ComposerBtn>
           </Link>
@@ -55,8 +65,12 @@ const MenuBar: React.FC<Props> = () => {
           <Link to="/selectroom">
             <ComposerBtn>채팅하러 가기</ComposerBtn>
           </Link>
-
-          <LogoutBtn onClick={onLogout}>로그아웃</LogoutBtn>
+            
+          {
+            onGetLocalStorage('authorization') ?
+            <LogoutBtn onClick={onLogout}>로그아웃</LogoutBtn>
+            : null
+          }
         </MenuItem>
       </MenuItems>
     </MenuWrapper>

@@ -18,12 +18,11 @@ function Auth() {
         onSetLocalStorageHandler('authorization', data)
         onSetLocalStorageHandler('nickname', nickname)
         onSetLocalStorageHandler('userInfo', decodeUserInfo)
-
-        navigate('/')
+        navigate('/recommend')
       })
       .catch((err) => {
         alert(err.response.data.message)
-        navigate("/login")
+        navigate('/login')
       })
   }, [])
 
