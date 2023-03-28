@@ -7,8 +7,17 @@ import {
   StDivChatRoomChatListWrap,
   StDivChatRoomWrap,
   StPChatRoom,
+  StDivUserList,
+  StDivUserProfile,
+  StDivProfileImg,
+  StPProfileNickname,
+  StDivRoomTitle,
+  StDivRoomImg,
+  StPRoomName,
+  STPExplain,
 } from './ChatRoomSt'
 import { onGetCookieHandler } from '../../util/cookie'
+import Header from '../../components/header/Header'
 
 interface ChatData {
   param?: string
@@ -17,7 +26,7 @@ interface ChatData {
 interface RecieveData {
   message: string | null
   user: {
-    nickname: string,
+    nickname: string
     UserInfo: string | null
   }
 }
@@ -99,7 +108,7 @@ function ChatRoom() {
     socket.on('userList', (data) => {
       let beforeUserList: any = []
       data.map((data: string[]) => {
-        if (data !== null) {
+        if (data !== null || data !== undefined) {
           beforeUserList.push(data)
         }
       })
@@ -194,62 +203,72 @@ function ChatRoom() {
   }, [recieveData])
 
   return (
-    <StDivChatRoomWrap>
-      <StDivChatRoomChatListWrap ref={scrollRef}>
-        <div ref={target}></div>
-        {scrollChatData?.map((scrollChatData) => {
-          return (
-            <StDivChatRoomChatListContain key={scrollChatData.chatId}>
-              <StPChatRoom>
-                {scrollChatData.nickname} : {scrollChatData.message}
-              </StPChatRoom>
-            </StDivChatRoomChatListContain>
-          )
-        })}
-        {beforeChatData?.map((beforeChatData) => {
-          return (
-            <StDivChatRoomChatListContain key={beforeChatData.chatId}>
-              <StPChatRoom>
-                {beforeChatData.nickname} : {beforeChatData.message}
-              </StPChatRoom>
-            </StDivChatRoomChatListContain>
-          )
-        })}
+    <>
+      <Header />
+      <StDivRoomTitle>
+        <StDivRoomImg>이미지</StDivRoomImg>
+        <StPRoomName>분노의 방</StPRoomName>
+        <p>당신의 감정을 실시간으로 나누어보세요</p>
+      </StDivRoomTitle>
+      <StDivChatRoomWrap>
+        <StDivUserList>
+          <STPExplain>참여자 인원 ({userList.length})</STPExplain>
+          {userList &&
+            userList.map((v) => {
+              return (
+                <StDivUserProfile key={v}>
+                  <StDivProfileImg>img</StDivProfileImg>
+                  {/* <p>{v}</p> */}
+                  <StPProfileNickname>사람 이름</StPProfileNickname>
+                </StDivUserProfile>
+              )
+            })}
+        </StDivUserList>
+        <StDivChatRoomChatListWrap ref={scrollRef}>
+          <div ref={target}></div>
+          {scrollChatData?.map((scrollChatData) => {
+            return (
+              <StDivChatRoomChatListContain key={scrollChatData.chatId}>
+                <StPChatRoom>
+                  {scrollChatData.nickname} : {scrollChatData.message}
+                </StPChatRoom>
+              </StDivChatRoomChatListContain>
+            )
+          })}
+          {beforeChatData?.map((beforeChatData) => {
+            return (
+              <StDivChatRoomChatListContain key={beforeChatData.chatId}>
+                <StPChatRoom>
+                  {beforeChatData.nickname} : {beforeChatData.message}
+                </StPChatRoom>
+              </StDivChatRoomChatListContain>
+            )
+          })}
 
-        {recieveData.map((recieveData, index) => {
-          return (
-            <StDivChatRoomChatListContain
-              key={`${recieveData.message} + ${index}`}
-            >
-              <StPChatRoom>
-                {recieveData.user.nickname} : {recieveData.message}
-              </StPChatRoom>
-            </StDivChatRoomChatListContain>
-          )
-        })}
-      </StDivChatRoomChatListWrap>
-
-      <div>
-        <form onSubmit={onSubmitChattingHandler}>
-          <input
-            value={chatText}
-            onChange={onChangeChatTextHandler}
-            placeholder="채팅 입력"
-          />
-          <button onClick={onClickSendMessageHandler}>보내기</button>
-        </form>
-      </div>
-      <div>
-        {userList.map((v) => {
-          return (
-            <div key={v}>
-              {' '}
-              <p>{v}</p>{' '}
-            </div>
-          )
-        })}
-      </div>
-    </StDivChatRoomWrap>
+          {recieveData.map((recieveData, index) => {
+            return (
+              <StDivChatRoomChatListContain
+                key={`${recieveData.message} + ${index}`}
+              >
+                <StPChatRoom>
+                  {recieveData.user.nickname} : {recieveData.message}
+                </StPChatRoom>
+              </StDivChatRoomChatListContain>
+            )
+          })}
+          <div>
+            <form onSubmit={onSubmitChattingHandler}>
+              <input
+                value={chatText}
+                onChange={onChangeChatTextHandler}
+                placeholder="채팅 입력"
+              />
+              <button onClick={onClickSendMessageHandler}>보내기</button>
+            </form>
+          </div>
+        </StDivChatRoomChatListWrap>
+      </StDivChatRoomWrap>
+    </>
   )
 }
 
