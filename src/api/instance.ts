@@ -8,6 +8,10 @@ const instance: AxiosInstance = axios.create({
   withCredentials: true,
 })
 
+const withoutTokenInstance = axios.create({
+  baseURL: process.env.REACT_APP_SERVER
+})
+
 instance.interceptors.request.use(refresh, refreshErrorHandle)
 
-export { instance }
+export { instance, withoutTokenInstance }

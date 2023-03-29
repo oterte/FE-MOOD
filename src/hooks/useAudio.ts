@@ -7,20 +7,24 @@ export type UseAudioReturnType = [
   Dispatch<SetStateAction<number>>
 ]
 
-function useAudio(): UseAudioReturnType {
+function useAudio(): any {
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const [timer, setTimer] = useState<number>(0)
-  const [musicId, setMusicId] = useState(0)
+  const [musicNumber, setMusicNumber] = useState(0)
 
-  const handleTimeUpdate = () => {
-    if (audioRef.current?.currentTime && audioRef.current.currentTime >= 3) {
+  const handleTimeUpdate = (musicId: number) => {
+    setMusicNumber(musicId)
+    if (audioRef.current?.currentTime && audioRef.current.currentTime >= 0) {
       setTimer((prev) => prev + 1)
     }
   }
-  if (timer === 30) {
-    postStreaming(musicId)
+  if (timer === 3) {
+    console.log(musicNumber)
+    postStreaming(musicNumber)
+    console.log('api 작동')
   }
-  return [handleTimeUpdate, audioRef, setMusicId]
+
+  return [handleTimeUpdate, audioRef, setMusicNumber]
 }
 
 export default useAudio
