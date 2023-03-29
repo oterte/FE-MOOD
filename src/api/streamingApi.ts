@@ -1,5 +1,5 @@
-import axios from 'axios'
+import { withoutTokenInstance } from './instance'
 
 export const postStreaming = async (musicId: number) => {
-  await axios.post(`/api/misic/${musicId}/streaming`)
+  await withoutTokenInstance.post(`/api/misic/${musicId}/streaming`)
 }
