@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { surveyButtonArr, SurveyData } from '../../pages/survey/surveyArray'
 
 interface Props {
   number: string
   setSurvey: React.Dispatch<React.SetStateAction<SurveyData>>
+  currentSlide: number
+  setCurrentSlide: React.Dispatch<React.SetStateAction<number>>
 }
 
-const Point = ({ number, setSurvey }: Props) => {
-  const [btn, setBtn] = useState<any>(null)
+const Point = ({ number, setSurvey, currentSlide, setCurrentSlide }: Props) => {
+  const [btn, setBtn] = useState<number | null>(null)
 
   const onClickPointHandler = (
     id: number,
@@ -19,6 +21,9 @@ const Point = ({ number, setSurvey }: Props) => {
       return { ...prevState, [number]: point }
     })
     setBtn(id)
+    setTimeout(() => {
+      if (currentSlide < 9) setCurrentSlide(currentSlide + 1)
+    }, 300)
   }
 
   return (
@@ -27,6 +32,7 @@ const Point = ({ number, setSurvey }: Props) => {
         return (
           <StDivPointContain key={buttonArr.number}>
             <StDivPointNumber
+              id={String(buttonArr.point)}
               style={{
                 backgroundColor: btn === buttonArr.id ? '#4B372E' : '#EFEFEF',
                 color: btn === buttonArr.id ? '#EFEFEF' : '#888888',

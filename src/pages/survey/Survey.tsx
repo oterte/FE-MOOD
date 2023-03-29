@@ -1,6 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { FaAngleLeft, FaAngleRight } from 'react-icons/fa'
-import Footer from '../../components/footer/Footer'
 import Header from '../../components/header/Header'
 import SurveyModal from '../../components/surveyModal/SurveyModal'
 import Point from '../../components/surveyRadioPoint/Point'
@@ -77,7 +76,6 @@ function Survey() {
       alert('설문을 모두 선택해주세요!')
     }
   }
-  console.log(status1, status2)
 
   return (
     <>
@@ -106,6 +104,8 @@ function Survey() {
                       <Point
                         number={Object.keys(survey)[question.id]}
                         setSurvey={setSurvey}
+                        currentSlide={currentSlide}
+                        setCurrentSlide={setCurrentSlide}
                       />
                       <StDivAnswer>
                         <StPAnswerLeft>전혀 아니다</StPAnswerLeft>
@@ -138,7 +138,6 @@ function Survey() {
             status2={status2}
           />
         ) : null}
-        {/* <Footer /> */}
       </Wrapper>
     </>
   )
