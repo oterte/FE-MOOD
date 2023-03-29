@@ -27,7 +27,7 @@ function Recommend() {
   const [likeStatus, setLikeStatus] = useState<boolean>(false)
   const [musicList, setMusicList] = useState<Music[]>([])
   const targetRef = useRef<HTMLDivElement>(null)
-  const [handleTimeUpdate, audioRef, setMusicNumber]: UseAudioReturnType =
+  const [handleTimeUpdate, audioRef, setMusicNumber]: any =
     useAudio()
 
   const getMusicMutation = useMutation(['recommendMusic'], getMusic, {
@@ -66,9 +66,9 @@ function Recommend() {
     queryClient.invalidateQueries(['recommendMusic'])
     getMusicMutation.mutate(coordinate)
   }
-  useEffect(() => {
-    if (musicId) setMusicNumber(musicId)
-  }, [musicId])
+  // useEffect(() => {
+  //   if (musicId) setMusicNumber(musicId)
+  // }, [musicId])
 
   const handleLikeUpdate = (
     updatedMusicId: number,
@@ -127,7 +127,7 @@ function Recommend() {
               controls
               ref={audioRef}
               src={musicUrl}
-              onTimeUpdate={handleTimeUpdate}
+              onTimeUpdate={() => handleTimeUpdate(musicId)}
             >
               오디오
             </audio>
@@ -149,7 +149,7 @@ function Recommend() {
           />
         </div>
       </StDivWrap>
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }
