@@ -2,8 +2,8 @@ import styled from 'styled-components'
 
 export const StDivRoomTitle = styled.div`
   width: 1260px;
-  height: 350px;
-  padding-top: 150px;
+  height: 250px;
+  padding-top: 50px;
   margin: auto;
   text-align: center;
 `
@@ -56,14 +56,49 @@ export const StDivChatRoomChatListWrap = styled.div`
   width: 1024px;
   height: 705px;
   overflow-y: scroll;
+  border: 1px solid #8b7d76;
+  box-sizing: border-box;
+  position: relative;
 `
 export const StDivChatRoomChatListContain = styled.div`
   width: max-content;
   max-width: 700px;
-  margin: auto;
   word-break: break-all;
 `
-export const StPChatRoom = styled.p`
-  width: 700px;
-  border: 1px solid blue;
+export const StDivChatRoom = styled.div`
+  margin-left: 28px;
+`
+export const StPChatListNickname = styled.p`
+  color: #000000;
+`
+export const StDivChatListMessage = styled.div`
+  width: 383px;
+  height: 45px;
+  color: #ffffff;
+  background-color: #8b7d76;
+  line-height: 45px;
+`
+export const StDivChatSubmit = styled.div`
+  height: 86px;
+  border-top: 1px solid #8b7d76;
+  line-height: 86px;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  position: absolute;
+`
+export const StInputChatSubmit = styled.input`
+  width: 837px;
+  height: 50px;
+  border: 1px solid #8b7d76;
+  box-sizing: border-box;
+  margin-left: 21px;
+`
+export const StBtnChatSubmit = styled.button`
+  width: 125px;
+  height: 50px;
+  color: #ffffff;
+  background-color: #4b372e;
+  border: none;
+  margin-left: 11px;
 `
