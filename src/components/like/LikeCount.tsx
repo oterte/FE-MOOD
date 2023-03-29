@@ -40,7 +40,7 @@ const LikeCount: React.FC<LikeCountProps> = React.memo(
 
     return (
       <LikeWrap>
-        <LikeIcon size={30} onClick={handleLikeButtonClick} />
+        <LikeIcon size={25} onClick={handleLikeButtonClick} />
         {likeCount > 0 && <span>{likeCount}</span>}
       </LikeWrap>
     )

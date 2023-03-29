@@ -19,6 +19,7 @@ function useAudio(): any {
     }
   }
   if (timer === 3) {
+    console.log(musicNumber)
     postStreaming(musicNumber)
     console.log('api 작동')
   }
