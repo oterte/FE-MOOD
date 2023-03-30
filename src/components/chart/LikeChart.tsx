@@ -1,6 +1,13 @@
 import { useEffect, useState } from 'react'
 import LikeCount from '../like/LikeCount'
-import { Con, Wrap } from './ChartStyle'
+import {
+  Con,
+  Wrap,
+  Chartnumber,
+  ChartImg,
+  ChartTitle,
+  ChartComposer,
+} from './ChartStyle'
 
 export interface Music {
   id: number
@@ -54,16 +61,13 @@ function LikeChart({
           .slice(visibleRange.start, visibleRange.end)
           .map((music, index) => (
             <Con key={music.musicId}>
-              <span style={{ flex: 0.2 }}>
-                {index + visibleRange.start + 1}
-              </span>
-              <span style={{ flex: 0.4, textAlign: 'left' }}>
-                {music.musicTitle}
-              </span>
-              <p style={{ flex: 0.3, textAlign: 'left' }}>{music.composer}</p>
-              <audio controls style={{ flex: 0.3 }}>
+              <Chartnumber>{index + visibleRange.start + 1}</Chartnumber>
+              <ChartImg>IMG</ChartImg>
+              <ChartTitle>{music.musicTitle}</ChartTitle>
+              <ChartComposer>{music.composer}</ChartComposer>
+              {/* <audio controls>
                 <source src={music.musicUrl} type="audio/mpeg" />
-              </audio>
+              </audio> */}
               <LikeCount
                 musicId={music.musicId}
                 likeCount={music.likesCount}

@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router'
 import { QueryClient, useMutation } from 'react-query'
 import { getMusic } from '../../api/recommendApi'
-import Footer from '../../components/footer/Footer'
 import Header from '../../components/header/Header'
 import { useState, useRef, useEffect } from 'react'
 import {
@@ -9,6 +8,19 @@ import {
   StDivMoodWrap,
   StDIvMusicPlayer,
   StDivComposerImg,
+  StPVigor,
+  StDivXcoordinate,
+  StPDepress,
+  StPPositive,
+  StPCalm,
+  StPMusicTitle,
+  StPMusicComposer,
+  StDivLike,
+  DivChartWrap,
+  MoveDetail,
+  LikeMusic,
+  CenterExplain,
+  ClickBox
 } from './RecommendSt'
 import { getlikedMusicList } from '../../api/chart'
 import LikeCount from '../../components/like/LikeCount'
@@ -40,7 +52,8 @@ function Recommend() {
   const [likeStatus, setLikeStatus] = useState<boolean>(false)
   const [musicList, setMusicList] = useState<Music[]>([])
   const targetRef = useRef<HTMLDivElement>(null)
-  const [handleTimeUpdate, audioRef, setMusicNumber]: any = useAudio()
+  const [handleTimeUpdate, audioRef, setMusicNumber]: UseAudioReturnType =
+    useAudio()
 
   const getMusicMutation = useMutation(['recommendMusic'], getMusic, {
     onSuccess: (data) => {
@@ -75,9 +88,9 @@ function Recommend() {
     queryClient.invalidateQueries(['recommendMusic'])
     getMusicMutation.mutate(coordinate)
   }
-  // useEffect(() => {
-  //   if (musicId) setMusicNumber(musicId)
-  // }, [musicId])
+  useEffect(() => {
+    if (musicData?.musicId) setMusicNumber(musicData?.musicId)
+  }, [musicData])
 
   const handleLikeUpdate = (
     updatedMusicId: number,
@@ -121,63 +134,70 @@ function Recommend() {
       setLikeCount(updatedMusic.likesCount)
     }
   }, [musicList, musicData])
-  console.log(musicData)
 
   return (
     <>
       <Header />
       <StDivWrap>
-        <StDivMoodWrap
-          ref={targetRef}
-          onClick={onClickcoordinateHandler}
-        ></StDivMoodWrap>
+        <StDivMoodWrap ref={targetRef} onClick={onClickcoordinateHandler}>
+          <StPVigor>생기 넘치는</StPVigor>
+          <StDivXcoordinate>
+            <StPDepress>우울한</StPDepress>
+            <StPPositive>긍정적인</StPPositive>
+          </StDivXcoordinate>
+          <StPCalm>차분한</StPCalm>
+        </StDivMoodWrap>
+
+        <div style={{ display: 'flex', textAlign: 'center' }}>
+          <div>
+            <CenterExplain>지금 듣는 이 곡은?</CenterExplain>
+            <StDIvMusicPlayer>
+              <StDivLike>
+                <LikeCount
+                  musicId={musicData?.musicId}
+                  likeCount={likeCount}
+                  likeStatus={likeStatus}
+                  onLikeUpdate={handleLikeUpdate}
+                />
+              </StDivLike>
+              <StDivComposerImg>IMG</StDivComposerImg>
+              {!musicData ? (
+                <ClickBox>기분 영역을 클릭해보세요!</ClickBox>
+              ) : (
+                <div style={{ textAlign: 'center' }}>
+                  <StPMusicTitle>{musicData.musicTitle}</StPMusicTitle>
+                  <StPMusicComposer>{musicData.composer}</StPMusicComposer>
+                  <LikeMusic>음악이 마음에 들었다면?</LikeMusic>
+                  <MoveDetail
+                    onClick={() =>
+                      navigate(`/recommend/music/${musicData?.musicId}`)
+                    }
+                  >
+                    댓글 남기기
+                  </MoveDetail>
+                </div>
+              )}
+            </StDIvMusicPlayer>
+          </div>
+          <div style={{ marginLeft: 'auto' }}>
+            <CenterExplain>다른 회원들은 어떤 곡을 좋아할까요?</CenterExplain>
+            <DivChartWrap>
+              <ChartTab
+                musicId={musicData?.musicId}
+                likeStatus={likeStatus}
+                musicList={musicList}
+                onLikeUpdate={handleLikeUpdate}
+              />
+            </DivChartWrap>
+          </div>
+        </div>
         <audio
           controls
           ref={audioRef}
           src={musicData?.musicUrl}
-          onTimeUpdate={() => handleTimeUpdate(musicData?.musicId)}
-        >
-          오디오
-        </audio>
-        <div style={{ display: 'flex' }}>
-          <StDIvMusicPlayer>
-            <div>
-              <LikeCount
-                musicId={musicData?.musicId}
-                likeCount={likeCount}
-                likeStatus={likeStatus}
-                onLikeUpdate={handleLikeUpdate}
-              />
-            </div>
-            <StDivComposerImg>IMG</StDivComposerImg>
-            {/* <p>{musicData}</p> */}
-            {!musicData ? (
-              <div>기분 영역을 클릭해보세요!</div>
-            ) : (
-              <div>
-                <p>{musicData.musicTitle}</p>
-                <p>{musicData.composer}</p>
-                <p>음악이 마음에 들었다면?</p>
-                <button
-                  onClick={() =>
-                    navigate(`/recommend/music/${musicData?.musicId}`)
-                  }
-                >
-                  댓글 남기기
-                </button>
-              </div>
-              // <div></div>
-            )}
-          </StDIvMusicPlayer>
-          <ChartTab
-            musicId={musicData?.musicId}
-            likeStatus={likeStatus}
-            musicList={musicList}
-            onLikeUpdate={handleLikeUpdate}
-          />
-        </div>
+          onTimeUpdate={handleTimeUpdate}
+        />
       </StDivWrap>
-      {/* <Footer /> */}
     </>
   )
 }
