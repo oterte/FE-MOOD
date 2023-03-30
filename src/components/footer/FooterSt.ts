@@ -1,24 +1,32 @@
 import styled from 'styled-components'
 
 export const FooterDiv = styled.div`
-  background-color: #555555;
+  align-items: center;
+  background-color: #8b7d76;
   width: 100%;
-  height: auto;
-  flex-shrink: 0;
+  height: 120px;
+  display: flex;
   position: absolute;
   bottom: 0;
-  transform: translateY(0%);
+  margin-top: auto;
 `
 
 export const FooterConDiv = styled.div`
-  margin: 1.5rem;
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+  margin-left: 2rem;
+`
+
+export const H1 = styled.h1`
+  color: #aaaaaa;
+  font-family: var(--font-googleGugi);
+  font-size: 1.5rem;
+  margin-right: 3rem;
 `
 
 export const FooterContent = styled.div`
-  font-weight: 400;
-  font-size: 0.8rem;
+  font-size: 1.1rem;
   color: white;
+  font-family: var(--font-NotoSansKR-Regular);
 `

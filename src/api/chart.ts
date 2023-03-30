@@ -1,4 +1,4 @@
-import { instance, withoutTokenInstance } from './instance'
+import { withoutTokenInstance, instance } from './instance'
 
 // 좋아요 기능
 export const toggleLike = async ({ musicId }: { musicId: number }) => {
@@ -14,7 +14,9 @@ export const getlikedMusicList = async () => {
 
 // 스트리밍 조회수
 export const streaming = async ({ musicId }: { musicId: number }) => {
-  const response = await withoutTokenInstance.post(`api/music/${musicId}/streaming`)
+  const response = await withoutTokenInstance.post(
+    `api/music/${musicId}/streaming`
+  )
   return response
 }
 

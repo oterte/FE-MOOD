@@ -18,7 +18,7 @@ export const SearchContainer = styled.div`
 export const SearchButton = styled.button`
   font-size: 16px;
   padding: 10px;
-  background-color: #f2f2f2;
+  background: none;
   border: none;
   border-radius: 5px;
   margin-right: 10px;
@@ -47,7 +47,7 @@ export const SearchInput = styled.div`
     overflow: visible;
 
     input {
-      width:280px; 
+      width: 280px;
       animation: ${fadeIn} 0.7s;
       // transition: width 1s;
     }
