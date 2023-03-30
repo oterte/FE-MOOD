@@ -7,6 +7,8 @@ import {
   SignupForm,
   SingupButton,
   SignupErrorSpan,
+  SignupCheckBtn,
+  SignupInputTwo,
 } from './singup'
 
 import Footer from '../../components/footer/Footer'
@@ -154,79 +156,71 @@ function SignUp() {
     <>
       <Header />
       <SignupContainer>
-        <h1>MOOD</h1>
         <SignupForm>
+          <p>회원가입</p>
+          <span onClick={() => {navigate("/login")}}>MOOD에 이미 가입하셨나요?</span>
+          <SignupLabel>아이디</SignupLabel>
+          <SignupInput
+            type="text"
+            name="id"
+            placeholder="아이디를 입력하세요"
+            value={id}
+            onChange={onCheckIdHandler}
+          />
+          <SignupCheckBtn onClick={onCheckExistId}>중복확인</SignupCheckBtn>
           <div>
-            <SignupLabel>아이디</SignupLabel>
-            <SignupInput
-              type="text"
-              name="id"
-              placeholder="아이디를 입력하세요"
-              value={id}
-              onChange={onCheckIdHandler}
-            />
-            <button onClick={onCheckExistId}>아이디 중복확인</button>
-            <div>
-              {idCheck === false ? (
-                <SignupErrorSpan style={{ color: 'red' }}>
-                  {idMessage}
-                </SignupErrorSpan>
-              ) : (
-                <SignupErrorSpan style={{ color: 'gray' }}>
-                  {idMessage}
-                </SignupErrorSpan>
-              )}
-            </div>
+            {idCheck === false ? (
+              <SignupErrorSpan style={{ color: 'red' }}>
+                {idMessage}
+              </SignupErrorSpan>
+            ) : (
+              <SignupErrorSpan style={{ color: 'gray' }}>
+                {idMessage}
+              </SignupErrorSpan>
+            )}
           </div>
-
+          <SignupLabel>이메일</SignupLabel>
+          <SignupInputTwo
+            type="email"
+            name="email"
+            placeholder="이메일을 입력하세요"
+            value={email}
+            onChange={onCheckEmailHandler}
+          />
           <div>
-            <SignupLabel>이메일</SignupLabel>
-            <SignupInput
-              type="email"
-              name="email"
-              placeholder="이메일을 입력하세요"
-              value={email}
-              onChange={onCheckEmailHandler}
-            />
-            <div>
-              {emailCheck === false ? (
-                <SignupErrorSpan style={{ color: 'red' }}>
-                  {emailMessage}
-                </SignupErrorSpan>
-              ) : (
-                <SignupErrorSpan style={{ color: 'gray' }}>
-                  {emailMessage}
-                </SignupErrorSpan>
-              )}
-            </div>
+            {emailCheck === false ? (
+              <SignupErrorSpan style={{ color: 'red' }}>
+                {emailMessage}
+              </SignupErrorSpan>
+            ) : (
+              <SignupErrorSpan style={{ color: 'gray' }}>
+                {emailMessage}
+              </SignupErrorSpan>
+            )}
           </div>
-
+          <SignupLabel>닉네임</SignupLabel>
+          <SignupInput
+            type="text"
+            name="nickname"
+            placeholder="닉네임을 입력하세요"
+            value={nickname}
+            onChange={onCheckNicknameHandler}
+          />
+          <SignupCheckBtn onClick={onCheckExistNickName}>중복확인</SignupCheckBtn>
           <div>
-            <SignupLabel>닉네임</SignupLabel>
-            <SignupInput
-              type="text"
-              name="nickname"
-              placeholder="닉네임을 입력하세요"
-              value={nickname}
-              onChange={onCheckNicknameHandler}
-            />
-            <button onClick={onCheckExistNickName}>닉네임 중복확인</button>
-            <div>
-              {nicknameCheck === false ? (
-                <SignupErrorSpan style={{ color: 'red' }}>
-                  {nicknameMessage}
-                </SignupErrorSpan>
-              ) : (
-                <SignupErrorSpan style={{ color: 'gray' }}>
-                  {nicknameMessage}
-                </SignupErrorSpan>
-              )}
-            </div>
+            {nicknameCheck === false ? (
+              <SignupErrorSpan style={{ color: 'red' }}>
+                {nicknameMessage}
+              </SignupErrorSpan>
+            ) : (
+              <SignupErrorSpan style={{ color: 'gray' }}>
+                {nicknameMessage}
+              </SignupErrorSpan>
+            )}
           </div>
-
           <div>
             <SignupLabel>비밀번호</SignupLabel>
-            <SignupInput
+            <SignupInputTwo
               type="password"
               name="password"
               placeholder="비밀번호를 입력하세요"
@@ -245,10 +239,9 @@ function SignUp() {
               )}
             </div>
           </div>
-
           <div>
             <SignupLabel>비밀번호 확인</SignupLabel>
-            <SignupInput
+            <SignupInputTwo
               type="password"
               name="confirm"
               placeholder="동일한 비밀번호를 입력하세요."
@@ -267,14 +260,13 @@ function SignUp() {
               )}
             </div>
           </div>
-
           <div>
             <SingupButton
               onClick={(e) => {
                 onSubmitSignUpHandler(e)
               }}
             >
-              회원가입
+              회원가입 하기
             </SingupButton>
           </div>
         </SignupForm>

@@ -8,18 +8,24 @@ import {
   MyPageProfileContainer,
   MyPageProfileImg,
   MyPageProfileImgBox,
-  MyPageProfileImgContainer,
 } from './mypageSC'
-import {
-  MyPageContentsContainer,
-  MyPageTab,
-  MyPageTabItem,
-} from './mypagecontentsSC'
-import { useNavigate } from 'react-router'
+import { MyPageContentsContainer } from './mypagecontentsSC'
+import MyPageBody from './MyPageBody'
+import { MyPageTableContainer, MyPageTableContentTd, MyPageTableThead } from './MyPageTable'
+type Like = {
+  composer: string
+  fileName: string
+  musicId: string
+  musicTitle: string
+  musicUrl: string
+}
 
 function MyPageLike() {
-  const navigate = useNavigate()
-  const { isLoading, isError, data: likedata } = useQuery(['like'], likedMusic)
+  const {
+    isLoading,
+    isError,
+    data: likedata,
+  } = useQuery<Like[]>(['like'], likedMusic)
   const { isLoading: profileLoading, data: profileData } = useQuery(
     ['profile'],
     showProfile
@@ -35,19 +41,17 @@ function MyPageLike() {
   }
 
   console.log(likedata)
-  console.log(profileData)
   return (
     <>
       <Header />
       <MyPageProfileContainer>
-        <MyPageProfileImgContainer>
+        <MyPageProfileBodyContainer>
+          <p>마이페이지</p>
           <MyPageProfileImgBox>
             <MyPageProfileImg src={profileData.profileUrl} />
           </MyPageProfileImgBox>
-        </MyPageProfileImgContainer>
-        <MyPageProfileBodyContainer>
           <div>
-            <h1>{profileData.nickname} 님 환영합니다</h1>
+            <p>{profileData.nickname} 님 환영합니다</p>
           </div>
           <div>
             <span>당신의 최근 감정 상태는 XXX 입니다.</span>
@@ -57,59 +61,32 @@ function MyPageLike() {
           </div>
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
-      <MyPageTab>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypageScrap')
-          }}
-        >
-          스크랩 음악
-        </MyPageTabItem>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypageComment')
-          }}
-        >
-          남긴 댓글
-        </MyPageTabItem>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypagerecomment')
-          }}
-        >
-          남긴 대댓글
-        </MyPageTabItem>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypageLike')
-          }}
-        >
-          좋아요
-        </MyPageTabItem>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypageScrap')
-          }}
-        >
-          감정 히스토리
-        </MyPageTabItem>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypageEditprofile')
-          }}
-        >
-          프로필 사진 변경
-        </MyPageTabItem>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypageDeleteaccount')
-          }}
-        >
-          회원 탈퇴
-        </MyPageTabItem>
-      </MyPageTab>
+      <MyPageBody />
       <MyPageContentsContainer>
-        <h1>좋아요</h1>
+        <MyPageTableContainer>
+          <MyPageTableThead>
+            <tr>
+              <th>작곡가</th>
+              <th>곡 제목</th>
+              <th> 재생</th>
+            </tr>
+          </MyPageTableThead>
+          <tbody>
+            {likedata
+              ? likedata.map((item) => (
+                  <tr key={item.musicId}>
+                    <MyPageTableContentTd>{item.composer}</MyPageTableContentTd>
+                    <MyPageTableContentTd>{item.musicTitle}</MyPageTableContentTd>
+                    <MyPageTableContentTd>
+                      <audio controls>
+                        <source src={item.musicUrl} type="audio/mpeg" />
+                      </audio>
+                    </MyPageTableContentTd>
+                  </tr>
+                ))
+              : null}
+          </tbody>
+        </MyPageTableContainer>
       </MyPageContentsContainer>
       <Footer />
     </>

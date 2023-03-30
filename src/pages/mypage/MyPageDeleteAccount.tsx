@@ -6,17 +6,13 @@ import {
   MyPageProfileContainer,
   MyPageProfileImg,
   MyPageProfileImgBox,
-  MyPageProfileImgContainer,
 } from './mypageSC'
-import {
-  MyPageContentsContainer,
-  MyPageTab,
-  MyPageTabItem,
-} from './mypagecontentsSC'
+import { MyPageContentsContainer } from './mypagecontentsSC'
 import { useNavigate } from 'react-router'
 import { useQuery } from 'react-query'
 import { deleteAccount, showProfile } from '../../api/mypage'
 import { onLogoutHandler, onRemoveToken } from '../../util/cookie'
+import MyPageBody from './MyPageBody'
 function MyPageDelteAccount() {
   const { isLoading: profileLoading, data: profileData } = useQuery(
     ['profile'],
@@ -45,14 +41,13 @@ function MyPageDelteAccount() {
     <>
       <Header />
       <MyPageProfileContainer>
-        <MyPageProfileImgContainer>
+        <MyPageProfileBodyContainer>
+          <p>마이페이지</p>
           <MyPageProfileImgBox>
             <MyPageProfileImg src={profileData.profileUrl} />
           </MyPageProfileImgBox>
-        </MyPageProfileImgContainer>
-        <MyPageProfileBodyContainer>
           <div>
-            <h1>{profileData.nickname} 님 환영합니다</h1>
+            <p>{profileData.nickname} 님 환영합니다</p>
           </div>
           <div>
             <span>당신의 최근 감정 상태는 XXX 입니다.</span>
@@ -62,57 +57,7 @@ function MyPageDelteAccount() {
           </div>
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
-      <MyPageTab>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypageScrap')
-          }}
-        >
-          스크랩 음악
-        </MyPageTabItem>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypageComment')
-          }}
-        >
-          남긴 댓글
-        </MyPageTabItem>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypagerecomment')
-          }}
-        >
-          남긴 대댓글
-        </MyPageTabItem>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypageLike')
-          }}
-        >
-          좋아요
-        </MyPageTabItem>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypageScrap')
-          }}
-        >
-          감정 히스토리
-        </MyPageTabItem>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypageEditprofile')
-          }}
-        >
-          프로필 사진 변경
-        </MyPageTabItem>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypageDeleteaccount')
-          }}
-        >
-          회원 탈퇴
-        </MyPageTabItem>
-      </MyPageTab>
+      <MyPageBody />
       <MyPageContentsContainer>
         <button onClick={onDeleteAccountHandler}>회원 탈퇴하기</button>
       </MyPageContentsContainer>
