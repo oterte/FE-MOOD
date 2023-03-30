@@ -1,4 +1,4 @@
-import React,{useRef, useState} from 'react'
+import React, { useRef, useState } from 'react'
 import Header from '../../components/header/Header'
 import Footer from '../../components/footer/Footer'
 import {
@@ -6,34 +6,36 @@ import {
   MyPageProfileContainer,
   MyPageProfileImg,
   MyPageProfileImgBox,
-  MyPageProfileImgContainer,
 } from './mypageSC'
 import {
   MyPageContentsContainer,
-  MyPageTab,
-  MyPageTabItem,
+  MyPageEditBtn,
+  MyPageEditContainer,
+  MyPageEditImg,
 } from './mypagecontentsSC'
-import { useNavigate } from 'react-router'
+
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { editProfileImg, showComment, showProfile, showReComment } from '../../api/mypage'
+import { editProfileImg, showProfile } from '../../api/mypage'
+import MyPageBody from './MyPageBody'
 function MyPageEditProfile() {
   const queryClient = useQueryClient()
-  const {isLoading, isError, data} = useQuery(['myComment'], showReComment)
-  const {isLoading:profileLoading,  data:profileData} = useQuery(['profile'], showProfile)
-  const navigate = useNavigate()
-  const imgRef:any = useRef<HTMLInputElement>(null)
+  const {
+    isLoading,
+    isError,
+    data: profileData,
+  } = useQuery(['profile'], showProfile)
+  const imgRef: any = useRef<HTMLInputElement>(null)
   const [imgUrl, setImgUrl] = useState<string | ArrayBuffer | null>()
   const [imgFile, setImgFile] = useState<File>()
 
-  const editMutation = useMutation(editProfileImg , {
-    onSuccess : () => {
+  const editMutation = useMutation(editProfileImg, {
+    onSuccess: () => {
       queryClient.invalidateQueries()
-    }
+    },
   })
 
-
   const onChangeImageHandler = () => {
-    const reader = new FileReader();
+    const reader = new FileReader()
     const file = imgRef.current.files[0]
     reader.readAsDataURL(file)
     reader.onloadend = () => {
@@ -42,36 +44,32 @@ function MyPageEditProfile() {
     }
   }
 
-  const onSubmitImageHandler = (e:React.MouseEvent<HTMLButtonElement>) => {
+  const onSubmitImageHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     const data = new FormData()
-    data.append("image", imgFile as File)
+    data.append('image', imgFile as File)
     editMutation.mutate(data)
   }
-  if(isLoading) {
+  if (isLoading) {
     return <h1>로딩중</h1>
   }
-  if(profileLoading){
-    return <h1>로딩중..</h1>
-  }
-  if(isError) {
+
+  if (isError) {
     return <h1>에러</h1>
   }
 
-  console.log(data)
   console.log(profileData)
   return (
     <>
       <Header />
       <MyPageProfileContainer>
-        <MyPageProfileImgContainer>
+        <MyPageProfileBodyContainer>
+          <p>마이페이지</p>
           <MyPageProfileImgBox>
             <MyPageProfileImg src={profileData.profileUrl} />
           </MyPageProfileImgBox>
-        </MyPageProfileImgContainer>
-        <MyPageProfileBodyContainer>
           <div>
-            <h1>{profileData.nickname} 님 환영합니다</h1>
+            <p>{profileData.nickname} 님 환영합니다</p>
           </div>
           <div>
             <span>당신의 최근 감정 상태는 XXX 입니다.</span>
@@ -81,60 +79,31 @@ function MyPageEditProfile() {
           </div>
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
-      <MyPageTab>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypageScrap')
-          }}
-        >
-          스크랩 음악
-        </MyPageTabItem>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypageComment')
-          }}
-        >
-          남긴 댓글
-        </MyPageTabItem>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypagerecomment')
-          }}
-        >
-          남긴 대댓글
-        </MyPageTabItem>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypageLike')
-          }}
-        >
-          좋아요
-        </MyPageTabItem>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypageScrap')
-          }}
-        >
-          감정 히스토리
-        </MyPageTabItem>
-        <MyPageTabItem onClick={() => {
-            navigate('/mypageEditprofile')
-          }}>프로필 사진 변경</MyPageTabItem>
-        <MyPageTabItem onClick={() => {
-            navigate('/mypageDeleteaccount')
-          }}>회원 탈퇴</MyPageTabItem>
-      </MyPageTab>
+      <MyPageBody />
       <MyPageContentsContainer>
-       <input 
-        ref={imgRef}
-        type='file'
-        accept='image/*'
-        onChange={onChangeImageHandler}
-       />
-       {
-        imgUrl ? <img src={imgUrl as string} alt="이미지"/> : null
-       }
-       <button onClick={onSubmitImageHandler}>프로필 이미지 수정</button>
+        <MyPageEditContainer>
+          <div>
+            {imgUrl ? (
+              <MyPageEditImg src={imgUrl as string} alt="이미지" />
+            ) : (
+              <MyPageEditImg
+                src={profileData.profileUrl as string}
+                alt="이미지"
+              />
+            )}
+          </div>
+          <input
+            ref={imgRef}
+            type="file"
+            accept="image/*"
+            onChange={onChangeImageHandler}
+          />
+          <div>
+            <MyPageEditBtn onClick={onSubmitImageHandler}>
+              회원 정보 저장
+            </MyPageEditBtn>
+          </div>
+        </MyPageEditContainer>
       </MyPageContentsContainer>
       <Footer />
     </>

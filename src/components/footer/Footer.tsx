@@ -1,10 +1,13 @@
-import { FooterConDiv, FooterContent, FooterDiv } from './FooterSt'
+import { Link } from 'react-router-dom'
+import { FooterConDiv, FooterContent, FooterDiv, H1 } from './FooterSt'
 
 function Footer() {
   return (
     <FooterDiv>
       <FooterConDiv>
-        <FooterContent>Title</FooterContent>
+        <Link to="/" style={{ textDecoration: 'none' }}>
+          <H1>MOOD</H1>
+        </Link>
         <FooterContent>Name</FooterContent>
       </FooterConDiv>
     </FooterDiv>
