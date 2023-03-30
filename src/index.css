@@ -1,13 +1,36 @@
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background:#F5F5F5;
+  font-family: NotoSansKR-Regular;
+  color:black;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+@font-face {
+  font-family: "Kaushan Script";
+  src: url(../src/assets/fonts/KaushanScript-Regular.ttf);
+}
+
+@font-face {
+  font-family: "NotoSerifKR-Regular";
+  src: url(../src/assets/fonts/NotoSerifKR-Regular.otf);
+}
+
+@font-face {
+  font-family: "NotoSansKR-Regular";
+  src: url(../src/assets/fonts/NotoSansKR-Regular.otf);
+}
+
+@font-face {
+  font-family: "NotoSansKR-Thin";
+  src: url(../src/assets/fonts/NotoSansKR-Thin.otf);
+}
+
+:root {
+	--font-googleGugi: "Kaushan Script";
+  --font-NotoSerifKR: "NotoSerifKR-Regular";
+  --font-NotoSansKR-Regular:"NotoSansKR-Regular";
+  --font-NotoSansKR-Thin:"NotoSansKR-Thin";
 }

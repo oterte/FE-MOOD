@@ -6,6 +6,12 @@ import kakao from '../../assets/kakao_login_large_narrow.png'
 import Header from '../../components/header/Header'
 import jwt_Decode from 'jwt-decode'
 import { onSetCookieHandler, onSetLocalStorageHandler } from '../../util/cookie'
+import {
+  LoginBtn,
+  LoginContainer,
+  LoginInput,
+  LoginSocialContainer,
+} from './loginSt'
 
 function Login() {
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`
@@ -26,7 +32,7 @@ function Login() {
         const decodeUserInfo = JSON.stringify(jwt_Decode(authId))
         const refreshToken = res.data.refreshToken
         onSetCookieHandler('authorization', authId)
-        onSetCookieHandler('refresh', refreshToken)
+        onSetLocalStorageHandler('refresh', refreshToken)
         onSetLocalStorageHandler('authorization', authId)
         onSetLocalStorageHandler('userInfo', decodeUserInfo)
         alert(res.data.message)
@@ -50,33 +56,41 @@ function Login() {
   return (
     <>
       <Header />
-      <form>
-        <input
-          type="text"
-          placeholder="아이디"
-          name="id"
-          value={id}
-          onChange={(e) => setId(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="비밀번호"
-          name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button onClick={(e) => onClickLoginHandler(e)}>로그인</button>
-      </form>
+      <LoginContainer>
+        <p>로그인</p>
+        <span onClick={() => {navigate("/signup")}}>MOOD 회원이 아니신가요?</span>
+        <form>
+          <LoginInput
+            type="text"
+            placeholder="아이디를 입력하세요."
+            name="id"
+            value={id}
+            onChange={(e) => setId(e.target.value)}
+          />
+          <LoginInput
+            type="password"
+            placeholder="비밀번호를 입력하세요"
+            name="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <LoginBtn onClick={(e) => onClickLoginHandler(e)}>
+            로그인 하기
+          </LoginBtn>
+        </form>
+        <LoginSocialContainer>
+          <img
+            src={kakao}
+            alt="카카오 로그인"
+            onClick={() => {
+              onKakaoLoginHandler()
+            }}
+          />
+        </LoginSocialContainer>
+      </LoginContainer>
 
-      <img
-        src={kakao}
-        alt="카카오 로그인"
-        onClick={() => {
-          onKakaoLoginHandler()
-        }}
-      />
-      <button onClick={onGoogleLoginHanlder}>구글 로그인</button>
-      <button onClick={onNaverLoginHandler}>네이버 로그인</button>
+      {/* <button onClick={onGoogleLoginHanlder}>구글 로그인</button>
+      <button onClick={onNaverLoginHandler}>네이버 로그인</button> */}
       <Footer />
     </>
   )

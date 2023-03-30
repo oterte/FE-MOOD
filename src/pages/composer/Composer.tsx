@@ -7,7 +7,7 @@ function Composer() {
     <>
       <Header />
       <ComposerList />
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }
