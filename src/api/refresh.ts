@@ -2,13 +2,10 @@ import {
   onSetLocalStorageHandler,
   onSetCookieHandler,
 } from './../util/cookie/index'
-import axios, { AxiosRequestConfig } from 'axios'
-import { Cookies } from 'react-cookie'
-
-const cookie = new Cookies()
+import axios from 'axios'
 
 export const refresh = async (config: any) => {
-  const refreshToken = cookie.get('refresh')
+  const refreshToken = localStorage.getItem('refresh')
   let token: any = localStorage.getItem('authorization')
   const expiredSec = 58 * 60 * 1000
   const body = {

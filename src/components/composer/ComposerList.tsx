@@ -41,6 +41,7 @@ const ComposerList = () => {
     { enabled: !!selectedComposer }
   )
 
+
   const [musicInfos, setMusicInfos] = useState<MusicInfo[] | undefined>()
 
   useEffect(() => {
@@ -75,6 +76,7 @@ const ComposerList = () => {
     })
     setMusicInfos(updatedMusicInfos)
   }
+
 
   return (
     <Wrap>
