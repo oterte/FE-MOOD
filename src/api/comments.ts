@@ -1,8 +1,8 @@
-import { instance } from './instance'
+import { instance , withoutTokenInstance } from './instance'
 
 // 댓글 조회
 export const getComment = async ({ musicId }: { musicId: number }) => {
-  const response = await instance.get(`/api/music/${musicId}/review`)
+  const response = await withoutTokenInstance.get(`/api/music/${musicId}/review`)
   return {
     count: response.data.reviews.count,
     comments: response.data.reviews.rows,
@@ -11,7 +11,7 @@ export const getComment = async ({ musicId }: { musicId: number }) => {
 
 // 대댓글 조회
 export const getRecomment = async ({ reviewId }: { reviewId: number }) => {
-  const response = await instance.get(`/api/review/${reviewId}/recomment`)
+  const response = await withoutTokenInstance.get(`/api/review/${reviewId}/recomment`)
   return {
     recomments: response.data.reComments.rows,
   }
@@ -103,18 +103,18 @@ export const editRecomment = async ({
 
 // 작곡가 조회
 export const getComposer = async ({ composer }: { composer: string }) => {
-  const response = await instance.get(`/api/composer?composer=${composer}`)
+  const response = await withoutTokenInstance.get(`/api/composer?composer=${composer}`)
   return response.data.imageUrl
 }
 
 // 음악 상세 정보 조회
 export const getMusicDetail = async ({ musicId }: { musicId: number }) => {
-  const response = await instance.get(`/api/music/${musicId}`)
+  const response = await withoutTokenInstance.get(`/api/music/${musicId}`)
   return response.data.data
 }
 
 // 작곡가별 추천
 export const musicDetail = async ({ musicId }: { musicId: number }) => {
-  const response = await instance.get(`/api/music/${musicId}`)
+  const response = await withoutTokenInstance.get(`/api/music/${musicId}`)
   return response
 }

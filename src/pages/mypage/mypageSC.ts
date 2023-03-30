@@ -13,8 +13,8 @@ export const MyPageProfileImgContainer = styled.div`
   height: 500px;
 `
 export const MyPageProfileImgBox = styled.div`
-  width: 100px;
-  height: 100px;
+  width: 200px;
+  height: 200px;
   margin: 0 auto;
 `
 export const MyPageProfileImg = styled.img`
@@ -26,6 +26,18 @@ export const MyPageProfileImg = styled.img`
 export const MyPageProfileBodyContainer = styled.div`
   width: 400px;
   height: 500px;
+  text-align: center;
+  p {
+    font-size: 25px;
+    font-weight: 400;
+    font-style: normal;
+  }
+  span {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 18px;
+  }
 `
 
 export const MyPageContentCommentContainer = styled.div`

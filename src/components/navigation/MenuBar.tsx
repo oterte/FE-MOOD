@@ -6,6 +6,14 @@ import {
   onRemoveToken,
 } from '../../util/cookie'
 import {
+  ChatBtn,
+  H1,
+  LoginMent,
+  ProfileImg,
+  RecommendBtn,
+  SurveyBtn,
+} from '../navigation/MenuBarSt'
+import {
   ComposerBtn,
   HamburgerButton,
   LoginBtn,
@@ -32,7 +40,7 @@ const MenuBar: React.FC<Props> = () => {
     navigate('/')
   }
   return (
-    <MenuWrapper>
+    <MenuWrapper isOpen={isOpen}>
       <HamburgerButton isOpen={isOpen} onClick={toggleMenu}>
         <span />
         <span />
@@ -40,18 +48,23 @@ const MenuBar: React.FC<Props> = () => {
       </HamburgerButton>
       <MenuItems isOpen={isOpen}>
         <MenuItem>
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <H1>MOOD</H1>
+          </Link>
+          <ProfileImg></ProfileImg>
+          <LoginMent>"__"님 어서오세요.</LoginMent>
           {!onGetLocalStorage('authorization') ? (
             <Link to="/login">
               <LoginBtn>로그인</LoginBtn>
             </Link>
           ) : null}
-           {onGetLocalStorage('authorization') ? (
+          {onGetLocalStorage('authorization') ? (
             <Link to="/mypage">
-              <LoginBtn>마이페이지</LoginBtn>
+              <LoginBtn>마이페이지 바로 가기</LoginBtn>
             </Link>
           ) : null}
           <Link to="/recommend">
-            <ComposerBtn>기분에 따라 노래 추천받기</ComposerBtn>
+            <RecommendBtn>기분에 따라 노래 추천받기</RecommendBtn>
           </Link>
 
           <Link to="/composer">
@@ -59,18 +72,16 @@ const MenuBar: React.FC<Props> = () => {
           </Link>
 
           <Link to="/survey">
-            <ComposerBtn>내 기분 상태 체크하기</ComposerBtn>
+            <SurveyBtn>내 기분 상태 체크하기</SurveyBtn>
           </Link>
 
           <Link to="/selectroom">
-            <ComposerBtn>채팅하러 가기</ComposerBtn>
+            <ChatBtn>채팅하러 가기</ChatBtn>
           </Link>
-            
-          {
-            onGetLocalStorage('authorization') ?
+
+          {onGetLocalStorage('authorization') ? (
             <LogoutBtn onClick={onLogout}>로그아웃</LogoutBtn>
-            : null
-          }
+          ) : null}
         </MenuItem>
       </MenuItems>
     </MenuWrapper>
