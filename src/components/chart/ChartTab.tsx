@@ -2,6 +2,7 @@ import { useState } from 'react'
 import LikeChart from '../chart/LikeChart'
 import { Music } from '../chart/LikeChart'
 import StreamingChart from '../chart/StreamingChart'
+import { ChartBtnWrap } from './ChartStyle'
 
 interface ChartTabProps {
   musicId: number | undefined
@@ -24,12 +25,10 @@ function ChartTab({
 
   return (
     <div>
-      <div>
-        <button onClick={() => setActiveTab('like')}>좋아요 순 차트보기</button>
-        <button onClick={() => setActiveTab('stream')}>
-          스트리밍 순 차트보기
-        </button>
-      </div>
+      <ChartBtnWrap>
+        <button onClick={() => setActiveTab('like')}>좋아요 순</button>
+        <button onClick={() => setActiveTab('stream')}>스트리밍 순</button>
+      </ChartBtnWrap>
 
       {activeTab === 'like' && (
         <LikeChart
