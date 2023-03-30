@@ -1,5 +1,5 @@
-import { instance } from './instance'
+import { withoutTokenInstance } from './instance'
 
 export const postStreaming = async (musicId: number) => {
-  await instance.post(`/api/misic/${musicId}/streaming`)
+  await withoutTokenInstance.post(`/api/misic/${musicId}/streaming`)
 }
