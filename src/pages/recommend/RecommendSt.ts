@@ -13,6 +13,7 @@ export const StDivMoodWrap = styled.div`
   flex-direction: column;
   justify-content: space-between;
   position: relative;
+  cursor: pointer;
 `
 export const StDIvMusicPlayer = styled.div`
   width: 492px;
