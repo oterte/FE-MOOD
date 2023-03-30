@@ -30,10 +30,7 @@ interface ChatData {
 }
 interface RecieveData {
   message: string | null
-  user: {
-    nickname: string
-    UserInfo: string | null
-  }
+  nickname: string
 }
 interface BeforeChatData {
   chatId: number
@@ -202,7 +199,6 @@ function ChatRoom() {
 
   useEffect(() => {
     socket.on('receiveMessage', (data) => {
-      console.log(data)
       setRecieveData([...recieveData, data])
     })
   }, [recieveData])
@@ -278,7 +274,7 @@ function ChatRoom() {
                 <StDivChatRoom>
                   <StPChatListNickname>
                     <span style={{ marginLeft: '20px' }}>
-                      {recieveData.user.nickname}
+                      {recieveData.nickname}
                     </span>
                   </StPChatListNickname>
                   <StDivChatListMessage>
