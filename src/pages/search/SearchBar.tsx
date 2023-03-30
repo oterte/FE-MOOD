@@ -6,6 +6,7 @@ import {
   SearchContainer,
   SearchInput,
 } from './SearchBarSt'
+import { BsSearch } from 'react-icons/bs'
 
 function SearchBar() {
   const [showInput, setShowInput] = useState(false)
@@ -49,7 +50,9 @@ function SearchBar() {
           <CloseButton onClick={handleClose}>닫기</CloseButton>
         </>
       ) : (
-        <SearchButton onClick={() => setShowInput(true)}>돋보기</SearchButton>
+        <SearchButton onClick={() => setShowInput(true)}>
+          <BsSearch size="25" />
+        </SearchButton>
       )}
     </SearchContainer>
   )

@@ -2,12 +2,14 @@ import styled from 'styled-components'
 
 export const Wrap = styled.div`
   width: 100%;
-  height: 50px;
+  height: 70px;
   text-align: center;
+  border-bottom: 1px solid #bcbeb3;
 `
 
 export const Left = styled.div`
   float: left;
+  margin-left: 10px;
   margin-top: 10px;
 `
 export const Center = styled.div`
@@ -17,7 +19,10 @@ export const Center = styled.div`
 
 export const Right = styled.div`
   float: right;
-  margin-top: -55px;
+  margin-top: -65px;
 `
 
-export const H1 = styled.h1``
+export const H1 = styled.h1`
+  color: black;
+  font-family: var(--font-googleGugi);
+`

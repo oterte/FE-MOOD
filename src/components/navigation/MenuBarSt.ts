@@ -1,9 +1,28 @@
 import styled from 'styled-components'
 
-export const MenuWrapper = styled.div`
+export const MenuWrapper = styled.div<{ isOpen: boolean }>`
   position: relative;
   height: 100%;
   z-index: 1;
+
+  ${({ isOpen }) =>
+    isOpen &&
+    `
+      &::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 0;
+      }
+  `}
+`
+
+export const MenuItem = styled.li`
+  position: relative;
 `
 
 export const HamburgerButton = styled.button<{ isOpen: boolean }>`
@@ -30,7 +49,7 @@ export const HamburgerButton = styled.button<{ isOpen: boolean }>`
     z-index: 100;
 
     &:first-child {
-      transform: ${({ isOpen }) => (isOpen ? 'rotate(28deg)' : 'rotate(0)')};
+      transform: ${({ isOpen }) => (isOpen ? 'rotate(29deg)' : 'rotate(0)')};
     }
 
     &:nth-child(2) {
@@ -38,47 +57,135 @@ export const HamburgerButton = styled.button<{ isOpen: boolean }>`
     }
 
     &:last-child {
-      transform: ${({ isOpen }) => (isOpen ? 'rotate(-28deg)' : 'rotate(0)')};
+      transform: ${({ isOpen }) => (isOpen ? 'rotate(-29deg)' : 'rotate(0)')};
     }
   }
 `
 
 export const MenuItems = styled.ul<{ isOpen: boolean }>`
   position: fixed;
-  top: 20px;
+  top: 0px;
   left: ${({ isOpen }) => (isOpen ? '0' : '-100%')};
-  width: 360px;
+  width: 400px;
   height: 100%;
   background: #ffffff;
-  border-right: 1px solid black;
   list-style-type: none;
   padding: 0;
   margin: 0;
-  transition: left 0.3s ease;
+  transition: left 0.5s ease;
   z-index: 0;
 `
-
-export const ComposerBtn = styled.button`
-  width: 280px;
-  height: 60px;
-  cursor: pointer;
-  border: none;
-  background: none;
-  text-align: left;
+export const H1 = styled.h1`
+  position: absolute;
+  top: 100px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  color: black;
+  font-family: var(--font-googleGugi);
+  font-size: 1.5rem;
+`
+export const ProfileImg = styled.img`
+  position: absolute;
+  top: 190px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: 70px;
+  height: 70px;
+  background: gray;
+  border-radius: 50%;
+`
+export const LoginMent = styled.p`
+  position: absolute;
+  top: 270px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  font-family: var(--font-NotoSerifKR);
   font-size: 1.2rem;
-  font-weight: bold;
 `
 
 export const LoginBtn = styled.button`
-  width: 280px;
-  height: 30px;
+  position: absolute;
+  top: 340px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: 192px;
+  height: 45px;
   cursor: pointer;
   border: none;
-  margin-bottom: 20px;
+  background: #4b372e;
+  text-align: left;
+  font-size: 1rem;
+  font-weight: bold;
+  font-family: var(--font-NotoSansKR-Thin);
+  color: white;
+  text-align: center;
+`
+
+export const RecommendBtn = styled.button`
+  position: absolute;
+  top: 450px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: 280px;
+  height: 70px;
+  cursor: pointer;
+  border: none;
   background: none;
   text-align: left;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: bold;
+  border-top: 3px solid #8b7d76;
+  border-bottom: 1px solid #8b7d76;
+  font-family: var(--font-NotoSansKR-Thin);
+`
+
+export const ComposerBtn = styled.button`
+  position: absolute;
+  top: 520px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: 280px;
+  height: 70px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-bottom: 1px solid #8b7d76;
+  font-family: var(--font-NotoSansKR-Thin);
+`
+export const SurveyBtn = styled.button`
+  position: absolute;
+  top: 590px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: 280px;
+  height: 70px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-bottom: 1px solid #8b7d76;
+  font-family: var(--font-NotoSansKR-Thin);
+`
+export const ChatBtn = styled.button`
+  position: absolute;
+  top: 660px;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  width: 280px;
+  height: 70px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-bottom: 3px solid #8b7d76;
+  font-family: var(--font-NotoSansKR-Thin);
 `
 export const LogoutBtn = styled.button`
   width: 280px;
@@ -86,13 +193,10 @@ export const LogoutBtn = styled.button`
   cursor: pointer;
   border: none;
   background: none;
-  text-align: left;
-  font-size: 1.2rem;
+  text-align: right;
+  font-size: 1.1rem;
   font-weight: bold;
-  margin-top: 600px;
-`
-
-export const MenuItem = styled.li`
-  margin-top: 100px;
-  padding: 1rem;
+  margin-top: 760px;
+  font-family: var(--font-NotoSansKR-Thin);
+  color: #888888;
 `
