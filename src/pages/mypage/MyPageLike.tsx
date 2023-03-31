@@ -11,7 +11,16 @@ import {
 } from './mypageSC'
 import { MyPageContentsContainer } from './mypagecontentsSC'
 import MyPageBody from './MyPageBody'
-import { MyPageTableContainer, MyPageTableContentTd, MyPageTableThead } from './MyPageTable'
+import {
+  MyPageBodyMiddle,
+  MyPageBodyTop,
+  MyPageLikeMiddleContainer,
+  MyPageLikeMiddleDiv,
+  MyPageLikeTopFirst,
+  MyPageLikeTopRest,
+  MyPageLikeTopSec,
+} from './MyPageTable'
+import { useNavigate } from 'react-router-dom'
 type Like = {
   composer: string
   fileName: string
@@ -21,6 +30,7 @@ type Like = {
 }
 
 function MyPageLike() {
+  const navigate = useNavigate()
   const {
     isLoading,
     isError,
@@ -63,30 +73,28 @@ function MyPageLike() {
       </MyPageProfileContainer>
       <MyPageBody />
       <MyPageContentsContainer>
-        <MyPageTableContainer>
-          <MyPageTableThead>
-            <tr>
-              <th>작곡가</th>
-              <th>곡 제목</th>
-              <th> 재생</th>
-            </tr>
-          </MyPageTableThead>
-          <tbody>
-            {likedata
-              ? likedata.map((item) => (
-                  <tr key={item.musicId}>
-                    <MyPageTableContentTd>{item.composer}</MyPageTableContentTd>
-                    <MyPageTableContentTd>{item.musicTitle}</MyPageTableContentTd>
-                    <MyPageTableContentTd>
-                      <audio controls>
-                        <source src={item.musicUrl} type="audio/mpeg" />
-                      </audio>
-                    </MyPageTableContentTd>
-                  </tr>
-                ))
-              : null}
-          </tbody>
-        </MyPageTableContainer>
+        <MyPageBodyTop>
+          <MyPageLikeTopFirst>작곡가 명</MyPageLikeTopFirst>
+          <MyPageLikeTopSec>곡 정보</MyPageLikeTopSec>
+          <MyPageLikeTopRest>재생</MyPageLikeTopRest>
+          <MyPageLikeTopRest>댓글남기기</MyPageLikeTopRest>
+        </MyPageBodyTop>
+        <MyPageBodyMiddle>
+          {likedata?.map((item) => (
+            <MyPageLikeMiddleContainer key={item.musicId}>
+              <MyPageLikeMiddleDiv>{item.composer}</MyPageLikeMiddleDiv>
+              <MyPageLikeMiddleDiv>{item.fileName}</MyPageLikeMiddleDiv>
+              <MyPageLikeMiddleDiv>
+                <audio controls src={item.musicUrl} />
+              </MyPageLikeMiddleDiv>
+              <MyPageLikeMiddleDiv
+                onClick={() => navigate(`/recommend/music/${item.musicId}`)}
+              >
+                댓글남기기
+              </MyPageLikeMiddleDiv>
+            </MyPageLikeMiddleContainer>
+          ))}
+        </MyPageBodyMiddle>
       </MyPageContentsContainer>
       <Footer />
     </>

@@ -88,7 +88,7 @@ function MyPageEditProfile() {
             ) : (
               <MyPageEditImg
                 src={profileData.profileUrl as string}
-                alt="이미지"
+                alt="이미지를 등록해주세요"
               />
             )}
           </div>

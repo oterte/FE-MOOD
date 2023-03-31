@@ -28,7 +28,7 @@ function Auth() {
       })
   }, [])
 
-  return <div>카카오 로그인</div>
+  return <div>카카오 로그인 로딩중...</div>
 }
 
 export default Auth

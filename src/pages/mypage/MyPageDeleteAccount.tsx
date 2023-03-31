@@ -26,8 +26,8 @@ function MyPageDelteAccount() {
       alert('탈퇴했습니다.')
       onLogoutHandler('authorization')
       onRemoveToken()
-      deleteAccount()
       navigate('/login')
+      deleteAccount()
     }
   }
   const navigate = useNavigate()
