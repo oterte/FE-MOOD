@@ -68,14 +68,21 @@ export const ClickBox = styled.p`
   font-size: 25px;
   margin: 80px auto;
 `
+export const MusicComtain = styled.div`
+height: 300px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: space-evenly;
+  position: relative;
+`
 export const StPMusicTitle = styled.p`
-  width: 200px;
+  width: 500px;
   font-size: 20px;
   margin: 22px auto 5px auto;
 `
 export const StPMusicComposer = styled.p`
   width: 100px;
-  font-size: 16px;
   color: #616161;
   margin: auto;
 `
@@ -97,4 +104,7 @@ export const DivChartWrap = styled.div`
   height: 582px;
   border: 1px solid #d6d6d6;
   box-sizing: border-box;
+`
+export const AudioDiv = styled.div`
+  margin-top: 20px;
 `

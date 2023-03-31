@@ -65,9 +65,6 @@ function LikeChart({
               <ChartImg>IMG</ChartImg>
               <ChartTitle>{music.musicTitle}</ChartTitle>
               <ChartComposer>{music.composer}</ChartComposer>
-              {/* <audio controls>
-                <source src={music.musicUrl} type="audio/mpeg" />
-              </audio> */}
               <LikeCount
                 musicId={music.musicId}
                 likeCount={music.likesCount}

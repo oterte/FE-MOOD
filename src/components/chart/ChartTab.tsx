@@ -2,7 +2,13 @@ import { useState } from 'react'
 import LikeChart from '../chart/LikeChart'
 import { Music } from '../chart/LikeChart'
 import StreamingChart from '../chart/StreamingChart'
-import { ChartBtnWrap } from './ChartStyle'
+import {
+  ChartBtnWrap,
+  ChartTopWrap,
+  ChartTopP,
+  OrderBtn,
+  OrderSpan,
+} from './ChartStyle'
 
 interface ChartTabProps {
   musicId: number | undefined
@@ -25,10 +31,29 @@ function ChartTab({
 
   return (
     <div>
-      <ChartBtnWrap>
-        <button onClick={() => setActiveTab('like')}>좋아요 순</button>
-        <button onClick={() => setActiveTab('stream')}>스트리밍 순</button>
-      </ChartBtnWrap>
+      <ChartTopWrap>
+        <ChartTopP>무드 차트 TOP 10</ChartTopP>
+        <ChartBtnWrap>
+          <OrderBtn
+            style={{
+              backgroundColor: activeTab === 'like' ? '#4B372E' : '#f5f5f5',
+              color: activeTab === 'like' ? '#EFEFEF' : '#888888',
+            }}
+            onClick={() => setActiveTab('like')}
+          >
+            <OrderSpan>좋아요 순</OrderSpan>
+          </OrderBtn>
+          <OrderBtn
+            style={{
+              backgroundColor: activeTab === 'stream' ? '#4B372E' : '#f5f5f5',
+              color: activeTab === 'stream' ? '#EFEFEF' : '#888888',
+            }}
+            onClick={() => setActiveTab('stream')}
+          >
+            <OrderSpan>스트리밍 순</OrderSpan>
+          </OrderBtn>
+        </ChartBtnWrap>
+      </ChartTopWrap>
 
       {activeTab === 'like' && (
         <LikeChart
