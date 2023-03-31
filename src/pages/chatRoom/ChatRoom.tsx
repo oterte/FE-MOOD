@@ -66,6 +66,7 @@ function ChatRoom() {
   const [scrollChatData, setScrollChatData] = useState<ScrollChatData[]>([])
   const [userList, setUserList] = useState<string[]>([])
   const [index, setIndex] = useState<number>(0)
+  const [roomName, setRoomName] = useState<string>('')
 
   const [prevScrollheight, setPrevScrollHeight] = useState<number>(0)
 
@@ -103,6 +104,28 @@ function ChatRoom() {
 
   const roomId: number = Number(id)
   const token = onGetCookieHandler('authorization')
+  useEffect(() => {
+    switch (roomId) {
+      case 1:
+        setRoomName('분노')
+        break
+      case 2:
+        setRoomName('슬픔')
+        break
+      case 3:
+        setRoomName('행복')
+        break
+      case 4:
+        setRoomName('지루함')
+        break
+      case 5:
+        setRoomName('부끄러움')
+        break
+      case 6:
+        setRoomName('놀램')
+        break
+    }
+  }, [])
 
   useEffect(() => {
     initSocketConnection()
@@ -110,11 +133,11 @@ function ChatRoom() {
     socket.on('userList', (data) => {
       let beforeUserList: any = []
       data.map((data: string[]) => {
-        if (data !== null || data !== undefined) {
+        if (data !== null) {
           beforeUserList.push(data)
         }
+        setUserList(beforeUserList)
       })
-      setUserList(beforeUserList)
     })
     if (!token) return
     socket.emit('newUser', token)
@@ -181,7 +204,7 @@ function ChatRoom() {
 
   useEffect(() => {
     socket.on('onUser', (data) => {
-      setUserList([...userList, data.nickname])
+      setUserList([...userList, data])
     })
   }, [userList])
 
@@ -202,13 +225,14 @@ function ChatRoom() {
       setRecieveData([...recieveData, data])
     })
   }, [recieveData])
+  console.log(userList)
 
   return (
     <>
       <Header />
       <StDivRoomTitle>
         <StDivRoomImg>이미지</StDivRoomImg>
-        <StPRoomName>분노의 방</StPRoomName>
+        <StPRoomName>{roomName}의 방</StPRoomName>
         <p style={{ color: '#888888' }}>
           당신의 감정을 실시간으로 나누어보세요
         </p>
@@ -217,12 +241,11 @@ function ChatRoom() {
         <StDivUserList>
           <STPExplain>참여자 인원 ({userList.length})</STPExplain>
           {userList &&
-            userList.map((v) => {
+            userList.map((item) => {
               return (
-                <StDivUserProfile key={v}>
+                <StDivUserProfile key={item}>
                   <StDivProfileImg>img</StDivProfileImg>
-                  <p>{v}</p>
-                  {/* <StPProfileNickname>사람 이름</StPProfileNickname> */}
+                  <StPProfileNickname>{item}</StPProfileNickname>
                 </StDivUserProfile>
               )
             })}
