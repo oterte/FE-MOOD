@@ -1,13 +1,36 @@
 import styled from 'styled-components'
 
+export const ChartTopWrap = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 700px;
+  margin: 27px auto;
+`
+export const ChartTopP = styled.p`
+  font-size: 25px;
+  font-weight: 500;
+  font-family: var(--font-NotoSerifKR);
+`
 export const ChartBtnWrap = styled.div`
   width: 172px;
   height: 30px;
-  margin: 57px 0px 51px 60px;
+  /* margin: 57px 0px 51px 60px; */
   border: 1px solid #8b7d76;
   display: flex;
   align-items: center;
   justify-content: space-around;
+`
+export const OrderBtn = styled.div`
+  width: 78px;
+  height: 20px;
+  color: #ffffff;
+  cursor: pointer;
+  line-height: 20px;
+`
+export const OrderSpan = styled.span`
+  font-size: 12px;
+  font-family: var(--font-NotoSansKR-Thin);
 `
 export const Wrap = styled.div`
   display: flex;
@@ -21,10 +44,11 @@ export const Con = styled.div`
   align-items: center;
   width: 100%;
   height: 88px;
-  border-top: 1px solid #DADADA;
+  border-top: 1px solid #dadada;
   box-sizing: border-box;
   :hover {
     background-color: #4b372e;
+    color: #ffffff;
   }
 `
 export const Chartnumber = styled.p`
@@ -43,6 +67,7 @@ export const ChartImg = styled.div`
   margin-left: 52px;
 `
 export const ChartTitle = styled.p`
+  width: 300px;
   margin-left: 34px;
 `
 export const ChartComposer = styled.p`
