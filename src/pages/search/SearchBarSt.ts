@@ -74,36 +74,64 @@ export const Wrap = styled.div`
 `
 export const Inpo = styled.div`
   width: 70%;
+  height: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
 `
 
 export const ComposerImg = styled.img`
-  position: absolute;
-  top: 90px;
-  left: 500px;
+  margin-right: 600px;
   width: 250px;
   height: 250px;
   border-radius: 50%;
 `
 export const ComposerName = styled.p`
-  position: absolute;
-  top: 80px;
-  left: 800px;
+  margin-top: -220px;
+  margin-left: -50px;
+  text-align: left;
   font-size: 2rem;
   font-family: var(--font-googleGugi);
 `
 export const Fullname = styled.p`
-  position: absolute;
-  top: 150px;
-  left: 800px;
+  margin-top: -20px;
+  margin-left: 80px;
   font-size: 1.2rem;
   font-family: var(--font-NotoSerifKR);
 `
 export const ComposerDesc = styled.p`
-  position: absolute;
-  top: 200px;
-  left: 800px;
+  margin-top: 10px;
+  margin-left: 410px;
   font-size: 1rem;
   max-width: 600px;
+`
+export const List = styled.div`
+  position: absolute;
+  top: 550px;
+  text-align: center;
+  background: #FEFEFE;
+  width: 1180px;
+  height: auto;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+
+  & > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    font-size: 1rem;
+    padding:1rem;
+
+  &:first-child {
+    background-color: #4B372E;
+    color: white;
+  }
+    
+  & > div:last-child {
+    border-bottom: none;
+  }
 `
