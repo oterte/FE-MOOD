@@ -80,7 +80,7 @@ export const Inpo = styled.div`
 
 export const ComposerImg = styled.img`
   position: absolute;
-  top: 80px;
+  top: 90px;
   left: 500px;
   width: 250px;
   height: 250px;
