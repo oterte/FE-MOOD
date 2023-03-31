@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { getSearch } from '../../api/search'
+import { Desc, H3 } from '../../components/composer/ComposerListSt'
+import Header from '../../components/header/Header'
 import {
   ComposerDesc,
   ComposerImg,
   ComposerName,
   Fullname,
   Inpo,
+  List,
   Wrap,
 } from './SearchBarSt'
 
@@ -54,48 +57,71 @@ function SearchResultPage() {
     }
   }, [searchTerm])
 
+  // // onLikeUpdate 함수 추가
+  // const onLikeUpdate = (musicId: number, newLikeStatus: boolean) => {
+  //   setComposerSongs((prevComposerSongs) =>
+  //     prevComposerSongs.map((song) =>
+  //       song.musicId === musicId
+  //         ? {
+  //             ...song,
+  //             likesCount: newLikeStatus ? song.likesCount + 1 : song.likesCount - 1,
+  //             likeStatus: newLikeStatus,
+  //           }
+  //         : song
+  //     )
+  //   )
+  // }
+
   return (
-    <Wrap>
-      {composerInfo && (
-        <Inpo>
-          <ComposerImg src={composerInfo.imageUrl} />
-          <ComposerName>{composerInfo.composer}</ComposerName>
-          <Fullname>
-            {composerInfo.koreanFullname}({composerInfo.birthDeath})
-          </Fullname>
-          <ComposerDesc>{composerInfo.describe}</ComposerDesc>
-        </Inpo>
-      )}
-      {composerSongs && composerSongs.length > 0 && (
-        <div>
-          <h4>곡 목록:</h4>
-          <ul>
-            {composerSongs.map((song) => (
-              <li key={song.musicId}>
-                {song.musicTitle}
-                <audio controls>
-                  <source src={song.musicUrl} type="audio/mpeg" />
-                </audio>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      {/* {musicTitles && musicTitles.length > 0 && (
-        <div>
-          <ul>
-            {musicTitles.map((musicTitle) => (
-              <li key={musicTitle.id}>{musicTitle.title}</li>
-            ))}
-          </ul>
-        </div>
-      )} */}
-      {!composerInfo &&
-        (!composerSongs || composerSongs.length === 0) &&
-        (!musicTitles || musicTitles.length === 0) && (
-          <p>검색에 대한 결과가 없습니다.</p>
+    <>
+      <Header />
+      <Wrap>
+        {composerInfo && (
+          <Inpo>
+            <ComposerImg src={composerInfo.imageUrl} />
+            <ComposerName>{composerInfo.composer}</ComposerName>
+            <Fullname>
+              {composerInfo.koreanFullname}({composerInfo.birthDeath})
+            </Fullname>
+            <ComposerDesc>{composerInfo.describe}</ComposerDesc>
+          </Inpo>
         )}
-    </Wrap>
+        {composerSongs && composerSongs.length > 0 && (
+          <div>
+            <List>
+              <div>
+                <div>no</div>
+                <div>곡명</div>
+                <div>좋아요</div>
+                <div>스크랩</div>
+                <div>더보기</div>
+              </div>
+              {composerSongs.map((music, index) => (
+                <div key={`music-${music.musicId}`}>
+                  <div>{index + 1}</div>
+                  <H3>{music.musicTitle}</H3>
+                  <div>
+                    {/* <LikeCount
+                    musicId={music.musicId}
+                    likeCount={music.likesCount}
+                    likeStatus={music.likeStatus}
+                    onLikeUpdate={onLikeUpdate}
+                  /> */}
+                  </div>
+                  <div>스크랩</div>
+                  <div>더보기</div>
+                </div>
+              ))}
+            </List>
+          </div>
+        )}
+        {!composerInfo &&
+          (!composerSongs || composerSongs.length === 0) &&
+          (!musicTitles || musicTitles.length === 0) && (
+            <p>검색에 대한 결과가 없습니다.</p>
+          )}
+      </Wrap>
+    </>
   )
 }
 
