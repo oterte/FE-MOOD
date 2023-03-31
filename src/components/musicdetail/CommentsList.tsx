@@ -1,12 +1,22 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import React, { useEffect, useState } from 'react'
 import { getComment, removeComment, editComment } from '../../api/comments'
+import { BsFillPencilFill } from 'react-icons/bs'
+import { BsCheck2All } from 'react-icons/bs'
+import { BsTrashFill } from 'react-icons/bs'
+
 import {
-  CommentBox,
+  Border,
   CommentInput,
+  CommentsBox,
+  DeleteBtn,
+  EditBtn,
   EditCommentInput,
+  Nickname,
+  ShowRepliesBtn,
+  Total,
+  WriteDate,
 } from '../../pages/musicDetail/MusicDetailSt'
-import { useParams } from 'react-router-dom'
 import { Wrap } from '../header/HeaderSt'
 import ReCommentsList from './ReCommentsList'
 import AddRecomment from './AddRecomment'
@@ -16,14 +26,15 @@ interface Comment {
   musicId: number
   review: string
   createdAt: string
+  nickname: string
 }
 
 function CommentsList({ musicId }: { musicId: number }) {
-  const params = useParams<{ id: string }>()
   const queryClient = useQueryClient()
   const [edit, setEdit] = useState<number>(0)
   const [inputValues, setInputValues] = useState<{ [key: number]: string }>({})
   const [comments, setComments] = useState<Comment[]>([])
+  const [showReplies, setShowReplies] = useState<{ [key: number]: boolean }>({})
 
   const { isLoading, isError, data } = useQuery(['comments', musicId], () =>
     getComment({ musicId })
@@ -70,6 +81,13 @@ function CommentsList({ musicId }: { musicId: number }) {
     deleteMutation.mutate({ musicId, reviewId })
   }
 
+  const toggleReplies = (reviewId: number) => {
+    setShowReplies((prevState) => ({
+      ...prevState,
+      [reviewId]: !prevState[reviewId],
+    }))
+  }
+
   useEffect(() => {
     if (data) {
       setComments(data.comments)
@@ -86,54 +104,76 @@ function CommentsList({ musicId }: { musicId: number }) {
 
   return (
     <Wrap>
-      <div>댓글 수: {data?.count}</div>
-      {comments.map((item) => {
-        return (
-          <CommentBox key={item.reviewId}>
-            <div>작성 시간: {new Date(item.createdAt).toLocaleString()}</div>
-            {edit === item.reviewId ? (
-              <form
-                onSubmit={(e) =>
-                  onSubmitEditHandler(e, item.musicId, item.reviewId)
-                }
-              >
-                <CommentInput
-                  type="text"
-                  value={inputValues[item.reviewId]}
-                  onChange={(e) => onChangeEditHandler(e, item.reviewId)}
-                />
-                <button type="submit">수정하기</button>
-              </form>
-            ) : (
-              <>
-                <EditCommentInput type="text" value={item.review} disabled />
-                <button
-                  onClick={() => {
-                    onClickDeleteButtonHandler(item.musicId, item.reviewId)
+      <Total>최신댓글 ({data?.count})</Total>
+      <Border>
+        {comments.map((item) => {
+          return (
+            <div key={item.reviewId}>
+              <CommentsBox>
+                <Nickname>{item.nickname}</Nickname>
+                <WriteDate>
+                  작성 시간: {new Date(item.createdAt).toLocaleString()}
+                </WriteDate>
+                {edit === item.reviewId ? (
+                  <form
+                    onSubmit={(e) =>
+                      onSubmitEditHandler(e, item.musicId, item.reviewId)
+                    }
+                  >
+                    <CommentInput
+                      type="text"
+                      value={inputValues[item.reviewId]}
+                      onChange={(e) => onChangeEditHandler(e, item.reviewId)}
+                    />
+                    <EditBtn type="submit">
+                      <BsCheck2All size="36" color="4b372e" />
+                    </EditBtn>
+                  </form>
+                ) : (
+                  <>
+                    <EditCommentInput
+                      type="text"
+                      value={item.review}
+                      disabled
+                    />
+                    <DeleteBtn
+                      onClick={(e) => {
+                        onClickDeleteButtonHandler(item.musicId, item.reviewId)
+                      }}
+                    >
+                      <BsTrashFill size="24" color="4b372e" />
+                    </DeleteBtn>
+                    <EditBtn
+                      onClick={(e) => {
+                        onClickEditButtonHandler(item.reviewId)
+                        setInputValues((prevState) => ({
+                          ...prevState,
+                          [item.reviewId]: item.review,
+                        }))
+                      }}
+                    >
+                      <BsFillPencilFill size="23" color="4b372e" />
+                    </EditBtn>
+                  </>
+                )}
+                <ShowRepliesBtn
+                  onClick={(e) => {
+                    toggleReplies(item.reviewId)
                   }}
                 >
-                  삭제
-                </button>
-                <button
-                  onClick={() => {
-                    onClickEditButtonHandler(item.reviewId)
-                    setInputValues((prevState) => ({
-                      ...prevState,
-                      [item.reviewId]: item.review,
-                    }))
-                  }}
-                >
-                  수정하기
-                </button>
-              </>
-            )}
-            <div>
-              <AddRecomment reviewId={item.reviewId} />
-              <ReCommentsList reviewId={item.reviewId} />
+                  {showReplies[item.reviewId] ? '답글 숨기기' : '답글 보기'}
+                </ShowRepliesBtn>
+              </CommentsBox>
+              {showReplies[item.reviewId] && (
+                <div>
+                  <ReCommentsList reviewId={item.reviewId} />
+                  <AddRecomment reviewId={item.reviewId} />
+                </div>
+              )}
             </div>
-          </CommentBox>
-        )
-      })}
+          )
+        })}
+      </Border>
     </Wrap>
   )
 }

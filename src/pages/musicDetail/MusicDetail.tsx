@@ -1,11 +1,19 @@
-import React from 'react'
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { getMusicDetail, getComposer } from '../../api/comments'
+import Header from '../../components/header/Header'
 import AddComment from '../../components/musicdetail/AddComment'
 import CommentsList from '../../components/musicdetail/CommentsList'
 import ReCommentsList from '../../components/musicdetail/ReCommentsList'
-import { ComposerImg } from './MusicDetailSt'
+import {
+  ComposerImg,
+  ComposerName,
+  Con,
+  Ment,
+  MusicDesc,
+  MusicTitle,
+  Wrap,
+} from './MusicDetailSt'
 
 function MusicDetail() {
   const params = useParams()
@@ -42,20 +50,29 @@ function MusicDetail() {
   if (isError) {
     return <h1>Error!</h1>
   }
-
   return (
-    <div>
-      <p>{data.composer}</p>
-      <p>{data.musicTitle}</p>
-      <p>{data.musicContent}</p>
-      <ComposerImg src={composer} alt={`${data.composer} 이미지`} />
-      <audio controls>
-        <source src={data.musicUrl} type="audio/mpeg" />
-      </audio>
-      <AddComment musicId={musicId} />
-      <CommentsList musicId={musicId} />
-      <ReCommentsList reviewId={musicId} />
-    </div>
+    <>
+      <Header />
+      <Wrap>
+        <Ment>다른 회원들과 음악 감상평을 공유해 보세요.</Ment>
+        <Con>
+          <ComposerImg src={composer} alt={`${data.composer} 이미지`} />
+          <MusicTitle>{data.musicTitle}</MusicTitle>
+          <MusicDesc>{data.musicContent}</MusicDesc>
+          <ComposerName>{data.composer}</ComposerName>
+        </Con>
+
+        <Ment>좋아하는 음악에 대해 댓글을 남겨보세요.</Ment>
+        <AddComment musicId={musicId} />
+        <CommentsList musicId={musicId} />
+        <ReCommentsList reviewId={musicId} />
+
+        {/* <audio controls>
+          <source src={data.musicUrl} type="audio/mpeg" />
+        </audio> */}
+      </Wrap>
+      {/* <Footer /> */}
+    </>
   )
 }
 

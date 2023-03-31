@@ -4,6 +4,8 @@ import { addRecomment } from '../../api/comments'
 import { useParams } from 'react-router-dom'
 import {
   AddReCommentInput,
+  AddReform,
+  ReCharacters,
   ReCommentBtn,
 } from '../../pages/musicDetail/MusicDetailSt'
 
@@ -13,7 +15,7 @@ function AddRecomment({ reviewId }: { reviewId: number }) {
   const queryClient = useQueryClient()
   const mutation = useMutation(addRecomment, {
     onSuccess: () => {
-      queryClient.invalidateQueries(['recomments'])
+      queryClient.invalidateQueries(['recomments', reviewId])
     },
   })
 
@@ -30,14 +32,15 @@ function AddRecomment({ reviewId }: { reviewId: number }) {
 
   return (
     <>
-      <form onSubmit={onSubmitCommentHandler}>
+      <AddReform onSubmit={onSubmitCommentHandler}>
         <AddReCommentInput
           value={comment}
           onChange={onChangeCommentHandler}
-          placeholder="대댓글을 남겨주세요."
+          placeholder="게시물의 저작권 등 분쟁, 개인정보 노출로 인한 책임은 작성자 또는 게시자에게 있음을 유의해 주세요."
         />
-        <ReCommentBtn type="submit">대댓글 작성</ReCommentBtn>
-      </form>
+        <ReCharacters>{comment.length}/100</ReCharacters>
+        <ReCommentBtn type="submit">댓글 작성</ReCommentBtn>
+      </AddReform>
     </>
   )
 }
