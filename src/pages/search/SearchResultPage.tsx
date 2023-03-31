@@ -1,12 +1,22 @@
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { getSearch } from '../../api/search'
+import {
+  ComposerDesc,
+  ComposerImg,
+  ComposerName,
+  Fullname,
+  Inpo,
+  Wrap,
+} from './SearchBarSt'
 
 type ComposerInfo = {
   composerId: number
   composer: string
   describe: string
   imageUrl: string
+  koreanFullname: string
+  birthDeath: number
 }
 
 type ComposerSong = {
@@ -45,48 +55,48 @@ function SearchResultPage() {
   }, [searchTerm])
 
   return (
-    <div>
-      <div>
-        {composerInfo && (
-          <div>
-            <h4>작곡가 정보:</h4>
-            <p>이름: {composerInfo.composer}</p>
-          </div>
+    <Wrap>
+      {composerInfo && (
+        <Inpo>
+          <ComposerImg src={composerInfo.imageUrl} />
+          <ComposerName>{composerInfo.composer}</ComposerName>
+          <Fullname>
+            {composerInfo.koreanFullname}({composerInfo.birthDeath})
+          </Fullname>
+          <ComposerDesc>{composerInfo.describe}</ComposerDesc>
+        </Inpo>
+      )}
+      {composerSongs && composerSongs.length > 0 && (
+        <div>
+          <h4>곡 목록:</h4>
+          <ul>
+            {composerSongs.map((song) => (
+              <li key={song.musicId}>
+                {song.musicTitle}
+                <audio controls>
+                  <source src={song.musicUrl} type="audio/mpeg" />
+                </audio>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {/* {musicTitles && musicTitles.length > 0 && (
+        <div>
+          <ul>
+            {musicTitles.map((musicTitle) => (
+              <li key={musicTitle.id}>{musicTitle.title}</li>
+            ))}
+          </ul>
+        </div>
+      )} */}
+      {!composerInfo &&
+        (!composerSongs || composerSongs.length === 0) &&
+        (!musicTitles || musicTitles.length === 0) && (
+          <p>검색에 대한 결과가 없습니다.</p>
         )}
-        {composerSongs && composerSongs.length > 0 && (
-          <div>
-            <h4>곡 목록:</h4>
-            <ul>
-              {composerSongs.map((song) => (
-                <li key={song.musicId}>
-                  {song.musicTitle}
-                  <audio controls>
-                    <source src={song.musicUrl} type="audio/mpeg" />
-                  </audio>
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
-        {musicTitles && musicTitles.length > 0 && (
-          <div>
-            <h4>음악 제목:</h4>
-            <ul>
-              {musicTitles.map((musicTitle) => (
-                <li key={musicTitle.id}>{musicTitle.title}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-        {!composerInfo &&
-          (!composerSongs || composerSongs.length === 0) &&
-          (!musicTitles || musicTitles.length === 0) && (
-            <p>검색에 대한 결과가 없습니다.</p>
-          )}
-      </div>
-    </div>
+    </Wrap>
   )
-  
 }
 
 export default SearchResultPage

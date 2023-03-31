@@ -63,3 +63,47 @@ export const CloseButton = styled.button`
   margin-right: 10px;
   cursor: pointer;
 `
+
+export const Wrap = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 100px;
+`
+export const Inpo = styled.div`
+  width: 70%;
+  display: flex;
+  align-items: center;
+`
+
+export const ComposerImg = styled.img`
+  position: absolute;
+  top: 80px;
+  left: 500px;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+`
+export const ComposerName = styled.p`
+  position: absolute;
+  top: 80px;
+  left: 800px;
+  font-size: 2rem;
+  font-family: var(--font-googleGugi);
+`
+export const Fullname = styled.p`
+  position: absolute;
+  top: 150px;
+  left: 800px;
+  font-size: 1.2rem;
+  font-family: var(--font-NotoSerifKR);
+`
+export const ComposerDesc = styled.p`
+  position: absolute;
+  top: 200px;
+  left: 800px;
+  font-size: 1rem;
+  max-width: 600px;
+`
