@@ -34,8 +34,8 @@ const Point = ({ number, setSurvey, currentSlide, setCurrentSlide }: Props) => {
             <StDivPointNumber
               id={String(buttonArr.point)}
               style={{
-                backgroundColor: btn === buttonArr.id ? '#4B372E' : '#EFEFEF',
-                color: btn === buttonArr.id ? '#EFEFEF' : '#888888',
+                backgroundColor: btn === buttonArr.id ? '#4B372E' : '#FFFFFF',
+                color: btn === buttonArr.id ? '#FFFFFF' : '#888888',
               }}
               onClick={(event) => onClickPointHandler(buttonArr.id, event)}
             >
@@ -51,19 +51,20 @@ const Point = ({ number, setSurvey, currentSlide, setCurrentSlide }: Props) => {
 export default Point
 
 const StDivPointWrap = styled.div`
-  width: 500px;
-  margin: 20px auto;
+  width: 365px;
+  margin: auto;
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
 `
 const StDivPointNumber = styled.button`
-  width: 48px;
-  height: 48px;
+  width: 65px;
+  height: 65px;
   border: 1px solid #d0d9d9;
   box-sizing: border-box;
   line-height: 48px;
   text-align: center;
   margin: auto;
+  cursor: pointer;
 `
 const StDivPointContain = styled.div`
   margin-top: 48px;

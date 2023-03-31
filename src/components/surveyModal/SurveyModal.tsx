@@ -35,13 +35,15 @@ function SurveyModal({ modalState, setModalState, status1, status2 }: Props) {
     }
   })
   const onClickMoveMusicDetailPageHandler = () => {
-    navigate(`/recommend/music/${data.musicId}`)
+    navigate(`/recommend/music/${data.data.musicId}`)
   }
   const onClickMoveReccomendPageHandler = () => {
     navigate('/recommend')
   }
   if (isLoading) return <h1>Loading</h1>
   if (isError) return <h1>Error 발생</h1>
+
+  console.log(data)
 
   return (
     <ModalContainer>
@@ -55,16 +57,14 @@ function SurveyModal({ modalState, setModalState, status1, status2 }: Props) {
             {data.data.composer}의 {data.data.musicTitle}를 <br />
             들어보시는건 어떠세요?
           </StPRecommend>
-          <div>
-            <StDivMoveMusic onClick={onClickMoveMusicDetailPageHandler}>
+          <MoveBtnWrap>
+            <StDivMoveBtn onClick={onClickMoveMusicDetailPageHandler}>
               <StSpanMoveMusic>곡 들으러 가기</StSpanMoveMusic>
-            </StDivMoveMusic>
-          </div>
-          <div>
-            <StDivMoveHome onClick={onClickMoveReccomendPageHandler}>
+            </StDivMoveBtn>
+            <StDivMoveBtn onClick={onClickMoveReccomendPageHandler}>
               <StSpanMoveMusic>홈페이지로 돌아가기</StSpanMoveMusic>
-            </StDivMoveHome>
-          </div>
+            </StDivMoveBtn>
+          </MoveBtnWrap>
         </div>
       </StModalContents>
     </ModalContainer>
@@ -118,27 +118,28 @@ const StPCondition = styled.p`
   margin-top: 95px;
   font-size: 25px;
   font-weight: 500;
+  font-family: var(--font-NotoSerifKR);
 `
 const StPRecommend = styled.p`
   color: #efefef;
   font-size: 16px;
   margin-top: 30px;
+  font-family: var(--font-NotoSerifKR);
 `
-const StDivMoveMusic = styled.div`
+const StDivMoveBtn = styled.div`
   width: 170px;
   height: 44px;
-  margin: 100px auto 50px auto;
   line-height: 44px;
   background-color: #bf9b30;
+  cursor: pointer;
 `
 const StSpanMoveMusic = styled.span`
   color: #efefef;
   font-size: 16px;
 `
-const StDivMoveHome = styled.div`
-  width: 170px;
-  height: 44px;
-  margin: auto;
-  line-height: 44px;
-  background-color: #bf9b30;
+const MoveBtnWrap = styled.div`
+  width: 380px;
+  margin: 100px auto;
+  display: flex;
+  justify-content: space-evenly;
 `

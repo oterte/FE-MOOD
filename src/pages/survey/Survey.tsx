@@ -7,7 +7,6 @@ import { questionArr, SurveyData } from './surveyArray'
 import {
   StDivSurveyWrap,
   StSpanSurveyTitle,
-  StDivSurveyExplanation,
   StPSurveyExplanation,
   StDIvPointWrap,
   StPSurveyQuestion,
@@ -18,8 +17,7 @@ import {
   StDivSubmit,
   StDivSlide,
   StDivCarouselWrap,
-  StDivCarouselLeft,
-  StDivCarouselRight,
+  StDivMoveBtn,
   StSpanCurrentSlide,
 } from './SurveySt'
 
@@ -82,7 +80,7 @@ function Survey() {
       <Wrapper>
         <Header />
         <StDivSurveyWrap>
-          <StDivSurveyExplanation>
+          <div style={{ marginTop: '100px' }}>
             <StSpanSurveyTitle>
               기분에 따라 노래를 추천 받아보세요
             </StSpanSurveyTitle>
@@ -91,7 +89,7 @@ function Survey() {
               <br />
               결과를 기반으로 노래가 추천됩니다.
             </StPSurveyExplanation>
-          </StDivSurveyExplanation>
+          </div>
           <form onSubmit={onSubmitHandler}>
             <div style={{ width: '1280px', overflow: 'hidden' }}>
               <StDivSlide ref={slideRef}>
@@ -99,7 +97,7 @@ function Survey() {
                   return (
                     <StDIvPointWrap ref={containRef} key={question.id}>
                       <StPSurveyQuestion>
-                        Q.{question.questionNumber} {question.question}
+                        {question.questionNumber}. {question.question}
                       </StPSurveyQuestion>
                       <Point
                         number={Object.keys(survey)[question.id]}
@@ -111,23 +109,28 @@ function Survey() {
                         <StPAnswerLeft>전혀 아니다</StPAnswerLeft>
                         <StPAnswerRight>매우 그렇다</StPAnswerRight>
                       </StDivAnswer>
-                      <StDivCarouselWrap>
-                        <StDivCarouselLeft onClick={prevSlide}>
-                          <FaAngleLeft />
-                        </StDivCarouselLeft>
-                        <StDivCarouselRight onClick={nextSlide}>
-                          <FaAngleRight />
-                        </StDivCarouselRight>
-                      </StDivCarouselWrap>
                     </StDIvPointWrap>
                   )
                 })}
               </StDivSlide>
             </div>
+
             <StSpanCurrentSlide> {currentSlide + 1} / 10</StSpanCurrentSlide>
-            <StDivSubmit onClick={onClickModalOpenHandler}>
-              결과 확인하기
-            </StDivSubmit>
+            {currentSlide !== 9 ? (
+              <>
+                <StDivCarouselWrap>
+                  <StDivMoveBtn onClick={prevSlide}>이전 문항으로</StDivMoveBtn>
+                  <StDivMoveBtn onClick={nextSlide}>다음 문항으로</StDivMoveBtn>
+                </StDivCarouselWrap>
+              </>
+            ) : (
+              <StDivCarouselWrap>
+                <StDivMoveBtn onClick={prevSlide}>이전 문항으로</StDivMoveBtn>
+                <StDivSubmit onClick={onClickModalOpenHandler}>
+                  결과 확인하기
+                </StDivSubmit>
+              </StDivCarouselWrap>
+            )}
           </form>
         </StDivSurveyWrap>
         {modalState === true ? (
