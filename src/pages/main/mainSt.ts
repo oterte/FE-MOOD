@@ -12,7 +12,7 @@ export const Wrap = styled.div`
 export const FirstContainWrap = styled.div`
   position: absolute;
   width: 100%;
-  height: 1080px;
+  height: 100vh;
   text-align: center;
   background-color: #4b372e;
   display: flex;
@@ -56,7 +56,6 @@ export const BgGradient = styled.div`
   height: 2777px;
   top: 2000px;
   position: absolute;
-  /* background-color: black; */
   background: linear-gradient(
     180deg,
     rgba(75, 55, 46, 0) 0%,
@@ -69,7 +68,7 @@ export const BgGradient = styled.div`
 
 export const SecondContain = styled.div`
   position: relative;
-  top: 1080px;
+  top: 100vh;
   background-color: #281d18;
   width: 100%;
   height: 1080px;

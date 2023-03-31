@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router'
+import { useRef, useState, useEffect } from 'react'
 import { ComposerArr } from './MainArr'
 import {
   MoveRecommendPage,
@@ -25,9 +26,20 @@ import {
 
 function Main() {
   const navigate = useNavigate()
+  const containRef = useRef<HTMLDivElement>(null)
+  const [scrollHeight, setScrollHeight] = useState<number>(0)
+
+  const onScrollFunction = () => {
+    setScrollHeight(window.scrollY)
+  }
+
+  useEffect(() => {
+    onScrollFunction();
+  }, [scrollHeight])
+
   return (
     <>
-      <Wrap>
+      <Wrap ref={containRef} onScroll={onScrollFunction}>
         <>
           <FirstContainWrap>
             <Title>MOOD</Title>
