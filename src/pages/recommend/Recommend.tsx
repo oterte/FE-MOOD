@@ -20,7 +20,9 @@ import {
   MoveDetail,
   LikeMusic,
   CenterExplain,
-  ClickBox
+  ClickBox,
+  MusicComtain,
+  AudioDiv
 } from './RecommendSt'
 import { getlikedMusicList } from '../../api/chart'
 import LikeCount from '../../components/like/LikeCount'
@@ -164,7 +166,7 @@ function Recommend() {
               {!musicData ? (
                 <ClickBox>기분 영역을 클릭해보세요!</ClickBox>
               ) : (
-                <div style={{ textAlign: 'center' }}>
+                <MusicComtain>
                   <StPMusicTitle>{musicData.musicTitle}</StPMusicTitle>
                   <StPMusicComposer>{musicData.composer}</StPMusicComposer>
                   <LikeMusic>음악이 마음에 들었다면?</LikeMusic>
@@ -175,7 +177,7 @@ function Recommend() {
                   >
                     댓글 남기기
                   </MoveDetail>
-                </div>
+                </MusicComtain>
               )}
             </StDIvMusicPlayer>
           </div>
@@ -191,12 +193,14 @@ function Recommend() {
             </DivChartWrap>
           </div>
         </div>
-        <audio
-          controls
-          ref={audioRef}
-          src={musicData?.musicUrl}
-          onTimeUpdate={handleTimeUpdate}
-        />
+        <AudioDiv>
+          <audio
+            controls
+            ref={audioRef}
+            src={musicData?.musicUrl}
+            onTimeUpdate={handleTimeUpdate}
+          />
+        </AudioDiv>
       </StDivWrap>
     </>
   )

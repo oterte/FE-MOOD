@@ -18,14 +18,11 @@ export const StPRoomName = styled.p`
   font-weight: 500;
   color: #30362c;
 `
-export const STPExplain = styled.p`
-  color: #888888;
-`
-
 export const StDivUserList = styled.div`
   width: 236px;
   height: 705px;
   border: 1px solid #8b7d76;
+  overflow: auto;
   box-sizing: border-box;
   text-align: center;
   align-items: center;
@@ -46,7 +43,9 @@ export const StDivProfileImg = styled.div`
 export const StPProfileNickname = styled.p`
   margin-left: 23px;
 `
+export const STPExplain = styled.p`
 
+`
 export const StDivChatRoomWrap = styled.div`
   width: 1260px;
   margin: auto;
@@ -70,6 +69,7 @@ export const StDivChatRoom = styled.div`
 `
 export const StPChatListNickname = styled.p`
   color: #000000;
+  margin: 30px 0px 11px 0px;
 `
 export const StDivChatListMessage = styled.div`
   width: 383px;
@@ -79,6 +79,7 @@ export const StDivChatListMessage = styled.div`
   line-height: 45px;
 `
 export const StDivChatSubmit = styled.div`
+  margin-top: 20px;
   height: 86px;
   border-top: 1px solid #8b7d76;
   line-height: 86px;

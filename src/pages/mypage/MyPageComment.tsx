@@ -12,7 +12,14 @@ import { useNavigate } from 'react-router'
 import { useQuery } from 'react-query'
 import { showComment, showProfile } from '../../api/mypage'
 import MyPageBody from './MyPageBody'
-import { MyPageTableContainer, MyPageTableContentTd, MyPageTableThead } from './MyPageTable'
+import {
+  MyPageBodyDiv,
+  MyPageBodyMiddle,
+  MyPageBodyMiddleContainer,
+  MyPageBodyMiddleDiv,
+  MyPageBodyTop,
+  MyPageMiddleDivCursor,
+} from './MyPageTable'
 
 type Review = {
   musicId?: string
@@ -63,32 +70,22 @@ function MyPageComment() {
       </MyPageProfileContainer>
       <MyPageBody />
       <MyPageContentsContainer>
-        <MyPageTableContainer>
-          <MyPageTableThead>
-            <tr>
-              <th>곡명</th>
-              <th>댓글 내용</th>
-              <th>댓글 페이지로</th>
-            </tr>
-          </MyPageTableThead>
-          <tbody>
-            {reviewData
-              ? reviewData.map((item) => (
-                  <tr key={item.reviewId}>
-                    <MyPageTableContentTd>{item.musicId}</MyPageTableContentTd>
-                    <MyPageTableContentTd>{item.review}</MyPageTableContentTd>
-                    <MyPageTableContentTd
-                      onClick={() =>
-                        navigate(`/recommend/music/${item.musicId}`)
-                      }
-                    >
-                      이동
-                    </MyPageTableContentTd>
-                  </tr>
-                ))
-              : null}
-          </tbody>
-        </MyPageTableContainer>
+        <MyPageBodyTop>
+          <MyPageBodyDiv>곡명</MyPageBodyDiv>
+          <MyPageBodyDiv>댓글 내용</MyPageBodyDiv>
+          <MyPageBodyDiv>댓글 페이지로</MyPageBodyDiv>
+        </MyPageBodyTop>
+        <MyPageBodyMiddle>
+          {
+           reviewData?.map((item) => (
+            <MyPageBodyMiddleContainer key={item.reviewId}>
+              <MyPageBodyMiddleDiv>{item.musicId}</MyPageBodyMiddleDiv>
+              <MyPageBodyMiddleDiv>{item.review}</MyPageBodyMiddleDiv>
+              <MyPageMiddleDivCursor onClick={() => navigate(`/recommend/music/${item.musicId}`)}>댓글남기기</MyPageMiddleDivCursor>
+            </MyPageBodyMiddleContainer>
+           ))
+          }
+        </MyPageBodyMiddle>
       </MyPageContentsContainer>
       <Footer />
     </>

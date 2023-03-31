@@ -2,13 +2,11 @@ import styled from 'styled-components'
 
 
 export const MyPageTab = styled.div`
+  width: 1200px;
+  margin: auto;
   display: flex;
   flex-direction: row;
-  margin: 0 auto;
-  justify-content: center;
-  align-items: center;
-  border-right: 1px solid #8b7076;
-  color: black;
+  color: #888888;
 
 `
 export const MyPageTabItem = styled.div`
@@ -33,8 +31,7 @@ export const MyPageContentsContainer = styled.div`
   height: 500px;
   margin: auto;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
 `
 export const MyPageEditContainer = styled.div`
   display: flex;
@@ -47,6 +44,7 @@ export const MyPageEditBtn = styled.button`
   height: 60px;
   background-color: #4b372e;
   color: white;
+  cursor: pointer;
 `
 export const MyPageEditImg = styled.img`
   width: 192px;

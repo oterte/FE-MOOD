@@ -5,14 +5,20 @@ import {
   editRecomment,
 } from '../../api/comments'
 import {
-  CommentBox,
+  Nickname,
+  ReCommentBox,
   ReCommentInput,
+  ReCommentsListWrap,
+  ReDeleteBtn,
+  ReEditBtn,
+  ReNickname,
 } from '../../pages/musicDetail/MusicDetailSt'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { useParams } from 'react-router-dom'
+import { BsFillPencilFill } from 'react-icons/bs'
+import { BsCheck2All } from 'react-icons/bs'
+import { BsTrashFill } from 'react-icons/bs'
 
 function ReCommentsList({ reviewId }: { reviewId: number }) {
-  const params = useParams<{ id: string }>()
   const queryClient = useQueryClient()
   const [edit, setEdit] = useState<number>(0)
   const [inputValues, setInputValues] = useState<{ [key: number]: string }>({})
@@ -120,13 +126,14 @@ function ReCommentsList({ reviewId }: { reviewId: number }) {
   }
 
   return (
-    <div>
+    <ReCommentsListWrap>
       {recomments &&
         recomments.length > 0 &&
         recomments.map((recomment: any) => {
           if (recomment.reviewId === reviewId) {
             return (
-              <CommentBox key={recomment.reCommentId}>
+              <ReCommentBox key={recomment.reCommentId}>
+                <ReNickname>{recomment.nickname}</ReNickname>
                 {edit === recomment.reCommentId ? (
                   <form
                     onSubmit={(e) =>
@@ -144,12 +151,15 @@ function ReCommentsList({ reviewId }: { reviewId: number }) {
                         onChangeEditRecommentHandler(e, recomment.reCommentId)
                       }
                     />
-                    <button type="submit">수정하기</button>
+                    <ReEditBtn type="submit">
+                      {' '}
+                      <BsCheck2All size="30" color="4b372e" />
+                    </ReEditBtn>
                   </form>
                 ) : (
                   <>
                     <span>{recomment.comment}</span>
-                    <button
+                    <ReDeleteBtn
                       onClick={() => {
                         onClickDeleteRecommentButtonHandler(
                           reviewId,
@@ -157,9 +167,9 @@ function ReCommentsList({ reviewId }: { reviewId: number }) {
                         )
                       }}
                     >
-                      삭제
-                    </button>
-                    <button
+                      <BsTrashFill size="20" color="4b372e" />
+                    </ReDeleteBtn>
+                    <ReEditBtn
                       onClick={() => {
                         onClickEditRecommentButtonHandler(
                           recomment.reCommentId,
@@ -168,15 +178,15 @@ function ReCommentsList({ reviewId }: { reviewId: number }) {
                       }}
                       disabled={edit !== 0}
                     >
-                      수정하기
-                    </button>
+                      <BsFillPencilFill size="20" color="4b372e" />
+                    </ReEditBtn>
                   </>
                 )}
-              </CommentBox>
+              </ReCommentBox>
             )
           }
         })}
-    </div>
+    </ReCommentsListWrap>
   )
 }
 

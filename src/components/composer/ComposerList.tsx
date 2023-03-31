@@ -7,7 +7,6 @@ import {
   Desc,
   H3,
   Inpo,
-  P,
   Li,
   ComposerImg,
   ComposerName,
@@ -27,12 +26,7 @@ type MusicInfo = {
 }
 
 const ComposerList = () => {
-  const composers = [
-    'Ludwig van Beethoven',
-    'Wolfgang Amadeus Mozart',
-    'Frederic Chopin',
-    'Antonio Vivaldi',
-  ]
+  const composers = ['Beethoven', 'Mozart', 'Chopin', 'Vivaldi']
   const [selectedComposer, setSelectedComposer] = useState(composers[0])
 
   const { data } = useQuery<{ composerInfo: any[]; music: MusicInfo[] }>(
@@ -40,7 +34,6 @@ const ComposerList = () => {
     () => composerList({ composer: selectedComposer }),
     { enabled: !!selectedComposer }
   )
-
 
   const [musicInfos, setMusicInfos] = useState<MusicInfo[] | undefined>()
 
@@ -76,7 +69,6 @@ const ComposerList = () => {
     })
     setMusicInfos(updatedMusicInfos)
   }
-
 
   return (
     <Wrap>
