@@ -1,17 +1,10 @@
-import { combineReducers, createStore } from 'redux'
 import musicPlayer from '../modules/musicPlayer'
-import {configureStore} from "@reduxjs/toolkit"
-
-// const rootReducer = combineReducers({
-//   musicPlayer,
-// })
-
-// const store = configure(rootReducer)
+import { configureStore } from '@reduxjs/toolkit'
 
 const store = configureStore({
-    reducer: {
-        musicPlayer: musicPlayer,
-    }
+  reducer: {
+    musicPlayer: musicPlayer,
+  },
 })
 
 export default store

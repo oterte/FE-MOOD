@@ -36,6 +36,8 @@ import { Music } from '../../components/chart/LikeChart'
 import useAudio, { UseAudioReturnType } from '../../hooks/useAudio'
 import Play from '../../components/playbar/Play'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
+import { useSelector } from 'react-redux'
+import { RootState } from '../../redux/config/configStore'
 
 export interface Coordinate {
   coordinateX: number
@@ -56,7 +58,6 @@ export interface MusicData {
 function Recommend() {
   const navigate = useNavigate()
 
-  const [musicData, setMusicData] = useState<MusicData | undefined>()
   const [likeCount, setLikeCount] = useState<number>(0)
   const [likeStatus, setLikeStatus] = useState<boolean>(false)
   const [musicList, setMusicList] = useState<Music[]>([])
@@ -65,14 +66,14 @@ function Recommend() {
     useAudio()
 
   const dispatch = useDispatch()
+  const selectMusicData = useSelector((state: RootState) => {
+    return state.musicPlayer
+  })
 
   const getMusicMutation = useMutation(['recommendMusic'], getMusic, {
     onSuccess: (data) => {
-      setMusicData(data)
       setLikeCount(data.likeCount)
       setLikeStatus(data.likeStatus)
-
-      console.log(data)
 
       if (data) {
         dispatch(setMusicPlay(data))
@@ -103,24 +104,16 @@ function Recommend() {
       )
     }
 
-    dispatch({
-      type: 'SET_MUSIC',
-      // payload: '',
-    })
-
     queryClient.invalidateQueries(['recommendMusic'])
     getMusicMutation.mutate(coordinate)
   }
-  useEffect(() => {
-    if (musicData?.musicId) setMusicNumber(musicData?.musicId)
-  }, [musicData])
 
   const handleLikeUpdate = (
     updatedMusicId: number,
     updatedLikeStatus: boolean,
     updatedLikeCount: number
   ) => {
-    if (musicData?.musicId === updatedMusicId) {
+    if (selectMusicData?.musicId === updatedMusicId) {
       setLikeStatus(updatedLikeStatus)
       setLikeCount(updatedLikeCount)
     }
@@ -150,13 +143,13 @@ function Recommend() {
 
   useEffect(() => {
     const updatedMusic = musicList.find(
-      (music) => music.musicId === musicData?.musicId
+      (music) => music.musicId === selectMusicData?.musicId
     )
     if (updatedMusic) {
       setLikeStatus(updatedMusic.likeStatus)
       setLikeCount(updatedMusic.likesCount)
     }
-  }, [musicList, musicData])
+  }, [musicList, selectMusicData])
 
   return (
     <>
@@ -181,23 +174,25 @@ function Recommend() {
             <StDIvMusicPlayer>
               <StDivLike>
                 <LikeCount
-                  musicId={musicData?.musicId}
+                  musicId={selectMusicData?.musicId}
                   likeCount={likeCount}
                   likeStatus={likeStatus}
                   onLikeUpdate={handleLikeUpdate}
                 />
               </StDivLike>
               <StDivComposerImg>IMG</StDivComposerImg>
-              {!musicData ? (
+              {!selectMusicData ? (
                 <ClickBox>기분 영역을 클릭해보세요!</ClickBox>
               ) : (
                 <MusicComtain>
-                  <StPMusicTitle>{musicData.musicTitle}</StPMusicTitle>
-                  <StPMusicComposer>{musicData.composer}</StPMusicComposer>
+                  <StPMusicTitle>{selectMusicData.musicTitle}</StPMusicTitle>
+                  <StPMusicComposer>
+                    {selectMusicData.composer}
+                  </StPMusicComposer>
                   <LikeMusic>음악이 마음에 들었다면?</LikeMusic>
                   <MoveDetail
                     onClick={() =>
-                      navigate(`/recommend/music/${musicData?.musicId}`)
+                      navigate(`/recommend/music/${selectMusicData?.musicId}`)
                     }
                   >
                     댓글 남기기
@@ -210,25 +205,18 @@ function Recommend() {
             <CenterExplain>다른 회원들은 어떤 곡을 좋아할까요?</CenterExplain>
             <DivChartWrap>
               <ChartTab
-                musicId={musicData?.musicId}
+                musicId={selectMusicData?.musicId}
                 likeStatus={likeStatus}
                 musicList={musicList}
                 onLikeUpdate={handleLikeUpdate}
-                setMusicData={setMusicData}
               />
             </DivChartWrap>
           </div>
         </div>
         <AudioDiv>
-          <audio
-            controls
-            ref={audioRef}
-            src={musicData?.musicUrl}
-            onTimeUpdate={handleTimeUpdate}
-          />
+          <Play></Play>
         </AudioDiv>
       </StDivWrap>
-      <Play></Play>
     </>
   )
 }

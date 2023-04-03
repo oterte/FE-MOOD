@@ -6,7 +6,7 @@ function Play() {
     return state.musicPlayer
   })
 
-  console.log(data)
+  console.log("selector data", data)
 
   return (
     <div>
