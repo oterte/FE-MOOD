@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../../api/loginapi'
-import Footer from '../../components/footer/Footer'
 import kakao from '../../assets/kakao_login_large_narrow.png'
 import Header from '../../components/header/Header'
 import jwt_Decode from 'jwt-decode'
@@ -58,7 +57,13 @@ function Login() {
       <Header />
       <LoginContainer>
         <p>로그인</p>
-        <span onClick={() => {navigate("/signup")}}>MOOD 회원이 아니신가요?</span>
+        <span
+          onClick={() => {
+            navigate('/signup')
+          }}
+        >
+          MOOD 회원이 아니신가요?
+        </span>
         <form>
           <LoginInput
             type="text"
@@ -91,7 +96,6 @@ function Login() {
 
       {/* <button onClick={onGoogleLoginHanlder}>구글 로그인</button>
       <button onClick={onNaverLoginHandler}>네이버 로그인</button> */}
-      <Footer />
     </>
   )
 }

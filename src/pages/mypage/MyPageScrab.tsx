@@ -2,7 +2,6 @@ import React from 'react'
 import { useQuery, useQueryClient } from 'react-query'
 import { scrappedMusic, showProfile } from '../../api/mypage'
 import Header from '../../components/header/Header'
-import Footer from '../../components/footer/Footer'
 import {
   MyPageProfileBodyContainer,
   MyPageProfileContainer,
@@ -41,7 +40,7 @@ function MyPageScrab() {
     <>
       <Header />
       <MyPageProfileContainer>
-      <MyPageProfileBodyContainer>
+        <MyPageProfileBodyContainer>
           <p>마이페이지</p>
           <MyPageProfileImgBox>
             <MyPageProfileImg src={profileData.profileUrl} />
@@ -97,7 +96,6 @@ function MyPageScrab() {
       <MyPageContentsContainer>
         <h1>스크랩</h1>
       </MyPageContentsContainer>
-      <Footer />
     </>
   )
 }

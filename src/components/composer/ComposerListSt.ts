@@ -2,11 +2,11 @@ import styled from 'styled-components'
 
 export const Wrap = styled.div`
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-bottom: 10rem;
 `
 
 export const Ment = styled.p`
@@ -20,6 +20,7 @@ export const Contents = styled.div`
   position: relative;
   width: 1180px;
   flex-grow: 1;
+  min-height: calc(100vh - 120px);
   display: flex;
   justify-content: center;
   border-bottom: 2px solid #8b7d76;

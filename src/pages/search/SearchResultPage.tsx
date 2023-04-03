@@ -3,6 +3,7 @@ import { useLocation } from 'react-router-dom'
 import { getSearch } from '../../api/search'
 import { Desc, H3 } from '../../components/composer/ComposerListSt'
 import Header from '../../components/header/Header'
+import Wrapper from '../../components/Wrapper'
 import {
   ComposerDesc,
   ComposerImg,
@@ -73,7 +74,7 @@ function SearchResultPage() {
   // }
 
   return (
-    <>
+    <Wrapper>
       <Header />
       <Wrap>
         {composerInfo && (
@@ -121,7 +122,7 @@ function SearchResultPage() {
             <p>검색에 대한 결과가 없습니다.</p>
           )}
       </Wrap>
-    </>
+    </Wrapper>
   )
 }
 
