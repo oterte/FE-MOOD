@@ -5,14 +5,15 @@ import Header from '../../components/header/Header'
 import AddComment from '../../components/musicdetail/AddComment'
 import CommentsList from '../../components/musicdetail/CommentsList'
 import ReCommentsList from '../../components/musicdetail/ReCommentsList'
+import Wrapper from '../../components/Wrapper'
 import {
+  AudioDiv,
   ComposerImg,
   ComposerName,
   Con,
   Ment,
   MusicDesc,
   MusicTitle,
-  Wrap,
 } from './MusicDetailSt'
 
 function MusicDetail() {
@@ -50,29 +51,26 @@ function MusicDetail() {
   if (isError) {
     return <h1>Error!</h1>
   }
+
   return (
-    <>
+    <Wrapper>
       <Header />
-      <Wrap>
-        <Ment>다른 회원들과 음악 감상평을 공유해 보세요.</Ment>
-        <Con>
-          <ComposerImg src={composer} alt={`${data.composer} 이미지`} />
-          <MusicTitle>{data.musicTitle}</MusicTitle>
-          <MusicDesc>{data.musicContent}</MusicDesc>
-          <ComposerName>{data.composer}</ComposerName>
-        </Con>
+      <Ment>다른 회원들과 음악 감상평을 공유해 보세요.</Ment>
+      <Con>
+        <ComposerImg src={composer} alt={`${data.composer} 이미지`} />
+        <MusicTitle>{data.musicTitle}</MusicTitle>
+        <MusicDesc>{data.musicContent}</MusicDesc>
+        <ComposerName>{data.composer}</ComposerName>
+      </Con>
 
-        <Ment>좋아하는 음악에 대해 댓글을 남겨보세요.</Ment>
-        <AddComment musicId={musicId} />
-        <CommentsList musicId={musicId} />
-        <ReCommentsList reviewId={musicId} />
-
-        {/* <audio controls>
-          <source src={data.musicUrl} type="audio/mpeg" />
-        </audio> */}
-      </Wrap>
-      {/* <Footer /> */}
-    </>
+      <Ment>좋아하는 음악에 대해 댓글을 남겨보세요.</Ment>
+      <AddComment musicId={musicId} />
+      <CommentsList musicId={musicId} />
+      <ReCommentsList reviewId={musicId} />
+      <AudioDiv>
+        <audio controls src={data.musicUrl} />
+      </AudioDiv>
+    </Wrapper>
   )
 }
 

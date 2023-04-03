@@ -1,6 +1,5 @@
 import React from 'react'
 import Header from '../../components/header/Header'
-import Footer from '../../components/footer/Footer'
 import {
   MyPageProfileBodyContainer,
   MyPageProfileContainer,
@@ -61,7 +60,6 @@ function MyPageDelteAccount() {
       <MyPageContentsContainer>
         <button onClick={onDeleteAccountHandler}>회원 탈퇴하기</button>
       </MyPageContentsContainer>
-      <Footer />
     </>
   )
 }
