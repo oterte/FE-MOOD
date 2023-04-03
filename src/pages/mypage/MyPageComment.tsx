@@ -1,6 +1,5 @@
 import React from 'react'
 import Header from '../../components/header/Header'
-import Footer from '../../components/footer/Footer'
 import {
   MyPageProfileBodyContainer,
   MyPageProfileContainer,
@@ -76,18 +75,19 @@ function MyPageComment() {
           <MyPageBodyDiv>댓글 페이지로</MyPageBodyDiv>
         </MyPageBodyTop>
         <MyPageBodyMiddle>
-          {
-           reviewData?.map((item) => (
+          {reviewData?.map((item) => (
             <MyPageBodyMiddleContainer key={item.reviewId}>
               <MyPageBodyMiddleDiv>{item.musicId}</MyPageBodyMiddleDiv>
               <MyPageBodyMiddleDiv>{item.review}</MyPageBodyMiddleDiv>
-              <MyPageMiddleDivCursor onClick={() => navigate(`/recommend/music/${item.musicId}`)}>댓글남기기</MyPageMiddleDivCursor>
+              <MyPageMiddleDivCursor
+                onClick={() => navigate(`/recommend/music/${item.musicId}`)}
+              >
+                댓글남기기
+              </MyPageMiddleDivCursor>
             </MyPageBodyMiddleContainer>
-           ))
-          }
+          ))}
         </MyPageBodyMiddle>
       </MyPageContentsContainer>
-      <Footer />
     </>
   )
 }
