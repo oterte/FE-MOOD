@@ -13,7 +13,6 @@ import {
   StDivRoomTitle,
   StDivRoomImg,
   StPRoomName,
-  STPExplain,
   StDivChatRoom,
   StPChatListNickname,
   StDivChatListMessage,
@@ -238,18 +237,6 @@ function ChatRoom() {
         </p>
       </StDivRoomTitle>
       <StDivChatRoomWrap>
-        <StDivUserList>
-          <STPExplain>참여자 인원 ({userList.length})</STPExplain>
-          {userList &&
-            userList.map((item) => {
-              return (
-                <StDivUserProfile key={item}>
-                  <StDivProfileImg>img</StDivProfileImg>
-                  <StPProfileNickname>{item}</StPProfileNickname>
-                </StDivUserProfile>
-              )
-            })}
-        </StDivUserList>
         <StDivChatRoomChatListWrap ref={scrollRef}>
           <div ref={target}></div>
           {scrollChatData?.map((scrollChatData) => {
@@ -309,20 +296,32 @@ function ChatRoom() {
               </StDivChatRoomChatListContain>
             )
           })}
-          <StDivChatSubmit>
-            <form onSubmit={onSubmitChattingHandler}>
-              <StInputChatSubmit
-                value={chatText}
-                onChange={onChangeChatTextHandler}
-                placeholder="채팅 입력"
-              />
-              <StBtnChatSubmit onClick={onClickSendMessageHandler}>
-                보내기
-              </StBtnChatSubmit>
-            </form>
-          </StDivChatSubmit>
         </StDivChatRoomChatListWrap>
+        <StDivUserList>
+          <p>참여자 인원 ({userList.length})</p>
+          {userList &&
+            userList.map((item) => {
+              return (
+                <StDivUserProfile key={item}>
+                  <StDivProfileImg>img</StDivProfileImg>
+                  <StPProfileNickname>{item}</StPProfileNickname>
+                </StDivUserProfile>
+              )
+            })}
+        </StDivUserList>
       </StDivChatRoomWrap>
+      <StDivChatSubmit>
+        <form onSubmit={onSubmitChattingHandler}>
+          <StInputChatSubmit
+            value={chatText}
+            onChange={onChangeChatTextHandler}
+            placeholder="채팅 입력"
+          />
+          <StBtnChatSubmit onClick={onClickSendMessageHandler}>
+            보내기
+          </StBtnChatSubmit>
+        </form>
+      </StDivChatSubmit>
     </>
   )
 }
