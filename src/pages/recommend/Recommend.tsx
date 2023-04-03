@@ -22,19 +22,23 @@ import {
   CenterExplain,
   ClickBox,
   MusicComtain,
-  AudioDiv
+  AudioDiv,
+  StDivTitle,
+  StPTitle,
+  StPExplain,
 } from './RecommendSt'
 import { getlikedMusicList } from '../../api/chart'
 import LikeCount from '../../components/like/LikeCount'
 import ChartTab from '../../components/chart/ChartTab'
 import { Music } from '../../components/chart/LikeChart'
 import useAudio, { UseAudioReturnType } from '../../hooks/useAudio'
+import Footer from '../../components/footer/Footer'
 
 export interface Coordinate {
   coordinateX: number
   coordinateY: number
 }
-interface MusicData {
+export interface MusicData {
   composer: string
   fileName: string
   musicContent: string
@@ -141,6 +145,10 @@ function Recommend() {
     <>
       <Header />
       <StDivWrap>
+        <StDivTitle>
+          <StPTitle>듣고 싶은 음악의 영역을 클릭하세요</StPTitle>
+          <StPExplain>영역을 기반으로 색다른 음악이 추천됩니다</StPExplain>
+        </StDivTitle>
         <StDivMoodWrap ref={targetRef} onClick={onClickcoordinateHandler}>
           <StPVigor>생기 넘치는</StPVigor>
           <StDivXcoordinate>
@@ -189,6 +197,8 @@ function Recommend() {
                 likeStatus={likeStatus}
                 musicList={musicList}
                 onLikeUpdate={handleLikeUpdate}
+                setMusicData={setMusicData}
+
               />
             </DivChartWrap>
           </div>
