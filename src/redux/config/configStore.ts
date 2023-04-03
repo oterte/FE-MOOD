@@ -1,12 +1,19 @@
 import { combineReducers, createStore } from 'redux'
-import musicPlayer from '../modules/musicList'
+import musicPlayer from '../modules/musicPlayer'
+import {configureStore} from "@reduxjs/toolkit"
 
-const rootReducer = combineReducers({
-  musicPlayer,
+// const rootReducer = combineReducers({
+//   musicPlayer,
+// })
+
+// const store = configure(rootReducer)
+
+const store = configureStore({
+    reducer: {
+        musicPlayer: musicPlayer,
+    }
 })
-
-const store = createStore(rootReducer)
 
 export default store
 
-export type RootState = ReturnType<typeof rootReducer>
+export type RootState = ReturnType<typeof store.getState>

@@ -1,8 +1,3 @@
-import { useNavigate } from 'react-router'
-import { QueryClient, useMutation } from 'react-query'
-import { getMusic } from '../../api/recommendApi'
-import Header from '../../components/header/Header'
-import { useState, useRef, useEffect } from 'react'
 import {
   StDivWrap,
   StDivMoodWrap,
@@ -27,12 +22,20 @@ import {
   StPTitle,
   StPExplain,
 } from './RecommendSt'
+import { useNavigate } from 'react-router'
+import { useDispatch } from 'react-redux'
+import { QueryClient, useMutation } from 'react-query'
+import { getMusic } from '../../api/recommendApi'
+import Header from '../../components/header/Header'
+import { useState, useRef, useEffect } from 'react'
+
 import { getlikedMusicList } from '../../api/chart'
 import LikeCount from '../../components/like/LikeCount'
 import ChartTab from '../../components/chart/ChartTab'
 import { Music } from '../../components/chart/LikeChart'
 import useAudio, { UseAudioReturnType } from '../../hooks/useAudio'
-import Footer from '../../components/footer/Footer'
+import Play from '../../components/playbar/Play'
+import { setMusicPlay } from '../../redux/modules/musicPlayer'
 
 export interface Coordinate {
   coordinateX: number
@@ -61,11 +64,20 @@ function Recommend() {
   const [handleTimeUpdate, audioRef, setMusicNumber]: UseAudioReturnType =
     useAudio()
 
+  const dispatch = useDispatch()
+
   const getMusicMutation = useMutation(['recommendMusic'], getMusic, {
     onSuccess: (data) => {
       setMusicData(data)
       setLikeCount(data.likeCount)
       setLikeStatus(data.likeStatus)
+
+      console.log(data)
+
+      if (data) {
+        dispatch(setMusicPlay(data))
+      }
+
       queryClient.invalidateQueries('recommendMusic')
     },
     onError: (error) => {
@@ -90,6 +102,11 @@ function Recommend() {
         ((e.nativeEvent.offsetY - moodHeight) / moodHeight) * 100 * -1
       )
     }
+
+    dispatch({
+      type: 'SET_MUSIC',
+      // payload: '',
+    })
 
     queryClient.invalidateQueries(['recommendMusic'])
     getMusicMutation.mutate(coordinate)
@@ -198,7 +215,6 @@ function Recommend() {
                 musicList={musicList}
                 onLikeUpdate={handleLikeUpdate}
                 setMusicData={setMusicData}
-
               />
             </DivChartWrap>
           </div>
@@ -212,6 +228,7 @@ function Recommend() {
           />
         </AudioDiv>
       </StDivWrap>
+      <Play></Play>
     </>
   )
 }
