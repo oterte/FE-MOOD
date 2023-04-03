@@ -37,13 +37,11 @@ function SurveyModal({ modalState, setModalState, status1, status2 }: Props) {
   const onClickMoveMusicDetailPageHandler = () => {
     navigate(`/recommend/music/${data.data.musicId}`)
   }
-  const onClickMoveReccomendPageHandler = () => {
-    navigate('/recommend')
+  const onClickReSurveyHandler = () => {
+    window.location.replace('/survey')
   }
   if (isLoading) return <h1>Loading</h1>
   if (isError) return <h1>Error 발생</h1>
-
-  console.log(data)
 
   return (
     <ModalContainer>
@@ -52,19 +50,27 @@ function SurveyModal({ modalState, setModalState, status1, status2 }: Props) {
           <StModalClose onClick={onClickCloseModalHandler}>
             <AiOutlineClose />
           </StModalClose>
-          <StPCondition>{data.msg}</StPCondition>
-          <StPRecommend>
-            {data.data.composer}의 {data.data.musicTitle}를 <br />
-            들어보시는건 어떠세요?
-          </StPRecommend>
-          <MoveBtnWrap>
-            <StDivMoveBtn onClick={onClickMoveMusicDetailPageHandler}>
-              <StSpanMoveMusic>곡 들으러 가기</StSpanMoveMusic>
-            </StDivMoveBtn>
-            <StDivMoveBtn onClick={onClickMoveReccomendPageHandler}>
-              <StSpanMoveMusic>홈페이지로 돌아가기</StSpanMoveMusic>
-            </StDivMoveBtn>
-          </MoveBtnWrap>
+          <ModalWrap>
+            {/* <BackgroundDesign></BackgroundDesign> */}
+            <ContainWrap>
+              <StPCondition>{data.msg}</StPCondition>
+              <StPRecommend>
+                {data.data.composer}의 {data.data.musicTitle}를 <br />
+                들어보시는건 어떠세요?
+              </StPRecommend>
+              <MoveBtnWrap>
+                <StDivMoveBtn color="#AAAAAA" onClick={onClickReSurveyHandler}>
+                  <StSpanMoveMusic>설문조사 다시 하기</StSpanMoveMusic>
+                </StDivMoveBtn>
+                <StDivMoveBtn
+                  color="#bf9b30"
+                  onClick={onClickMoveMusicDetailPageHandler}
+                >
+                  <StSpanMoveMusic>곡 들으러 가기</StSpanMoveMusic>
+                </StDivMoveBtn>
+              </MoveBtnWrap>
+            </ContainWrap>
+          </ModalWrap>
         </div>
       </StModalContents>
     </ModalContainer>
@@ -112,6 +118,7 @@ const StModalClose = styled.div`
   color: #ffffff;
   margin-left: 550px;
   font-size: 22px;
+  cursor: pointer;
 `
 const StPCondition = styled.p`
   color: #efefef;
@@ -121,6 +128,9 @@ const StPCondition = styled.p`
   font-family: var(--font-NotoSerifKR);
 `
 const StPRecommend = styled.p`
+  width: 300px;
+  margin: auto;
+  text-align: center;
   color: #efefef;
   font-size: 16px;
   margin-top: 30px;
@@ -130,7 +140,7 @@ const StDivMoveBtn = styled.div`
   width: 170px;
   height: 44px;
   line-height: 44px;
-  background-color: #bf9b30;
+  background-color: ${(props) => props.color};
   cursor: pointer;
 `
 const StSpanMoveMusic = styled.span`
@@ -142,4 +152,29 @@ const MoveBtnWrap = styled.div`
   margin: 100px auto;
   display: flex;
   justify-content: space-evenly;
+`
+export const ModalWrap = styled.div`
+  width: 540px;
+  height: 550px;
+  overflow: hidden;
+  border: 1px solid red
+  position: relative;
+  z-index: 1;
+`
+export const BackgroundDesign = styled.div`
+  width: 350px;
+  height: 636px;
+  background: linear-gradient(
+    180deg,
+    rgba(75, 55, 46, 0) 0%,
+    #46342b 46.35%,
+    rgba(40, 29, 24, 0) 100%
+  );
+  transform: rotate(-53.65deg);
+  position: absolute;
+  z-index: 0;
+`
+export const ContainWrap = styled.div`
+  position: relative;
+  z-index: 2;
 `
