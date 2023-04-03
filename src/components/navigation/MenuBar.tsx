@@ -22,6 +22,12 @@ import {
   MenuItems,
   MenuWrapper,
 } from './MenuBarSt'
+import menu1 from '../../assets/icons/menu_01.png'
+import menu2 from '../../assets/icons/menu_02.png'
+import menu3 from '../../assets/icons/menu_03.png'
+import menu4 from '../../assets/icons/menu_04.png'
+import menubtn from '../../assets/icons/menu_black.png'
+import closebtn from '../../assets/icons/xmark_black.png'
 
 type Props = {
   items: string[]
@@ -42,9 +48,7 @@ const MenuBar: React.FC<Props> = () => {
   return (
     <MenuWrapper isOpen={isOpen}>
       <HamburgerButton isOpen={isOpen} onClick={toggleMenu}>
-        <span />
-        <span />
-        <span />
+        <img src={isOpen ? closebtn : menubtn} alt="menu_toggle" />
       </HamburgerButton>
       <MenuItems isOpen={isOpen}>
         <MenuItem>
@@ -64,19 +68,30 @@ const MenuBar: React.FC<Props> = () => {
             </Link>
           ) : null}
           <Link to="/recommend">
-            <RecommendBtn>기분에 따라 노래 추천받기</RecommendBtn>
+            <RecommendBtn>
+              <img src={menu1} alt="recommend" />
+              기분에 따라 노래 추천받기
+            </RecommendBtn>
           </Link>
 
           <Link to="/composer">
-            <ComposerBtn>작곡가별 음악 추천받기</ComposerBtn>
+            <ComposerBtn>
+              <img src={menu2} alt="composer" />
+              작곡가별 음악 추천받기
+            </ComposerBtn>
           </Link>
 
           <Link to="/survey">
-            <SurveyBtn>내 기분 상태 체크하기</SurveyBtn>
+            <SurveyBtn>
+              <img src={menu3} alt="survey" />내 기분 상태 체크하기
+            </SurveyBtn>
           </Link>
 
           <Link to="/selectroom">
-            <ChatBtn>채팅하러 가기</ChatBtn>
+            <ChatBtn>
+              <img src={menu4} alt="selectroom" />
+              채팅하러 가기
+            </ChatBtn>
           </Link>
 
           {onGetLocalStorage('authorization') ? (

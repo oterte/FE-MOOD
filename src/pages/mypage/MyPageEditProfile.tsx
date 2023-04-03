@@ -1,6 +1,5 @@
 import React, { useRef, useState } from 'react'
 import Header from '../../components/header/Header'
-import Footer from '../../components/footer/Footer'
 import {
   MyPageProfileBodyContainer,
   MyPageProfileContainer,
@@ -105,7 +104,6 @@ function MyPageEditProfile() {
           </div>
         </MyPageEditContainer>
       </MyPageContentsContainer>
-      <Footer />
     </>
   )
 }

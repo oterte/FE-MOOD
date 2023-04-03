@@ -1,14 +1,13 @@
 import ComposerList from '../../components/composer/ComposerList'
-import Footer from '../../components/footer/Footer'
 import Header from '../../components/header/Header'
+import Wrapper from '../../components/Wrapper'
 
 function Composer() {
   return (
-    <>
+    <Wrapper>
       <Header />
       <ComposerList />
-      {/* <Footer /> */}
-    </>
+    </Wrapper>
   )
 }
 

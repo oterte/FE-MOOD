@@ -2,7 +2,6 @@ import React from 'react'
 import { useQuery } from 'react-query'
 import { likedMusic, showProfile } from '../../api/mypage'
 import Header from '../../components/header/Header'
-import Footer from '../../components/footer/Footer'
 import {
   MyPageProfileBodyContainer,
   MyPageProfileContainer,
@@ -96,7 +95,6 @@ function MyPageLike() {
           ))}
         </MyPageBodyMiddle>
       </MyPageContentsContainer>
-      <Footer />
     </>
   )
 }

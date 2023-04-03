@@ -11,7 +11,6 @@ import {
   SignupInputTwo,
 } from './singup'
 
-import Footer from '../../components/footer/Footer'
 import { checkId, checkNickname, register } from '../../api/signup'
 import { useNavigate } from 'react-router-dom'
 import Header from '../../components/header/Header'
@@ -158,7 +157,13 @@ function SignUp() {
       <SignupContainer>
         <SignupForm>
           <p>회원가입</p>
-          <span onClick={() => {navigate("/login")}}>MOOD에 이미 가입하셨나요?</span>
+          <span
+            onClick={() => {
+              navigate('/login')
+            }}
+          >
+            MOOD에 이미 가입하셨나요?
+          </span>
           <SignupLabel>아이디</SignupLabel>
           <SignupInput
             type="text"
@@ -206,7 +211,9 @@ function SignUp() {
             value={nickname}
             onChange={onCheckNicknameHandler}
           />
-          <SignupCheckBtn onClick={onCheckExistNickName}>중복확인</SignupCheckBtn>
+          <SignupCheckBtn onClick={onCheckExistNickName}>
+            중복확인
+          </SignupCheckBtn>
           <div>
             {nicknameCheck === false ? (
               <SignupErrorSpan style={{ color: 'red' }}>
@@ -271,7 +278,6 @@ function SignUp() {
           </div>
         </SignupForm>
       </SignupContainer>
-      <Footer />
     </>
   )
 }
