@@ -51,7 +51,7 @@ function SurveyModal({ modalState, setModalState, status1, status2 }: Props) {
             <AiOutlineClose />
           </StModalClose>
           <ModalWrap>
-            {/* <BackgroundDesign></BackgroundDesign> */}
+            <BackgroundDesign></BackgroundDesign>
             <ContainWrap>
               <StPCondition>{data.msg}</StPCondition>
               <StPRecommend>
@@ -115,6 +115,9 @@ const StModalContents = styled.div`
   }
 `
 const StModalClose = styled.div`
+  position: absolute;
+  border: 1px solid red;
+  width: 30px;
   color: #ffffff;
   margin-left: 550px;
   font-size: 22px;
@@ -154,16 +157,16 @@ const MoveBtnWrap = styled.div`
   justify-content: space-evenly;
 `
 export const ModalWrap = styled.div`
-  width: 540px;
+  width: 530px;
   height: 550px;
   overflow: hidden;
-  border: 1px solid red
   position: relative;
   z-index: 1;
 `
 export const BackgroundDesign = styled.div`
   width: 350px;
   height: 636px;
+  margin: auto;
   background: linear-gradient(
     180deg,
     rgba(75, 55, 46, 0) 0%,
@@ -172,6 +175,8 @@ export const BackgroundDesign = styled.div`
   );
   transform: rotate(-53.65deg);
   position: absolute;
+  top: -40px;
+  left: 100px;
   z-index: 0;
 `
 export const ContainWrap = styled.div`
