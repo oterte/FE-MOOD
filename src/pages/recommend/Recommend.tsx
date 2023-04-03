@@ -33,7 +33,6 @@ import { getlikedMusicList } from '../../api/chart'
 import LikeCount from '../../components/like/LikeCount'
 import ChartTab from '../../components/chart/ChartTab'
 import { Music } from '../../components/chart/LikeChart'
-import useAudio, { UseAudioReturnType } from '../../hooks/useAudio'
 import Play from '../../components/playbar/Play'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
 import { useSelector } from 'react-redux'
@@ -62,8 +61,6 @@ function Recommend() {
   const [likeStatus, setLikeStatus] = useState<boolean>(false)
   const [musicList, setMusicList] = useState<Music[]>([])
   const targetRef = useRef<HTMLDivElement>(null)
-  const [handleTimeUpdate, audioRef, setMusicNumber]: UseAudioReturnType =
-    useAudio()
 
   const dispatch = useDispatch()
   const selectMusicData = useSelector((state: RootState) => {
@@ -213,9 +210,7 @@ function Recommend() {
             </DivChartWrap>
           </div>
         </div>
-        <AudioDiv>
-          <Play></Play>
-        </AudioDiv>
+        <Play />
       </StDivWrap>
     </>
   )
