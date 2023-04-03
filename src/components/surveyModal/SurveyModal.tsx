@@ -116,7 +116,6 @@ const StModalContents = styled.div`
 `
 const StModalClose = styled.div`
   position: absolute;
-  border: 1px solid red;
   width: 30px;
   color: #ffffff;
   margin-left: 550px;
