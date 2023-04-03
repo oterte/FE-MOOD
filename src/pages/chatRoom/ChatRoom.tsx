@@ -1,7 +1,12 @@
-import React, { useRef } from 'react'
-import { useState, useEffect, useCallback } from 'react'
+import React, { useRef, useState, useEffect, useCallback } from 'react'
 import { useParams } from 'react-router-dom'
 import { io } from 'socket.io-client'
+import angry from '../../assets/icons/angry_brown.png'
+import sad from '../../assets/icons/sad_brown.png'
+import happy from '../../assets/icons/happy_brown.png'
+import bore from '../../assets/icons/boring_brown.png'
+import embarrass from '../../assets/icons/embarrass_brown.png'
+import surprise from '../../assets/icons/surprise_brown.png'
 import {
   StDivChatRoomChatListContain,
   StDivChatRoomChatListWrap,
@@ -19,34 +24,16 @@ import {
   StDivChatSubmit,
   StInputChatSubmit,
   StBtnChatSubmit,
+  RoomImg,
 } from './ChatRoomSt'
 import { onGetCookieHandler } from '../../util/cookie'
 import Header from '../../components/header/Header'
-
-interface ChatData {
-  param?: string
-  message: string
-}
-interface RecieveData {
-  message: string | null
-  nickname: string
-}
-interface BeforeChatData {
-  chatId: number
-  roomId: number
-  nickname: string
-  message: string
-  createdAt: string
-  updatedAt: string
-}
-interface ScrollChatData {
-  chatId: number
-  roomId: number
-  nickname: string
-  message: string
-  createdAt: string
-  updatedAt: string
-}
+import {
+  BeforeChatData,
+  ChatData,
+  RecieveData,
+  ScrollChatData,
+} from './ChatRoomArray'
 
 const socket = io(`${process.env.REACT_APP_SERVER}`, {
   transports: ['websocket'],
@@ -66,6 +53,7 @@ function ChatRoom() {
   const [userList, setUserList] = useState<string[]>([])
   const [index, setIndex] = useState<number>(0)
   const [roomName, setRoomName] = useState<string>('')
+  const [roomImg, setRoomImg] = useState<string>('')
 
   const [prevScrollheight, setPrevScrollHeight] = useState<number>(0)
 
@@ -107,21 +95,27 @@ function ChatRoom() {
     switch (roomId) {
       case 1:
         setRoomName('분노')
+        setRoomImg(angry)
         break
       case 2:
         setRoomName('슬픔')
+        setRoomImg(sad)
         break
       case 3:
         setRoomName('행복')
+        setRoomImg(happy)
         break
       case 4:
         setRoomName('지루함')
+        setRoomImg(bore)
         break
       case 5:
         setRoomName('부끄러움')
+        setRoomImg(embarrass)
         break
       case 6:
         setRoomName('놀램')
+        setRoomImg(surprise)
         break
     }
   }, [])
@@ -230,7 +224,9 @@ function ChatRoom() {
     <>
       <Header />
       <StDivRoomTitle>
-        <StDivRoomImg>이미지</StDivRoomImg>
+        <StDivRoomImg>
+          <RoomImg src={roomImg} />
+        </StDivRoomImg>
         <StPRoomName>{roomName}의 방</StPRoomName>
         <p style={{ color: '#888888' }}>
           당신의 감정을 실시간으로 나누어보세요

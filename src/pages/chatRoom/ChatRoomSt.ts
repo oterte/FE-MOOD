@@ -11,7 +11,10 @@ export const StDivRoomImg = styled.div`
   width: 80px;
   height: 50px;
   margin: auto;
-  border: 1px solid #888888;
+`
+export const RoomImg = styled.img`
+  width: 80px;
+  height: 50px;
 `
 export const StPRoomName = styled.p`
   font-size: 32px;
@@ -19,7 +22,7 @@ export const StPRoomName = styled.p`
   color: #30362c;
 `
 export const StDivUserList = styled.div`
-  width: 236px;
+  width: 428px;
   height: 705px;
   border: 1px solid #8b7d76;
   overflow: auto;
@@ -35,9 +38,9 @@ export const StDivUserProfile = styled.div`
   border-bottom: 1px solid #e7e8e6;
 `
 export const StDivProfileImg = styled.div`
-  width: 50px;
-  height: 50px;
-  margin-left: 26px;
+  width: 53px;
+  height: 53px;
+  margin-left: 53px;
   line-height: 50px;
 `
 export const StPProfileNickname = styled.p`
@@ -100,5 +103,5 @@ export const StBtnChatSubmit = styled.button`
   color: #ffffff;
   background-color: #4b372e;
   border: none;
-  margin-left: 11px;
+  margin-left: 50px;
 `
