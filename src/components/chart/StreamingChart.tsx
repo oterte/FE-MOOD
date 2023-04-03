@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { getstreamingMusicList } from '../../api/chart'
 import {
   ChartComposer,
@@ -9,8 +9,13 @@ import {
   Wrap,
 } from './ChartStyle'
 import { Music } from './LikeChart'
+import { MusicData } from '../../pages/recommend/Recommend'
 
-function StreamingChart() {
+interface StreamChartProps {
+  setMusicData: Dispatch<SetStateAction<MusicData | undefined>>
+}
+
+function StreamingChart(setMusicData: StreamChartProps) {
   const [streamingList, setStreamingList] = useState<Music[]>([])
   const [visibleRankStart, setVisibleRankStart] = useState(0)
 
@@ -36,6 +41,10 @@ function StreamingChart() {
     }
   }, [visibleRankStart])
 
+  // const onClickMusicHandler = (music: any) => {
+  //   setMusicData(music)
+  // }
+
   return (
     <Wrap>
       {streamingList
@@ -52,4 +61,4 @@ function StreamingChart() {
   )
 }
 
-export default StreamingChart
+export default React.memo(StreamingChart)
