@@ -153,6 +153,7 @@ export const Border = styled.div`
   border: 2px solid #d9d9d9;
   background: white;
   margin: auto;
+  overflow-y: auto;
 `
 
 export const ReCommentBox = styled.div`
@@ -308,4 +309,13 @@ export const ReEditBtn = styled.button`
   margin-right: 50px;
   background: none;
   color: white;
+`
+
+export const AudioDiv = styled.div`
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 120px;
+  background: #fafafa;
+  box-shadow: -4px -2px 30px rgba(0, 0, 0, 0.1);
 `

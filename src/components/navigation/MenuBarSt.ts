@@ -38,27 +38,12 @@ export const HamburgerButton = styled.button<{ isOpen: boolean }>`
   box-sizing: border-box;
   z-index: 100;
 
-  span {
+  img {
     width: 100%;
-    height: 2px;
-    background-color: black;
     transition: all 0.1s linear;
     position: relative;
     left: 50px;
-    transform-origin: 1px;
     z-index: 100;
-
-    &:first-child {
-      transform: ${({ isOpen }) => (isOpen ? 'rotate(29deg)' : 'rotate(0)')};
-    }
-
-    &:nth-child(2) {
-      opacity: ${({ isOpen }) => (isOpen ? '0' : '1')};
-    }
-
-    &:last-child {
-      transform: ${({ isOpen }) => (isOpen ? 'rotate(-29deg)' : 'rotate(0)')};
-    }
   }
 `
 
@@ -137,6 +122,20 @@ export const RecommendBtn = styled.button`
   border-top: 3px solid #8b7d76;
   border-bottom: 1px solid #8b7d76;
   font-family: var(--font-NotoSansKR-Thin);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 18px;
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+
+  img {
+    width: 40px;
+    margin-right: 5px;
+  }
 `
 
 export const ComposerBtn = styled.button`
@@ -154,6 +153,20 @@ export const ComposerBtn = styled.button`
   font-weight: bold;
   border-bottom: 1px solid #8b7d76;
   font-family: var(--font-NotoSansKR-Thin);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 32px;
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+
+  img {
+    width: 32px;
+    margin-right: 10px;
+  }
 `
 export const SurveyBtn = styled.button`
   position: absolute;
@@ -170,6 +183,20 @@ export const SurveyBtn = styled.button`
   font-weight: bold;
   border-bottom: 1px solid #8b7d76;
   font-family: var(--font-NotoSansKR-Thin);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 50px;
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+
+  img {
+    width: 36px;
+    margin-right: 10px;
+  }
 `
 export const ChatBtn = styled.button`
   position: absolute;
@@ -186,6 +213,20 @@ export const ChatBtn = styled.button`
   font-weight: bold;
   border-bottom: 3px solid #8b7d76;
   font-family: var(--font-NotoSansKR-Thin);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 100px;
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+
+  img {
+    width: 32px;
+    margin-right: 15px;
+  }
 `
 export const LogoutBtn = styled.button`
   width: 280px;
