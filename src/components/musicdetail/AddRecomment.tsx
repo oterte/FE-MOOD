@@ -1,16 +1,14 @@
 import { useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 import { addRecomment } from '../../api/comments'
-import { useParams } from 'react-router-dom'
 import {
-  AddReCommentInput,
+  AddReCommentTextArea,
   AddReform,
   ReCharacters,
   ReCommentBtn,
 } from '../../pages/musicDetail/MusicDetailSt'
 
 function AddRecomment({ reviewId }: { reviewId: number }) {
-  const { id: musicId } = useParams<{ id: string }>()
   const [comment, setComment] = useState<string>('')
   const queryClient = useQueryClient()
   const mutation = useMutation(addRecomment, {
@@ -18,10 +16,6 @@ function AddRecomment({ reviewId }: { reviewId: number }) {
       queryClient.invalidateQueries(['recomments', reviewId])
     },
   })
-
-  const onChangeCommentHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setComment(e.target.value)
-  }
 
   const onSubmitCommentHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -33,12 +27,15 @@ function AddRecomment({ reviewId }: { reviewId: number }) {
   return (
     <>
       <AddReform onSubmit={onSubmitCommentHandler}>
-        <AddReCommentInput
+        <AddReCommentTextArea
           value={comment}
-          onChange={onChangeCommentHandler}
+          onChange={(e) => {
+            const text = e.target.value
+            setComment(text)
+          }}
           placeholder="게시물의 저작권 등 분쟁, 개인정보 노출로 인한 책임은 작성자 또는 게시자에게 있음을 유의해 주세요."
         />
-        <ReCharacters>{comment.length}/100</ReCharacters>
+        <ReCharacters>{comment.length}/50</ReCharacters>
         <ReCommentBtn type="submit">댓글 작성</ReCommentBtn>
       </AddReform>
     </>
