@@ -21,6 +21,7 @@ export const MyPageProfileImg = styled.img`
   max-width: 100%;
   max-height: 100%;
   object-fit: cover;
+  border-radius:50%;
 `
 
 export const MyPageProfileBodyContainer = styled.div`
