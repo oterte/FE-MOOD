@@ -7,13 +7,6 @@ function MyPageBody() {
   return (
     <>
       <MyPageTab>
-        {/* <MyPageTabItem
-          onClick={() => {
-            navigate('/mypageScrap')
-          }}
-        >
-          스크랩 음악
-        </MyPageTabItem> */}
         <MyPageTabItem
           onClick={() => {
             navigate('/mypageComment')

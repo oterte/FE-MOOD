@@ -1,3 +1,4 @@
+import { Nickname } from './../pages/musicDetail/MusicDetailSt';
 import { instance } from './instance'
 
 export const showProfile = async () => {
@@ -7,7 +8,7 @@ export const showProfile = async () => {
 
 export const showComment = async () => {
   const response = await instance.get('/api/user/reviewlist')
-  return response.data.reviesList
+  return response
 }
 
 export const showReComment = async () => {
@@ -25,12 +26,19 @@ export const scrappedMusic = async () => {
 }
 
 export const editProfileImg = async (newProfile: any) => {
-  console.log(newProfile)
   await instance.patch('/api/user/uploadprofile', newProfile, {
     headers: {
       'Content-Type': 'multipart/form-data',
     },
   })
+}
+
+export const changeNickname = async (newNickname:string) => {
+  console.log(newNickname)
+  const body = {
+    nickname:newNickname
+  }
+  await instance.patch('/api/user/changenickname', body)
 }
 
 export const deleteAccount = async () => {
