@@ -6,7 +6,13 @@ import {
   MyPageProfileImg,
   MyPageProfileImgBox,
 } from './mypageSC'
-import { MyPageContentsContainer } from './mypagecontentsSC'
+import {
+  MyPageCommentTab,
+  MyPageContentsContainer,
+  MyPageTab,
+  MyPageTabItem,
+  MyPageTabItemLast,
+} from './mypagecontentsSC'
 import { useNavigate } from 'react-router'
 import { useQuery } from 'react-query'
 import { showComment, showProfile } from '../../api/mypage'
@@ -30,7 +36,7 @@ function MyPageComment() {
     isLoading,
     isError,
     data: reviewData,
-  } = useQuery<Review[]>(['myComment'], showComment)
+  } = useQuery(['myComment'], showComment)
   const { isLoading: profileLoading, data: profileData } = useQuery(
     ['profile'],
     showProfile
@@ -67,7 +73,36 @@ function MyPageComment() {
           </div>
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
-      <MyPageBody />
+      <MyPageTab>
+        <MyPageCommentTab
+          onClick={() => {
+            navigate('/mypageComment')
+          }}
+        >
+          남긴 댓글
+        </MyPageCommentTab>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageLike')
+          }}
+        >
+          좋아요
+        </MyPageTabItem>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageEditprofile')
+          }}
+        >
+          프로필 사진 변경
+        </MyPageTabItem>
+        <MyPageTabItemLast
+          onClick={() => {
+            navigate('/mypageDeleteaccount')
+          }}
+        >
+          회원 탈퇴
+        </MyPageTabItemLast>
+      </MyPageTab>
       <MyPageContentsContainer>
         <MyPageBodyTop>
           <MyPageBodyDiv>곡명</MyPageBodyDiv>
@@ -75,7 +110,7 @@ function MyPageComment() {
           <MyPageBodyDiv>댓글 페이지로</MyPageBodyDiv>
         </MyPageBodyTop>
         <MyPageBodyMiddle>
-          {reviewData?.map((item) => (
+          {/* {reviewData?.map((item) => (
             <MyPageBodyMiddleContainer key={item.reviewId}>
               <MyPageBodyMiddleDiv>{item.musicId}</MyPageBodyMiddleDiv>
               <MyPageBodyMiddleDiv>{item.review}</MyPageBodyMiddleDiv>
@@ -85,7 +120,7 @@ function MyPageComment() {
                 댓글남기기
               </MyPageMiddleDivCursor>
             </MyPageBodyMiddleContainer>
-          ))}
+          ))} */}
         </MyPageBodyMiddle>
       </MyPageContentsContainer>
     </>

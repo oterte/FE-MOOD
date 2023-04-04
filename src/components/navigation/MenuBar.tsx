@@ -43,8 +43,8 @@ const MenuBar: React.FC<Props> = () => {
   const onLogout = () => {
     onRemoveToken()
     onLogoutHandler('authorization')
-    navigate('/')
   }
+  const nickname = onGetLocalStorage("nickname")
   return (
     <MenuWrapper isOpen={isOpen}>
       <HamburgerButton isOpen={isOpen} onClick={toggleMenu}>
@@ -56,7 +56,10 @@ const MenuBar: React.FC<Props> = () => {
             <H1>MOOD</H1>
           </Link>
           <ProfileImg></ProfileImg>
-          <LoginMent>"__"님 어서오세요.</LoginMent>
+          {
+            nickname ? <LoginMent>{nickname}님 어서오세요.</LoginMent>
+            : <LoginMent>어서오세요.</LoginMent>
+          }
           {!onGetLocalStorage('authorization') ? (
             <Link to="/login">
               <LoginBtn>로그인</LoginBtn>
