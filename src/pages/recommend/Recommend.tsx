@@ -37,6 +37,7 @@ import Play from '../../components/playbar/Play'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/config/configStore'
+import { setIsPlaying } from '../../redux/modules/isPlaying'
 
 export interface Coordinate {
   coordinateX: number
@@ -100,6 +101,7 @@ function Recommend() {
         ((e.nativeEvent.offsetY - moodHeight) / moodHeight) * 100 * -1
       )
     }
+    dispatch(setIsPlaying())
 
     queryClient.invalidateQueries(['recommendMusic'])
     getMusicMutation.mutate(coordinate)

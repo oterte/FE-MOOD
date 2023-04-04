@@ -26,4 +26,4 @@ const musicSlice = createSlice({
 })
 
 export default musicSlice.reducer
-export const { setMusicPlay } = musicSlice.actions;
+export const { setMusicPlay } = musicSlice.actions
