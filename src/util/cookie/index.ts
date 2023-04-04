@@ -30,6 +30,7 @@ export const onLogoutHandler = (name:string) => {
         .replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`);
     });
     window.location.reload()
+    window.location.assign('/recommend')
 }
 
 export const onRemoveToken = () => {

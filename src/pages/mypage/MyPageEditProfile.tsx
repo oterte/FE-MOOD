@@ -7,16 +7,30 @@ import {
   MyPageProfileImgBox,
 } from './mypageSC'
 import {
+  ExternalContainer,
   MyPageContentsContainer,
   MyPageEditBtn,
   MyPageEditContainer,
   MyPageEditImg,
+  MyPageEditTab,
+  MyPageImgBtnWrap,
+  MyPageImgEditInput,
+  MyPageInput,
+  MyPageInputBtn,
+  MyPageInputContainer,
+  MyPageInputLabel,
+  MyPageTab,
+  MyPageTabItem,
+  MyPageTabItemLast,
 } from './mypagecontentsSC'
 
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { editProfileImg, showProfile } from '../../api/mypage'
-import MyPageBody from './MyPageBody'
+import { changeNickname, editProfileImg, showProfile } from '../../api/mypage'
+import { useNavigate } from 'react-router-dom'
+import { checkNickname } from '../../api/signup'
+import { onSetLocalStorageHandler } from '../../util/cookie'
 function MyPageEditProfile() {
+  const navigate = useNavigate()
   const queryClient = useQueryClient()
   const {
     isLoading,
@@ -26,13 +40,18 @@ function MyPageEditProfile() {
   const imgRef: any = useRef<HTMLInputElement>(null)
   const [imgUrl, setImgUrl] = useState<string | ArrayBuffer | null>()
   const [imgFile, setImgFile] = useState<File>()
+  const [newNickname, setNewNickname] = useState('')
 
   const editMutation = useMutation(editProfileImg, {
     onSuccess: () => {
       queryClient.invalidateQueries()
     },
   })
-
+  const changeMutation = useMutation(changeNickname, {
+    onSuccess: () => {
+      queryClient.invalidateQueries()
+    },
+  })
   const onChangeImageHandler = () => {
     const reader = new FileReader()
     const file = imgRef.current.files[0]
@@ -49,6 +68,12 @@ function MyPageEditProfile() {
     data.append('image', imgFile as File)
     editMutation.mutate(data)
   }
+  const onChangeNicknameHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    changeMutation.mutate(newNickname)
+    setNewNickname('')
+    onSetLocalStorageHandler("nickname", newNickname)
+  }
   if (isLoading) {
     return <h1>로딩중</h1>
   }
@@ -58,6 +83,7 @@ function MyPageEditProfile() {
   }
 
   console.log(profileData)
+  console.log(newNickname)
   return (
     <>
       <Header />
@@ -78,10 +104,40 @@ function MyPageEditProfile() {
           </div>
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
-      <MyPageBody />
+      <MyPageTab>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageComment')
+          }}
+        >
+          남긴 댓글
+        </MyPageTabItem>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageLike')
+          }}
+        >
+          좋아요
+        </MyPageTabItem>
+        <MyPageEditTab
+          onClick={() => {
+            navigate('/mypageEditprofile')
+          }}
+        >
+          프로필 사진 변경
+        </MyPageEditTab>
+        <MyPageTabItemLast
+          onClick={() => {
+            navigate('/mypageDeleteaccount')
+          }}
+        >
+          회원 탈퇴
+        </MyPageTabItemLast>
+      </MyPageTab>
       <MyPageContentsContainer>
-        <MyPageEditContainer>
-          <div>
+        <ExternalContainer>
+          <MyPageEditContainer>
+            {/* <div>
             {imgUrl ? (
               <MyPageEditImg src={imgUrl as string} alt="이미지" />
             ) : (
@@ -96,13 +152,41 @@ function MyPageEditProfile() {
             type="file"
             accept="image/*"
             onChange={onChangeImageHandler}
-          />
-          <div>
-            <MyPageEditBtn onClick={onSubmitImageHandler}>
-              회원 정보 저장
-            </MyPageEditBtn>
-          </div>
-        </MyPageEditContainer>
+          /> */}
+            <label htmlFor="fileinput">
+              <MyPageEditImg
+                src={imgUrl ? imgUrl : profileData.profileUrl}
+                alt="이미지"
+              />
+            </label>
+            <MyPageImgEditInput
+              id='fileinput'
+              ref={imgRef}
+              type="file"
+              accept="image/*"
+              onChange={onChangeImageHandler}
+            />
+            <MyPageImgBtnWrap>
+              <MyPageInputBtn onClick={onSubmitImageHandler}>
+                프로필 사진 수정
+              </MyPageInputBtn>
+            </MyPageImgBtnWrap>
+            <MyPageInputContainer>
+              <form>
+                <MyPageInputLabel>닉네임</MyPageInputLabel>
+                <MyPageInput
+                  type="text"
+                  value={newNickname}
+                  placeholder="닉네임을 입력하세요"
+                  onChange={(e) => setNewNickname(e.target.value)}
+                />
+                <MyPageInputBtn type="submit" onClick={onChangeNicknameHandler}>
+                  닉네임 변경
+                </MyPageInputBtn>
+              </form>
+            </MyPageInputContainer>
+          </MyPageEditContainer>
+        </ExternalContainer>
       </MyPageContentsContainer>
     </>
   )

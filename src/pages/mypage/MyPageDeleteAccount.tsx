@@ -6,7 +6,13 @@ import {
   MyPageProfileImg,
   MyPageProfileImgBox,
 } from './mypageSC'
-import { MyPageContentsContainer } from './mypagecontentsSC'
+import {
+  MyPageContentsContainer,
+  MyPageDeleteTab,
+  MyPageTab,
+  MyPageTabItem,
+  MyPageTabItemLast,
+} from './mypagecontentsSC'
 import { useNavigate } from 'react-router'
 import { useQuery } from 'react-query'
 import { deleteAccount, showProfile } from '../../api/mypage'
@@ -35,7 +41,6 @@ function MyPageDelteAccount() {
     return <h1>로딩중..</h1>
   }
 
-  console.log(profileData)
   return (
     <>
       <Header />
@@ -56,7 +61,36 @@ function MyPageDelteAccount() {
           </div>
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
-      <MyPageBody />
+      <MyPageTab>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageComment')
+          }}
+        >
+          남긴 댓글
+        </MyPageTabItem>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageLike')
+          }}
+        >
+          좋아요
+        </MyPageTabItem>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageEditprofile')
+          }}
+        >
+          프로필 사진 변경
+        </MyPageTabItem>
+        <MyPageDeleteTab
+          onClick={() => {
+            navigate('/mypageDeleteaccount')
+          }}
+        >
+          회원 탈퇴
+        </MyPageDeleteTab>
+      </MyPageTab>
       <MyPageContentsContainer>
         <button onClick={onDeleteAccountHandler}>회원 탈퇴하기</button>
       </MyPageContentsContainer>
