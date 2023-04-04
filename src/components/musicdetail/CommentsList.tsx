@@ -17,7 +17,7 @@ import {
   Total,
   WriteDate,
 } from '../../pages/musicDetail/MusicDetailSt'
-import { Wrap } from '../header/HeaderSt'
+import { Wrap } from '../../pages/musicDetail/MusicDetailSt'
 import ReCommentsList from './ReCommentsList'
 import AddRecomment from './AddRecomment'
 
@@ -101,7 +101,8 @@ function CommentsList({ musicId }: { musicId: number }) {
   if (isError) {
     return <h1>error</h1>
   }
-
+  console.log(data);
+  
   return (
     <Wrap>
       <Total>최신댓글 ({data?.count})</Total>
@@ -112,7 +113,7 @@ function CommentsList({ musicId }: { musicId: number }) {
               <CommentsBox>
                 <Nickname>{item.nickname}</Nickname>
                 <WriteDate>
-                  작성 시간: {new Date(item.createdAt).toLocaleString()}
+                  {new Date(item.createdAt).toLocaleString()}
                 </WriteDate>
                 {edit === item.reviewId ? (
                   <form

@@ -7,6 +7,7 @@ import {
   SearchInput,
 } from './SearchBarSt'
 import { BsSearch } from 'react-icons/bs'
+import { BsX } from "react-icons/bs";
 
 function SearchBar() {
   const [showInput, setShowInput] = useState(false)
@@ -46,8 +47,8 @@ function SearchBar() {
       </SearchInput>
       {showInput ? (
         <>
-          <SearchButton onClick={onClickSearchHandler}>검색</SearchButton>
-          <CloseButton onClick={handleClose}>닫기</CloseButton>
+          <SearchButton onClick={onClickSearchHandler}><BsSearch size="23"/></SearchButton>
+          <CloseButton onClick={handleClose}><BsX size="38"/></CloseButton>
         </>
       ) : (
         <SearchButton onClick={() => setShowInput(true)}>

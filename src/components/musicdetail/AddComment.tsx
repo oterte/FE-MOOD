@@ -22,14 +22,6 @@ function AddComment({ musicId }: Props) {
     },
   })
 
-  const onChangeCommentHandler = useCallback(
-    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-      const text = e.target.value
-      setReview(text)
-    },
-    []
-  )
-
   const onSubmitHandler = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()

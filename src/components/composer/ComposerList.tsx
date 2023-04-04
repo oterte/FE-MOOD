@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useQuery } from 'react-query'
 import { composerList } from '../../api/composerApi'
-import LikeCount from '../like/LikeCount'
+import Play from '../playbar/Play'
+import Heart from '../../assets/icons/Heart_brown.png'
+import Down from '../../assets/icons/down_brown.png'
 import {
   Contents,
   Desc,
@@ -14,7 +16,14 @@ import {
   Describe,
   Ment,
   Wrap,
+  ContentContainer,
+  MusicDetailBtn,
+  ShowRepliesBtn,
+  SpanMusicContent,
+  SpanMusicTitle,
+  ToogleWrap,
 } from './ComposerListSt'
+import { useNavigate } from 'react-router-dom'
 
 type MusicInfo = {
   id: number
@@ -26,6 +35,7 @@ type MusicInfo = {
 }
 
 const ComposerList = () => {
+  const navigate = useNavigate()
   const composers = ['Beethoven', 'Mozart', 'Chopin', 'Vivaldi']
   const [selectedComposer, setSelectedComposer] = useState(composers[0])
 
@@ -36,6 +46,7 @@ const ComposerList = () => {
   )
 
   const [musicInfos, setMusicInfos] = useState<MusicInfo[] | undefined>()
+  const [showReplies, setShowReplies] = useState<number>(-1)
 
   useEffect(() => {
     if (data) {
@@ -50,24 +61,8 @@ const ComposerList = () => {
 
   const composerInfo = data?.composerInfo[0]
 
-  const onLikeUpdate = (
-    musicId: number,
-    updatedLikeStatus: boolean,
-    updatedLikeCount: number
-  ) => {
-    if (!musicInfos) return
-
-    const updatedMusicInfos = musicInfos.map((musicInfo) => {
-      if (musicInfo.id === musicId) {
-        return {
-          ...musicInfo,
-          likeStatus: updatedLikeStatus,
-          likesCount: updatedLikeCount,
-        }
-      }
-      return musicInfo
-    })
-    setMusicInfos(updatedMusicInfos)
+  const toggleReplies = (musicIndex: number) => {
+    setShowReplies((prevState) => (prevState === musicIndex ? -1 : musicIndex))
   }
 
   return (
@@ -85,7 +80,6 @@ const ComposerList = () => {
             {composerName}
           </Li>
         ))}
-
         {composerInfo && musicInfos ? (
           <>
             <Inpo>
@@ -108,20 +102,40 @@ const ComposerList = () => {
                 <div>더보기</div>
               </div>
               {musicInfos?.map((music, index) => (
-                <div key={`music-${music.id || music.musicTitle}`}>
-                  <div>{index + 1}</div>
-                  <H3>{music.musicTitle}</H3>
-                  <div>
-                    <LikeCount
-                      musicId={music.id}
-                      likeCount={music.likesCount}
-                      likeStatus={music.likeStatus}
-                      onLikeUpdate={onLikeUpdate}
-                    />
+                <React.Fragment key={`music-fragment-${music.musicTitle}`}>
+                  <div key={`music-${music.id || music.musicTitle}`}>
+                    <div>{index + 1}</div>
+                    <H3>{music.musicTitle}</H3>
+                    <button>
+                      <img src={Heart} alt="like" />
+                    </button>
+                    <button>
+                      <img src={Down} alt="down" />
+                    </button>
+                    <div>
+                      <ShowRepliesBtn onClick={() => toggleReplies(index)}>
+                        {showReplies === index ? '숨기기' : '더보기'}
+                      </ShowRepliesBtn>
+                    </div>
                   </div>
-                  <div>스크랩</div>
-                  <div>더보기</div>
-                </div>
+                  {showReplies === index && (
+                    <ToogleWrap key={`music-info-${music.id}`}>
+                      <ContentContainer>
+                        <SpanMusicTitle>{music.musicTitle}</SpanMusicTitle>
+                        <SpanMusicContent>
+                          {music.musicContent}
+                        </SpanMusicContent>
+                        <MusicDetailBtn
+                          onClick={() =>
+                            navigate(`/recommend/music/${music?.id}`)
+                          }
+                        >
+                          댓글 남기러 가기
+                        </MusicDetailBtn>
+                      </ContentContainer>
+                    </ToogleWrap>
+                  )}
+                </React.Fragment>
               ))}
             </Desc>
           </>
@@ -129,6 +143,7 @@ const ComposerList = () => {
           <div>Loading</div>
         )}
       </Contents>
+      <Play />
     </Wrap>
   )
 }
