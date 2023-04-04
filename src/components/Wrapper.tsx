@@ -7,15 +7,18 @@ const Wrapper = ({ children }: { children: any }) => {
 export default Wrapper
 
 const StWrapper = styled.div`
+  position: relative;
   width: 100%;
-  box-sizing: border-box;
-  min-height: 200vh;
-  height: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
   align-items: center;
-  position: relative;
-  padding-top: 4rem;
-  padding-bottom: 10rem;
+`
+
+export const Wrap = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `

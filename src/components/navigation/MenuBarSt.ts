@@ -26,6 +26,7 @@ export const MenuItem = styled.li`
 `
 
 export const HamburgerButton = styled.button<{ isOpen: boolean }>`
+  position: ${({ isOpen }) => (isOpen ? 'fixed' : 'relative')};
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -238,6 +239,7 @@ export const LogoutBtn = styled.button`
   font-size: 1.1rem;
   font-weight: bold;
   margin-top: 760px;
+  margin-left: 70px;
   font-family: var(--font-NotoSansKR-Thin);
   color: #888888;
 `
