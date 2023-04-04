@@ -1,10 +1,11 @@
-import React from 'react'
+import { ComposerName, PlayBarWrap, PlayMusicTitle } from './PlaySt'
 
 function Play() {
   return (
-    <div>
-      
-    </div>
+    <PlayBarWrap>
+      <PlayMusicTitle>곡명</PlayMusicTitle>
+      <ComposerName>작곡가</ComposerName>
+    </PlayBarWrap>
   )
 }
 
