@@ -118,12 +118,12 @@ function SignUp() {
     ) {
       register(body)
         .then((res) => {
-          alert('회원가입에 성공하셨습니다.')
+          alert(`${nickname}님 회원가입에 성공하셨습니다.`)
           navigate('/login')
           return res
         })
         .catch((error) => {
-          console.log(error)
+          alert(error.response.data.message)
         })
     }
   }
