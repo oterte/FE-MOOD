@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import LikeCount from '../like/LikeCount'
 import {
   Con,
@@ -8,7 +8,8 @@ import {
   ChartTitle,
   ChartComposer,
 } from './ChartStyle'
-import { MusicData } from '../../pages/recommend/Recommend'
+import { useDispatch } from 'react-redux'
+import { setMusicPlay } from '../../redux/modules/musicPlayer'
 
 export interface Music {
   id: number
@@ -32,7 +33,6 @@ interface LikeChartProps {
     likeCount: number
   ) => void
   musicList: Music[]
-  setMusicData: Dispatch<SetStateAction<MusicData | undefined>>
 }
 
 function LikeChart({
@@ -40,7 +40,6 @@ function LikeChart({
   likeStatus,
   onLikeUpdate,
   musicList,
-  setMusicData,
 }: LikeChartProps) {
   const [visibleRange, setVisibleRange] = useState({ start: 0, end: 5 })
 
@@ -57,8 +56,9 @@ function LikeChart({
     }
   }, [])
 
-  const onClickMusicHandler = (music: any) => {
-    setMusicData(music)
+  const dispatch = useDispatch()
+  const onClickMusicChangeHandler = (music: Music) => {
+    dispatch(setMusicPlay(music))
   }
 
   return (
@@ -67,7 +67,10 @@ function LikeChart({
         musicList
           .slice(visibleRange.start, visibleRange.end)
           .map((music, index) => (
-            <Con key={music.musicId} onClick={() => onClickMusicHandler(music)}>
+            <Con
+              key={music.musicId}
+              onClick={() => onClickMusicChangeHandler(music)}
+            >
               <Chartnumber>{index + visibleRange.start + 1}</Chartnumber>
               <ChartImg>IMG</ChartImg>
               <ChartTitle>{music.musicTitle}</ChartTitle>

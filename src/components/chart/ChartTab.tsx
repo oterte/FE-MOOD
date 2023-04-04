@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import React, { useState } from 'react'
 import LikeChart from '../chart/LikeChart'
 import { Music } from '../chart/LikeChart'
 import StreamingChart from '../chart/StreamingChart'
@@ -9,7 +9,6 @@ import {
   OrderBtn,
   OrderSpan,
 } from './ChartStyle'
-import { MusicData } from '../../pages/recommend/Recommend'
 
 interface ChartTabProps {
   musicId: number | undefined
@@ -20,7 +19,6 @@ interface ChartTabProps {
     likeStatus: boolean,
     likeCount: number
   ) => void
-  setMusicData: Dispatch<SetStateAction<MusicData | undefined>>
 }
 
 function ChartTab({
@@ -28,7 +26,6 @@ function ChartTab({
   likeStatus,
   musicList,
   onLikeUpdate,
-  setMusicData,
 }: ChartTabProps) {
   const [activeTab, setActiveTab] = useState<'like' | 'stream'>('like')
 
@@ -64,11 +61,10 @@ function ChartTab({
           likeStatus={likeStatus}
           musicList={musicList}
           onLikeUpdate={onLikeUpdate}
-          setMusicData={setMusicData}
         />
       )}
 
-      {activeTab === 'stream' && <StreamingChart setMusicData={setMusicData} />}
+      {activeTab === 'stream' && <StreamingChart />}
     </div>
   )
 }
