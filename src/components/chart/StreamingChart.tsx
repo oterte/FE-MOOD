@@ -11,6 +11,7 @@ import {
 import { Music } from './LikeChart'
 import { useDispatch } from 'react-redux'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
+import { setIsPlaying } from '../../redux/modules/isPlaying'
 
 function StreamingChart() {
   const [streamingList, setStreamingList] = useState<Music[]>([])
@@ -41,6 +42,7 @@ function StreamingChart() {
   const dispatch = useDispatch()
   const onClickMusicChangeHandler = (music: Music) => {
     dispatch(setMusicPlay(music))
+    dispatch(setIsPlaying())
   }
 
   return (

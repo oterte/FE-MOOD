@@ -69,6 +69,7 @@ function Recommend() {
 
   const getMusicMutation = useMutation(['recommendMusic'], getMusic, {
     onSuccess: (data) => {
+      console.log(data)
       setLikeCount(data.likeCount)
       setLikeStatus(data.likeStatus)
 
@@ -79,7 +80,7 @@ function Recommend() {
       queryClient.invalidateQueries('recommendMusic')
     },
     onError: (error) => {
-      console.log(error)
+      // console.log(error)
     },
   })
 
