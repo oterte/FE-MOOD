@@ -5,9 +5,9 @@ import Header from '../../components/header/Header'
 import AddComment from '../../components/musicdetail/AddComment'
 import CommentsList from '../../components/musicdetail/CommentsList'
 import ReCommentsList from '../../components/musicdetail/ReCommentsList'
+import Play from '../../components/playbar/Play'
 import Wrapper from '../../components/Wrapper'
 import {
-  AudioDiv,
   ComposerImg,
   ComposerName,
   Con,
@@ -67,9 +67,7 @@ function MusicDetail() {
       <AddComment musicId={musicId} />
       <CommentsList musicId={musicId} />
       <ReCommentsList reviewId={musicId} />
-      <AudioDiv>
-        <audio controls src={data.musicUrl} />
-      </AudioDiv>
+      <Play />
     </Wrapper>
   )
 }
