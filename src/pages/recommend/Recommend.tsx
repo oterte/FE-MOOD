@@ -28,7 +28,6 @@ import { QueryClient, useMutation } from 'react-query'
 import { getMusic } from '../../api/recommendApi'
 import Header from '../../components/header/Header'
 import { useState, useRef, useEffect } from 'react'
-
 import { getlikedMusicList } from '../../api/chart'
 import LikeCount from '../../components/like/LikeCount'
 import ChartTab from '../../components/chart/ChartTab'
@@ -212,8 +211,8 @@ function Recommend() {
             </DivChartWrap>
           </div>
         </div>
-        <Play />
       </StDivWrap>
+      <Play />
     </>
   )
 }
