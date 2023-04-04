@@ -13,6 +13,7 @@ import {
   StPExplain,
   StDivMoveRoom,
 } from './SelectChatSt'
+import Play from '../../components/playbar/Play'
 
 function SelectChat() {
   const navigate = useNavigate()
@@ -45,6 +46,7 @@ function SelectChat() {
             </StDivRoomContain>
           )
         })}
+        <Play />
       </StDivSelectRoomWrap>
     </>
   )

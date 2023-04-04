@@ -1,11 +1,15 @@
 import styled from 'styled-components'
 
 export const Wrap = styled.div`
-  width: 100%;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: auto;
+  padding: 0 20px;
+  margin-bottom: 20rem;
 `
 
 export const Ment = styled.p`
@@ -76,11 +80,6 @@ export const CommentsBox = styled.div`
   background: #fefefe;
 `
 
-export const PlayBtn = styled.button`
-  position: absolute;
-  top: 220px;
-  right: 38%;
-`
 export const Total = styled.p`
   margin-top: 50px;
   margin-right: 800px;
@@ -106,14 +105,20 @@ export const AddCommentTextArea = styled.textarea.attrs({
   background: #fefefe;
 `
 
-export const AddReCommentInput = styled.input.attrs({
-  maxLength: 100,
+export const AddReCommentTextArea = styled.textarea.attrs({
+  maxLength: 50,
 })`
   width: 850px;
-  height: 100px;
+  max-width: 850px;
+  height: 70px;
+  resize: none;
+  overflow: auto;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  line-height: 1.5rem;
   border: 2px solid #d9d9d9;
   padding: 1.5rem;
-  margin-top: 50px;
+  margin: 1rem 1.55rem;
 `
 export const Characters = styled.p`
   position: absolute;
@@ -123,8 +128,8 @@ export const Characters = styled.p`
 `
 export const ReCharacters = styled.p`
   position: absolute;
-  bottom: 10px;
-  right: 235px;
+  bottom: 23px;
+  right: 230px;
   color: gray;
 `
 
@@ -152,18 +157,24 @@ export const Border = styled.div`
   height: 840px;
   border: 2px solid #d9d9d9;
   background: white;
-  margin: auto;
   overflow-y: auto;
 `
-
 export const ReCommentBox = styled.div`
   position: relative;
-  left: -330px;
-  width: 1000px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90px;
   box-sizing: border-box;
-  padding: 10px;
+  padding-left: 3rem;
+  padding-bottom: 2rem;
   overflow: hidden;
   font-size: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
 `
 
 export const CommentInput = styled.input`
@@ -200,10 +211,11 @@ export const Nickname = styled.p`
 `
 export const ReNickname = styled.p`
   position: absolute;
-
+  bottom: 5px;
+  left: 50px;
   border: none;
   background: none;
-  font-size: 10rem;
+  font-size: 0.9rem;
   color: gray;
 `
 
@@ -214,6 +226,15 @@ export const WriteDate = styled.p`
   border: none;
   background: none;
   font-size: 1rem;
+  color: gray;
+`
+export const ReWriteDate = styled.p`
+  position: absolute;
+  bottom: 5px;
+  left: 140px;
+  border: none;
+  background: none;
+  font-size: 0.9rem;
   color: gray;
 `
 
@@ -242,8 +263,6 @@ export const EditBtn = styled.button`
   color: white;
 `
 
-export const ReAddComment = styled.input``
-
 export const ReCommentInput = styled.input``
 export const EditReCommentInput = styled.input``
 
@@ -253,7 +272,7 @@ export const AddReform = styled.form`
 
 export const ReCommentBtn = styled.button`
   position: absolute;
-  bottom: 15px;
+  bottom: 35px;
   right: 40px;
   width: 170px;
   height: 40px;
@@ -284,11 +303,10 @@ export const ReCommentsListWrap = styled.button`
   border: none;
   width: 100%;
   border-bottom: 1px solid #d9d9d9;
-  margin-bottom: 10px;
 `
 export const ReDeleteBtn = styled.button`
   position: absolute;
-  top: 3px;
+  top: 25px;
   right: -35px;
   width: 40px;
   height: 40px;
@@ -300,22 +318,13 @@ export const ReDeleteBtn = styled.button`
 `
 export const ReEditBtn = styled.button`
   position: absolute;
-  top: 3px;
+  top: 25px;
   right: 10px;
   width: 40px;
   height: 40px;
   cursor: pointer;
   border: none;
-  margin-right: 50px;
+  margin-right: 3rem;
   background: none;
   color: white;
-`
-
-export const AudioDiv = styled.div`
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: 120px;
-  background: #fafafa;
-  box-shadow: -4px -2px 30px rgba(0, 0, 0, 0.1);
 `
