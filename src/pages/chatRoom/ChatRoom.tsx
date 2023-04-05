@@ -299,7 +299,7 @@ function ChatRoom() {
             userList.map((item) => {
               return (
                 <StDivUserProfile key={item}>
-                  <StDivProfileImg>img</StDivProfileImg>
+                  {/* <StDivProfileImg>img</StDivProfileImg> */}
                   <StPProfileNickname>{item}</StPProfileNickname>
                 </StDivUserProfile>
               )

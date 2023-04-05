@@ -32,10 +32,10 @@ export const StDivUserList = styled.div`
 `
 export const StDivUserProfile = styled.div`
   display: flex;
-  width: 209px;
+  width: 309px;
   height: 60px;
   margin: auto;
-  border-bottom: 1px solid #e7e8e6;
+  border-bottom: 2px solid #e7e8e6;
 `
 export const StDivProfileImg = styled.div`
   width: 53px;
@@ -91,7 +91,7 @@ export const StDivChatSubmit = styled.div`
   align-content: center;
 `
 export const StInputChatSubmit = styled.input`
-  width: 837px;
+  width: 1050px;
   height: 50px;
   border: 1px solid #8b7d76;
   box-sizing: border-box;
@@ -103,5 +103,5 @@ export const StBtnChatSubmit = styled.button`
   color: #ffffff;
   background-color: #4b372e;
   border: none;
-  margin-left: 50px;
+  margin-left: 30px;
 `
