@@ -26,7 +26,7 @@ import { useNavigate } from 'react-router-dom'
 import LikeCount from '../like/LikeCount'
 
 type MusicInfo = {
-  id: number
+  musicId: number
   musicTitle: string
   musicContent: string
   musicUrl: string
@@ -66,7 +66,7 @@ const ComposerList = () => {
           ) => {
             setMusicInfos((prevState) =>
               prevState?.map((m) =>
-                m.id === musicId
+                m.musicId === musicId
                   ? { ...m, likeStatus, likesCount: likeCount }
                   : m
               )
@@ -83,6 +83,7 @@ const ComposerList = () => {
     setShowReplies((prevState) => (prevState === musicIndex ? -1 : musicIndex))
   }
 
+  console.log(musicInfos)
   return (
     <Wrap>
       <Ment>작곡가별 음악을 추천받아 보세요.</Ment>
@@ -121,11 +122,11 @@ const ComposerList = () => {
               </div>
               {musicInfos?.map((music, index) => (
                 <React.Fragment key={`music-fragment-${music.musicTitle}`}>
-                  <div key={`music-${music.id || music.musicTitle}`}>
+                  <div key={`music-${music.musicId || music.musicTitle}`}>
                     <div>{index + 1}</div>
                     <H3>{music.musicTitle}</H3>
                     <LikeCount
-                      musicId={music.id}
+                      musicId={music.musicId}
                       likeCount={music.likesCount}
                       likeStatus={music.likeStatus}
                       onLikeUpdate={music.handleLikeUpdate}
@@ -141,7 +142,7 @@ const ComposerList = () => {
                     </div>
                   </div>
                   {showReplies === index && (
-                    <ToogleWrap key={`music-info-${music.id}`}>
+                    <ToogleWrap key={`music-info-${music.musicId}`}>
                       <ContentContainer>
                         <SpanMusicTitle>{music.musicTitle}</SpanMusicTitle>
                         <SpanMusicContent>
@@ -149,7 +150,7 @@ const ComposerList = () => {
                         </SpanMusicContent>
                         <MusicDetailBtn
                           onClick={() =>
-                            navigate(`/recommend/music/${music?.id}`)
+                            navigate(`/recommend/music/${music?.musicId}`)
                           }
                         >
                           댓글 남기러 가기

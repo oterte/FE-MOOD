@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import Header from '../../components/header/Header'
 import {
   MyPageProfileBodyContainer,
@@ -8,7 +8,6 @@ import {
 } from './mypageSC'
 import {
   MyPageCommentTab,
-  MyPageContentsContainer,
   MyPageTab,
   MyPageTabItem,
   MyPageTabItemLast,
@@ -17,26 +16,14 @@ import { useNavigate } from 'react-router'
 import { useQuery } from 'react-query'
 import { showComment, showProfile } from '../../api/mypage'
 import Play from '../../components/playbar/Play'
-import {
-  MyPageBodyDiv,
-  MyPageBodyMiddle,
-  MyPageBodyMiddleContainer,
-  MyPageBodyMiddleDiv,
-  MyPageBodyTop,
-  MyPageContainer,
-  MyPageMiddleDivCursor,
-} from './MyPageTable'
-import {
-  Desc,
-  H3,
-  ContentContainer,
-  MusicDetailBtn,
-  ShowRepliesBtn,
-  SpanMusicContent,
-  SpanMusicTitle,
-  ToogleWrap,
-} from '../../components/composer/ComposerListSt'
-import downBtnBrown from '../../assets/icons/down_brown.png'
+import { MyPageContainer } from './MyPageTable'
+import { H3, ShowRepliesBtn } from '../../components/composer/ComposerListSt'
+import Pagination from 'react-js-pagination'
+import './mypagePagination.css'
+import { useDispatch } from 'react-redux'
+import { setMusicPlay } from '../../redux/modules/musicPlayer'
+import { setIsPlaying } from '../../redux/modules/isPlaying'
+import MyPageBody from './MyPageBody'
 type Review = {
   musicId?: string
   reviewId?: string
@@ -44,17 +31,24 @@ type Review = {
 }
 function MyPageComment() {
   const [currentPage, setCurrentPage] = useState(1)
+  const dispatch = useDispatch()
+  const onClickMusicChangeHandler = (music: any) => {
+    dispatch(setMusicPlay(music))
+    dispatch(setIsPlaying())
+  }
   const {
     isLoading,
     isError,
     data: reviewData,
-  } = useQuery<Review[]>(['myComment', currentPage], () => showComment(currentPage))
+  } = useQuery(['myComment', currentPage], () =>
+    showComment(currentPage)
+  )
   const { isLoading: profileLoading, data: profileData } = useQuery(
     ['profile'],
     showProfile
   )
   const navigate = useNavigate()
-  const onPaginationHadler = (i:any) => {
+  const onPaginationHandler = (i: any) => {
     setCurrentPage(i)
   }
   if (isLoading) {
@@ -88,58 +82,40 @@ function MyPageComment() {
           </div>
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
-      <MyPageTab>
-        <MyPageCommentTab
-          onClick={() => {
-            navigate('/mypageComment')
-          }}
-        >
-          남긴 댓글
-        </MyPageCommentTab>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypageLike')
-          }}
-        >
-          좋아요
-        </MyPageTabItem>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypageEditprofile')
-          }}
-        >
-          프로필 사진 변경
-        </MyPageTabItem>
-        <MyPageTabItemLast
-          onClick={() => {
-            navigate('/mypageDeleteaccount')
-          }}
-        >
-          회원 탈퇴
-        </MyPageTabItemLast>
-      </MyPageTab>
-      
-        <MyPageContainer>
+      <MyPageBody></MyPageBody>
+
+      <MyPageContainer>
         <div>
           <div>no</div>
           <div>곡명</div>
           <div>상세페이지로</div>
         </div>
-          {reviewData?.map((item,index) => (
-            <React.Fragment key={`${item.reviewId}`}>
+        {reviewData.reviewList.map((item:any, index:any) => (
+          <React.Fragment key={`${item.reviewId}`}>
             <div>
               <div>{index + 1}</div>
               <H3>{item.review}</H3>
               <div>
-                <ShowRepliesBtn onClick={() => navigate(`/recommend/music/${item?.musicId}`)}>
+                <ShowRepliesBtn
+                  onClick={() => navigate(`/recommend/music/${item?.musicId}`)}
+                >
                   댓글작성
                 </ShowRepliesBtn>
               </div>
             </div>
           </React.Fragment>
-          ))}
-        </MyPageContainer>
-        <Play/>
+        ))}
+        <Pagination
+          activePage={currentPage}
+          itemsCountPerPage={10}
+          totalItemsCount={reviewData.reviewCount}
+          pageRangeDisplayed={5}
+          prevPageText={'<'}
+          nextPageText={'>'}
+          onChange={onPaginationHandler}
+        />
+      </MyPageContainer>
+      <Play />
     </>
   )
 }

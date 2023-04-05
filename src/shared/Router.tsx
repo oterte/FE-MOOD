@@ -14,7 +14,6 @@ import Auth from '../pages/auth/Auth'
 import MyPage from '../pages/mypage/MyPage'
 import ChatRoom from '../pages/chatRoom/ChatRoom'
 import SelectChat from '../pages/chatRoom/SelectChat'
-import MyPageScrab from '../pages/mypage/MyPageScrab'
 import MyPageLike from '../pages/mypage/MyPageLike'
 import MyPageComment from '../pages/mypage/MyPageComment'
 import MyPageEditProfile from '../pages/mypage/MyPageEditProfile'
@@ -42,7 +41,6 @@ function Router() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/selectroom" element={<SelectChat />} />
         <Route path="/chatroom/:id" element={<ChatRoom />} />
-        <Route path='/mypageScrap' element={<MyPageScrab/>}/>
         <Route path='/mypageLike' element={<MyPageLike/>}/>
         <Route path='/mypageComment' element={<MyPageComment />}/>
         <Route path='/mypageEditprofile' element={<MyPageEditProfile />}/>

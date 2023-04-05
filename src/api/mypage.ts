@@ -1,14 +1,25 @@
 import { Nickname } from './../pages/musicDetail/MusicDetailSt';
 import { instance } from './instance'
 
+
+export const doScrap = async (id:number) => {
+  console.log(id)
+  const response = await instance.put(`/api/music/${id}/scrap`)
+  return response
+}
+
 export const showProfile = async () => {
   const response = await instance.get('/api/user/userinfo')
   return response.data.userInfo
 }
+export const showScrap = async (id:number) => {
+  const response = await instance.get(`/api/user/scraplist?page=${id}`)
+  return response
+}
 
 export const showComment = async (id:number) => {
   const response = await instance.get(`/api/user/reviewlist?page=${id}`)
-  return response.data.reviewList
+  return response.data
 }
 
 export const showReComment = async () => {
@@ -17,13 +28,10 @@ export const showReComment = async () => {
 }
 export const likedMusic = async (id:number) => {
   const response = await instance.get(`/api/user/likelist?page=${id}`)
-  return response.data.likeList
+  return response.data
 }
 
-export const scrappedMusic = async () => {
-  const response = await instance.get('/api/user/scraplist')
-  return response.data.scrapList
-}
+
 
 export const editProfileImg = async (newProfile: any) => {
   await instance.patch('/api/user/uploadprofile', newProfile, {

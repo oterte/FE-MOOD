@@ -194,7 +194,7 @@ export const MyPageContainer = styled.div`
     align-items: center;
     border-bottom: 1px solid #ddd;
     font-size: 1rem;
-    padding: 1rem;
+    padding: 0.5rem;
 
     img {
       width: 23px;

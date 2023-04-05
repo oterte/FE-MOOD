@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import { useQuery } from 'react-query'
-import { likedMusic, showProfile } from '../../api/mypage'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { doScrap, likedMusic, showProfile } from '../../api/mypage'
 import Header from '../../components/header/Header'
-import './mypagePagination.css'
 import {
   MyPageProfileBodyContainer,
   MyPageProfileContainer,
@@ -17,6 +16,8 @@ import {
 } from './mypagecontentsSC'
 import Play from '../../components/playbar/Play'
 import downBtnBrown from '../../assets/icons/down_brown.png'
+import playBtnBrown from '../../assets/icons/music_play_brown.png'
+import { setMusicPlay } from '../../redux/modules/musicPlayer'
 import {
   H3,
   ContentContainer,
@@ -29,6 +30,10 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { MyPageContainer } from './MyPageTable'
 import Pagination from 'react-js-pagination'
+import './mypagePagination.css'
+import { useDispatch } from 'react-redux'
+import { setIsPlaying } from '../../redux/modules/isPlaying'
+import MyPageBody from './MyPageBody'
 
 type Like = {
   composer: string
@@ -40,17 +45,32 @@ type Like = {
 
 function MyPageLike() {
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
+  const dispatch = useDispatch()
+  const onClickMusicChangeHandler = (music: any) => {
+    dispatch(setMusicPlay(music))
+    dispatch(setIsPlaying())
+  }
+
   const [currentPage, setCurrentPage] = useState(1)
   const [showDesc, setShowDesc] = useState<number>(-1)
   const {
     isLoading,
     isError,
     data: likedata,
-  } = useQuery<Like[]>(['like', currentPage], () => likedMusic(currentPage))
+  } = useQuery(['like', currentPage], () => likedMusic(currentPage))
   const { isLoading: profileLoading, data: profileData } = useQuery(
     ['profile'],
     showProfile
   )
+  const scrapMutation = useMutation(doScrap, {
+    onSuccess: () => {
+      queryClient.invalidateQueries();
+    }
+  })
+  const onScrapHandler = (id:number) => {
+    scrapMutation.mutate(id)
+  }
   if (isLoading) {
     return <h1>로딩중</h1>
   }
@@ -90,54 +110,25 @@ function MyPageLike() {
           </div>
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
-      <MyPageTab>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypageComment')
-          }}
-        >
-          남긴 댓글
-        </MyPageTabItem>
-        <MyPageLikeTab
-          onClick={() => {
-            navigate('/mypageLike')
-          }}
-        >
-          좋아요
-        </MyPageLikeTab>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypageEditprofile')
-          }}
-        >
-          프로필 사진 변경
-        </MyPageTabItem>
-        <MyPageTabItemLast
-          onClick={() => {
-            navigate('/mypageDeleteaccount')
-          }}
-        >
-          회원 탈퇴
-        </MyPageTabItemLast>
-      </MyPageTab>
+      <MyPageBody></MyPageBody>
       <MyPageContainer>
         <div>
           <div>no</div>
           <div>곡명</div>
-          <div>좋아요</div>
+          <div>재생</div>
           <div>스크랩</div>
           <div>더보기</div>
         </div>
-        {likedata?.map((item, index) => (
+        {likedata.likeList.map((item:any, index:any) => (
           <React.Fragment key={`${item.musicId}`}>
             <div>
               <div>{index + 1}</div>
               <H3>{item.musicTitle}</H3>
               <button>
-                <img src={downBtnBrown} alt="like" />
+                <img src={playBtnBrown} alt="like" onClick={() => onClickMusicChangeHandler(item)}/>
               </button>
               <button>
-                <img src={downBtnBrown} alt="down" />
+                <img src={downBtnBrown} alt="down" onClick={() => onScrapHandler(item.musicId)}/>
               </button>
               <div>
                 <ShowRepliesBtn onClick={() => toggleReplies(index)}>
@@ -163,7 +154,7 @@ function MyPageLike() {
         <Pagination
         activePage={currentPage}
         itemsCountPerPage={10}
-        totalItemsCount={50}
+        totalItemsCount={likedata.likeCount}
         pageRangeDisplayed={5}
         prevPageText={"<"}
         nextPageText={">"} 

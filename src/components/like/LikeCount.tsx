@@ -21,7 +21,10 @@ const cookies = new Cookies()
 const LikeCount: React.FC<LikeCountProps> = React.memo(
   ({ musicId, likeCount, likeStatus, onLikeUpdate }) => {
     const handleLikeButtonClick = async () => {
-      if (!musicId) return
+      if (!musicId) {
+        console.log("id 없음")
+        return
+      }
       const token = cookies.get('authorization')
       if (!token) {
         alert('로그인 후 이용 가능합니다.')
