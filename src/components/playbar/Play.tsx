@@ -91,17 +91,17 @@ function Play() {
 export default Play
 
 const AudioWrap = styled.div`
-  width: 1900px;
+  width: 100%;
   height: 120px;
   background-color: #fafafa;
   border: 1px solid #dfdfdf;
-  box-sizing: border-box
-  position: sticky;
+  box-sizing: border-box;
+  position: fixed;
   bottom: 0px;
   margin-top: 30px;
-  position: sticky;
-  display:flex;
+  display: flex;
 `
+
 const AudioContain = styled.div`
   width: 1280px;
   margin: auto;

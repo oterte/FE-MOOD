@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { useQuery } from 'react-query'
 import { composerList } from '../../api/composerApi'
 import Play from '../playbar/Play'
-import Heart from '../../assets/icons/Heart_brown.png'
 import Down from '../../assets/icons/down_brown.png'
 import {
   Contents,
@@ -24,6 +23,7 @@ import {
   ToogleWrap,
 } from './ComposerListSt'
 import { useNavigate } from 'react-router-dom'
+import LikeCount from '../like/LikeCount'
 
 type MusicInfo = {
   id: number
@@ -32,6 +32,11 @@ type MusicInfo = {
   musicUrl: string
   likesCount: number
   likeStatus: boolean
+  handleLikeUpdate: (
+    musicId: number,
+    likeStatus: boolean,
+    likeCount: number
+  ) => void
 }
 
 const ComposerList = () => {
@@ -54,6 +59,19 @@ const ComposerList = () => {
         data.music.map((music) => ({
           ...music,
           likeStatus: music.likeStatus,
+          handleLikeUpdate: (
+            musicId: number,
+            likeStatus: boolean,
+            likeCount: number
+          ) => {
+            setMusicInfos((prevState) =>
+              prevState?.map((m) =>
+                m.id === musicId
+                  ? { ...m, likeStatus, likesCount: likeCount }
+                  : m
+              )
+            )
+          },
         }))
       )
     }
@@ -106,9 +124,13 @@ const ComposerList = () => {
                   <div key={`music-${music.id || music.musicTitle}`}>
                     <div>{index + 1}</div>
                     <H3>{music.musicTitle}</H3>
-                    <button>
-                      <img src={Heart} alt="like" />
-                    </button>
+                    <LikeCount
+                      musicId={music.id}
+                      likeCount={music.likesCount}
+                      likeStatus={music.likeStatus}
+                      onLikeUpdate={music.handleLikeUpdate}
+                    />
+
                     <button>
                       <img src={Down} alt="down" />
                     </button>
