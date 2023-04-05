@@ -21,16 +21,18 @@ import {
   SpanMusicContent,
   SpanMusicTitle,
   ToogleWrap,
+  PaddingBottomDiv,
 } from './ComposerListSt'
 import { useNavigate } from 'react-router-dom'
 import LikeCount from '../like/LikeCount'
+import { getscrapList, scrapMusic } from '../../api/scrap'
 
 type MusicInfo = {
-  id: number
+  musicId: number
   musicTitle: string
   musicContent: string
   musicUrl: string
-  likesCount: number
+  likeCount: number
   likeStatus: boolean
   handleLikeUpdate: (
     musicId: number,
@@ -43,6 +45,7 @@ const ComposerList = () => {
   const navigate = useNavigate()
   const composers = ['Beethoven', 'Mozart', 'Chopin', 'Vivaldi']
   const [selectedComposer, setSelectedComposer] = useState(composers[0])
+  const [scrapStatus, setScrapStatus] = useState<boolean[]>([])
 
   const { data } = useQuery<{ composerInfo: any[]; music: MusicInfo[] }>(
     ['composerList', selectedComposer],
@@ -53,25 +56,26 @@ const ComposerList = () => {
   const [musicInfos, setMusicInfos] = useState<MusicInfo[] | undefined>()
   const [showReplies, setShowReplies] = useState<number>(-1)
 
+  const handleLikeUpdate = (
+    musicId: number,
+    likeStatus: boolean,
+    likeCount: number
+  ) => {
+    console.log('handleLikeUpdate called', musicId, likeStatus, likeCount)
+    setMusicInfos((prevState) =>
+      prevState?.map((m) =>
+        m.musicId === musicId ? { ...m, likeStatus, likeCount: likeCount } : m
+      )
+    )
+  }
+
   useEffect(() => {
     if (data) {
       setMusicInfos(
         data.music.map((music) => ({
           ...music,
           likeStatus: music.likeStatus,
-          handleLikeUpdate: (
-            musicId: number,
-            likeStatus: boolean,
-            likeCount: number
-          ) => {
-            setMusicInfos((prevState) =>
-              prevState?.map((m) =>
-                m.id === musicId
-                  ? { ...m, likeStatus, likesCount: likeCount }
-                  : m
-              )
-            )
-          },
+          handleLikeUpdate,
         }))
       )
     }
@@ -81,6 +85,24 @@ const ComposerList = () => {
 
   const toggleReplies = (musicIndex: number) => {
     setShowReplies((prevState) => (prevState === musicIndex ? -1 : musicIndex))
+  }
+
+  const updateScrapStatus = async (musicId: number) => {
+    try {
+      const scrapList = await getscrapList({ musicId })
+      setScrapStatus(scrapList)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleScrapButtonClick = async (musicId: number) => {
+    try {
+      await scrapMusic({ musicId })
+      updateScrapStatus(musicId)
+    } catch (error) {
+      console.error(error)
+    }
   }
 
   return (
@@ -111,6 +133,7 @@ const ComposerList = () => {
               </ComposerNameKo>
               <Describe>{composerInfo.describe}</Describe>
             </Inpo>
+            <div></div>
             <Desc>
               <div>
                 <div>no</div>
@@ -121,19 +144,22 @@ const ComposerList = () => {
               </div>
               {musicInfos?.map((music, index) => (
                 <React.Fragment key={`music-fragment-${music.musicTitle}`}>
-                  <div key={`music-${music.id || music.musicTitle}`}>
+                  <div key={`music-${music.musicId || music.musicTitle}`}>
                     <div>{index + 1}</div>
                     <H3>{music.musicTitle}</H3>
                     <LikeCount
-                      musicId={music.id}
-                      likeCount={music.likesCount}
+                      musicId={music.musicId}
+                      likeCount={music.likeCount}
                       likeStatus={music.likeStatus}
-                      onLikeUpdate={music.handleLikeUpdate}
+                      onLikeUpdate={handleLikeUpdate}
                     />
 
-                    <button>
+                    <button
+                      onClick={() => handleScrapButtonClick(music.musicId)}
+                    >
                       <img src={Down} alt="down" />
                     </button>
+
                     <div>
                       <ShowRepliesBtn onClick={() => toggleReplies(index)}>
                         {showReplies === index ? '숨기기' : '더보기'}
@@ -141,7 +167,7 @@ const ComposerList = () => {
                     </div>
                   </div>
                   {showReplies === index && (
-                    <ToogleWrap key={`music-info-${music.id}`}>
+                    <ToogleWrap key={`music-info-${music.musicId}`}>
                       <ContentContainer>
                         <SpanMusicTitle>{music.musicTitle}</SpanMusicTitle>
                         <SpanMusicContent>
@@ -149,7 +175,7 @@ const ComposerList = () => {
                         </SpanMusicContent>
                         <MusicDetailBtn
                           onClick={() =>
-                            navigate(`/recommend/music/${music?.id}`)
+                            navigate(`/recommend/music/${music?.musicId}`)
                           }
                         >
                           댓글 남기러 가기
@@ -159,6 +185,7 @@ const ComposerList = () => {
                   )}
                 </React.Fragment>
               ))}
+              <PaddingBottomDiv />
             </Desc>
           </>
         ) : (
