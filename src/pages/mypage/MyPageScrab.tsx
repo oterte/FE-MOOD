@@ -1,55 +1,30 @@
 import React from 'react'
+import { useQuery, useQueryClient } from 'react-query'
+import {  showProfile } from '../../api/mypage'
 import Header from '../../components/header/Header'
 import {
   MyPageProfileBodyContainer,
   MyPageProfileContainer,
   MyPageProfileImg,
   MyPageProfileImgBox,
+  MyPageProfileImgContainer,
 } from './mypageSC'
 import {
   MyPageContentsContainer,
-  MyPageDeleteTab,
   MyPageTab,
   MyPageTabItem,
-  MyPageTabItemLast,
 } from './mypagecontentsSC'
-import Play from '../../components/playbar/Play'
 import { useNavigate } from 'react-router'
-import { useQuery } from 'react-query'
-import { deleteAccount, showProfile } from '../../api/mypage'
-import { onLogoutHandler, onRemoveToken } from '../../util/cookie'
-import MyPageBody from './MyPageBody'
-import { useDispatch } from 'react-redux'
-import { setMusicPlay } from '../../redux/modules/musicPlayer'
-import { setIsPlaying } from '../../redux/modules/isPlaying'
-function MyPageDelteAccount() {
+function MyPageScrab() {
+  const navigate = useNavigate()
+ 
   const { isLoading: profileLoading, data: profileData } = useQuery(
     ['profile'],
     showProfile
   )
-  console.log(12312312)
-  const dispatch = useDispatch()
-  const onClickMusicChangeHandler = (music: any) => {
-    dispatch(setMusicPlay(music))
-    dispatch(setIsPlaying())
-  }
 
-  const onDeleteAccountHandler = () => {
-    if (!window.confirm('정말 회원 탈퇴를 진행하시겠습니까?')) {
-      alert('취소되었습니다.')
-    } else {
-      alert('탈퇴했습니다.')
-      onLogoutHandler('authorization')
-      onRemoveToken()
-      navigate('/login')
-      deleteAccount()
-    }
-  }
-  const navigate = useNavigate()
 
-  if (profileLoading) {
-    return <h1>로딩중..</h1>
-  }
+  console.log(profileData)
 
   return (
     <>
@@ -72,6 +47,13 @@ function MyPageDelteAccount() {
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
       <MyPageTab>
+        {/* <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageScrap')
+          }}
+        >
+          스크랩 음악
+        </MyPageTabItem> */}
         <MyPageTabItem
           onClick={() => {
             navigate('/mypageComment')
@@ -91,22 +73,21 @@ function MyPageDelteAccount() {
             navigate('/mypageEditprofile')
           }}
         >
-          프로필 사진 변경
+          프로필 변경
         </MyPageTabItem>
-        <MyPageDeleteTab
+        <MyPageTabItem
           onClick={() => {
             navigate('/mypageDeleteaccount')
           }}
         >
           회원 탈퇴
-        </MyPageDeleteTab>
+        </MyPageTabItem>
       </MyPageTab>
       <MyPageContentsContainer>
-        <button onClick={onDeleteAccountHandler}>회원 탈퇴하기</button>
+        <h1>스크랩</h1>
       </MyPageContentsContainer>
-      <Play/>
     </>
   )
 }
 
-export default MyPageDelteAccount
+export default MyPageScrab

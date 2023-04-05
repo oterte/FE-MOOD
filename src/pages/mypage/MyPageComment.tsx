@@ -23,7 +23,6 @@ import './mypagePagination.css'
 import { useDispatch } from 'react-redux'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
 import { setIsPlaying } from '../../redux/modules/isPlaying'
-import MyPageBody from './MyPageBody'
 type Review = {
   musicId?: string
   reviewId?: string
@@ -82,7 +81,36 @@ function MyPageComment() {
           </div>
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
-      <MyPageBody></MyPageBody>
+      <MyPageTab>
+        <MyPageCommentTab
+          onClick={() => {
+            navigate('/mypageComment')
+          }}
+        >
+          남긴 댓글
+        </MyPageCommentTab>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageLike')
+          }}
+        >
+          좋아요
+        </MyPageTabItem>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageEditprofile')
+          }}
+        >
+          프로필 사진 변경
+        </MyPageTabItem>
+        <MyPageTabItemLast
+          onClick={() => {
+            navigate('/mypageDeleteaccount')
+          }}
+        >
+          회원 탈퇴
+        </MyPageTabItemLast>
+      </MyPageTab>
 
       <MyPageContainer>
         <div>

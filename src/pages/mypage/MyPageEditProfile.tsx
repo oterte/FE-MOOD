@@ -33,7 +33,6 @@ import { onSetLocalStorageHandler } from '../../util/cookie'
 import { useDispatch } from 'react-redux'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
 import { setIsPlaying } from '../../redux/modules/isPlaying'
-import MyPageBody from './MyPageBody'
 function MyPageEditProfile() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
@@ -114,7 +113,36 @@ function MyPageEditProfile() {
           </div>
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
-      <MyPageBody></MyPageBody>
+      <MyPageTab>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageComment')
+          }}
+        >
+          남긴 댓글
+        </MyPageTabItem>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageLike')
+          }}
+        >
+          좋아요
+        </MyPageTabItem>
+        <MyPageEditTab
+          onClick={() => {
+            navigate('/mypageEditprofile')
+          }}
+        >
+          프로필 사진 변경
+        </MyPageEditTab>
+        <MyPageTabItemLast
+          onClick={() => {
+            navigate('/mypageDeleteaccount')
+          }}
+        >
+          회원 탈퇴
+        </MyPageTabItemLast>
+      </MyPageTab>
       <MyPageContentsContainer>
         <ExternalContainer>
           <MyPageEditContainer>
