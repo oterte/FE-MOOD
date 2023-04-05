@@ -12,7 +12,7 @@ export const refresh = async (config: any) => {
     refreshToken,
   }
   const { data } = await axios.post(
-    `${process.env.REACT_APP_SERVER}/api/refresh`,
+    `${process.env.REACT_APP_SERVER}/api/user/refresh`,
     body
   )
 

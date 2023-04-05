@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Header from '../../components/header/Header'
 import {
   MyPageProfileBodyContainer,
@@ -16,32 +16,47 @@ import {
 import { useNavigate } from 'react-router'
 import { useQuery } from 'react-query'
 import { showComment, showProfile } from '../../api/mypage'
-import MyPageBody from './MyPageBody'
+import Play from '../../components/playbar/Play'
 import {
   MyPageBodyDiv,
   MyPageBodyMiddle,
   MyPageBodyMiddleContainer,
   MyPageBodyMiddleDiv,
   MyPageBodyTop,
+  MyPageContainer,
   MyPageMiddleDivCursor,
 } from './MyPageTable'
-
+import {
+  Desc,
+  H3,
+  ContentContainer,
+  MusicDetailBtn,
+  ShowRepliesBtn,
+  SpanMusicContent,
+  SpanMusicTitle,
+  ToogleWrap,
+} from '../../components/composer/ComposerListSt'
+import downBtnBrown from '../../assets/icons/down_brown.png'
 type Review = {
   musicId?: string
   reviewId?: string
   review?: string
 }
 function MyPageComment() {
+  const [currentPage, setCurrentPage] = useState(1)
   const {
     isLoading,
     isError,
     data: reviewData,
-  } = useQuery(['myComment'], showComment)
+  } = useQuery<Review[]>(['myComment', currentPage], () => showComment(currentPage))
   const { isLoading: profileLoading, data: profileData } = useQuery(
     ['profile'],
     showProfile
   )
   const navigate = useNavigate()
+  const onPaginationHadler = (i:any) => {
+    setCurrentPage(i)
+  }
   if (isLoading) {
     return <h1>로딩중</h1>
   }
@@ -103,26 +118,28 @@ function MyPageComment() {
           회원 탈퇴
         </MyPageTabItemLast>
       </MyPageTab>
-      <MyPageContentsContainer>
-        <MyPageBodyTop>
-          <MyPageBodyDiv>곡명</MyPageBodyDiv>
-          <MyPageBodyDiv>댓글 내용</MyPageBodyDiv>
-          <MyPageBodyDiv>댓글 페이지로</MyPageBodyDiv>
-        </MyPageBodyTop>
-        <MyPageBodyMiddle>
-          {/* {reviewData?.map((item) => (
-            <MyPageBodyMiddleContainer key={item.reviewId}>
-              <MyPageBodyMiddleDiv>{item.musicId}</MyPageBodyMiddleDiv>
-              <MyPageBodyMiddleDiv>{item.review}</MyPageBodyMiddleDiv>
-              <MyPageMiddleDivCursor
-                onClick={() => navigate(`/recommend/music/${item.musicId}`)}
-              >
-                댓글남기기
-              </MyPageMiddleDivCursor>
-            </MyPageBodyMiddleContainer>
-          ))} */}
-        </MyPageBodyMiddle>
-      </MyPageContentsContainer>
+      
+        <MyPageContainer>
+        <div>
+          <div>no</div>
+          <div>곡명</div>
+          <div>상세페이지로</div>
+        </div>
+          {reviewData?.map((item,index) => (
+            <React.Fragment key={`${item.reviewId}`}>
+            <div>
+              <div>{index + 1}</div>
+              <H3>{item.review}</H3>
+              <div>
+                <ShowRepliesBtn onClick={() => navigate(`/recommend/music/${item?.musicId}`)}>
+                  댓글작성
+                </ShowRepliesBtn>
+              </div>
+            </div>
+          </React.Fragment>
+          ))}
+        </MyPageContainer>
+        <Play/>
     </>
   )
 }

@@ -6,6 +6,7 @@ import {
   MyPageProfileImg,
   MyPageProfileImgBox,
 } from './mypageSC'
+import Play from '../../components/playbar/Play'
 import {
   ExternalContainer,
   MyPageContentsContainer,
@@ -72,7 +73,7 @@ function MyPageEditProfile() {
     e.preventDefault()
     changeMutation.mutate(newNickname)
     setNewNickname('')
-    onSetLocalStorageHandler("nickname", newNickname)
+    onSetLocalStorageHandler('nickname', newNickname)
   }
   if (isLoading) {
     return <h1>로딩중</h1>
@@ -137,22 +138,6 @@ function MyPageEditProfile() {
       <MyPageContentsContainer>
         <ExternalContainer>
           <MyPageEditContainer>
-            {/* <div>
-            {imgUrl ? (
-              <MyPageEditImg src={imgUrl as string} alt="이미지" />
-            ) : (
-              <MyPageEditImg
-                src={profileData.profileUrl as string}
-                alt="이미지를 등록해주세요"
-              />
-            )}
-          </div>
-          <input
-            ref={imgRef}
-            type="file"
-            accept="image/*"
-            onChange={onChangeImageHandler}
-          /> */}
             <label htmlFor="fileinput">
               <MyPageEditImg
                 src={imgUrl ? imgUrl : profileData.profileUrl}
@@ -160,7 +145,7 @@ function MyPageEditProfile() {
               />
             </label>
             <MyPageImgEditInput
-              id='fileinput'
+              id="fileinput"
               ref={imgRef}
               type="file"
               accept="image/*"
@@ -188,6 +173,7 @@ function MyPageEditProfile() {
           </MyPageEditContainer>
         </ExternalContainer>
       </MyPageContentsContainer>
+      <Play />
     </>
   )
 }

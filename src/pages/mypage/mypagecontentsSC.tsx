@@ -7,6 +7,7 @@ export const MyPageTab = styled.div`
   flex-direction: row;
   color: #888888;
   text-align: center;
+  line-height:45px;
 `
 export const MyPageTabItem = styled.div`
   width: 129px;
@@ -75,6 +76,7 @@ export const MyPageContentsContainer = styled.div`
   margin: auto;
   display: flex;
   flex-direction: column;
+  margin-top: 25px;
 `
 export const ExternalContainer = styled.div`
   display: flex;
