@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { useQuery } from 'react-query'
 import { likedMusic, showProfile } from '../../api/mypage'
 import Header from '../../components/header/Header'
+import './mypagePagination.css'
 import {
   MyPageProfileBodyContainer,
   MyPageProfileContainer,
@@ -9,32 +10,26 @@ import {
   MyPageProfileImgBox,
 } from './mypageSC'
 import {
-  MyPageContentsContainer,
   MyPageLikeTab,
   MyPageTab,
   MyPageTabItem,
   MyPageTabItemLast,
 } from './mypagecontentsSC'
-import playBtn from '../../assets/icons/music_play_brown.png'
-import downBtn from '../../assets/icons/down_brown.png'
+import Play from '../../components/playbar/Play'
+import downBtnBrown from '../../assets/icons/down_brown.png'
 import {
-  MyPageBodyMiddle,
-  MyPageBodyTop,
-  MyPageLikeDescDiv,
-  MyPageLikeLast,
-  MyPageLikeMiddleContainer,
-  MyPageLikeMiddleDiv,
-  MyPageLikeMiddleFour,
-  MyPageLikeMiddleOne,
-  MyPageLikeMiddleThree,
-  MyPageLikeMiddleTwo,
-  MyPageLikeMoreBtn,
-  MyPageLikeScrapBtn,
-  MyPageLikeTopFirst,
-  MyPageLikeTopRest,
-  MyPageLikeTopSec,
-} from './MyPageTable'
+  H3,
+  ContentContainer,
+  MusicDetailBtn,
+  ShowRepliesBtn,
+  SpanMusicContent,
+  SpanMusicTitle,
+  ToogleWrap,
+} from '../../components/composer/ComposerListSt'
 import { useNavigate } from 'react-router-dom'
+import { MyPageContainer } from './MyPageTable'
+import Pagination from 'react-js-pagination'
+
 type Like = {
   composer: string
   fileName: string
@@ -45,40 +40,36 @@ type Like = {
 
 function MyPageLike() {
   const navigate = useNavigate()
-  const [isDesc, setIsDesc] = useState(false)
-  // const {
-  //   isLoading,
-  //   isError,
-  //   data: likedata,
-  // } = useQuery<Like[]>(['like'], likedMusic)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [showDesc, setShowDesc] = useState<number>(-1)
+  const {
+    isLoading,
+    isError,
+    data: likedata,
+  } = useQuery<Like[]>(['like', currentPage], () => likedMusic(currentPage))
   const { isLoading: profileLoading, data: profileData } = useQuery(
     ['profile'],
     showProfile
   )
-  // if (isLoading) {
-  //   return <h1>로딩중</h1>
-  // }
+  if (isLoading) {
+    return <h1>로딩중</h1>
+  }
   if (profileLoading) {
     return <h1>로딩중..</h1>
   }
-  // if (isError) {
-  //   return <h1>에러</h1>
-  // }
-
-  // console.log(likedata)
-  // const onPlayMusicHandler = (musicUrl:string) => {
-  //   const myAudio = new Audio()
-  //   myAudio.src = musicUrl;
-  //   myAudio.play()
-  // }
-  const onDescHandler = () => {
-    if(isDesc === true){
-      setIsDesc(false)
-    }else{
-      setIsDesc(true)
-    }
+  if (isError) {
+    return <h1>에러</h1>
   }
-  console.log(isDesc)
+
+  console.log(likedata)
+  const toggleReplies = (descIndex: number) => {
+    setShowDesc((prevState) => (prevState === descIndex ? -1 : descIndex))
+    console.log(showDesc)
+  }
+  const onPaginationHandler = (i:any) => {
+    setCurrentPage(i);
+  };
+
   return (
     <>
       <Header />
@@ -129,73 +120,58 @@ function MyPageLike() {
           회원 탈퇴
         </MyPageTabItemLast>
       </MyPageTab>
-      <MyPageContentsContainer>
-        <MyPageBodyTop>
-          <MyPageLikeTopFirst>NO</MyPageLikeTopFirst>
-          <MyPageLikeTopSec>곡명</MyPageLikeTopSec>
-          <MyPageLikeTopRest>스크랩</MyPageLikeTopRest>
-          <MyPageLikeTopRest>더보기</MyPageLikeTopRest>
-          <MyPageLikeLast>댓글작성</MyPageLikeLast>
-        </MyPageBodyTop>
-        <MyPageBodyMiddle>
-          <MyPageLikeMiddleContainer>
-            <MyPageLikeMiddleOne>곡 넘버</MyPageLikeMiddleOne>
-            <MyPageLikeMiddleTwo>곡 이름</MyPageLikeMiddleTwo>
-            <MyPageLikeMiddleThree>
-              <MyPageLikeScrapBtn src={downBtn} alt="플레이버튼" />
-            </MyPageLikeMiddleThree>
-            <MyPageLikeMiddleThree>
-              <MyPageLikeMoreBtn src={playBtn} alt="설명버튼" onClick={onDescHandler}/>
-            </MyPageLikeMiddleThree>
-            <MyPageLikeMiddleFour>댓글작성</MyPageLikeMiddleFour>
-          </MyPageLikeMiddleContainer>
-          {
-            isDesc === true ? 
-            <MyPageLikeDescDiv>
-              <div>테스트 곡 제목</div>
-              <div>테스트 곡 설명</div>
-            </MyPageLikeDescDiv> 
-            : null
-          }
-          <MyPageLikeMiddleContainer>
-            <MyPageLikeMiddleOne>곡 넘버</MyPageLikeMiddleOne>
-            <MyPageLikeMiddleTwo>곡 이름</MyPageLikeMiddleTwo>
-            <MyPageLikeMiddleThree>
-              <MyPageLikeScrapBtn src={downBtn} alt="플레이버튼" />
-            </MyPageLikeMiddleThree>
-            <MyPageLikeMiddleThree>
-              <MyPageLikeMoreBtn src={playBtn} alt="설명버튼" onClick={onDescHandler}/>
-            </MyPageLikeMiddleThree>
-            <MyPageLikeMiddleFour>댓글작성</MyPageLikeMiddleFour>
-          </MyPageLikeMiddleContainer>
-          {
-            isDesc === true ? 
-            <MyPageLikeDescDiv>
-              <div>테스트 곡 제목</div>
-              <div>테스트 곡 설명</div>
-            </MyPageLikeDescDiv> 
-            : null
-          }
-        </MyPageBodyMiddle>
-      </MyPageContentsContainer>
+      <MyPageContainer>
+        <div>
+          <div>no</div>
+          <div>곡명</div>
+          <div>좋아요</div>
+          <div>스크랩</div>
+          <div>더보기</div>
+        </div>
+        {likedata?.map((item, index) => (
+          <React.Fragment key={`${item.musicId}`}>
+            <div>
+              <div>{index + 1}</div>
+              <H3>{item.musicTitle}</H3>
+              <button>
+                <img src={downBtnBrown} alt="like" />
+              </button>
+              <button>
+                <img src={downBtnBrown} alt="down" />
+              </button>
+              <div>
+                <ShowRepliesBtn onClick={() => toggleReplies(index)}>
+                  {showDesc === index ? '숨기기' : '더보기'}
+                </ShowRepliesBtn>
+              </div>
+            </div>
+            {showDesc === index && (
+              <ToogleWrap>
+                <ContentContainer>
+                  <SpanMusicTitle>{item.musicTitle}</SpanMusicTitle>
+                  <SpanMusicContent>{item.fileName}</SpanMusicContent>
+                  <MusicDetailBtn
+                    onClick={() => navigate(`/recommend/music/${item?.musicId}`)}
+                  >
+                    댓글 남기러 가기
+                  </MusicDetailBtn>
+                </ContentContainer>
+              </ToogleWrap>
+            )}
+          </React.Fragment>
+        ))}
+        <Pagination
+        activePage={currentPage}
+        itemsCountPerPage={10}
+        totalItemsCount={50}
+        pageRangeDisplayed={5}
+        prevPageText={"<"}
+        nextPageText={">"} 
+        onChange={onPaginationHandler}/>
+      </MyPageContainer>
+      <Play />
     </>
   )
 }
 
 export default MyPageLike
-
-// {likedata?.map((item) => (
-//   <MyPageLikeMiddleContainer key={item.musicId}>
-//     <MyPageLikeMiddleDiv>{item.composer}</MyPageLikeMiddleDiv>
-//     <MyPageLikeMiddleDiv>{item.fileName}</MyPageLikeMiddleDiv>
-//     <MyPageLikeMiddleDiv>
-//       {/* <audio controls src={item.musicUrl} /> */}
-//       <MyPageLikePlayBtn src={playBtn} alt="플레이버튼" onClick={() => onPlayMusicHandler(item.musicUrl)}/>
-//     </MyPageLikeMiddleDiv>
-//     <MyPageLikeMiddleDiv
-//       onClick={() => navigate(`/recommend/music/${item.musicId}`)}
-//     >
-//       댓글남기기
-//     </MyPageLikeMiddleDiv>
-//   </MyPageLikeMiddleContainer>
-// ))}

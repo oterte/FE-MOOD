@@ -6,17 +6,17 @@ export const showProfile = async () => {
   return response.data.userInfo
 }
 
-export const showComment = async () => {
-  const response = await instance.get('/api/user/reviewlist')
-  return response
+export const showComment = async (id:number) => {
+  const response = await instance.get(`/api/user/reviewlist?page=${id}`)
+  return response.data.reviewList
 }
 
 export const showReComment = async () => {
   const response = await instance.get('/api/user/recommentlist')
   return response.data.recommentList
 }
-export const likedMusic = async () => {
-  const response = await instance.get('/api/user/likelist')
+export const likedMusic = async (id:number) => {
+  const response = await instance.get(`/api/user/likelist?page=${id}`)
   return response.data.likeList
 }
 

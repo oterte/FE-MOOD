@@ -13,6 +13,7 @@ import {
   MyPageTabItem,
   MyPageTabItemLast,
 } from './mypagecontentsSC'
+import Play from '../../components/playbar/Play'
 import { useNavigate } from 'react-router'
 import { useQuery } from 'react-query'
 import { deleteAccount, showProfile } from '../../api/mypage'
@@ -94,6 +95,7 @@ function MyPageDelteAccount() {
       <MyPageContentsContainer>
         <button onClick={onDeleteAccountHandler}>회원 탈퇴하기</button>
       </MyPageContentsContainer>
+      <Play/>
     </>
   )
 }
