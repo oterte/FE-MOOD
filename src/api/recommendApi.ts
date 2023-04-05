@@ -10,6 +10,6 @@ export const getMusic = async (coordinate: Coordinate) => {
 }
 
 export const getSurveyMusic = async (status1: number, status2: number) => {
-  const musicData = await withoutTokenInstance.get(`/api/survey/${status1}/${status2}`)
-  return musicData.data.data
+  const musicData = await withoutTokenInstance.get(`/api/music/survey/${status1}/${status2}`)
+  return musicData.data
 }
