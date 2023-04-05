@@ -30,9 +30,18 @@ import { changeNickname, editProfileImg, showProfile } from '../../api/mypage'
 import { useNavigate } from 'react-router-dom'
 import { checkNickname } from '../../api/signup'
 import { onSetLocalStorageHandler } from '../../util/cookie'
+import { useDispatch } from 'react-redux'
+import { setMusicPlay } from '../../redux/modules/musicPlayer'
+import { setIsPlaying } from '../../redux/modules/isPlaying'
+import MyPageBody from './MyPageBody'
 function MyPageEditProfile() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
+  const dispatch = useDispatch()
+  const onClickMusicChangeHandler = (music: any) => {
+    dispatch(setMusicPlay(music))
+    dispatch(setIsPlaying())
+  }
   const {
     isLoading,
     isError,
@@ -105,36 +114,7 @@ function MyPageEditProfile() {
           </div>
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
-      <MyPageTab>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypageComment')
-          }}
-        >
-          남긴 댓글
-        </MyPageTabItem>
-        <MyPageTabItem
-          onClick={() => {
-            navigate('/mypageLike')
-          }}
-        >
-          좋아요
-        </MyPageTabItem>
-        <MyPageEditTab
-          onClick={() => {
-            navigate('/mypageEditprofile')
-          }}
-        >
-          프로필 사진 변경
-        </MyPageEditTab>
-        <MyPageTabItemLast
-          onClick={() => {
-            navigate('/mypageDeleteaccount')
-          }}
-        >
-          회원 탈퇴
-        </MyPageTabItemLast>
-      </MyPageTab>
+      <MyPageBody></MyPageBody>
       <MyPageContentsContainer>
         <ExternalContainer>
           <MyPageEditContainer>

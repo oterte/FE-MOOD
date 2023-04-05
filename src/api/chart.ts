@@ -2,6 +2,7 @@ import { withoutTokenInstance, instance } from './instance'
 
 // 좋아요 기능
 export const toggleLike = async ({ musicId }: { musicId: number }) => {
+  console.log(musicId)
   const response = await instance.put(`api/music/${musicId}/like`)
   return response
 }
