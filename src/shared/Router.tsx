@@ -36,15 +36,15 @@ function Router() {
         <Route path="/search" element={<SearchBar />} />
         <Route path="/searchresultpage" element={<SearchResultPage />} />
         <Route path="/api/kakao/callback" element={<Auth />} />
-        <Route path ="/api/google/callback" element={<GoogleAuth />}/>
-        <Route path='/api/naver/callback' element={<NaverAuth />}/>
+        <Route path="/api/google/callback" element={<GoogleAuth />} />
+        <Route path="/api/naver/callback" element={<NaverAuth />} />
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/selectroom" element={<SelectChat />} />
         <Route path="/chatroom/:id" element={<ChatRoom />} />
-        <Route path='/mypageLike' element={<MyPageLike/>}/>
-        <Route path='/mypageComment' element={<MyPageComment />}/>
-        <Route path='/mypageEditprofile' element={<MyPageEditProfile />}/>
-        <Route path='/mypageDeleteaccount' element={<MyPageDeleteAccount />}/>
+        <Route path="/mypageLike" element={<MyPageLike />} />
+        <Route path="/mypageComment" element={<MyPageComment />} />
+        <Route path="/mypageEditprofile" element={<MyPageEditProfile />} />
+        <Route path="/mypageDeleteaccount" element={<MyPageDeleteAccount />} />
       </Routes>
     </BrowserRouter>
   )
