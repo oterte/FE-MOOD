@@ -17,10 +17,10 @@ import {
   CenterExplain,
   ClickBox,
   MusicComtain,
-  AudioDiv,
   StDivTitle,
   StPTitle,
   StPExplain,
+  ComposerImg,
 } from './RecommendSt'
 import { useNavigate } from 'react-router'
 import { useDispatch } from 'react-redux'
@@ -178,7 +178,9 @@ function Recommend() {
                   onLikeUpdate={handleLikeUpdate}
                 />
               </StDivLike>
-              <StDivComposerImg>IMG</StDivComposerImg>
+              <StDivComposerImg>
+                <ComposerImg src={selectMusicData.imageUrl} />
+              </StDivComposerImg>
               {!selectMusicData ? (
                 <ClickBox>기분 영역을 클릭해보세요!</ClickBox>
               ) : (

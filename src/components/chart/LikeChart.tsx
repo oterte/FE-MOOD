@@ -10,6 +10,7 @@ import {
 } from './ChartStyle'
 import { useDispatch } from 'react-redux'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
+import { setIsPlaying } from '../../redux/modules/isPlaying'
 
 export interface Music {
   id: number
@@ -59,6 +60,7 @@ function LikeChart({
   const dispatch = useDispatch()
   const onClickMusicChangeHandler = (music: Music) => {
     dispatch(setMusicPlay(music))
+    dispatch(setIsPlaying())
   }
 
   return (
