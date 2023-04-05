@@ -6,6 +6,12 @@ export const toggleLike = async ({ musicId }: { musicId: number }) => {
   return response
 }
 
+// 좋아요 상태 조회
+export const likeStatus = async ({ musicId }: { musicId: number }) => {
+  const response = await instance.get(`api/music/${musicId}/like`)
+  return response
+}
+
 // 좋아요 갯수별 순위
 export const getlikedMusicList = async () => {
   const response = await withoutTokenInstance.get(`api/music/likechart`)

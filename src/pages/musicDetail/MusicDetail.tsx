@@ -11,6 +11,7 @@ import {
   ComposerImg,
   ComposerName,
   Con,
+  InfoContainer,
   Ment,
   MusicDesc,
   MusicTitle,
@@ -58,9 +59,11 @@ function MusicDetail() {
       <Ment>다른 회원들과 음악 감상평을 공유해 보세요.</Ment>
       <Con>
         <ComposerImg src={composer} alt={`${data.composer} 이미지`} />
-        <MusicTitle>{data.musicTitle}</MusicTitle>
-        <MusicDesc>{data.musicContent}</MusicDesc>
-        <ComposerName>{data.composer}</ComposerName>
+        <InfoContainer>
+          <MusicTitle>{data.musicTitle}</MusicTitle>
+          <MusicDesc>{data.musicContent}</MusicDesc>
+          <ComposerName>{data.composer}</ComposerName>
+        </InfoContainer>
       </Con>
 
       <Ment>좋아하는 음악에 대해 댓글을 남겨보세요.</Ment>
