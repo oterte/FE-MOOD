@@ -7,6 +7,7 @@ import {
   ChartImg,
   ChartTitle,
   ChartComposer,
+  ComposerImg,
 } from './ChartStyle'
 import { useDispatch } from 'react-redux'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
@@ -23,6 +24,7 @@ export interface Music {
   likesCount: number
   likeStatus: boolean
   streamCount?: number
+  imageUrl: string
 }
 
 interface LikeChartProps {
@@ -74,7 +76,9 @@ function LikeChart({
               onClick={() => onClickMusicChangeHandler(music)}
             >
               <Chartnumber>{index + visibleRange.start + 1}</Chartnumber>
-              <ChartImg>IMG</ChartImg>
+              <ChartImg>
+                <ComposerImg src={music.imageUrl} />
+              </ChartImg>
               <ChartTitle>{music.musicTitle}</ChartTitle>
               <ChartComposer>{music.composer}</ChartComposer>
               <LikeCount

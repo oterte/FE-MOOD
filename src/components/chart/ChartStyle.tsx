@@ -59,12 +59,15 @@ export const Chartnumber = styled.p`
 export const ChartImg = styled.div`
   width: 62px;
   height: 62px;
-  border: 1px solid blue;
-  box-sizing: border-box;
   border-radius: 50%;
   text-align: center;
   line-height: 62px;
   margin-left: 52px;
+`
+export const ComposerImg = styled.img`
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
 `
 export const ChartTitle = styled.p`
   width: 300px;
