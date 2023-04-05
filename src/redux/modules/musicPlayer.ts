@@ -10,6 +10,7 @@ const initialState = {
   status: undefined,
   tag: null,
   userId: undefined,
+  imageUrl: '',
 }
 
 const musicSlice = createSlice({
@@ -17,6 +18,8 @@ const musicSlice = createSlice({
   initialState,
   reducers: {
     setMusicPlay: (state, action) => {
+      console.log(action)
+      state.imageUrl = action.payload.imageUrl
       state.musicTitle = action.payload.musicTitle
       state.composer = action.payload.composer
       state.musicId = action.payload.musicId

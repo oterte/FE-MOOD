@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 
 export const Wrap = styled.div`
-  position: relative
+  position: relative;
   width: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -71,8 +72,8 @@ export const Desc = styled.div`
   background: #fefefe;
   width: 1180px;
   height: auto;
+  min-height: 500px;
   text-align: center;
-  padding-bottom: 20rem;
 
   & > div {
     display: grid;
@@ -110,6 +111,11 @@ export const Desc = styled.div`
       justify-self: center;
     }
   }
+`
+
+export const PaddingBottomDiv = styled.div`
+  height: 20rem;
+  background: #f5f5f5;
 `
 
 export const Inpo = styled.div`

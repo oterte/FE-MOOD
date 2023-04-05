@@ -32,7 +32,7 @@ export const SearchInput = styled.div`
   input {
     width: 0;
     height: 30px;
-    border: 1.5px solid #6e6e6e;
+    border: 2px solid #6e6e6e;
     border-radius: 30px;
     padding: 5px;
     font-size: 16px;
