@@ -3,6 +3,7 @@ import { useQuery } from 'react-query'
 import { composerList } from '../../api/composerApi'
 import Play from '../playbar/Play'
 import Down from '../../assets/icons/down_brown.png'
+import { scrapMusic, getscrapList } from '../../api/scrap'
 import {
   Contents,
   Desc,
@@ -25,7 +26,6 @@ import {
 } from './ComposerListSt'
 import { useNavigate } from 'react-router-dom'
 import LikeCount from '../like/LikeCount'
-import { getscrapList, scrapMusic } from '../../api/scrap'
 
 type MusicInfo = {
   musicId: number
@@ -45,7 +45,6 @@ const ComposerList = () => {
   const navigate = useNavigate()
   const composers = ['Beethoven', 'Mozart', 'Chopin', 'Vivaldi']
   const [selectedComposer, setSelectedComposer] = useState(composers[0])
-  const [scrapStatus, setScrapStatus] = useState<boolean[]>([])
 
   const { data } = useQuery<{ composerInfo: any[]; music: MusicInfo[] }>(
     ['composerList', selectedComposer],
@@ -55,6 +54,31 @@ const ComposerList = () => {
 
   const [musicInfos, setMusicInfos] = useState<MusicInfo[] | undefined>()
   const [showReplies, setShowReplies] = useState<number>(-1)
+  const [scrapStatus, setScrapStatus] = useState<boolean[]>([])
+
+  const updateScrapStatus = async (musicId: number) => {
+    try {
+      const scrapList = await getscrapList({ musicId })
+      console.log('Scrap status updated:', scrapList)
+      setScrapStatus(scrapList)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const handleScrapButtonClick = async (musicId: number) => {
+    const token = localStorage.getItem('authorization')
+    if (!token) {
+      alert('로그인 후 이용 가능합니다.')
+      return
+    }
+    try {
+      const updatedScrapStatus = await scrapMusic({ musicId })
+      updateScrapStatus(musicId)
+    } catch (error) {
+      console.error(error)
+    }
+  }
 
   const handleLikeUpdate = (
     musicId: number,
@@ -75,22 +99,7 @@ const ComposerList = () => {
         data.music.map((music) => ({
           ...music,
           likeStatus: music.likeStatus,
-
           handleLikeUpdate,
-
-          handleLikeUpdate: (
-            musicId: number,
-            likeStatus: boolean,
-            likeCount: number
-          ) => {
-            setMusicInfos((prevState) =>
-              prevState?.map((m) =>
-                m.musicId === musicId
-                  ? { ...m, likeStatus, likesCount: likeCount }
-                  : m
-              )
-            )
-          },
         }))
       )
     }
@@ -101,27 +110,6 @@ const ComposerList = () => {
   const toggleReplies = (musicIndex: number) => {
     setShowReplies((prevState) => (prevState === musicIndex ? -1 : musicIndex))
   }
-
-
-  const updateScrapStatus = async (musicId: number) => {
-    try {
-      const scrapList = await getscrapList({ musicId })
-      setScrapStatus(scrapList)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  const handleScrapButtonClick = async (musicId: number) => {
-    try {
-      await scrapMusic({ musicId })
-      updateScrapStatus(musicId)
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  console.log(musicInfos)
 
   return (
     <Wrap>
@@ -168,7 +156,6 @@ const ComposerList = () => {
                     <LikeCount
                       musicId={music.musicId}
                       likeCount={music.likeCount}
-                      likeCount={music.likesCount}
                       likeStatus={music.likeStatus}
                       onLikeUpdate={handleLikeUpdate}
                     />
