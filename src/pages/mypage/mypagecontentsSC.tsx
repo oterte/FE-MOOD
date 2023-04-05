@@ -7,6 +7,7 @@ export const MyPageTab = styled.div`
   flex-direction: row;
   color: #888888;
   text-align: center;
+  line-height: 45px;
 `
 export const MyPageTabItem = styled.div`
   width: 129px;
@@ -19,6 +20,15 @@ export const MyPageTabItem = styled.div`
     background-color: #4b372e;
     color: #ffffff;
   }
+`
+export const MyPageScrapTab = styled.div`
+  width: 129px;
+  height: 45px;
+  background-color: #4b372e;
+  color: #ffffff;
+  border-right: 1px solid #535645;
+  cursor: pointer;
+  text-align: center;
 `
 export const MyPageCommentTab = styled.div`
   width: 129px;
@@ -75,6 +85,7 @@ export const MyPageContentsContainer = styled.div`
   margin: auto;
   display: flex;
   flex-direction: column;
+  margin-top: 25px;
 `
 export const ExternalContainer = styled.div`
   display: flex;
@@ -116,7 +127,7 @@ export const MyPageInputLabel = styled.label`
   font-weight: 400;
   font-size: 16px;
   color: #000000;
-  margin-left:20px;
+  margin-left: 20px;
 `
 
 export const MyPageInput = styled.input`
@@ -124,10 +135,10 @@ export const MyPageInput = styled.input`
   height: 45px;
   background-color: #f4f4f4;
   border: 1px solid #888888;
-  margin-left:20px;
+  margin-left: 20px;
 `
 export const MyPageImgBtnWrap = styled.div`
-  margin-top:20px;
+  margin-top: 20px;
 `
 export const MyPageInputBtn = styled.button`
   width: 144px;
@@ -140,9 +151,8 @@ export const MyPageInputBtn = styled.button`
   font-size: 16px;
   text-align: center;
   margin-left: 20px;
-  cursor:pointer;
+  cursor: pointer;
 `
 export const MyPageImgEditInput = styled.input`
-  display:none;
-  
+  display: none;
 `

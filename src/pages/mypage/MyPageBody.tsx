@@ -7,6 +7,13 @@ function MyPageBody() {
   return (
     <>
       <MyPageTab>
+      <MyPageTabItem
+          onClick={() => {
+            navigate('/mypage')
+          }}
+        >
+          스크랩
+        </MyPageTabItem>
         <MyPageTabItem
           onClick={() => {
             navigate('/mypageComment')

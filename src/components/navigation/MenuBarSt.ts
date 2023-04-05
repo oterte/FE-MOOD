@@ -86,7 +86,7 @@ export const LoginMent = styled.p`
   left: 50%;
   transform: translate(-50%, 0%);
   font-family: var(--font-NotoSerifKR);
-  font-size: 1.2rem;
+  font-size: 1.1rem;
 `
 
 export const LoginBtn = styled.button`

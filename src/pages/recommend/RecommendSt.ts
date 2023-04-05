@@ -50,11 +50,15 @@ export const StDivComposerImg = styled.div`
   width: 180px;
   height: 180px;
   border-radius: 50%;
-  border: 1px solid blue;
   margin: 39px auto 0px auto;
   text-align: center;
   line-height: 180px;
   box-sizing: border-box;
+`
+export const ComposerImg = styled.img`
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
 `
 export const StPVigor = styled.p`
   font-size: 25px;
