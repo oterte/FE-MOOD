@@ -9,7 +9,7 @@ export const Wrap = styled.div`
   max-width: 1200px;
   margin: auto;
   padding: 0 20px;
-  margin-bottom: 10rem;
+  margin-bottom: 15rem;
 `
 
 export const Ment = styled.p`
@@ -168,7 +168,7 @@ export const ReCommentBox = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 90px;
+  height: 100px;
   box-sizing: border-box;
   padding-left: 3rem;
   padding-bottom: 2rem;
@@ -267,8 +267,13 @@ export const EditBtn = styled.button`
   color: white;
 `
 
-export const ReCommentInput = styled.input``
-export const EditReCommentInput = styled.input``
+export const ReCommentInput = styled.input`
+  width: 700px;
+  height: 26px;
+  font-size: 1.18rem;
+  border: 2px solid #dedede;
+  padding-left: 0.8rem;
+`
 
 export const AddReform = styled.form`
   position: relative;
