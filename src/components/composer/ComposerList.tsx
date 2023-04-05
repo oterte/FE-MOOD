@@ -75,7 +75,22 @@ const ComposerList = () => {
         data.music.map((music) => ({
           ...music,
           likeStatus: music.likeStatus,
+
           handleLikeUpdate,
+
+          handleLikeUpdate: (
+            musicId: number,
+            likeStatus: boolean,
+            likeCount: number
+          ) => {
+            setMusicInfos((prevState) =>
+              prevState?.map((m) =>
+                m.musicId === musicId
+                  ? { ...m, likeStatus, likesCount: likeCount }
+                  : m
+              )
+            )
+          },
         }))
       )
     }
@@ -86,6 +101,7 @@ const ComposerList = () => {
   const toggleReplies = (musicIndex: number) => {
     setShowReplies((prevState) => (prevState === musicIndex ? -1 : musicIndex))
   }
+
 
   const updateScrapStatus = async (musicId: number) => {
     try {
@@ -104,6 +120,8 @@ const ComposerList = () => {
       console.error(error)
     }
   }
+
+  console.log(musicInfos)
 
   return (
     <Wrap>
@@ -150,6 +168,7 @@ const ComposerList = () => {
                     <LikeCount
                       musicId={music.musicId}
                       likeCount={music.likeCount}
+                      likeCount={music.likesCount}
                       likeStatus={music.likeStatus}
                       onLikeUpdate={handleLikeUpdate}
                     />

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useQuery, useQueryClient } from 'react-query'
-import { scrappedMusic, showProfile } from '../../api/mypage'
+import {  showProfile } from '../../api/mypage'
 import Header from '../../components/header/Header'
 import {
   MyPageProfileBodyContainer,
@@ -17,23 +17,13 @@ import {
 import { useNavigate } from 'react-router'
 function MyPageScrab() {
   const navigate = useNavigate()
-  const { isLoading, isError, data } = useQuery(['scrap'], scrappedMusic)
+ 
   const { isLoading: profileLoading, data: profileData } = useQuery(
     ['profile'],
     showProfile
   )
 
-  if (isLoading) {
-    return <h1>로딩중</h1>
-  }
-  if (profileLoading) {
-    return <h1>로딩중..</h1>
-  }
-  if (isError) {
-    return <h1>에러</h1>
-  }
 
-  console.log(data)
   console.log(profileData)
 
   return (

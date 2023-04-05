@@ -30,9 +30,17 @@ import { changeNickname, editProfileImg, showProfile } from '../../api/mypage'
 import { useNavigate } from 'react-router-dom'
 import { checkNickname } from '../../api/signup'
 import { onSetLocalStorageHandler } from '../../util/cookie'
+import { useDispatch } from 'react-redux'
+import { setMusicPlay } from '../../redux/modules/musicPlayer'
+import { setIsPlaying } from '../../redux/modules/isPlaying'
 function MyPageEditProfile() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
+  const dispatch = useDispatch()
+  const onClickMusicChangeHandler = (music: any) => {
+    dispatch(setMusicPlay(music))
+    dispatch(setIsPlaying())
+  }
   const {
     isLoading,
     isError,

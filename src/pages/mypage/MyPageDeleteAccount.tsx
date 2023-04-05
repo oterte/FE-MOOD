@@ -19,11 +19,19 @@ import { useQuery } from 'react-query'
 import { deleteAccount, showProfile } from '../../api/mypage'
 import { onLogoutHandler, onRemoveToken } from '../../util/cookie'
 import MyPageBody from './MyPageBody'
+import { useDispatch } from 'react-redux'
+import { setMusicPlay } from '../../redux/modules/musicPlayer'
+import { setIsPlaying } from '../../redux/modules/isPlaying'
 function MyPageDelteAccount() {
   const { isLoading: profileLoading, data: profileData } = useQuery(
     ['profile'],
     showProfile
   )
+  const dispatch = useDispatch()
+  const onClickMusicChangeHandler = (music: any) => {
+    dispatch(setMusicPlay(music))
+    dispatch(setIsPlaying())
+  }
 
   const onDeleteAccountHandler = () => {
     if (!window.confirm('정말 회원 탈퇴를 진행하시겠습니까?')) {
@@ -96,6 +104,7 @@ function MyPageDelteAccount() {
         <button onClick={onDeleteAccountHandler}>회원 탈퇴하기</button>
       </MyPageContentsContainer>
       <Play/>
+      <div>123123123</div>
     </>
   )
 }

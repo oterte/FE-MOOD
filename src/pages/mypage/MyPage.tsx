@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Header from '../../components/header/Header'
 import {
   MyPageProfileBodyContainer,
@@ -8,11 +8,30 @@ import {
 } from './mypageSC'
 import { MyPageContentsContainer } from './mypagecontentsSC'
 import { useQuery } from 'react-query'
-import { showProfile } from '../../api/mypage'
+import { showProfile, showScrap } from '../../api/mypage'
 import MyPageBody from './MyPageBody'
+import { useDispatch } from 'react-redux'
+import { setMusicPlay } from '../../redux/modules/musicPlayer'
+import { setIsPlaying } from '../../redux/modules/isPlaying'
 
 function MyPage() {
-  const { isLoading, isError, data, error } = useQuery(['profile'], showProfile)
+  const [currentPage, setCurrentPage] = useState(1)
+  const dispatch = useDispatch()
+  const onClickMusicChangeHandler = (music: any) => {
+    dispatch(setMusicPlay(music))
+    dispatch(setIsPlaying())
+  }
+    const {
+      isLoading:scrapLoading,
+      isError:scrapError,
+      data: scrapData,
+    } = useQuery(['myComment', currentPage], () =>
+      showScrap(currentPage)
+    )
+  const { isLoading, isError, data } = useQuery(['profile'], showProfile)
+  // if (scrapLoading) {
+  //   return <h1>로딩중</h1>
+  // }
   if (isLoading) {
     return <h1>로딩중</h1>
   }
@@ -20,7 +39,7 @@ function MyPage() {
     console.log(isError)
   }
 
-  console.log(error)
+  // console.log(scrapData)
   return (
     <>
       <Header />
