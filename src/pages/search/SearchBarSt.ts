@@ -66,7 +66,7 @@ export const CloseButton = styled.button`
 `
 
 export const Wrap = styled.div`
-  position: relative
+  position: relative;
   width: 100%;
   display: flex;
   flex-direction: column;
