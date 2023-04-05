@@ -20,34 +20,26 @@ import { MyPageContainer } from './MyPageTable'
 import { H3, ShowRepliesBtn } from '../../components/composer/ComposerListSt'
 import Pagination from 'react-js-pagination'
 import './mypagePagination.css'
-import { useDispatch } from 'react-redux'
-import { setMusicPlay } from '../../redux/modules/musicPlayer'
-import { setIsPlaying } from '../../redux/modules/isPlaying'
 type Review = {
-  musicId?: string
-  reviewId?: string
+  createdAt?: string
+  musicId?: number
+  reviewId?: number
   review?: string
 }
 function MyPageComment() {
   const [currentPage, setCurrentPage] = useState(1)
-  const dispatch = useDispatch()
-  const onClickMusicChangeHandler = (music: any) => {
-    dispatch(setMusicPlay(music))
-    dispatch(setIsPlaying())
-  }
   const {
     isLoading,
     isError,
     data: reviewData,
-  } = useQuery(['myComment', currentPage], () =>
-    showComment(currentPage)
-  )
+  } = useQuery(['myComment', currentPage], () => showComment(currentPage))
+
   const { isLoading: profileLoading, data: profileData } = useQuery(
     ['profile'],
     showProfile
   )
   const navigate = useNavigate()
-  const onPaginationHandler = (i: any) => {
+  const onPaginationHandler = (i: number) => {
     setCurrentPage(i)
   }
   if (isLoading) {
@@ -59,8 +51,6 @@ function MyPageComment() {
   if (isError) {
     return <h1>에러</h1>
   }
-
-  console.log(reviewData)
   return (
     <>
       <Header />
@@ -82,6 +72,13 @@ function MyPageComment() {
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
       <MyPageTab>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypage')
+          }}
+        >
+          스크랩
+        </MyPageTabItem>
         <MyPageCommentTab
           onClick={() => {
             navigate('/mypageComment')
@@ -118,7 +115,7 @@ function MyPageComment() {
           <div>곡명</div>
           <div>상세페이지로</div>
         </div>
-        {reviewData.reviewList.map((item:any, index:any) => (
+        {reviewData.reviewList.map((item: Review, index: number) => (
           <React.Fragment key={`${item.reviewId}`}>
             <div>
               <div>{index + 1}</div>

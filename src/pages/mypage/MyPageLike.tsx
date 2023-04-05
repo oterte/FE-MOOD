@@ -64,10 +64,10 @@ function MyPageLike() {
   )
   const scrapMutation = useMutation(doScrap, {
     onSuccess: () => {
-      queryClient.invalidateQueries();
-    }
+      queryClient.invalidateQueries()
+    },
   })
-  const onScrapHandler = (id:number) => {
+  const onScrapHandler = (id: number) => {
     scrapMutation.mutate(id)
   }
   if (isLoading) {
@@ -81,13 +81,15 @@ function MyPageLike() {
   }
 
   console.log(likedata)
+  
   const toggleReplies = (descIndex: number) => {
     setShowDesc((prevState) => (prevState === descIndex ? -1 : descIndex))
     console.log(showDesc)
   }
-  const onPaginationHandler = (i:any) => {
-    setCurrentPage(i);
-  };
+
+  const onPaginationHandler = (i: number) => {
+    setCurrentPage(i)
+  }
 
   return (
     <>
@@ -99,7 +101,7 @@ function MyPageLike() {
             <MyPageProfileImg src={profileData.profileUrl} />
           </MyPageProfileImgBox>
           <div>
-            <p>{profileData.nickname} 님 환영합니다</p>
+            <p>{profileData.nickname}님 환영합니다</p>
           </div>
           <div>
             <span>당신의 최근 감정 상태는 XXX 입니다.</span>
@@ -110,6 +112,13 @@ function MyPageLike() {
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
       <MyPageTab>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypage')
+          }}
+        >
+          스크랩
+        </MyPageTabItem>
         <MyPageTabItem
           onClick={() => {
             navigate('/mypageComment')
@@ -147,16 +156,24 @@ function MyPageLike() {
           <div>스크랩</div>
           <div>더보기</div>
         </div>
-        {likedata.likeList.map((item:any, index:any) => (
+        {likedata.likeList.map((item: any, index: number) => (
           <React.Fragment key={`${item.musicId}`}>
             <div>
               <div>{index + 1}</div>
               <H3>{item.musicTitle}</H3>
               <button>
-                <img src={playBtnBrown} alt="like" onClick={() => onClickMusicChangeHandler(item)}/>
+                <img
+                  src={playBtnBrown}
+                  alt="like"
+                  onClick={() => onClickMusicChangeHandler(item)}
+                />
               </button>
               <button>
-                <img src={downBtnBrown} alt="down" onClick={() => onScrapHandler(item.musicId)}/>
+                <img
+                  src={downBtnBrown}
+                  alt="down"
+                  onClick={() => onScrapHandler(item.musicId)}
+                />
               </button>
               <div>
                 <ShowRepliesBtn onClick={() => toggleReplies(index)}>
@@ -170,7 +187,9 @@ function MyPageLike() {
                   <SpanMusicTitle>{item.musicTitle}</SpanMusicTitle>
                   <SpanMusicContent>{item.fileName}</SpanMusicContent>
                   <MusicDetailBtn
-                    onClick={() => navigate(`/recommend/music/${item?.musicId}`)}
+                    onClick={() =>
+                      navigate(`/recommend/music/${item?.musicId}`)
+                    }
                   >
                     댓글 남기러 가기
                   </MusicDetailBtn>
@@ -180,13 +199,14 @@ function MyPageLike() {
           </React.Fragment>
         ))}
         <Pagination
-        activePage={currentPage}
-        itemsCountPerPage={10}
-        totalItemsCount={likedata.likeCount}
-        pageRangeDisplayed={5}
-        prevPageText={"<"}
-        nextPageText={">"} 
-        onChange={onPaginationHandler}/>
+          activePage={currentPage}
+          itemsCountPerPage={10}
+          totalItemsCount={likedata.likeCount}
+          pageRangeDisplayed={5}
+          prevPageText={'<'}
+          nextPageText={'>'}
+          onChange={onPaginationHandler}
+        />
       </MyPageContainer>
       <Play />
     </>
