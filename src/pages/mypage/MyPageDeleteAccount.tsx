@@ -27,7 +27,6 @@ function MyPageDelteAccount() {
     ['profile'],
     showProfile
   )
-  console.log(12312312)
   const dispatch = useDispatch()
   const onClickMusicChangeHandler = (music: any) => {
     dispatch(setMusicPlay(music))
@@ -105,6 +104,7 @@ function MyPageDelteAccount() {
         <button onClick={onDeleteAccountHandler}>회원 탈퇴하기</button>
       </MyPageContentsContainer>
       <Play/>
+      <div>123123123</div>
     </>
   )
 }
