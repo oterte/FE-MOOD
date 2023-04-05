@@ -33,7 +33,6 @@ import Pagination from 'react-js-pagination'
 import './mypagePagination.css'
 import { useDispatch } from 'react-redux'
 import { setIsPlaying } from '../../redux/modules/isPlaying'
-import MyPageBody from './MyPageBody'
 
 type Like = {
   composer: string
@@ -110,7 +109,36 @@ function MyPageLike() {
           </div>
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
-      <MyPageBody></MyPageBody>
+      <MyPageTab>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageComment')
+          }}
+        >
+          남긴 댓글
+        </MyPageTabItem>
+        <MyPageLikeTab
+          onClick={() => {
+            navigate('/mypageLike')
+          }}
+        >
+          좋아요
+        </MyPageLikeTab>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageEditprofile')
+          }}
+        >
+          프로필 사진 변경
+        </MyPageTabItem>
+        <MyPageTabItemLast
+          onClick={() => {
+            navigate('/mypageDeleteaccount')
+          }}
+        >
+          회원 탈퇴
+        </MyPageTabItemLast>
+      </MyPageTab>
       <MyPageContainer>
         <div>
           <div>no</div>
