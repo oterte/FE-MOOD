@@ -1,9 +1,12 @@
 import styled from 'styled-components'
 
+export const Wrap = styled.div`
+  width: 100%;
+  height: auto;
+`
 export const StDivWrap = styled.div`
   width: 1260px;
-  /* height: 400px; */
-  margin: 50px auto;
+  margin: 50px auto 13rem auto;
 `
 export const StDivTitle = styled.div`
   width: 1260px;
