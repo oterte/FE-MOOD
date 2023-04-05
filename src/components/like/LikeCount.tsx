@@ -1,5 +1,6 @@
 import React from 'react'
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
+import Heart from '../../assets/icons/Heart_brown.png'
+import FillHeart from '../../assets/icons/heart_white.png'
 import { toggleLike } from '../../api/chart'
 import { Cookies } from 'react-cookie'
 import { LikeWrap } from './LikeSt'
@@ -20,7 +21,10 @@ const cookies = new Cookies()
 const LikeCount: React.FC<LikeCountProps> = React.memo(
   ({ musicId, likeCount, likeStatus, onLikeUpdate }) => {
     const handleLikeButtonClick = async () => {
-      if (!musicId) return
+      if (!musicId) {
+        console.log("id 없음")
+        return
+      }
       const token = cookies.get('authorization')
       if (!token) {
         alert('로그인 후 이용 가능합니다.')
@@ -36,11 +40,16 @@ const LikeCount: React.FC<LikeCountProps> = React.memo(
       }
     }
 
-    const LikeIcon = likeStatus ? AiFillHeart : AiOutlineHeart
+    const likeImage = likeStatus ? FillHeart : Heart
 
     return (
       <LikeWrap>
-        <LikeIcon size={25} onClick={handleLikeButtonClick} />
+        <img
+          src={likeImage}
+          alt={likeStatus ? 'liked' : 'unliked'}
+          onClick={handleLikeButtonClick}
+          style={{ width: '25px', height: '25px' }}
+        />
         {likeCount > 0 && <span>{likeCount}</span>}
       </LikeWrap>
     )

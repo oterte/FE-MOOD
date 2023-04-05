@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '../../components/header/Header'
 import {
   MyPageProfileBodyContainer,
@@ -8,7 +8,6 @@ import {
 } from './mypageSC'
 import {
   MyPageCommentTab,
-  MyPageContentsContainer,
   MyPageTab,
   MyPageTabItem,
   MyPageTabItemLast,
@@ -16,32 +15,33 @@ import {
 import { useNavigate } from 'react-router'
 import { useQuery } from 'react-query'
 import { showComment, showProfile } from '../../api/mypage'
-import MyPageBody from './MyPageBody'
-import {
-  MyPageBodyDiv,
-  MyPageBodyMiddle,
-  MyPageBodyMiddleContainer,
-  MyPageBodyMiddleDiv,
-  MyPageBodyTop,
-  MyPageMiddleDivCursor,
-} from './MyPageTable'
-
+import Play from '../../components/playbar/Play'
+import { MyPageContainer } from './MyPageTable'
+import { H3, ShowRepliesBtn } from '../../components/composer/ComposerListSt'
+import Pagination from 'react-js-pagination'
+import './mypagePagination.css'
 type Review = {
-  musicId?: string
-  reviewId?: string
+  createdAt?: string
+  musicId?: number
+  reviewId?: number
   review?: string
 }
 function MyPageComment() {
+  const [currentPage, setCurrentPage] = useState(1)
   const {
     isLoading,
     isError,
     data: reviewData,
-  } = useQuery(['myComment'], showComment)
+  } = useQuery(['myComment', currentPage], () => showComment(currentPage))
+
   const { isLoading: profileLoading, data: profileData } = useQuery(
     ['profile'],
     showProfile
   )
   const navigate = useNavigate()
+  const onPaginationHandler = (i: number) => {
+    setCurrentPage(i)
+  }
   if (isLoading) {
     return <h1>로딩중</h1>
   }
@@ -51,8 +51,6 @@ function MyPageComment() {
   if (isError) {
     return <h1>에러</h1>
   }
-
-  console.log(reviewData)
   return (
     <>
       <Header />
@@ -74,6 +72,13 @@ function MyPageComment() {
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
       <MyPageTab>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypage')
+          }}
+        >
+          스크랩
+        </MyPageTabItem>
         <MyPageCommentTab
           onClick={() => {
             navigate('/mypageComment')
@@ -103,26 +108,39 @@ function MyPageComment() {
           회원 탈퇴
         </MyPageTabItemLast>
       </MyPageTab>
-      <MyPageContentsContainer>
-        <MyPageBodyTop>
-          <MyPageBodyDiv>곡명</MyPageBodyDiv>
-          <MyPageBodyDiv>댓글 내용</MyPageBodyDiv>
-          <MyPageBodyDiv>댓글 페이지로</MyPageBodyDiv>
-        </MyPageBodyTop>
-        <MyPageBodyMiddle>
-          {/* {reviewData?.map((item) => (
-            <MyPageBodyMiddleContainer key={item.reviewId}>
-              <MyPageBodyMiddleDiv>{item.musicId}</MyPageBodyMiddleDiv>
-              <MyPageBodyMiddleDiv>{item.review}</MyPageBodyMiddleDiv>
-              <MyPageMiddleDivCursor
-                onClick={() => navigate(`/recommend/music/${item.musicId}`)}
-              >
-                댓글남기기
-              </MyPageMiddleDivCursor>
-            </MyPageBodyMiddleContainer>
-          ))} */}
-        </MyPageBodyMiddle>
-      </MyPageContentsContainer>
+
+      <MyPageContainer>
+        <div>
+          <div>no</div>
+          <div>곡명</div>
+          <div>상세페이지로</div>
+        </div>
+        {reviewData.reviewList.map((item: Review, index: number) => (
+          <React.Fragment key={`${item.reviewId}`}>
+            <div>
+              <div>{index + 1}</div>
+              <H3>{item.review}</H3>
+              <div>
+                <ShowRepliesBtn
+                  onClick={() => navigate(`/recommend/music/${item?.musicId}`)}
+                >
+                  댓글작성
+                </ShowRepliesBtn>
+              </div>
+            </div>
+          </React.Fragment>
+        ))}
+        <Pagination
+          activePage={currentPage}
+          itemsCountPerPage={10}
+          totalItemsCount={reviewData.reviewCount}
+          pageRangeDisplayed={5}
+          prevPageText={'<'}
+          nextPageText={'>'}
+          onChange={onPaginationHandler}
+        />
+      </MyPageContainer>
+      <Play />
     </>
   )
 }

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '../../components/header/Header'
 import {
   MyPageProfileBodyContainer,
@@ -6,13 +6,57 @@ import {
   MyPageProfileImg,
   MyPageProfileImgBox,
 } from './mypageSC'
-import { MyPageContentsContainer } from './mypagecontentsSC'
+import downBtnBrown from '../../assets/icons/down_brown.png'
+import playBtnBrown from '../../assets/icons/music_play_brown.png'
+import {
+  MyPageScrapTab,
+  MyPageTab,
+  MyPageTabItem,
+  MyPageTabItemLast,
+} from './mypagecontentsSC'
 import { useQuery } from 'react-query'
-import { showProfile } from '../../api/mypage'
-import MyPageBody from './MyPageBody'
+import { showProfile, showScrap } from '../../api/mypage'
+import { useDispatch } from 'react-redux'
+import { setMusicPlay } from '../../redux/modules/musicPlayer'
+import { setIsPlaying } from '../../redux/modules/isPlaying'
+import { useNavigate } from 'react-router-dom'
+import Pagination from 'react-js-pagination'
+import { MyPageContainer } from './MyPageTable'
+import {
+  ContentContainer,
+  H3,
+  MusicDetailBtn,
+  ShowRepliesBtn,
+  SpanMusicContent,
+  SpanMusicTitle,
+  ToogleWrap,
+} from '../../components/composer/ComposerListSt'
+import Play from '../../components/playbar/Play'
 
 function MyPage() {
-  const { isLoading, isError, data, error } = useQuery(['profile'], showProfile)
+  const [currentPage, setCurrentPage] = useState(1)
+  const [showDesc, setShowDesc] = useState<number>(-1)
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const onClickMusicChangeHandler = (music: any) => {
+    dispatch(setMusicPlay(music))
+    dispatch(setIsPlaying())
+  }
+  const { isLoading: scrapLoading, data: scrapData } = useQuery(
+    ['myScrap', currentPage],
+    () => showScrap(currentPage)
+  )
+  const { isLoading, isError, data } = useQuery(['profile'], showProfile)
+  const onPaginationHandler = (i: any) => {
+    setCurrentPage(i)
+  }
+  const toggleReplies = (descIndex: number) => {
+    setShowDesc((prevState) => (prevState === descIndex ? -1 : descIndex))
+    console.log(showDesc)
+  }
+  if (scrapLoading) {
+    return <h1>로딩중</h1>
+  }
   if (isLoading) {
     return <h1>로딩중</h1>
   }
@@ -20,7 +64,7 @@ function MyPage() {
     console.log(isError)
   }
 
-  console.log(error)
+  console.log('스크랩 조회', scrapData)
   return (
     <>
       <Header />
@@ -41,8 +85,100 @@ function MyPage() {
           </div>
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
-      <MyPageBody />
-      <MyPageContentsContainer></MyPageContentsContainer>
+      <MyPageTab>
+        <MyPageScrapTab
+          onClick={() => {
+            navigate('/mypage')
+          }}
+        >
+          스크랩
+        </MyPageScrapTab>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageComment')
+          }}
+        >
+          남긴 댓글
+        </MyPageTabItem>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageLike')
+          }}
+        >
+          좋아요
+        </MyPageTabItem>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageEditprofile')
+          }}
+        >
+          프로필 사진 변경
+        </MyPageTabItem>
+        <MyPageTabItemLast
+          onClick={() => {
+            navigate('/mypageDeleteaccount')
+          }}
+        >
+          회원 탈퇴
+        </MyPageTabItemLast>
+      </MyPageTab>
+      <MyPageContainer>
+        <div>
+          <div>no</div>
+          <div>곡명</div>
+          <div>재생</div>
+          <div>좋아요</div>
+          <div>더보기</div>
+        </div>
+        {scrapData.scrapList.map((item: any, index: number) => (
+          <React.Fragment key={`${item.musicId}`}>
+            <div>
+              <div>{index + 1}</div>
+              <H3>{item.musicTitle}</H3>
+              <button>
+                <img
+                  src={playBtnBrown}
+                  alt="like"
+                  onClick={() => onClickMusicChangeHandler(item)}
+                />
+              </button>
+              <button>
+                <img src={downBtnBrown} alt="down" />
+              </button>
+              <div>
+                <ShowRepliesBtn onClick={() => toggleReplies(index)}>
+                  {showDesc === index ? '숨기기' : '더보기'}
+                </ShowRepliesBtn>
+              </div>
+            </div>
+            {showDesc === index && (
+              <ToogleWrap>
+                <ContentContainer>
+                  <SpanMusicTitle>{item.musicTitle}</SpanMusicTitle>
+                  <SpanMusicContent>{item.fileName}</SpanMusicContent>
+                  <MusicDetailBtn
+                    onClick={() =>
+                      navigate(`/recommend/music/${item?.musicId}`)
+                    }
+                  >
+                    댓글 남기러 가기
+                  </MusicDetailBtn>
+                </ContentContainer>
+              </ToogleWrap>
+            )}
+          </React.Fragment>
+        ))}
+        <Pagination
+          activePage={currentPage}
+          itemsCountPerPage={10}
+          totalItemsCount={scrapData.scrapCount}
+          pageRangeDisplayed={5}
+          prevPageText={'<'}
+          nextPageText={'>'}
+          onChange={onPaginationHandler}
+        />
+      </MyPageContainer>
+      <Play />
     </>
   )
 }

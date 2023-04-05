@@ -9,7 +9,7 @@ export const Wrap = styled.div`
   max-width: 1200px;
   margin: auto;
   padding: 0 20px;
-  margin-bottom: 20rem;
+  margin-bottom: 15rem;
 `
 
 export const Ment = styled.p`
@@ -20,43 +20,47 @@ export const Ment = styled.p`
 `
 
 export const Con = styled.div`
-  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 350px;
   background: #4b372e;
+  box-shadow: 8px 8px 5px -3px rgba(75, 55, 46, 0.27);
+  -webkit-box-shadow: 8px 8px 5px -3px rgba(75, 55, 46, 0.27);
+  -moz-box-shadow: 8px 8px 5px -3px rgba(75, 55, 46, 0.27);
+`
+
+export const InfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 `
 
 export const ComposerImg = styled.img`
-  position: absolute;
-  top: 60px;
-  left: 450px;
   width: 220px;
   height: 220px;
   border-radius: 50%;
+  margin-right: 5rem;
 `
 export const MusicTitle = styled.h3`
-  position: absolute;
-  top: 55px;
-  left: 750px;
   font-size: 1.2rem;
   font-family: var(--font-NotoSerifKR);
   color: white;
+  text-align: left;
 `
+
 export const MusicDesc = styled.p`
-  position: absolute;
-  top: 150px;
-  left: 750px;
   color: white;
   font-size: 1.2rem;
   max-width: 800px;
+  text-align: left;
 `
 
 export const ComposerName = styled.h3`
-  position: absolute;
-  top: 100px;
-  left: 750px;
   color: white;
   font-size: 1rem;
+  text-align: left;
 `
 
 export const CommentsWrap = styled.div`
@@ -164,7 +168,7 @@ export const ReCommentBox = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 90px;
+  height: 100px;
   box-sizing: border-box;
   padding-left: 3rem;
   padding-bottom: 2rem;
@@ -263,8 +267,13 @@ export const EditBtn = styled.button`
   color: white;
 `
 
-export const ReCommentInput = styled.input``
-export const EditReCommentInput = styled.input``
+export const ReCommentInput = styled.input`
+  width: 700px;
+  height: 26px;
+  font-size: 1.18rem;
+  border: 2px solid #dedede;
+  padding-left: 0.8rem;
+`
 
 export const AddReform = styled.form`
   position: relative;
@@ -298,11 +307,9 @@ export const ShowRepliesBtn = styled.button`
   font-size: 1rem;
 `
 
-export const ReCommentsListWrap = styled.button`
+export const ReCommentsListWrap = styled.div`
   background: #fafafa;
-  border: none;
   width: 100%;
-  border-bottom: 1px solid #d9d9d9;
 `
 export const ReDeleteBtn = styled.button`
   position: absolute;
