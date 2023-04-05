@@ -92,32 +92,12 @@ function ChatRoom() {
   const roomId: number = Number(id)
   const token = onGetCookieHandler('authorization')
   useEffect(() => {
-    switch (roomId) {
-      case 1:
-        setRoomName('분노')
-        setRoomImg(angry)
-        break
-      case 2:
-        setRoomName('슬픔')
-        setRoomImg(sad)
-        break
-      case 3:
-        setRoomName('행복')
-        setRoomImg(happy)
-        break
-      case 4:
-        setRoomName('지루함')
-        setRoomImg(bore)
-        break
-      case 5:
-        setRoomName('부끄러움')
-        setRoomImg(embarrass)
-        break
-      case 6:
-        setRoomName('놀램')
-        setRoomImg(surprise)
-        break
-    }
+    if (roomId === 1) setRoomName('분노'); setRoomImg(angry)
+    if (roomId === 2) setRoomName('슬픔'); setRoomImg(sad)
+    if (roomId === 3) setRoomName('행복'); setRoomImg(happy)
+    if (roomId === 4) setRoomName('지루함'); setRoomImg(bore)
+    if (roomId === 5) setRoomName('부끄러움'); setRoomImg(embarrass)
+    if (roomId === 6) setRoomName('놀램'); setRoomImg(surprise)
   }, [])
 
   useEffect(() => {
