@@ -143,6 +143,7 @@ const Dealt = styled.div<Props>`
   height: 5px;
   border-radius: 5px;
 `
+
 const AudioContain = styled.div`
   width: 1280px;
   height: 120px;
