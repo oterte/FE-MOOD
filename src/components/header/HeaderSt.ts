@@ -4,7 +4,7 @@ export const Wrap = styled.div`
   display: flex;
   align-items: center;
   width: 100%;
-  height: 90px;
+  height: 100px;
   border-bottom: 1px solid #bcbeb3;
   justify-content: space-between;
 `

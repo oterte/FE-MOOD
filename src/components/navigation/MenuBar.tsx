@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import {
   onGetLocalStorage,
   onLogoutHandler,
@@ -34,7 +34,6 @@ type Props = {
 }
 
 const MenuBar: React.FC<Props> = () => {
-  const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false)
 
   const toggleMenu = () => {
@@ -44,7 +43,7 @@ const MenuBar: React.FC<Props> = () => {
     onRemoveToken()
     onLogoutHandler('authorization')
   }
-  const nickname = onGetLocalStorage("nickname")
+  const nickname = onGetLocalStorage('nickname')
   return (
     <MenuWrapper isOpen={isOpen}>
       <HamburgerButton isOpen={isOpen} onClick={toggleMenu}>
@@ -56,10 +55,14 @@ const MenuBar: React.FC<Props> = () => {
             <H1>MOOD</H1>
           </Link>
           <ProfileImg></ProfileImg>
-          {
-            nickname ? <LoginMent>{nickname}님 어서오세요.</LoginMent>
-            : <LoginMent>어서오세요.</LoginMent>
-          }
+          {nickname ? (
+            <LoginMent>
+              {nickname}님<br />
+              환영합니다.
+            </LoginMent>
+          ) : (
+            <LoginMent>로그인 해주세요.</LoginMent>
+          )}
           {!onGetLocalStorage('authorization') ? (
             <Link to="/login">
               <LoginBtn>로그인</LoginBtn>

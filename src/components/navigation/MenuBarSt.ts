@@ -26,7 +26,7 @@ export const MenuItem = styled.li`
 `
 
 export const HamburgerButton = styled.button<{ isOpen: boolean }>`
-  position: ${({ isOpen }) => (isOpen ? 'fixed' : 'relative')};
+  position: ${({ isOpen }) => (isOpen ? 'fixed' : 'absolute')};
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -43,6 +43,7 @@ export const HamburgerButton = styled.button<{ isOpen: boolean }>`
     width: 100%;
     transition: all 0.1s linear;
     position: relative;
+    top: -10px;
     left: 50px;
     z-index: 100;
   }
@@ -86,12 +87,15 @@ export const LoginMent = styled.p`
   left: 50%;
   transform: translate(-50%, 0%);
   font-family: var(--font-NotoSerifKR);
-  font-size: 1.1rem;
+  font-size: 1.15rem;
+  width: 100%;
+  text-align: center;
+  line-height: 30px;
 `
 
 export const LoginBtn = styled.button`
   position: absolute;
-  top: 340px;
+  top: 370px;
   left: 50%;
   transform: translate(-50%, 0%);
   width: 192px;
@@ -109,7 +113,7 @@ export const LoginBtn = styled.button`
 
 export const RecommendBtn = styled.button`
   position: absolute;
-  top: 450px;
+  top: 480px;
   left: 50%;
   transform: translate(-50%, 0%);
   width: 280px;
@@ -141,7 +145,7 @@ export const RecommendBtn = styled.button`
 
 export const ComposerBtn = styled.button`
   position: absolute;
-  top: 520px;
+  top: 550px;
   left: 50%;
   transform: translate(-50%, 0%);
   width: 280px;
@@ -171,7 +175,7 @@ export const ComposerBtn = styled.button`
 `
 export const SurveyBtn = styled.button`
   position: absolute;
-  top: 590px;
+  top: 620px;
   left: 50%;
   transform: translate(-50%, 0%);
   width: 280px;
@@ -201,7 +205,7 @@ export const SurveyBtn = styled.button`
 `
 export const ChatBtn = styled.button`
   position: absolute;
-  top: 660px;
+  top: 690px;
   left: 50%;
   transform: translate(-50%, 0%);
   width: 280px;
@@ -238,7 +242,7 @@ export const LogoutBtn = styled.button`
   text-align: right;
   font-size: 1.1rem;
   font-weight: bold;
-  margin-top: 760px;
+  margin-top: 790px;
   margin-left: 70px;
   font-family: var(--font-NotoSansKR-Thin);
   color: #888888;
