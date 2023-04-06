@@ -20,6 +20,7 @@ import MyPageEditProfile from '../pages/mypage/MyPageEditProfile'
 import MyPageDeleteAccount from '../pages/mypage/MyPageDeleteAccount'
 import GoogleAuth from '../pages/auth/GoogleAuth'
 import NaverAuth from '../pages/auth/NaverAuth'
+import MyPageDeleteDone from '../pages/mypage/MyPageDeleteDone'
 
 function Router() {
   return (
@@ -45,6 +46,7 @@ function Router() {
         <Route path="/mypageComment" element={<MyPageComment />} />
         <Route path="/mypageEditprofile" element={<MyPageEditProfile />} />
         <Route path="/mypageDeleteaccount" element={<MyPageDeleteAccount />} />
+        <Route path='/delete' element={<MyPageDeleteDone/>}/>
       </Routes>
     </BrowserRouter>
   )
