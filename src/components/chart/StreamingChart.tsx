@@ -7,6 +7,7 @@ import {
   ChartTitle,
   Con,
   Wrap,
+  ComposerImg,
 } from './ChartStyle'
 import { Music } from './LikeChart'
 import { useDispatch } from 'react-redux'
@@ -55,7 +56,9 @@ function StreamingChart() {
             onClick={() => onClickMusicChangeHandler(music)}
           >
             <Chartnumber>{visibleRankStart + index + 1} </Chartnumber>
-            <ChartImg>IMG</ChartImg>
+            <ChartImg>
+              <ComposerImg src={music.imageUrl} />
+            </ChartImg>
             <ChartTitle>{music.musicTitle}</ChartTitle>
             <ChartComposer>{music.composer}</ChartComposer>
           </Con>

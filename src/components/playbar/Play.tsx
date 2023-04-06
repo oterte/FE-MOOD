@@ -114,6 +114,7 @@ function Play() {
           ref={audioRef}
           onTimeUpdate={handleTimeUpdate}
           src={data.musicPlayer.musicUrl}
+          autoPlay={true}
         />
       </AudioWrap>
     </>
