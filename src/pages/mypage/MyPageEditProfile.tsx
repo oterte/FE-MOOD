@@ -28,6 +28,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { changeNickname, editProfileImg, showProfile } from '../../api/mypage'
 import { useNavigate } from 'react-router-dom'
 import { onSetLocalStorageHandler } from '../../util/cookie'
+import { checkNickname } from '../../api/signup'
 function MyPageEditProfile() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
@@ -40,6 +41,7 @@ function MyPageEditProfile() {
   const [imgUrl, setImgUrl] = useState<string | ArrayBuffer | null>()
   const [imgFile, setImgFile] = useState<File>()
   const [newNickname, setNewNickname] = useState('')
+  const [nicknameCheck, setNicknameCheck] = useState(false)
 
   const editMutation = useMutation(editProfileImg, {
     onSuccess: () => {
@@ -69,9 +71,20 @@ function MyPageEditProfile() {
   }
   const onChangeNicknameHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    changeMutation.mutate(newNickname)
-    setNewNickname('')
-    onSetLocalStorageHandler('nickname', newNickname)
+    if (newNickname !== '') {
+      checkNickname(newNickname)
+        .then((res) => {
+          console.log(res)
+          alert('사용 가능한 닉네임입니다.')
+          changeMutation.mutate(newNickname)
+          setNewNickname('')
+          onSetLocalStorageHandler('nickname', newNickname)
+        })
+        .catch((error) => {
+          console.log(error)
+          alert(error.response.data.message)
+        })
+    }
   }
   if (isLoading) {
     return <h1>로딩중</h1>

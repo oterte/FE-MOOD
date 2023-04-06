@@ -22,8 +22,6 @@ export const onSetLocalStorageHandler = (
 }
 
 export const onLogoutHandler = (name:string) => {
-    // 현재 쿠키를 전부 가져와서
-    // 각 쿠키에 대한 만료일을 현재 날짜 이전으로 설정하여 쿠키를 삭제
     document.cookie.split(";").forEach((c) => {
       document.cookie = c
         .replace(/^ +/, "")
@@ -33,6 +31,13 @@ export const onLogoutHandler = (name:string) => {
     window.location.assign('/recommend')
 }
 
+export const onDeletetHandler = (name:string) => {
+  document.cookie.split(";").forEach((c) => {
+    document.cookie = c
+      .replace(/^ +/, "")
+      .replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`);
+  });
+}
 export const onRemoveToken = () => {
   return localStorage.clear()
 }

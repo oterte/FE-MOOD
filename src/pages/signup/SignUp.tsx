@@ -9,6 +9,12 @@ import {
   SignupErrorSpan,
   SignupCheckBtn,
   SignupInputTwo,
+  SignupErrorDiv,
+  SignupLabelDiv,
+  SingupButtonDisabled,
+  SpanDiv,
+  SignupDiv,
+  InputDiv,
 } from './singup'
 
 import { checkId, checkNickname, register } from '../../api/signup'
@@ -28,6 +34,8 @@ function SignUp() {
   const [passwordMessage, setPasswordMessage] = useState('')
   const [confirmCheckMessage, setConfirmCheckMessage] = useState('')
 
+  const [idResponse, setIdResponse] = useState(0)
+  const [nicknameResponse, setNicknameResponse] = useState(0)
   const [idCheck, setIdCheck] = useState(false)
   const [passwordCheck, setPasswordCheck] = useState(false)
   const [confirmCheck, setConfirmCheck] = useState(false)
@@ -108,7 +116,15 @@ function SignUp() {
   const onSubmitSignUpHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     const body = { id, password, confirm, email, nickname }
-    if (!id || !email || !password || !confirm || !nickname) return
+    if (
+      !idCheck ||
+      !emailCheck ||
+      !passwordCheck ||
+      !confirmCheck ||
+      !nicknameCheck
+    ) {
+      alert('모든 입력칸을 입력해주세요.')
+    }
     if (
       idCheck &&
       nicknameCheck &&
@@ -118,7 +134,8 @@ function SignUp() {
     ) {
       register(body)
         .then((res) => {
-          alert(`${nickname}님 회원가입에 성공하셨습니다.`)
+          console.log(res)
+          alert(res.data)
           navigate('/login')
           return res
         })
@@ -132,10 +149,14 @@ function SignUp() {
     if (id !== '') {
       checkId(id)
         .then((res) => {
+          console.log(res)
+          setIdResponse(res.status)
           alert('사용 가능한 아이디입니다.')
         })
         .catch((error) => {
+          console.log(error)
           alert(error.response.data.message)
+          setIdResponse(error.response.status)
         })
     }
   }
@@ -144,10 +165,14 @@ function SignUp() {
     if (nickname !== '') {
       checkNickname(nickname)
         .then((res) => {
+          console.log(res)
           alert('사용 가능한 닉네임입니다.')
+          setNicknameResponse(res.status)
         })
         .catch((error) => {
+          console.log(error)
           alert(error.response.data.message)
+          setNicknameResponse(error.response.status)
         })
     }
   }
@@ -156,85 +181,110 @@ function SignUp() {
       <Header />
       <SignupContainer>
         <SignupForm>
-          <p>회원가입</p>
-          <span
-            onClick={() => {
-              navigate('/login')
-            }}
-          >
-            MOOD에 이미 가입하셨나요?
-          </span>
-          <SignupLabel>아이디</SignupLabel>
-          <SignupInput
-            type="text"
-            name="id"
-            placeholder="아이디를 입력하세요"
-            value={id}
-            onChange={onCheckIdHandler}
-          />
-          <SignupCheckBtn onClick={onCheckExistId}>중복확인</SignupCheckBtn>
-          <div>
-            {idCheck === false ? (
-              <SignupErrorSpan style={{ color: 'red' }}>
-                {idMessage}
-              </SignupErrorSpan>
-            ) : (
-              <SignupErrorSpan style={{ color: 'gray' }}>
-                {idMessage}
-              </SignupErrorSpan>
-            )}
-          </div>
-          <SignupLabel>이메일</SignupLabel>
-          <SignupInputTwo
-            type="email"
-            name="email"
-            placeholder="이메일을 입력하세요"
-            value={email}
-            onChange={onCheckEmailHandler}
-          />
-          <div>
-            {emailCheck === false ? (
-              <SignupErrorSpan style={{ color: 'red' }}>
-                {emailMessage}
-              </SignupErrorSpan>
-            ) : (
-              <SignupErrorSpan style={{ color: 'gray' }}>
-                {emailMessage}
-              </SignupErrorSpan>
-            )}
-          </div>
-          <SignupLabel>닉네임</SignupLabel>
-          <SignupInput
-            type="text"
-            name="nickname"
-            placeholder="닉네임을 입력하세요"
-            value={nickname}
-            onChange={onCheckNicknameHandler}
-          />
-          <SignupCheckBtn onClick={onCheckExistNickName}>
-            중복확인
-          </SignupCheckBtn>
-          <div>
-            {nicknameCheck === false ? (
-              <SignupErrorSpan style={{ color: 'red' }}>
-                {nicknameMessage}
-              </SignupErrorSpan>
-            ) : (
-              <SignupErrorSpan style={{ color: 'gray' }}>
-                {nicknameMessage}
-              </SignupErrorSpan>
-            )}
-          </div>
-          <div>
-            <SignupLabel>비밀번호</SignupLabel>
-            <SignupInputTwo
-              type="password"
-              name="password"
-              placeholder="비밀번호를 입력하세요"
-              value={password}
-              onChange={onCheckPasswordHandler}
-            />
+          <p>Sign Up</p>
+          <SpanDiv>
+            <span
+              onClick={() => {
+                navigate('/login')
+              }}
+            >
+              MOOD에 이미 가입하셨나요?
+            </span>
+          </SpanDiv>
+          <SignupDiv>
+            <SignupLabelDiv>
+              <SignupLabel>아이디</SignupLabel>
+            </SignupLabelDiv>
+
+            <InputDiv>
+              <SignupInput
+                type="text"
+                name="id"
+                placeholder="아이디를 입력하세요"
+                value={id}
+                onChange={onCheckIdHandler}
+              />
+              <SignupCheckBtn onClick={onCheckExistId}>중복확인</SignupCheckBtn>
+            </InputDiv>
+            <SignupErrorDiv>
+              {idCheck === false ? (
+                <SignupErrorSpan style={{ color: 'red' }}>
+                  {idMessage}
+                </SignupErrorSpan>
+              ) : (
+                <SignupErrorSpan style={{ color: 'gray' }}>
+                  {idMessage}
+                </SignupErrorSpan>
+              )}
+            </SignupErrorDiv>
+          </SignupDiv>
+          <SignupDiv>
+            <SignupLabelDiv>
+              <SignupLabel>닉네임</SignupLabel>
+            </SignupLabelDiv>
+            <InputDiv>
+              <SignupInput
+                type="text"
+                name="nickname"
+                placeholder="닉네임을 입력하세요"
+                value={nickname}
+                onChange={onCheckNicknameHandler}
+              />
+              <SignupCheckBtn onClick={onCheckExistNickName}>
+                중복확인
+              </SignupCheckBtn>
+            </InputDiv>
+            <SignupErrorDiv>
+              {nicknameCheck === false ? (
+                <SignupErrorSpan style={{ color: 'red' }}>
+                  {nicknameMessage}
+                </SignupErrorSpan>
+              ) : (
+                <SignupErrorSpan style={{ color: 'gray' }}>
+                  {nicknameMessage}
+                </SignupErrorSpan>
+              )}
+            </SignupErrorDiv>
+          </SignupDiv>
+          <SignupDiv>
+            <SignupLabelDiv>
+              <SignupLabel>이메일</SignupLabel>
+            </SignupLabelDiv>
             <div>
+              <SignupInputTwo
+                type="email"
+                name="email"
+                placeholder="이메일을 입력하세요"
+                value={email}
+                onChange={onCheckEmailHandler}
+              />
+            </div>
+            <SignupErrorDiv>
+              {emailCheck === false ? (
+                <SignupErrorSpan style={{ color: 'red' }}>
+                  {emailMessage}
+                </SignupErrorSpan>
+              ) : (
+                <SignupErrorSpan style={{ color: 'gray' }}>
+                  {emailMessage}
+                </SignupErrorSpan>
+              )}
+            </SignupErrorDiv>
+          </SignupDiv>
+          <SignupDiv>
+            <SignupLabelDiv>
+              <SignupLabel>비밀번호</SignupLabel>
+            </SignupLabelDiv>
+            <div>
+              <SignupInputTwo
+                type="password"
+                name="password"
+                placeholder="비밀번호를 입력하세요"
+                value={password}
+                onChange={onCheckPasswordHandler}
+              />
+            </div>
+            <SignupErrorDiv>
               {passwordCheck === false ? (
                 <SignupErrorSpan style={{ color: 'red' }}>
                   {passwordMessage}
@@ -244,18 +294,22 @@ function SignUp() {
                   {passwordMessage}
                 </SignupErrorSpan>
               )}
-            </div>
-          </div>
-          <div>
-            <SignupLabel>비밀번호 확인</SignupLabel>
-            <SignupInputTwo
-              type="password"
-              name="confirm"
-              placeholder="동일한 비밀번호를 입력하세요."
-              value={confirm}
-              onChange={onCheckConfirmHandler}
-            />
+            </SignupErrorDiv>
+          </SignupDiv>
+          <SignupDiv>
+            <SignupLabelDiv>
+              <SignupLabel>비밀번호 확인</SignupLabel>
+            </SignupLabelDiv>
             <div>
+              <SignupInputTwo
+                type="password"
+                name="confirm"
+                placeholder="동일한 비밀번호를 입력하세요."
+                value={confirm}
+                onChange={onCheckConfirmHandler}
+              />
+            </div>
+            <SignupErrorDiv>
               {confirmCheck === false ? (
                 <SignupErrorSpan style={{ color: 'red' }}>
                   {confirmCheckMessage}
@@ -265,17 +319,23 @@ function SignUp() {
                   {confirmCheckMessage}
                 </SignupErrorSpan>
               )}
+            </SignupErrorDiv>
+          </SignupDiv>
+          {idResponse === 200 && nicknameResponse === 200 ? (
+            <div>
+              <SingupButton
+                onClick={(e) => {
+                  onSubmitSignUpHandler(e)
+                }}
+              >
+                Sign Up
+              </SingupButton>
             </div>
-          </div>
-          <div>
-            <SingupButton
-              onClick={(e) => {
-                onSubmitSignUpHandler(e)
-              }}
-            >
-              회원가입 하기
-            </SingupButton>
-          </div>
+          ) : (
+            <div>
+              <SingupButtonDisabled disabled>Sign Up</SingupButtonDisabled>
+            </div>
+          )}
         </SignupForm>
       </SignupContainer>
     </>
