@@ -34,6 +34,7 @@ import {
   RecieveData,
   ScrollChatData,
 } from './ChatRoomArray'
+import Play from '../../components/playbar/Play'
 
 const socket = io(`${process.env.REACT_APP_SERVER}`, {
   transports: ['websocket'],
@@ -92,12 +93,18 @@ function ChatRoom() {
   const roomId: number = Number(id)
   const token = onGetCookieHandler('authorization')
   useEffect(() => {
-    if (roomId === 1) setRoomName('분노'); setRoomImg(angry)
-    if (roomId === 2) setRoomName('슬픔'); setRoomImg(sad)
-    if (roomId === 3) setRoomName('행복'); setRoomImg(happy)
-    if (roomId === 4) setRoomName('지루함'); setRoomImg(bore)
-    if (roomId === 5) setRoomName('부끄러움'); setRoomImg(embarrass)
-    if (roomId === 6) setRoomName('놀램'); setRoomImg(surprise)
+    if (roomId === 1) setRoomName('분노')
+    setRoomImg(angry)
+    if (roomId === 2) setRoomName('슬픔')
+    setRoomImg(sad)
+    if (roomId === 3) setRoomName('행복')
+    setRoomImg(happy)
+    if (roomId === 4) setRoomName('지루함')
+    setRoomImg(bore)
+    if (roomId === 5) setRoomName('부끄러움')
+    setRoomImg(embarrass)
+    if (roomId === 6) setRoomName('놀램')
+    setRoomImg(surprise)
   }, [])
 
   useEffect(() => {
@@ -298,6 +305,7 @@ function ChatRoom() {
           </StBtnChatSubmit>
         </form>
       </StDivChatSubmit>
+      <Play />
     </>
   )
 }

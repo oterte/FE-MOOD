@@ -82,8 +82,8 @@ function SelectChat() {
             </StDivRoomContain>
           )
         })}
-        <Play />
       </StDivSelectRoomWrap>
+      <Play />
     </>
   )
 }
