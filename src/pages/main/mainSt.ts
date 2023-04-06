@@ -91,9 +91,13 @@ export const ComposerImg = styled.div`
   left: 518px;
   width: 445px;
   height: 445px;
-  background-color: #8b7d76;
   border-radius: 50%;
   z-index: 2;
+`
+export const ComposerImgFile = styled.img`
+  width: 445px;
+  height: 445px;
+  border-radius: 50%;
 `
 export const ComposerNameKr = styled.p`
   position: absolute;
