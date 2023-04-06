@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { useQuery } from 'react-query'
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { setMusicPlay } from '../../redux/modules/musicPlayer'
+import { setIsPlaying } from '../../redux/modules/isPlaying'
 import { composerList } from '../../api/composerApi'
+import LikeCount from '../like/LikeCount'
 import Play from '../playbar/Play'
+import { scrapMusic } from '../../api/scrap'
 import Down from '../../assets/icons/down_brown.png'
-import { scrapMusic, getscrapList } from '../../api/scrap'
+import pre_brown from '../../assets/icons/pre_brown.png'
+import morebtn from '../../assets/icons/morebtn.png'
 import {
   Contents,
   Desc,
@@ -24,8 +31,6 @@ import {
   ToogleWrap,
   PaddingBottomDiv,
 } from './ComposerListSt'
-import { useNavigate } from 'react-router-dom'
-import LikeCount from '../like/LikeCount'
 
 type MusicInfo = {
   musicId: number
@@ -34,6 +39,7 @@ type MusicInfo = {
   musicUrl: string
   likeCount: number
   likeStatus: boolean
+  scrapStatus: boolean
   handleLikeUpdate: (
     musicId: number,
     likeStatus: boolean,
@@ -43,8 +49,19 @@ type MusicInfo = {
 
 const ComposerList = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   const composers = ['Beethoven', 'Mozart', 'Chopin', 'Vivaldi']
   const [selectedComposer, setSelectedComposer] = useState(composers[0])
+  const [musicInfos, setMusicInfos] = useState<MusicInfo[] | undefined>()
+  const [showReplies, setShowReplies] = useState<number[]>([])
+  const [scrapStatus, setScrapStatus] = useState<{ [key: number]: boolean }>({})
+  const [selectedMusicId, setSelectedMusicId] = useState<number | null>(null)
+
+  const handleMusicClick = (music: any) => {
+    setSelectedMusicId(music)
+    dispatch(setMusicPlay(music))
+    dispatch(setIsPlaying())
+  }
 
   const { data } = useQuery<{ composerInfo: any[]; music: MusicInfo[] }>(
     ['composerList', selectedComposer],
@@ -52,18 +69,42 @@ const ComposerList = () => {
     { enabled: !!selectedComposer }
   )
 
-  const [musicInfos, setMusicInfos] = useState<MusicInfo[] | undefined>()
-  const [showReplies, setShowReplies] = useState<number>(-1)
-  const [scrapStatus, setScrapStatus] = useState<boolean[]>([])
+  const composerInfo = data?.composerInfo[0]
 
-  const updateScrapStatus = async (musicId: number) => {
-    try {
-      const scrapList = await getscrapList({ musicId })
-      console.log('Scrap status updated:', scrapList)
-      setScrapStatus(scrapList)
-    } catch (error) {
-      console.error(error)
-    }
+  const toggleReplies = (musicIndex: number) => {
+    setShowReplies((prevState) => {
+      const indexInState = prevState.indexOf(musicIndex)
+      if (indexInState === -1) {
+        return [...prevState, musicIndex]
+      } else {
+        const newState = [...prevState]
+        newState.splice(indexInState, 1)
+        return newState
+      }
+    })
+  }
+
+  const handleLikeUpdate = async (musicId: number, likeStatus: boolean) => {
+    setMusicInfos((prevInfos) => {
+      if (!prevInfos) return prevInfos
+
+      const updatedInfos = prevInfos.map((music) => {
+        if (music.musicId === musicId) {
+          const newMusic = {
+            ...music,
+            likeStatus,
+            likeCount: likeStatus ? music.likeCount + 1 : music.likeCount - 1,
+          }
+          localStorage.setItem(
+            `music_${music.musicId}`,
+            JSON.stringify(newMusic)
+          )
+          return newMusic
+        }
+        return music
+      })
+      return updatedInfos
+    })
   }
 
   const handleScrapButtonClick = async (musicId: number) => {
@@ -73,43 +114,61 @@ const ComposerList = () => {
       return
     }
     try {
-      const updatedScrapStatus = await scrapMusic({ musicId })
-      updateScrapStatus(musicId)
+      await scrapMusic({ musicId })
+      setMusicInfos((prevInfos) => {
+        if (!prevInfos) return prevInfos
+
+        const updatedInfos = prevInfos.map((music) => {
+          if (music.musicId === musicId) {
+            const newScrapStatus = !music.scrapStatus
+            const updatedMusic = {
+              ...music,
+              scrapStatus: newScrapStatus,
+            }
+            localStorage.setItem(
+              `music_${music.musicId}`,
+              JSON.stringify(updatedMusic)
+            )
+            return updatedMusic
+          }
+          return music
+        })
+        return updatedInfos
+      })
+      setScrapStatus((prevStatus) => ({
+        ...prevStatus,
+        [musicId]: !prevStatus[musicId],
+      }))
     } catch (error) {
       console.error(error)
     }
   }
 
-  const handleLikeUpdate = (
-    musicId: number,
-    likeStatus: boolean,
-    likeCount: number
-  ) => {
-    console.log('handleLikeUpdate called', musicId, likeStatus, likeCount)
-    setMusicInfos((prevState) =>
-      prevState?.map((m) =>
-        m.musicId === musicId ? { ...m, likeStatus, likeCount: likeCount } : m
-      )
-    )
-  }
-
   useEffect(() => {
-    if (data) {
-      setMusicInfos(
-        data.music.map((music) => ({
+    if (data?.music) {
+      const initialScrapStatus: { [key: number]: boolean } = {}
+      const updatedMusicInfos = data.music.map((music) => {
+        const musicInfoFromStorage = JSON.parse(
+          localStorage.getItem(`music_${music.musicId}`) || '{}'
+        )
+        const currentScrapStatus = musicInfoFromStorage.hasOwnProperty(
+          'scrapStatus'
+        )
+          ? musicInfoFromStorage.scrapStatus
+          : false
+        initialScrapStatus[music.musicId] = currentScrapStatus
+        return {
           ...music,
-          likeStatus: music.likeStatus,
+          likeStatus: musicInfoFromStorage.likeStatus || music.likeStatus,
+          likeCount: musicInfoFromStorage.likeCount || music.likeCount,
+          scrapStatus: currentScrapStatus,
           handleLikeUpdate,
-        }))
-      )
+        }
+      })
+      setMusicInfos(updatedMusicInfos)
+      setScrapStatus(initialScrapStatus)
     }
-  }, [data])
-
-  const composerInfo = data?.composerInfo[0]
-
-  const toggleReplies = (musicIndex: number) => {
-    setShowReplies((prevState) => (prevState === musicIndex ? -1 : musicIndex))
-  }
+  }, [data, setScrapStatus])
 
   return (
     <Wrap>
@@ -152,7 +211,13 @@ const ComposerList = () => {
                 <React.Fragment key={`music-fragment-${music.musicTitle}`}>
                   <div key={`music-${music.musicId || music.musicTitle}`}>
                     <div>{index + 1}</div>
-                    <H3>{music.musicTitle}</H3>
+                    <H3 onClick={() => handleMusicClick(music)}>
+                      {music.musicTitle}
+                      {selectedMusicId === music.musicId && (
+                        <img src="재생 중 이미지 URL" alt="Playing" />
+                      )}
+                    </H3>
+
                     <LikeCount
                       musicId={music.musicId}
                       likeCount={music.likeCount}
@@ -163,16 +228,22 @@ const ComposerList = () => {
                     <button
                       onClick={() => handleScrapButtonClick(music.musicId)}
                     >
-                      <img src={Down} alt="down" />
+                      <img
+                        key={music.musicId}
+                        src={`${
+                          scrapStatus[music.musicId] ? pre_brown : Down
+                        }?t=${Date.now()}`}
+                        alt="scrap"
+                      />
                     </button>
 
                     <div>
                       <ShowRepliesBtn onClick={() => toggleReplies(index)}>
-                        {showReplies === index ? '숨기기' : '더보기'}
+                        <img src={morebtn} alt="More" />
                       </ShowRepliesBtn>
                     </div>
                   </div>
-                  {showReplies === index && (
+                  {showReplies.includes(index) && (
                     <ToogleWrap key={`music-info-${music.musicId}`}>
                       <ContentContainer>
                         <SpanMusicTitle>{music.musicTitle}</SpanMusicTitle>
@@ -184,7 +255,7 @@ const ComposerList = () => {
                             navigate(`/recommend/music/${music?.musicId}`)
                           }
                         >
-                          댓글 남기러 가기
+                          댓글 남기러 가기&nbsp;&nbsp;{'>'}
                         </MusicDetailBtn>
                       </ContentContainer>
                     </ToogleWrap>

@@ -22,7 +22,12 @@ import {
   Songs,
   SongsDiv,
   BgGradient,
+  ComposerImgFile,
 } from './mainSt'
+import chopin from '../../assets/composer/쇼팽.png'
+import vivaldi from '../../assets/composer/비발디.png'
+import beethoven from '../../assets/composer/베토밴.png'
+import mozart from '../../assets/composer/모차르트.png'
 
 function Main() {
   const navigate = useNavigate()
@@ -34,7 +39,7 @@ function Main() {
   }
 
   useEffect(() => {
-    onScrollFunction();
+    onScrollFunction()
   }, [scrollHeight])
 
   return (
@@ -42,6 +47,10 @@ function Main() {
       <Wrap ref={containRef} onScroll={onScrollFunction}>
         <>
           <FirstContainWrap>
+            {/* <video style={{ border: '1px solid red', width: '100px', height: '100px'}}>
+              <source src="../../../public/mood.mp4" type='video/mp4' />
+              지원이 안 되나요?
+            </video> */}
             <Title>MOOD</Title>
             <Condition>오늘의 기분은 어떠신가요?</Condition>
             <Explain>
@@ -59,7 +68,9 @@ function Main() {
             <BgGradient></BgGradient>
             <SecondContain>
               <ComposerName>Frédéric Chopin</ComposerName>
-              <ComposerImg></ComposerImg>
+              <ComposerImg>
+                <ComposerImgFile src={chopin} />
+              </ComposerImg>
               <ComposerNameKr>프레데리크 쇼팽 (1810-1849)</ComposerNameKr>
               <ComposerDesc>
                 프레데리크 쇼팽은 낭만주의 시대의 대표적인 작곡가로 그의 모든
@@ -93,7 +104,9 @@ function Main() {
 
             <SecondContain>
               <ComposerName>Antonio Vivaldi</ComposerName>
-              <ComposerImg></ComposerImg>
+              <ComposerImg>
+                <ComposerImgFile src={vivaldi} />
+              </ComposerImg>
               <ComposerNameKr>안토니오 비발디 (1695-1741)</ComposerNameKr>
               <ComposerDesc>
                 안토니오 비발디는 18세기 이탈리아의 바로크 시대 작곡가로
@@ -127,7 +140,9 @@ function Main() {
 
             <SecondContain>
               <ComposerName>Ludwig van Beethoven</ComposerName>
-              <ComposerImg></ComposerImg>
+              <ComposerImg>
+                <ComposerImgFile src={beethoven} />
+              </ComposerImg>
               <ComposerNameKr>루트비히 판 베토벤 (1778-1827)</ComposerNameKr>
               <ComposerDesc>
                 루트비히 판 베토벤은 독일의 작곡가로 고전시대의 대표적인
@@ -163,7 +178,9 @@ function Main() {
 
             <SecondContain>
               <ComposerName>Wolfgang Amadeus Mozart</ComposerName>
-              <ComposerImg></ComposerImg>
+              <ComposerImg>
+                <ComposerImgFile src={mozart} />
+              </ComposerImg>
               <ComposerNameKr>
                 볼프강 아마데우스 모차르트 (1756-1791)
               </ComposerNameKr>

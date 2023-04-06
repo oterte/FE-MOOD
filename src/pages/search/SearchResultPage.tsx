@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { setMusicPlay } from '../../redux/modules/musicPlayer'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { scrapMusic } from '../../api/scrap'
 import { getSearch } from '../../api/search'
+import LikeCount from '../../components/like/LikeCount'
 import { H3 } from '../../components/composer/ComposerListSt'
+import { ShowRepliesBtn } from './SearchBarSt'
 import Header from '../../components/header/Header'
 import Play from '../../components/playbar/Play'
 import Wrapper from '../../components/Wrapper'
-import Heart from '../../assets/icons/Heart_brown.png'
 import Down from '../../assets/icons/down_brown.png'
+import down_outline from '../../assets/icons/down_outline.png'
+import morebtn from '../../assets/icons/morebtn.png'
 
 import {
   ComposerDesc,
@@ -26,8 +32,6 @@ import {
   Wrap,
 } from './SearchBarSt'
 
-import { ShowRepliesBtn } from './SearchBarSt'
-
 type ComposerInfo = {
   composerId: number
   composer: string
@@ -46,16 +50,43 @@ type ComposerSong = {
   status: number
   composer: string
   fileName: string
+  likeCount: number
+  likeStatus: boolean
+  scrapStatus: boolean
+  handleLikeUpdate: (
+    musicId: number,
+    likeStatus: boolean,
+    likeCount: number
+  ) => void
 }
 
 function SearchResultPage() {
   const navigate = useNavigate()
   const location = useLocation()
+  const dispatch = useDispatch()
   const queryParams = new URLSearchParams(location.search)
   const searchTerm = queryParams.get('query')
   const [composerInfo, setComposerInfo] = useState<ComposerInfo | null>(null)
   const [composerSongs, setComposerSongs] = useState<ComposerSong[]>([])
   const [showReplies, setShowReplies] = useState<{ [key: number]: boolean }>({})
+  const [musicInfos, setMusicInfos] = useState<ComposerSong[] | undefined>()
+  const [scrapStatus, setScrapStatus] = useState<{ [key: number]: boolean }>({})
+
+  const handleMusicClick = (
+    musicId: number,
+    musicTitle: string,
+    composer: string,
+    musicUrl: string
+  ) => {
+    dispatch(
+      setMusicPlay({
+        musicId,
+        musicTitle,
+        composer,
+        musicUrl,
+      })
+    )
+  }
 
   const toggleReplies = (musicId: number) => {
     setShowReplies((prevState) => ({
@@ -77,6 +108,92 @@ function SearchResultPage() {
     }
   }, [searchTerm])
 
+  const handleLikeUpdate = async (musicId: number, likeStatus: boolean) => {
+    setMusicInfos((prevInfos) => {
+      if (!prevInfos) return prevInfos
+
+      const updatedInfos = prevInfos.map((music) => {
+        if (music.musicId === musicId) {
+          const newMusic = {
+            ...music,
+            likeStatus,
+            likeCount: likeStatus ? music.likeCount + 1 : music.likeCount - 1,
+          }
+          localStorage.setItem(
+            `music_${music.musicId}`,
+            JSON.stringify(newMusic)
+          )
+          return newMusic
+        }
+        return music
+      })
+      return updatedInfos
+    })
+  }
+
+  const handleScrapButtonClick = async (musicId: number) => {
+    const token = localStorage.getItem('authorization')
+    if (!token) {
+      alert('로그인 후 이용 가능합니다.')
+      return
+    }
+    try {
+      await scrapMusic({ musicId })
+      setMusicInfos((prevInfos) => {
+        if (!prevInfos) return prevInfos
+
+        const updatedInfos = prevInfos.map((music) => {
+          if (music.musicId === musicId) {
+            const newScrapStatus = !music.scrapStatus
+            const updatedMusic = {
+              ...music,
+              scrapStatus: newScrapStatus,
+            }
+            localStorage.setItem(
+              `music_${music.musicId}`,
+              JSON.stringify(updatedMusic)
+            )
+            return updatedMusic
+          }
+          return music
+        })
+        return updatedInfos
+      })
+      setScrapStatus((prevStatus) => ({
+        ...prevStatus,
+        [musicId]: !prevStatus[musicId],
+      }))
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  useEffect(() => {
+    if (composerSongs) {
+      const initialScrapStatus: { [key: number]: boolean } = {}
+      const updatedMusicInfos = composerSongs.map((music) => {
+        const musicInfoFromStorage = JSON.parse(
+          localStorage.getItem(`music_${music.musicId}`) || '{}'
+        )
+        const currentScrapStatus = musicInfoFromStorage.hasOwnProperty(
+          'scrapStatus'
+        )
+          ? musicInfoFromStorage.scrapStatus
+          : false
+        initialScrapStatus[music.musicId] = currentScrapStatus
+        return {
+          ...music,
+          likeStatus: musicInfoFromStorage.likeStatus || music.likeStatus,
+          likeCount: musicInfoFromStorage.likeCount || music.likeCount,
+          scrapStatus: currentScrapStatus,
+          handleLikeUpdate,
+        }
+      })
+      setMusicInfos(updatedMusicInfos)
+      setScrapStatus(initialScrapStatus)
+    }
+  }, [composerSongs, setScrapStatus])
+
   return (
     <Wrapper>
       <Header />
@@ -96,7 +213,7 @@ function SearchResultPage() {
             </ComposerInfoContainer>
           </Inpo>
         )}
-        {composerSongs && composerSongs.length > 0 && (
+        {musicInfos && musicInfos.length > 0 && (
           <List>
             <div>
               <div>no</div>
@@ -105,22 +222,41 @@ function SearchResultPage() {
               <div>스크랩</div>
               <div>더보기</div>
             </div>
-            {composerSongs.map((music, index) => (
+            {musicInfos.map((music, index) => (
               <React.Fragment key={`music-fragment-${music.musicId}`}>
                 <div key={`music-${music.musicId}`}>
                   <div>{index + 1}</div>
-                  <H3>{music.musicTitle}</H3>
-                  <button>
-                    <img src={Heart} alt="like" />
+                  <H3
+                    onClick={() =>
+                      handleMusicClick(
+                        music.musicId,
+                        music.musicTitle,
+                        music.composer,
+                        music.musicUrl
+                      )
+                    }
+                  >
+                    {music.musicTitle}
+                  </H3>
+                  <LikeCount
+                    musicId={music.musicId}
+                    likeCount={music.likeCount}
+                    likeStatus={music.likeStatus}
+                    onLikeUpdate={handleLikeUpdate}
+                  />
+
+                  <button onClick={() => handleScrapButtonClick(music.musicId)}>
+                    <img
+                      src={scrapStatus[music.musicId] ? down_outline : Down}
+                      alt="scrap"
+                    />
                   </button>
-                  <button>
-                    <img src={Down} alt="down" />
-                  </button>
+
                   <div>
                     <ShowRepliesBtn
                       onClick={() => toggleReplies(music.musicId)}
                     >
-                      {showReplies[music.musicId] ? '숨기기' : '더보기'}
+                      <img src={morebtn} alt="More" />
                     </ShowRepliesBtn>
                   </div>
                 </div>
@@ -134,7 +270,7 @@ function SearchResultPage() {
                           navigate(`/recommend/music/${music?.musicId}`)
                         }
                       >
-                        댓글 남기러 가기
+                        댓글 남기러 가기&nbsp;&nbsp;{'>'}
                       </MusicDetailBtn>
                     </ContentContainer>
                   </ToogleWrap>
@@ -143,6 +279,7 @@ function SearchResultPage() {
             ))}
           </List>
         )}
+
         {!composerInfo && (!composerSongs || composerSongs.length === 0) && (
           <p>검색에 대한 결과가 없습니다.</p>
         )}

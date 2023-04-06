@@ -91,13 +91,12 @@ export const Line = styled.hr`
 `
 
 export const Inpo = styled.div`
-  width: 70%;
+  width: 100%;
   height: 100%;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
-  justify-content: flex-start;
-
+  align-items: center;
+  justify-content: center;
   margin-bottom: 7rem;
 `
 
@@ -134,6 +133,7 @@ export const ComposerDesc = styled.p`
   margin-left: 0;
   font-size: 1rem;
   max-width: 600px;
+  line-height: 28px;
 `
 export const ShowRepliesBtn = styled.button`
   border: none;
@@ -192,6 +192,7 @@ export const List = styled.div`
 
 export const ToogleWrap = styled.div`
   width: 97.3%;
+  background: #fcfcfc;
 `
 
 export const ContentContainer = styled.div`
@@ -209,9 +210,8 @@ export const ContentContainer = styled.div`
 export const MusicDetailBtn = styled.span`
   position: absolute;
   bottom: 35px;
-  left: 110px;
-  font-size: 1rem;
-  border: 2px solid #ded6d3;
+  left: 105px;
+  font-size: 1.15rem;
   color: #4b372e;
   border-radius: 20px;
   font-weight: bold;
@@ -220,12 +220,6 @@ export const MusicDetailBtn = styled.span`
   cursor: pointer;
   text-align: center;
   line-height: 34px;
-
-  :hover {
-    background: #73615a;
-    color: white;
-    transition: 0.3s;
-  }
 `
 
 export const SpanMusicTitle = styled.span`

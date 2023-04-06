@@ -12,7 +12,7 @@ const isPlayingSlice = createSlice({
   initialState: isPlayingInitialState,
   reducers: {
     setIsPlaying: (state) => {
-      state.state = false
+      state.state = true
     },
     setTogglePlaying: (state) => {
       state.state = !state.state
