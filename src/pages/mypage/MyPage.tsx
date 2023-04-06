@@ -155,7 +155,7 @@ function MyPage() {
               <ToogleWrap>
                 <ContentContainer>
                   <SpanMusicTitle>{item.musicTitle}</SpanMusicTitle>
-                  <SpanMusicContent>{item.fileName}</SpanMusicContent>
+                  <SpanMusicContent>{item.musicContent}</SpanMusicContent>
                   <MusicDetailBtn
                     onClick={() =>
                       navigate(`/recommend/music/${item?.musicId}`)
