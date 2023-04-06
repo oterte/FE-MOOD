@@ -91,7 +91,6 @@ export const ComposerImg = styled.div`
   left: 518px;
   width: 445px;
   height: 445px;
-  background-color: #8b7d76;
   border-radius: 50%;
   z-index: 2;
 `
