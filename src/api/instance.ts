@@ -8,7 +8,7 @@ const instance: AxiosInstance = axios.create({
 })
 
 const withoutTokenInstance = axios.create({
-  baseURL: process.env.REACT_APP_SERVER
+  baseURL: process.env.REACT_APP_SERVER,
 })
 
 instance.interceptors.request.use(refresh, refreshErrorHandle)

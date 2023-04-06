@@ -9,6 +9,8 @@ import {
   LoginBtn,
   LoginContainer,
   LoginInput,
+  LoginInputDiv,
+  LoginLabelDiv,
   LoginSocialContainer,
 } from './loginSt'
 
@@ -58,7 +60,7 @@ function Login() {
     <>
       <Header />
       <LoginContainer>
-        <p>로그인</p>
+        <p>Log in</p>
         <span
           onClick={() => {
             navigate('/signup')
@@ -67,22 +69,32 @@ function Login() {
           MOOD 회원이 아니신가요?
         </span>
         <form>
-          <LoginInput
-            type="text"
-            placeholder="아이디를 입력하세요."
-            name="id"
-            value={id}
-            onChange={(e) => setId(e.target.value)}
-          />
-          <LoginInput
-            type="password"
-            placeholder="비밀번호를 입력하세요"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
+          <LoginLabelDiv>
+            <label>아이디</label>
+          </LoginLabelDiv>
+          <LoginInputDiv>
+            <LoginInput
+              type="text"
+              placeholder="아이디를 입력하세요."
+              name="id"
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+            />
+          </LoginInputDiv>
+          <LoginLabelDiv>
+            <label>비밀번호</label>
+          </LoginLabelDiv>
+          <LoginInputDiv>
+            <LoginInput
+              type="password"
+              placeholder="비밀번호를 입력하세요"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </LoginInputDiv>
           <LoginBtn onClick={(e) => onClickLoginHandler(e)}>
-            로그인 하기
+          Log in
           </LoginBtn>
         </form>
         <LoginSocialContainer>

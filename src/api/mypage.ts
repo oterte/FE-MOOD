@@ -1,12 +1,6 @@
 import { Nickname } from './../pages/musicDetail/MusicDetailSt'
 import { instance } from './instance'
 
-export const doScrap = async (id: number) => {
-  console.log(id)
-  const response = await instance.put(`/api/music/${id}/scrap`)
-  return response
-}
-
 export const showProfile = async () => {
   const response = await instance.get('/api/user/userinfo')
   return response.data.userInfo
@@ -35,7 +29,6 @@ export const editProfileImg = async (newProfile: any) => {
 }
 
 export const changeNickname = async (newNickname: string) => {
-  console.log(newNickname)
   const body = {
     nickname: newNickname,
   }
@@ -43,7 +36,6 @@ export const changeNickname = async (newNickname: string) => {
 }
 
 export const deleteAccount = async () => {
-  await instance.delete('/api/user/delete')
+  const response = await instance.delete('/api/user/delete')
+  return response
 }
-
-export const emotionHistory = async () => {}

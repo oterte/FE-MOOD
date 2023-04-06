@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { doScrap, likedMusic, showProfile } from '../../api/mypage'
+import { likedMusic, showProfile } from '../../api/mypage'
 import Header from '../../components/header/Header'
 import {
   MyPageProfileBodyContainer,
@@ -33,11 +33,12 @@ import Pagination from 'react-js-pagination'
 import './mypagePagination.css'
 import { useDispatch } from 'react-redux'
 import { setIsPlaying } from '../../redux/modules/isPlaying'
+import { scrapMusic } from '../../api/scrap'
 
 type Like = {
   composer: string
   fileName: string
-  musicId: string
+  musicId: number
   musicTitle: string
   musicUrl: string
 }
@@ -62,14 +63,12 @@ function MyPageLike() {
     ['profile'],
     showProfile
   )
-  const scrapMutation = useMutation(doScrap, {
-    onSuccess: () => {
-      queryClient.invalidateQueries()
-    },
+  
+  const scrapMutation = useMutation(scrapMusic, {
+    onSuccess : () => {
+      queryClient.invalidateQueries();
+    }
   })
-  const onScrapHandler = (id: number) => {
-    scrapMutation.mutate(id)
-  }
   if (isLoading) {
     return <h1>로딩중</h1>
   }
@@ -81,7 +80,7 @@ function MyPageLike() {
   }
 
   console.log(likedata)
-  
+
   const toggleReplies = (descIndex: number) => {
     setShowDesc((prevState) => (prevState === descIndex ? -1 : descIndex))
     console.log(showDesc)
@@ -89,6 +88,9 @@ function MyPageLike() {
 
   const onPaginationHandler = (i: number) => {
     setCurrentPage(i)
+  }
+  const onScrapHanlder = (i:number) => {
+    
   }
 
   return (
@@ -156,7 +158,7 @@ function MyPageLike() {
           <div>스크랩</div>
           <div>더보기</div>
         </div>
-        {likedata.likeList.map((item: any, index: number) => (
+        {likedata.likeList.map((item: Like, index: number) => (
           <React.Fragment key={`${item.musicId}`}>
             <div>
               <div>{index + 1}</div>
@@ -169,11 +171,7 @@ function MyPageLike() {
                 />
               </button>
               <button>
-                <img
-                  src={downBtnBrown}
-                  alt="down"
-                  onClick={() => onScrapHandler(item.musicId)}
-                />
+                <img src={downBtnBrown} alt="down" />
               </button>
               <div>
                 <ShowRepliesBtn onClick={() => toggleReplies(index)}>

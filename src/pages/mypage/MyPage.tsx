@@ -6,7 +6,7 @@ import {
   MyPageProfileImg,
   MyPageProfileImgBox,
 } from './mypageSC'
-import downBtnBrown from '../../assets/icons/down_brown.png'
+import downBtnBrown from '../../assets/icons/Heart_brown.png'
 import playBtnBrown from '../../assets/icons/music_play_brown.png'
 import {
   MyPageScrapTab,
