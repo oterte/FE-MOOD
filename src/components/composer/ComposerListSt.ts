@@ -149,6 +149,7 @@ export const Describe = styled.p`
 
 export const H3 = styled.h3`
   font-size: 1rem;
+  cursor: pointer;
 `
 
 export const P = styled.p`
@@ -170,9 +171,8 @@ export const ContentContainer = styled.div`
 export const MusicDetailBtn = styled.span`
   position: absolute;
   bottom: 35px;
-  left: 110px;
-  font-size: 1rem;
-  border: 2px solid #ded6d3;
+  left: 105px;
+  font-size: 1.15rem;
   color: #4b372e;
   border-radius: 20px;
   font-weight: bold;
@@ -181,12 +181,6 @@ export const MusicDetailBtn = styled.span`
   cursor: pointer;
   text-align: center;
   line-height: 34px;
-
-  :hover {
-    background: #73615a;
-    color: white;
-    transition: 0.3s;
-  }
 `
 
 export const SpanMusicTitle = styled.span`
@@ -208,6 +202,7 @@ export const SpanMusicContent = styled.span`
 
 export const ToogleWrap = styled.div`
   width: 97.3%;
+  background: #fcfcfc;
 `
 
 export const ShowRepliesBtn = styled.button`
