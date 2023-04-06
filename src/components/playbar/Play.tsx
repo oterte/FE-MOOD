@@ -88,7 +88,11 @@ function Play() {
         </ProgressBar>
         <AudioContain>
           <PlayExplain>
-            <PlayTitle>{data.musicPlayer.musicTitle}</PlayTitle>
+            <PlayTitle>
+              {data.musicPlayer.musicTitle.length > 20
+                ? data.musicPlayer.musicTitle.substring(0, 20) + '...'
+                : data.musicPlayer.musicTitle}
+            </PlayTitle>
             <p style={{ color: '#888888' }}>{data.musicPlayer.composer}</p>
           </PlayExplain>
           {playingState === false ? (
@@ -105,7 +109,7 @@ function Play() {
             </p>
           ) : (
             <p>
-              <span style={{ color: '#888888' }}>{calculate(currentTime)}</span>{' '}
+              <span style={{ color: '#888888' }}>{calculate(currentTime)}</span>
               / {calculate(duration)}
             </p>
           )}

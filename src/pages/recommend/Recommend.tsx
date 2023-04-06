@@ -183,7 +183,7 @@ function Recommend() {
                 <StDivComposerImg>
                   <ComposerImg src={selectMusicData.imageUrl} />
                 </StDivComposerImg>
-                {!selectMusicData ? (
+                {!selectMusicData.composer ? (
                   <ClickBox>기분 영역을 클릭해보세요!</ClickBox>
                 ) : (
                   <MusicComtain>

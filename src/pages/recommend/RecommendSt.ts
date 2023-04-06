@@ -52,11 +52,8 @@ export const StDivLike = styled.div`
 export const StDivComposerImg = styled.div`
   width: 180px;
   height: 180px;
-  border-radius: 50%;
-  margin: 39px auto 0px auto;
-  text-align: center;
+  margin: 30px auto 0px auto;
   line-height: 180px;
-  box-sizing: border-box;
 `
 export const ComposerImg = styled.img`
   width: 180px;
