@@ -78,10 +78,15 @@ export const MyPageDeleteTab = styled.div`
   cursor: pointer;
   text-align: center;
 `
+export const MyPageBottomDiv = styled.div`
+  height: 20rem;
+  background: #f5f5f5;
+
+`
 
 export const MyPageContentsContainer = styled.div`
   width: 1200px;
-  height: 500px;
+  height: auto;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -94,13 +99,12 @@ export const ExternalContainer = styled.div`
 `
 export const MyPageEditContainer = styled.div`
   width: 600px;
-  height: 721px;
+  height: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   background-color: #fefefe;
-  margin-top: 40px;
 `
 export const MyPageEditBtn = styled.button`
   width: 675px;
@@ -155,4 +159,94 @@ export const MyPageInputBtn = styled.button`
 `
 export const MyPageImgEditInput = styled.input`
   display: none;
+`
+
+export const MyPageDeleteDivOne = styled.div`
+  width: 1302px;
+  text-align: center;
+`
+export const POne = styled.p`
+  font-family: var(--font-NotoSerifKR);
+  font-weight: 400;
+  font-size: 25px;
+  color: #000000;
+`
+
+export const PTwo = styled.p`
+  font-family: var(--font-NotoSerifKR);
+  font-weight: 400;
+  font-size: 16px;
+  color: #888888;
+`
+export const PThree = styled.p`
+  font-family: var(--font-NotoSerifKR);
+  font-weight: 400;
+  font-size: 20px;
+  color: #000000;
+`
+export const MyPageDeleteDivTwo = styled.div`
+  width: 1302px;
+  height: 300px;
+  background-color: #ffffff;
+  text-align: center;
+`
+export const MyPageDeleteInput = styled.input`
+  width: 366px;
+  height: 45px;
+  background-color: #f4f4f4;
+  border: 1px solid #888888;
+`
+export const MyPageDeleteBtnDiv = styled.div`
+  margin-top: 50px;
+
+`
+export const MyPageDeleteBtn = styled.button`
+  width: 144px;
+  height: 45px;
+  background-color: #4b372e;
+  border: 1px solid #4b372e;
+  cursor: pointer;
+  color: #ffffff;
+`
+export const MyPageDoneDiv = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`
+export const TextDiv = styled.div`
+  width: 500px;
+  height: 500px;
+  text-align: center;
+  margin-top: 10%;
+
+`
+
+export const PDone = styled.div`
+  font-family: var(--font-NotoSerifKR);
+  font-style: normal;
+  font-size: 32px;
+  font-weight: 400;
+  color: #000000;
+  margin-bottom: 5%;
+
+`
+export const PThin = styled.div`
+  font-family: var(--font-NotoSerifKR);
+  font-style: normal;
+  font-size: 20px;
+  font-weight: 400;
+  color: #888888;
+`
+export const DoneBtn = styled.button`
+  width: 144px;
+  height: 45px;
+  background-color: #4b372e;
+  border: 1px solid #4b372e;
+  color: white;
+  margin-top: 5%;
+  cursor: pointer;
+  
 `

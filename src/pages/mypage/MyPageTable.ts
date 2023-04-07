@@ -178,13 +178,11 @@ export const MyPageLikeMoreBtn = styled.button`
   cursor: pointer;
 `
 export const MyPageContainer = styled.div`
-  top: 730px;
   text-align: center;
   background: #fefefe;
   width: 1200px;
   height: auto;
-  text-align: center;
-  padding-bottom: 20rem;
+  padding-bottom: 10rem;
   margin:auto;
   margin-top: 20px;
 

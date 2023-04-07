@@ -7,6 +7,7 @@ import {
   MyPageProfileImgBox,
 } from './mypageSC'
 import {
+  MyPageBottomDiv,
   MyPageCommentTab,
   MyPageTab,
   MyPageTabItem,
@@ -17,14 +18,14 @@ import { useQuery } from 'react-query'
 import { showComment, showProfile } from '../../api/mypage'
 import Play from '../../components/playbar/Play'
 import { MyPageContainer } from './MyPageTable'
-import { H3, ShowRepliesBtn } from '../../components/composer/ComposerListSt'
+import { H2, H3, ShowRepliesBtn } from '../../components/composer/ComposerListSt'
 import Pagination from 'react-js-pagination'
 import './mypagePagination.css'
 type Review = {
   createdAt?: string
   musicId?: number
   reviewId?: number
-  review?: string
+  review: string
 }
 function MyPageComment() {
   const [currentPage, setCurrentPage] = useState(1)
@@ -119,7 +120,9 @@ function MyPageComment() {
           <React.Fragment key={`${item.reviewId}`}>
             <div>
               <div>{index + 1}</div>
-              <H3>{item.review}</H3>
+              {
+                item.review.length < 20 ? <H2>{item.review}</H2> : <H2>{item.review.slice(0,20)+("...")}</H2>
+              }
               <div>
                 <ShowRepliesBtn
                   onClick={() => navigate(`/recommend/music/${item?.musicId}`)}
@@ -140,6 +143,7 @@ function MyPageComment() {
           onChange={onPaginationHandler}
         />
       </MyPageContainer>
+      <MyPageBottomDiv/>
       <Play />
     </>
   )

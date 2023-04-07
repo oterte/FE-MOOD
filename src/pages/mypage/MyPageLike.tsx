@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { doScrap, likedMusic, showProfile } from '../../api/mypage'
+import { likedMusic, showProfile } from '../../api/mypage'
 import Header from '../../components/header/Header'
 import {
   MyPageProfileBodyContainer,
@@ -9,6 +9,7 @@ import {
   MyPageProfileImgBox,
 } from './mypageSC'
 import {
+  MyPageBottomDiv,
   MyPageLikeTab,
   MyPageTab,
   MyPageTabItem,
@@ -17,6 +18,7 @@ import {
 import Play from '../../components/playbar/Play'
 import downBtnBrown from '../../assets/icons/down_brown.png'
 import playBtnBrown from '../../assets/icons/music_play_brown.png'
+import moreBtn from '../../assets/icons/morebtn.png'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
 import {
   H3,
@@ -26,6 +28,7 @@ import {
   SpanMusicContent,
   SpanMusicTitle,
   ToogleWrap,
+  H2,
 } from '../../components/composer/ComposerListSt'
 import { useNavigate } from 'react-router-dom'
 import { MyPageContainer } from './MyPageTable'
@@ -33,13 +36,14 @@ import Pagination from 'react-js-pagination'
 import './mypagePagination.css'
 import { useDispatch } from 'react-redux'
 import { setIsPlaying } from '../../redux/modules/isPlaying'
+import { scrapMusic } from '../../api/scrap'
 
 type Like = {
   composer: string
-  fileName: string
-  musicId: string
+  musicId: number
   musicTitle: string
   musicUrl: string
+  musicContent:string
 }
 
 function MyPageLike() {
@@ -62,14 +66,12 @@ function MyPageLike() {
     ['profile'],
     showProfile
   )
-  const scrapMutation = useMutation(doScrap, {
-    onSuccess: () => {
-      queryClient.invalidateQueries()
-    },
+  
+  const scrapMutation = useMutation(scrapMusic, {
+    onSuccess : () => {
+      queryClient.invalidateQueries();
+    }
   })
-  const onScrapHandler = (id: number) => {
-    scrapMutation.mutate(id)
-  }
   if (isLoading) {
     return <h1>로딩중</h1>
   }
@@ -81,7 +83,7 @@ function MyPageLike() {
   }
 
   console.log(likedata)
-  
+
   const toggleReplies = (descIndex: number) => {
     setShowDesc((prevState) => (prevState === descIndex ? -1 : descIndex))
     console.log(showDesc)
@@ -89,6 +91,9 @@ function MyPageLike() {
 
   const onPaginationHandler = (i: number) => {
     setCurrentPage(i)
+  }
+  const onScrapHanlder = (i:number) => {
+    
   }
 
   return (
@@ -156,11 +161,11 @@ function MyPageLike() {
           <div>스크랩</div>
           <div>더보기</div>
         </div>
-        {likedata.likeList.map((item: any, index: number) => (
+        {likedata.likeList.map((item: Like, index: number) => (
           <React.Fragment key={`${item.musicId}`}>
             <div>
               <div>{index + 1}</div>
-              <H3>{item.musicTitle}</H3>
+              <H2>{item.musicTitle}</H2>
               <button>
                 <img
                   src={playBtnBrown}
@@ -169,15 +174,11 @@ function MyPageLike() {
                 />
               </button>
               <button>
-                <img
-                  src={downBtnBrown}
-                  alt="down"
-                  onClick={() => onScrapHandler(item.musicId)}
-                />
+                <img src={downBtnBrown} alt="down" />
               </button>
               <div>
                 <ShowRepliesBtn onClick={() => toggleReplies(index)}>
-                  {showDesc === index ? '숨기기' : '더보기'}
+                <img src={moreBtn} alt="더보기" />
                 </ShowRepliesBtn>
               </div>
             </div>
@@ -185,7 +186,7 @@ function MyPageLike() {
               <ToogleWrap>
                 <ContentContainer>
                   <SpanMusicTitle>{item.musicTitle}</SpanMusicTitle>
-                  <SpanMusicContent>{item.fileName}</SpanMusicContent>
+                  <SpanMusicContent>{item.musicContent}</SpanMusicContent>
                   <MusicDetailBtn
                     onClick={() =>
                       navigate(`/recommend/music/${item?.musicId}`)
@@ -208,6 +209,7 @@ function MyPageLike() {
           onChange={onPaginationHandler}
         />
       </MyPageContainer>
+      <MyPageBottomDiv/>
       <Play />
     </>
   )

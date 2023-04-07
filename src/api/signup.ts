@@ -19,7 +19,7 @@ export const register = async (body: UserInfo) => {
 export const checkId = async (id?: string) => {
   const value = { id: id }
   const response = await axios.post(
-    `${process.env.REACT_APP_SERVER}/api/idCheck`,
+    `${process.env.REACT_APP_SERVER}/api/signup/idCheck`,
     value
   )
   return response
@@ -28,7 +28,7 @@ export const checkId = async (id?: string) => {
 export const checkNickname = async (nickname?: string) => {
   const value = { nickname: nickname }
   const response = await axios.post(
-    `${process.env.REACT_APP_SERVER}/api/nicknameCheck`,
+    `${process.env.REACT_APP_SERVER}/api/signup/nicknameCheck`,
     value
   )
   return response
