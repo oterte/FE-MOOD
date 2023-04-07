@@ -15,6 +15,7 @@ import {
   SpanDiv,
   SignupDiv,
   InputDiv,
+  SignUpUpperDiv,
 } from './singup'
 
 import { checkId, checkNickname, register } from '../../api/signup'
@@ -180,6 +181,7 @@ function SignUp() {
     <>
       <Header />
       <SignupContainer>
+        <SignUpUpperDiv>
         <SignupForm>
           <p>Sign Up</p>
           <SpanDiv>
@@ -250,7 +252,7 @@ function SignUp() {
             <SignupLabelDiv>
               <SignupLabel>이메일</SignupLabel>
             </SignupLabelDiv>
-            <div>
+            <InputDiv>
               <SignupInputTwo
                 type="email"
                 name="email"
@@ -258,7 +260,7 @@ function SignUp() {
                 value={email}
                 onChange={onCheckEmailHandler}
               />
-            </div>
+            </InputDiv>
             <SignupErrorDiv>
               {emailCheck === false ? (
                 <SignupErrorSpan style={{ color: 'red' }}>
@@ -275,7 +277,7 @@ function SignUp() {
             <SignupLabelDiv>
               <SignupLabel>비밀번호</SignupLabel>
             </SignupLabelDiv>
-            <div>
+            <InputDiv>
               <SignupInputTwo
                 type="password"
                 name="password"
@@ -283,7 +285,7 @@ function SignUp() {
                 value={password}
                 onChange={onCheckPasswordHandler}
               />
-            </div>
+            </InputDiv>
             <SignupErrorDiv>
               {passwordCheck === false ? (
                 <SignupErrorSpan style={{ color: 'red' }}>
@@ -300,7 +302,7 @@ function SignUp() {
             <SignupLabelDiv>
               <SignupLabel>비밀번호 확인</SignupLabel>
             </SignupLabelDiv>
-            <div>
+            <InputDiv>
               <SignupInputTwo
                 type="password"
                 name="confirm"
@@ -308,7 +310,7 @@ function SignUp() {
                 value={confirm}
                 onChange={onCheckConfirmHandler}
               />
-            </div>
+            </InputDiv>
             <SignupErrorDiv>
               {confirmCheck === false ? (
                 <SignupErrorSpan style={{ color: 'red' }}>
@@ -337,6 +339,7 @@ function SignUp() {
             </div>
           )}
         </SignupForm>
+        </SignUpUpperDiv>
       </SignupContainer>
     </>
   )

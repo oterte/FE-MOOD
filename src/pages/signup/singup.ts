@@ -11,8 +11,8 @@ export const SignupContainer = styled.div`
   margin: auto;
   border: 1px solid #8b7d76;
   text-align: center;
-  margin-top:50px;
-  p{
+  margin-top: 50px;
+  p {
     margin: auto;
     font-family: var(--font-NotoSerifKR);
     font-style: normal;
@@ -21,40 +21,44 @@ export const SignupContainer = styled.div`
     line-height: 46px;
     margin-bottom: 15px;
   }
-  span{
-    font-style: normal;
-    font-family: var(--font-NotoSansKr);
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 23px;
-    color:#000000;
-    cursor: pointer;
-    margin-top: 15px;
-  }
 `
+export const SignUpUpperDiv = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
+
 export const SpanDiv = styled.div`
   margin-bottom: 25px;
+  font-style: normal;
+  font-family: var(--font-NotoSansKr);
+  font-weight: 400;
+  font-size: 16px;
+  color: #000000;
+  cursor: pointer;
+  margin-top: 15px;
 `
-export const SignupForm = styled.form`
-`
+
+export const SignupForm = styled.form``
 export const SignupErrorDiv = styled.div`
   width: 100%;
   margin-top: -10px;
   text-align: left;
-  span{
-    font-size: 15px;
+  span {
+    font-size: 13px;
   }
 `
 export const SignupLabelDiv = styled.div`
- width: 276px;
+  width: 276px;
   height: 27px;
   font-style: normal;
   font-weight: 400;
-  font-size:16px;
+  font-size: 16px;
   line-height: 24px;
   color: #000000;
   display: block;
-  margin-bottom: px;
   text-align: left;
 `
 export const SignupLabel = styled.label`
@@ -62,7 +66,7 @@ export const SignupLabel = styled.label`
   height: 27px;
   font-style: normal;
   font-weight: 400;
-  font-size:16px;
+  font-size: 16px;
   line-height: 24px;
   color: #000000;
   display: block;
@@ -71,9 +75,9 @@ export const SignupDiv = styled.div`
   width: 100%;
 `
 export const InputDiv = styled.div`
-  width: 80%;
+  width: 100%;
   display: flex;
-  margin-top: 15px;
+  margin-top: 5px;
 `
 
 export const SignupInput = styled.input`
@@ -107,7 +111,7 @@ export const SignupCheckBtn = styled.button`
 export const SingupButton = styled.button`
   width: 432px;
   height: 50px;
-  background-color: #4b372E;
+  background-color: #4b372e;
   color: white;
   font-size: 18px;
   cursor: pointer;
