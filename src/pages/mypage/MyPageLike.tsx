@@ -9,6 +9,7 @@ import {
   MyPageProfileImgBox,
 } from './mypageSC'
 import {
+  MyPageBottomDiv,
   MyPageLikeTab,
   MyPageTab,
   MyPageTabItem,
@@ -17,6 +18,7 @@ import {
 import Play from '../../components/playbar/Play'
 import downBtnBrown from '../../assets/icons/down_brown.png'
 import playBtnBrown from '../../assets/icons/music_play_brown.png'
+import moreBtn from '../../assets/icons/morebtn.png'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
 import {
   H3,
@@ -26,6 +28,7 @@ import {
   SpanMusicContent,
   SpanMusicTitle,
   ToogleWrap,
+  H2,
 } from '../../components/composer/ComposerListSt'
 import { useNavigate } from 'react-router-dom'
 import { MyPageContainer } from './MyPageTable'
@@ -37,10 +40,10 @@ import { scrapMusic } from '../../api/scrap'
 
 type Like = {
   composer: string
-  fileName: string
   musicId: number
   musicTitle: string
   musicUrl: string
+  musicContent:string
 }
 
 function MyPageLike() {
@@ -162,7 +165,7 @@ function MyPageLike() {
           <React.Fragment key={`${item.musicId}`}>
             <div>
               <div>{index + 1}</div>
-              <H3>{item.musicTitle}</H3>
+              <H2>{item.musicTitle}</H2>
               <button>
                 <img
                   src={playBtnBrown}
@@ -175,7 +178,7 @@ function MyPageLike() {
               </button>
               <div>
                 <ShowRepliesBtn onClick={() => toggleReplies(index)}>
-                  {showDesc === index ? '숨기기' : '더보기'}
+                <img src={moreBtn} alt="더보기" />
                 </ShowRepliesBtn>
               </div>
             </div>
@@ -183,7 +186,7 @@ function MyPageLike() {
               <ToogleWrap>
                 <ContentContainer>
                   <SpanMusicTitle>{item.musicTitle}</SpanMusicTitle>
-                  <SpanMusicContent>{item.fileName}</SpanMusicContent>
+                  <SpanMusicContent>{item.musicContent}</SpanMusicContent>
                   <MusicDetailBtn
                     onClick={() =>
                       navigate(`/recommend/music/${item?.musicId}`)
@@ -206,6 +209,7 @@ function MyPageLike() {
           onChange={onPaginationHandler}
         />
       </MyPageContainer>
+      <MyPageBottomDiv/>
       <Play />
     </>
   )

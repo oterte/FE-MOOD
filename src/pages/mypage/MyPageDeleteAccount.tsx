@@ -6,6 +6,7 @@ import {
   MyPageProfileImgBox,
 } from './mypageSC'
 import {
+  MyPageBottomDiv,
   MyPageContentsContainer,
   MyPageDeleteBtn,
   MyPageDeleteBtnDiv,
@@ -132,6 +133,7 @@ function MyPageDelteAccount() {
           </MyPageDeleteBtnDiv>
         </MyPageDeleteDivTwo>
       </MyPageContentsContainer>
+      <MyPageBottomDiv/>
       <Play />
     </>
   )

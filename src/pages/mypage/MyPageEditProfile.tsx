@@ -9,6 +9,7 @@ import {
 import Play from '../../components/playbar/Play'
 import {
   ExternalContainer,
+  MyPageBottomDiv,
   MyPageContentsContainer,
   MyPageEditContainer,
   MyPageEditImg,
@@ -93,9 +94,6 @@ function MyPageEditProfile() {
   if (isError) {
     return <h1>에러</h1>
   }
-
-  console.log(profileData)
-  console.log(newNickname)
   return (
     <>
       <Header />
@@ -191,6 +189,7 @@ function MyPageEditProfile() {
           </MyPageEditContainer>
         </ExternalContainer>
       </MyPageContentsContainer>
+      <MyPageBottomDiv />
       <Play />
     </>
   )

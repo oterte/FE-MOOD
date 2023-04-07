@@ -6,9 +6,11 @@ import {
   MyPageProfileImg,
   MyPageProfileImgBox,
 } from './mypageSC'
-import downBtnBrown from '../../assets/icons/Heart_brown.png'
+import heartBtnBrown from '../../assets/icons/Heart_brown.png'
 import playBtnBrown from '../../assets/icons/music_play_brown.png'
+import moreBtn from '../../assets/icons/morebtn.png'
 import {
+  MyPageBottomDiv,
   MyPageScrapTab,
   MyPageTab,
   MyPageTabItem,
@@ -24,6 +26,7 @@ import Pagination from 'react-js-pagination'
 import { MyPageContainer } from './MyPageTable'
 import {
   ContentContainer,
+  H2,
   H3,
   MusicDetailBtn,
   ShowRepliesBtn,
@@ -32,7 +35,14 @@ import {
   ToogleWrap,
 } from '../../components/composer/ComposerListSt'
 import Play from '../../components/playbar/Play'
-
+import LikeCount from '../../components/like/LikeCount'
+type Scrap = {
+  composer:string
+  musicContent:string
+  musicId:number
+  musicTitle:string
+  musicUrl:string
+}
 function MyPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [showDesc, setShowDesc] = useState<number>(-1)
@@ -63,7 +73,6 @@ function MyPage() {
   if (isError) {
     console.log(isError)
   }
-
   console.log('스크랩 조회', scrapData)
   return (
     <>
@@ -130,11 +139,11 @@ function MyPage() {
           <div>좋아요</div>
           <div>더보기</div>
         </div>
-        {scrapData.scrapList.map((item: any, index: number) => (
+        {scrapData.scrapList.map((item: Scrap, index: number) => (
           <React.Fragment key={`${item.musicId}`}>
             <div>
               <div>{index + 1}</div>
-              <H3>{item.musicTitle}</H3>
+              <H2>{item.musicTitle}</H2>
               <button>
                 <img
                   src={playBtnBrown}
@@ -143,11 +152,11 @@ function MyPage() {
                 />
               </button>
               <button>
-                <img src={downBtnBrown} alt="down" />
+                <img src={heartBtnBrown} alt="down" />
               </button>
               <div>
                 <ShowRepliesBtn onClick={() => toggleReplies(index)}>
-                  {showDesc === index ? '숨기기' : '더보기'}
+                  <img src={moreBtn} alt="더보기" />
                 </ShowRepliesBtn>
               </div>
             </div>
@@ -155,7 +164,7 @@ function MyPage() {
               <ToogleWrap>
                 <ContentContainer>
                   <SpanMusicTitle>{item.musicTitle}</SpanMusicTitle>
-                  <SpanMusicContent>{item.fileName}</SpanMusicContent>
+                  <SpanMusicContent>{item.musicContent}</SpanMusicContent>
                   <MusicDetailBtn
                     onClick={() =>
                       navigate(`/recommend/music/${item?.musicId}`)
@@ -178,6 +187,7 @@ function MyPage() {
           onChange={onPaginationHandler}
         />
       </MyPageContainer>
+      <MyPageBottomDiv/>
       <Play />
     </>
   )

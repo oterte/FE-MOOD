@@ -78,10 +78,15 @@ export const MyPageDeleteTab = styled.div`
   cursor: pointer;
   text-align: center;
 `
+export const MyPageBottomDiv = styled.div`
+  height: 20rem;
+  background: #f5f5f5;
+
+`
 
 export const MyPageContentsContainer = styled.div`
   width: 1200px;
-  height: 500px;
+  height: auto;
   margin: auto;
   display: flex;
   flex-direction: column;
@@ -94,13 +99,12 @@ export const ExternalContainer = styled.div`
 `
 export const MyPageEditContainer = styled.div`
   width: 600px;
-  height: 721px;
+  height: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-direction: column;
   background-color: #fefefe;
-  margin-top: 40px;
 `
 export const MyPageEditBtn = styled.button`
   width: 675px;
