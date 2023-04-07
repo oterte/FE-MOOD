@@ -8,6 +8,7 @@ import {
 } from './mypageSC'
 import downBtnBrown from '../../assets/icons/Heart_brown.png'
 import playBtnBrown from '../../assets/icons/music_play_brown.png'
+import moreBtn from '../../assets/icons/morebtn.png'
 import {
   MyPageScrapTab,
   MyPageTab,
@@ -147,7 +148,7 @@ function MyPage() {
               </button>
               <div>
                 <ShowRepliesBtn onClick={() => toggleReplies(index)}>
-                  {showDesc === index ? '숨기기' : '더보기'}
+                  <img src={moreBtn} alt="더보기" />
                 </ShowRepliesBtn>
               </div>
             </div>
@@ -155,7 +156,7 @@ function MyPage() {
               <ToogleWrap>
                 <ContentContainer>
                   <SpanMusicTitle>{item.musicTitle}</SpanMusicTitle>
-                  <SpanMusicContent>{item.fileName}</SpanMusicContent>
+                  <SpanMusicContent>{item.musicContent}</SpanMusicContent>
                   <MusicDetailBtn
                     onClick={() =>
                       navigate(`/recommend/music/${item?.musicId}`)
