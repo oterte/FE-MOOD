@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from '../../redux/config/configStore'
 import styled from 'styled-components'
 import useAudio from '../../hooks/useAudio'
-import { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useMemo, useCallback } from 'react'
 import playBar from '../../assets/icons/music_play_brown.png'
 import playStopBar from '../../assets/icons/music_stop_brown.png'
 import { setTogglePlaying } from '../../redux/modules/isPlaying'
@@ -45,13 +45,21 @@ function Play() {
     audioRef.current?.readyState,
   ])
 
-  const calculate = (secs: number) => {
+  // const calculate = (secs: number) => {
+  //   const minutes = Math.floor(secs / 60)
+  //   const returnedMinutes = minutes < 10 ? `0${minutes}` : minutes
+  //   const seconds = Math.floor(secs % 60)
+  //   const returndeSeconds = seconds < 10 ? `0${seconds}` : seconds
+  //   return `${returnedMinutes} : ${returndeSeconds}`
+  // }
+
+  const calculate = useCallback((secs: number) => {
     const minutes = Math.floor(secs / 60)
     const returnedMinutes = minutes < 10 ? `0${minutes}` : minutes
     const seconds = Math.floor(secs % 60)
     const returndeSeconds = seconds < 10 ? `0${seconds}` : seconds
     return `${returnedMinutes} : ${returndeSeconds}`
-  }
+  }, [])
 
   useEffect(() => {
     if (data.musicPlayer.musicId) setMusicNumber(data.musicPlayer.musicId)
@@ -75,6 +83,8 @@ function Play() {
   //     audioRef.current!.currentTime =  ((audioRef.current!.currentTime) / targetCoordinate) * 100
   //   }
   // }
+
+  console.log('리렌더')
 
   return (
     <>
@@ -125,7 +135,7 @@ function Play() {
   )
 }
 
-export default Play
+export default React.memo(Play)
 
 const AudioWrap = styled.div`
   width: 100%;

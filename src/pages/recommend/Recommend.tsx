@@ -22,6 +22,7 @@ import {
   StPExplain,
   ComposerImg,
 } from './RecommendSt'
+import React from 'react'
 import { useNavigate } from 'react-router'
 import { useDispatch } from 'react-redux'
 import { QueryClient, useMutation } from 'react-query'
@@ -222,4 +223,4 @@ function Recommend() {
   )
 }
 
-export default Recommend
+export default React.memo(Recommend)
