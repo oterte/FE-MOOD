@@ -2,7 +2,6 @@ import styled from 'styled-components'
 
 export const MyPageProfileContainer = styled.div`
   width: 1200px;
-  height: 500px;
   margin: auto;
   display: flex;
   justify-content: center;

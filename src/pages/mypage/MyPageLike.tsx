@@ -9,6 +9,7 @@ import {
   MyPageProfileImgBox,
 } from './mypageSC'
 import {
+  MyPageBottomDiv,
   MyPageLikeTab,
   MyPageTab,
   MyPageTabItem,
@@ -27,6 +28,7 @@ import {
   SpanMusicContent,
   SpanMusicTitle,
   ToogleWrap,
+  H2,
 } from '../../components/composer/ComposerListSt'
 import { useNavigate } from 'react-router-dom'
 import { MyPageContainer } from './MyPageTable'
@@ -163,7 +165,7 @@ function MyPageLike() {
           <React.Fragment key={`${item.musicId}`}>
             <div>
               <div>{index + 1}</div>
-              <H3>{item.musicTitle}</H3>
+              <H2>{item.musicTitle}</H2>
               <button>
                 <img
                   src={playBtnBrown}
@@ -207,6 +209,7 @@ function MyPageLike() {
           onChange={onPaginationHandler}
         />
       </MyPageContainer>
+      <MyPageBottomDiv/>
       <Play />
     </>
   )

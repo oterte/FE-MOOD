@@ -28,7 +28,6 @@ function Login() {
     e.preventDefault()
     login({ id: id, password: password })
       .then((res) => {
-        console.log('res', res)
         const authId = res.data.accessToken
         const nickname = res.data.nickname
         const decodeUserInfo = JSON.stringify(jwt_Decode(authId))
