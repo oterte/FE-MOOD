@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useQuery } from 'react-query'
 import { useNavigate } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
-import { setIsPlaying } from '../../redux/modules/isPlaying'
+import { setIsPlaying, setTogglePlaying } from '../../redux/modules/isPlaying'
 import { composerList } from '../../api/composerApi'
 import LikeCount from '../like/LikeCount'
 import Play from '../playbar/Play'
@@ -31,6 +31,7 @@ import {
   ToogleWrap,
   PaddingBottomDiv,
 } from './ComposerListSt'
+import { RootState } from '../../redux/config/configStore'
 
 type MusicInfo = {
   musicId: number
@@ -50,17 +51,27 @@ type MusicInfo = {
 const ComposerList = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const isPlaying = useSelector((state: RootState) => state.isPlaying.state)
   const composers = ['Beethoven', 'Mozart', 'Chopin', 'Vivaldi']
   const [selectedComposer, setSelectedComposer] = useState(composers[0])
   const [musicInfos, setMusicInfos] = useState<MusicInfo[] | undefined>()
   const [showReplies, setShowReplies] = useState<number[]>([])
   const [scrapStatus, setScrapStatus] = useState<{ [key: number]: boolean }>({})
-  const [selectedMusicId, setSelectedMusicId] = useState<number | null>(null)
+  const [playingMusicId, setPlayingMusicId] = useState<number | null>(null)
 
-  const handleMusicClick = (music: any) => {
-    setSelectedMusicId(music)
-    dispatch(setMusicPlay(music))
+  const handlePlayClick = (
+    musicId: number,
+    musicTitle: string,
+    composer: string,
+    musicUrl: string
+  ) => {
+    if (isPlaying) {
+      dispatch(setTogglePlaying())
+    }
+
+    dispatch(setMusicPlay({ musicTitle, composer, musicId, musicUrl }))
     dispatch(setIsPlaying())
+    setPlayingMusicId(musicId)
   }
 
   const { data } = useQuery<{ composerInfo: any[]; music: MusicInfo[] }>(
@@ -211,10 +222,19 @@ const ComposerList = () => {
                 <React.Fragment key={`music-fragment-${music.musicTitle}`}>
                   <div key={`music-${music.musicId || music.musicTitle}`}>
                     <div>{index + 1}</div>
-                    <H3 onClick={() => handleMusicClick(music)}>
+                    <H3
+                      onClick={() =>
+                        handlePlayClick(
+                          music.musicId,
+                          music.musicTitle,
+                          composerInfo.composer,
+                          music.musicUrl
+                        )
+                      }
+                    >
                       {music.musicTitle}
-                      {selectedMusicId === music.musicId && (
-                        <img src="재생 중 이미지 URL" alt="Playing" />
+                      {playingMusicId === music.musicId && (
+                        <img src="" alt="" />
                       )}
                     </H3>
 
