@@ -217,7 +217,6 @@ function Recommend() {
             </div>
           </div>
         </StDivWrap>
-        <Play />
       </Wrapper>
     </>
   )

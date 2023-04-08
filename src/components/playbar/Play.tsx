@@ -45,14 +45,6 @@ function Play() {
     audioRef.current?.readyState,
   ])
 
-  // const calculate = (secs: number) => {
-  //   const minutes = Math.floor(secs / 60)
-  //   const returnedMinutes = minutes < 10 ? `0${minutes}` : minutes
-  //   const seconds = Math.floor(secs % 60)
-  //   const returndeSeconds = seconds < 10 ? `0${seconds}` : seconds
-  //   return `${returnedMinutes} : ${returndeSeconds}`
-  // }
-
   const calculate = useCallback((secs: number) => {
     const minutes = Math.floor(secs / 60)
     const returnedMinutes = minutes < 10 ? `0${minutes}` : minutes
@@ -83,8 +75,6 @@ function Play() {
   //     audioRef.current!.currentTime =  ((audioRef.current!.currentTime) / targetCoordinate) * 100
   //   }
   // }
-
-  console.log('리렌더')
 
   return (
     <>

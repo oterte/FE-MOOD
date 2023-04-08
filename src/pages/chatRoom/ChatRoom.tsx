@@ -302,7 +302,6 @@ function ChatRoom() {
           </form>
         </StDivChatSubmit>
       </div>
-      <Play />
     </>
   )
 }
