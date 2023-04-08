@@ -21,22 +21,24 @@ instance.interceptors.request.use(
 )
 
 //Axios의 인터셉터를 사용하여,
-//401 Unauthorized 응답을 받았을 때 refresh token을 사용하여
+//419 응답을 받았을 때 refresh token을 사용하여
 //새로운 access token을 가져오도록 설정
 instance.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const refresh = localStorage.getItem('refresh')
+    const refreshToken = localStorage.getItem('refresh')
+    console.log("refreshToken", refreshToken)
+    const access = localStorage.getItem('authorization')
     const originalRequest = error.config
-    if (error.response.status === 401 || error.response.status === 403) {
+    if (error.response.status === 419) {
       console.log('갱신 시도중')
       originalRequest._retry = true
       const body = {
-        authorization: `Bearer ${refresh}`,
+        refreshToken,
       }
       try {
         console.log('토큰 갱신 api 실행')
-        const res = await axios.post(`/api/user/refresh`, refresh)
+        const res = await instance.post(`/api/user/refresh`, refreshToken)
         console.log(res)
         const data = res.data
         onSetLocalStorageHandler('authorization', data.accessToken)

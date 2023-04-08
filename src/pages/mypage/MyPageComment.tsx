@@ -117,7 +117,7 @@ function MyPageComment() {
       <MyPageContainer>
         <div>
           <div>no</div>
-          <div>곡명</div>
+          <div>댓글</div>
           <div>상세페이지로</div>
         </div>
         {reviewData.reviewList.map((item: Review, index: number) => (

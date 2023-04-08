@@ -26,8 +26,6 @@ import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { deleteAccount, showProfile } from '../../api/mypage'
 import {
   onDeletetHandler,
-  onGetLocalStorage,
-  onLogoutHandler,
   onRemoveToken,
 } from '../../util/cookie'
 function MyPageDelteAccount() {
@@ -57,6 +55,7 @@ function MyPageDelteAccount() {
         })
         .catch((error) => {
           console.log(error)
+          console.log(error.response.data.message)
         })
     }
   }

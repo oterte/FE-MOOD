@@ -98,7 +98,14 @@ export const SignupInputTwo = styled.input`
 export const SignupErrorSpan = styled.span`
   font-size: 13px;
 `
-
+export const SignupCheckBtnDisabled = styled.button`
+  width: 144px;
+  height: 45px;
+  background-color: gray;
+  border: 1px solid #8b7d76;
+  margin-left: 20px;
+  color: #ffffff;
+`
 export const SignupCheckBtn = styled.button`
   width: 144px;
   height: 45px;
