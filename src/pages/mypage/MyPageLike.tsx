@@ -17,6 +17,7 @@ import {
 } from './mypagecontentsSC'
 import Play from '../../components/playbar/Play'
 import downBtnBrown from '../../assets/icons/down_brown.png'
+import downBtnWhite from '../../assets/icons/down_white.png'
 import playBtnBrown from '../../assets/icons/music_play_brown.png'
 import moreBtn from '../../assets/icons/morebtn.png'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
@@ -43,7 +44,8 @@ type Like = {
   musicId: number
   musicTitle: string
   musicUrl: string
-  musicContent:string
+  musicContent: string
+  scrapStatus: boolean
 }
 
 function MyPageLike() {
@@ -66,11 +68,11 @@ function MyPageLike() {
     ['profile'],
     showProfile
   )
-  
+
   const scrapMutation = useMutation(scrapMusic, {
-    onSuccess : () => {
-      queryClient.invalidateQueries();
-    }
+    onSuccess: () => {
+      queryClient.invalidateQueries()
+    },
   })
   if (isLoading) {
     return <h1>로딩중</h1>
@@ -92,8 +94,8 @@ function MyPageLike() {
   const onPaginationHandler = (i: number) => {
     setCurrentPage(i)
   }
-  const onScrapHanlder = (i:number) => {
-    
+  const onScrapHanlder = (i: number) => {
+    scrapMutation.mutate({ musicId: i })
   }
 
   return (
@@ -174,11 +176,23 @@ function MyPageLike() {
                 />
               </button>
               <button>
-                <img src={downBtnBrown} alt="down" />
+                {item.scrapStatus === false ? (
+                  <img
+                    src={downBtnBrown}
+                    alt="down"
+                    onClick={() => onScrapHanlder(item.musicId)}
+                  />
+                ) : (
+                  <img
+                    src={downBtnWhite}
+                    alt="down"
+                    onClick={() => onScrapHanlder(item.musicId)}
+                  />
+                )}
               </button>
               <div>
                 <ShowRepliesBtn onClick={() => toggleReplies(index)}>
-                <img src={moreBtn} alt="더보기" />
+                  <img src={moreBtn} alt="더보기" />
                 </ShowRepliesBtn>
               </div>
             </div>
@@ -209,7 +223,7 @@ function MyPageLike() {
           onChange={onPaginationHandler}
         />
       </MyPageContainer>
-      <MyPageBottomDiv/>
+      <MyPageBottomDiv />
     </>
   )
 }
