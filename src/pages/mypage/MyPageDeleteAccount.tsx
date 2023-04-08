@@ -24,17 +24,22 @@ import Play from '../../components/playbar/Play'
 import { useNavigate } from 'react-router'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { deleteAccount, showProfile } from '../../api/mypage'
-import { onDeletetHandler, onGetLocalStorage, onLogoutHandler, onRemoveToken } from '../../util/cookie'
+import {
+  onDeletetHandler,
+  onGetLocalStorage,
+  onLogoutHandler,
+  onRemoveToken,
+} from '../../util/cookie'
 function MyPageDelteAccount() {
   const { isLoading: profileLoading, data: profileData } = useQuery(
     ['profile'],
     showProfile
   )
-  const queryClient = useQueryClient();
+  const queryClient = useQueryClient()
   const deleteMutation = useMutation(deleteAccount, {
-    onSuccess : () => {
-      queryClient.invalidateQueries();
-    }
+    onSuccess: () => {
+      queryClient.invalidateQueries()
+    },
   })
 
   const onDeleteAccountHandler = () => {
@@ -129,12 +134,13 @@ function MyPageDelteAccount() {
           <PThree>탈퇴하시려면 비밀번호를 입력해주세요.</PThree>
           <MyPageDeleteInput placeholder="비밀번호를 입력해주세요" />
           <MyPageDeleteBtnDiv>
-            <MyPageDeleteBtn onClick={onDeleteAccountHandler}>탈퇴하기</MyPageDeleteBtn>
+            <MyPageDeleteBtn onClick={onDeleteAccountHandler}>
+              탈퇴하기
+            </MyPageDeleteBtn>
           </MyPageDeleteBtnDiv>
         </MyPageDeleteDivTwo>
       </MyPageContentsContainer>
-      <MyPageBottomDiv/>
-      <Play />
+      <MyPageBottomDiv />
     </>
   )
 }
