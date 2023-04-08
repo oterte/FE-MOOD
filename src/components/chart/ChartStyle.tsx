@@ -15,7 +15,6 @@ export const ChartTopP = styled.p`
 export const ChartBtnWrap = styled.div`
   width: 172px;
   height: 30px;
-  /* margin: 57px 0px 51px 60px; */
   border: 1px solid #8b7d76;
   display: flex;
   align-items: center;
@@ -75,7 +74,7 @@ export const ChartTitle = styled.p`
 `
 export const ChartComposer = styled.p`
   margin-left: auto;
-  margin-right: 50px;
+  margin-right: 40px;
   color: #666666;
   width: 100px;
 `
