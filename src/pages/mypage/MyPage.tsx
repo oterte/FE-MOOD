@@ -88,6 +88,8 @@ function MyPage() {
     console.log(isError)
   }
   console.log('스크랩 조회', scrapData)
+  console.log('스크랩 조회', scrapData)
+  console.log('스크랩 조회', scrapData)
   return (
     <>
       <Header />
