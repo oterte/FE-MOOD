@@ -16,6 +16,7 @@ import {
   SignupDiv,
   InputDiv,
   SignUpUpperDiv,
+  SignupCheckBtnDisabled,
 } from './singup'
 
 import { checkId, checkNickname, register } from '../../api/signup'
@@ -135,8 +136,7 @@ function SignUp() {
     ) {
       register(body)
         .then((res) => {
-          console.log(res)
-          alert(res.data)
+          alert(res.data.message)
           navigate('/login')
           return res
         })
@@ -182,163 +182,173 @@ function SignUp() {
       <Header />
       <SignupContainer>
         <SignUpUpperDiv>
-        <SignupForm>
-          <p>Sign Up</p>
-          <SpanDiv>
-            <span
-              onClick={() => {
-                navigate('/login')
-              }}
-            >
-              MOOD에 이미 가입하셨나요?
-            </span>
-          </SpanDiv>
-          <SignupDiv>
-            <SignupLabelDiv>
-              <SignupLabel>아이디</SignupLabel>
-            </SignupLabelDiv>
-
-            <InputDiv>
-              <SignupInput
-                type="text"
-                name="id"
-                placeholder="아이디를 입력하세요"
-                value={id}
-                onChange={onCheckIdHandler}
-              />
-              <SignupCheckBtn onClick={onCheckExistId}>중복확인</SignupCheckBtn>
-            </InputDiv>
-            <SignupErrorDiv>
-              {idCheck === false ? (
-                <SignupErrorSpan style={{ color: 'red' }}>
-                  {idMessage}
-                </SignupErrorSpan>
-              ) : (
-                <SignupErrorSpan style={{ color: 'gray' }}>
-                  {idMessage}
-                </SignupErrorSpan>
-              )}
-            </SignupErrorDiv>
-          </SignupDiv>
-          <SignupDiv>
-            <SignupLabelDiv>
-              <SignupLabel>닉네임</SignupLabel>
-            </SignupLabelDiv>
-            <InputDiv>
-              <SignupInput
-                type="text"
-                name="nickname"
-                placeholder="닉네임을 입력하세요"
-                value={nickname}
-                onChange={onCheckNicknameHandler}
-              />
-              <SignupCheckBtn onClick={onCheckExistNickName}>
-                중복확인
-              </SignupCheckBtn>
-            </InputDiv>
-            <SignupErrorDiv>
-              {nicknameCheck === false ? (
-                <SignupErrorSpan style={{ color: 'red' }}>
-                  {nicknameMessage}
-                </SignupErrorSpan>
-              ) : (
-                <SignupErrorSpan style={{ color: 'gray' }}>
-                  {nicknameMessage}
-                </SignupErrorSpan>
-              )}
-            </SignupErrorDiv>
-          </SignupDiv>
-          <SignupDiv>
-            <SignupLabelDiv>
-              <SignupLabel>이메일</SignupLabel>
-            </SignupLabelDiv>
-            <InputDiv>
-              <SignupInputTwo
-                type="email"
-                name="email"
-                placeholder="이메일을 입력하세요"
-                value={email}
-                onChange={onCheckEmailHandler}
-              />
-            </InputDiv>
-            <SignupErrorDiv>
-              {emailCheck === false ? (
-                <SignupErrorSpan style={{ color: 'red' }}>
-                  {emailMessage}
-                </SignupErrorSpan>
-              ) : (
-                <SignupErrorSpan style={{ color: 'gray' }}>
-                  {emailMessage}
-                </SignupErrorSpan>
-              )}
-            </SignupErrorDiv>
-          </SignupDiv>
-          <SignupDiv>
-            <SignupLabelDiv>
-              <SignupLabel>비밀번호</SignupLabel>
-            </SignupLabelDiv>
-            <InputDiv>
-              <SignupInputTwo
-                type="password"
-                name="password"
-                placeholder="비밀번호를 입력하세요"
-                value={password}
-                onChange={onCheckPasswordHandler}
-              />
-            </InputDiv>
-            <SignupErrorDiv>
-              {passwordCheck === false ? (
-                <SignupErrorSpan style={{ color: 'red' }}>
-                  {passwordMessage}
-                </SignupErrorSpan>
-              ) : (
-                <SignupErrorSpan style={{ color: 'gray' }}>
-                  {passwordMessage}
-                </SignupErrorSpan>
-              )}
-            </SignupErrorDiv>
-          </SignupDiv>
-          <SignupDiv>
-            <SignupLabelDiv>
-              <SignupLabel>비밀번호 확인</SignupLabel>
-            </SignupLabelDiv>
-            <InputDiv>
-              <SignupInputTwo
-                type="password"
-                name="confirm"
-                placeholder="동일한 비밀번호를 입력하세요."
-                value={confirm}
-                onChange={onCheckConfirmHandler}
-              />
-            </InputDiv>
-            <SignupErrorDiv>
-              {confirmCheck === false ? (
-                <SignupErrorSpan style={{ color: 'red' }}>
-                  {confirmCheckMessage}
-                </SignupErrorSpan>
-              ) : (
-                <SignupErrorSpan style={{ color: 'gray' }}>
-                  {confirmCheckMessage}
-                </SignupErrorSpan>
-              )}
-            </SignupErrorDiv>
-          </SignupDiv>
-          {idResponse === 200 && nicknameResponse === 200 ? (
-            <div>
-              <SingupButton
-                onClick={(e) => {
-                  onSubmitSignUpHandler(e)
+          <SignupForm>
+            <p>Sign Up</p>
+            <SpanDiv>
+              <span
+                onClick={() => {
+                  navigate('/login')
                 }}
               >
-                Sign Up
-              </SingupButton>
-            </div>
-          ) : (
-            <div>
-              <SingupButtonDisabled disabled>Sign Up</SingupButtonDisabled>
-            </div>
-          )}
-        </SignupForm>
+                MOOD에 이미 가입하셨나요?
+              </span>
+            </SpanDiv>
+            <SignupDiv>
+              <SignupLabelDiv>
+                <SignupLabel>아이디</SignupLabel>
+              </SignupLabelDiv>
+
+              <InputDiv>
+                <SignupInput
+                  type="text"
+                  name="id"
+                  placeholder="아이디를 입력하세요"
+                  value={id}
+                  onChange={onCheckIdHandler}
+                />
+                {idCheck === false ? (
+                  <SignupCheckBtnDisabled disabled>중복확인</SignupCheckBtnDisabled>
+                ) : (
+                  <SignupCheckBtn onClick={onCheckExistId}>
+                    중복확인
+                  </SignupCheckBtn>
+                )}
+              </InputDiv>
+              <SignupErrorDiv>
+                {idCheck === false ? (
+                  <SignupErrorSpan style={{ color: 'red' }}>
+                    {idMessage}
+                  </SignupErrorSpan>
+                ) : (
+                  <SignupErrorSpan style={{ color: 'gray' }}>
+                    {idMessage}
+                  </SignupErrorSpan>
+                )}
+              </SignupErrorDiv>
+            </SignupDiv>
+            <SignupDiv>
+              <SignupLabelDiv>
+                <SignupLabel>닉네임</SignupLabel>
+              </SignupLabelDiv>
+              <InputDiv>
+                <SignupInput
+                  type="text"
+                  name="nickname"
+                  placeholder="닉네임을 입력하세요"
+                  value={nickname}
+                  onChange={onCheckNicknameHandler}
+                />
+                {nicknameCheck === false ? (
+                  <SignupCheckBtnDisabled disabled>중복확인</SignupCheckBtnDisabled>
+                ) : (
+                  <SignupCheckBtn onClick={onCheckExistNickName}>
+                    중복확인
+                  </SignupCheckBtn>
+                )}
+              </InputDiv>
+              <SignupErrorDiv>
+                {nicknameCheck === false ? (
+                  <SignupErrorSpan style={{ color: 'red' }}>
+                    {nicknameMessage}
+                  </SignupErrorSpan>
+                ) : (
+                  <SignupErrorSpan style={{ color: 'gray' }}>
+                    {nicknameMessage}
+                  </SignupErrorSpan>
+                )}
+              </SignupErrorDiv>
+            </SignupDiv>
+            <SignupDiv>
+              <SignupLabelDiv>
+                <SignupLabel>이메일</SignupLabel>
+              </SignupLabelDiv>
+              <InputDiv>
+                <SignupInputTwo
+                  type="email"
+                  name="email"
+                  placeholder="이메일을 입력하세요"
+                  value={email}
+                  onChange={onCheckEmailHandler}
+                />
+              </InputDiv>
+              <SignupErrorDiv>
+                {emailCheck === false ? (
+                  <SignupErrorSpan style={{ color: 'red' }}>
+                    {emailMessage}
+                  </SignupErrorSpan>
+                ) : (
+                  <SignupErrorSpan style={{ color: 'gray' }}>
+                    {emailMessage}
+                  </SignupErrorSpan>
+                )}
+              </SignupErrorDiv>
+            </SignupDiv>
+            <SignupDiv>
+              <SignupLabelDiv>
+                <SignupLabel>비밀번호</SignupLabel>
+              </SignupLabelDiv>
+              <InputDiv>
+                <SignupInputTwo
+                  type="password"
+                  name="password"
+                  placeholder="비밀번호를 입력하세요"
+                  value={password}
+                  onChange={onCheckPasswordHandler}
+                />
+              </InputDiv>
+              <SignupErrorDiv>
+                {passwordCheck === false ? (
+                  <SignupErrorSpan style={{ color: 'red' }}>
+                    {passwordMessage}
+                  </SignupErrorSpan>
+                ) : (
+                  <SignupErrorSpan style={{ color: 'gray' }}>
+                    {passwordMessage}
+                  </SignupErrorSpan>
+                )}
+              </SignupErrorDiv>
+            </SignupDiv>
+            <SignupDiv>
+              <SignupLabelDiv>
+                <SignupLabel>비밀번호 확인</SignupLabel>
+              </SignupLabelDiv>
+              <InputDiv>
+                <SignupInputTwo
+                  type="password"
+                  name="confirm"
+                  placeholder="동일한 비밀번호를 입력하세요."
+                  value={confirm}
+                  onChange={onCheckConfirmHandler}
+                />
+              </InputDiv>
+              <SignupErrorDiv>
+                {confirmCheck === false ? (
+                  <SignupErrorSpan style={{ color: 'red' }}>
+                    {confirmCheckMessage}
+                  </SignupErrorSpan>
+                ) : (
+                  <SignupErrorSpan style={{ color: 'gray' }}>
+                    {confirmCheckMessage}
+                  </SignupErrorSpan>
+                )}
+              </SignupErrorDiv>
+            </SignupDiv>
+            {idResponse === 200 && nicknameResponse === 200 ? (
+              <div>
+                <SingupButton
+                  onClick={(e) => {
+                    onSubmitSignUpHandler(e)
+                  }}
+                >
+                  Sign Up
+                </SingupButton>
+              </div>
+            ) : (
+              <div>
+                <SingupButtonDisabled disabled>Sign Up</SingupButtonDisabled>
+              </div>
+            )}
+          </SignupForm>
         </SignUpUpperDiv>
       </SignupContainer>
     </>

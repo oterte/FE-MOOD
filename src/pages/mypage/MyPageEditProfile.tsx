@@ -190,7 +190,6 @@ function MyPageEditProfile() {
         </ExternalContainer>
       </MyPageContentsContainer>
       <MyPageBottomDiv />
-      <Play />
     </>
   )
 }

@@ -7,6 +7,7 @@ import store from './redux/config/configStore'
 import ReactGA from 'react-ga'
 import { createBrowserHistory } from 'history'
 
+
 function App() {
   const queryClient = new QueryClient()
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from '../../components/header/Header'
 import {
   MyPageProfileBodyContainer,
@@ -7,6 +7,7 @@ import {
   MyPageProfileImgBox,
 } from './mypageSC'
 import heartBtnBrown from '../../assets/icons/Heart_brown.png'
+import heartBtnWhite from '../../assets/icons/heart_white.png'
 import playBtnBrown from '../../assets/icons/music_play_brown.png'
 import moreBtn from '../../assets/icons/morebtn.png'
 import {
@@ -16,7 +17,7 @@ import {
   MyPageTabItem,
   MyPageTabItemLast,
 } from './mypagecontentsSC'
-import { useQuery } from 'react-query'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { showProfile, showScrap } from '../../api/mypage'
 import { useDispatch } from 'react-redux'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
@@ -27,35 +28,48 @@ import { MyPageContainer } from './MyPageTable'
 import {
   ContentContainer,
   H2,
-  H3,
   MusicDetailBtn,
   ShowRepliesBtn,
   SpanMusicContent,
   SpanMusicTitle,
   ToogleWrap,
 } from '../../components/composer/ComposerListSt'
-import Play from '../../components/playbar/Play'
-import LikeCount from '../../components/like/LikeCount'
+import { toggleLike } from '../../api/chart'
 type Scrap = {
-  composer:string
-  musicContent:string
-  musicId:number
-  musicTitle:string
-  musicUrl:string
+  composer: string
+  musicContent: string
+  musicId: number
+  musicTitle: string
+  musicUrl: string
+  likeStatus: boolean
 }
+
 function MyPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const [showDesc, setShowDesc] = useState<number>(-1)
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const onClickMusicChangeHandler = (music: any) => {
-    dispatch(setMusicPlay(music))
-    dispatch(setIsPlaying())
+  const queryClient = useQueryClient()
+  const likeMutation = useMutation(toggleLike, {
+    onSuccess: () => {
+      queryClient.invalidateQueries()
+    },
+  })
+  const onToggleLikeHandler = (id: number) => {
+    likeMutation.mutate({ musicId: id })
   }
+
   const { isLoading: scrapLoading, data: scrapData } = useQuery(
     ['myScrap', currentPage],
     () => showScrap(currentPage)
   )
+
+  const onClickMusicChangeHandler = (music: any) => {
+    dispatch(setMusicPlay(music))
+    dispatch(setIsPlaying())
+  }
+
   const { isLoading, isError, data } = useQuery(['profile'], showProfile)
   const onPaginationHandler = (i: any) => {
     setCurrentPage(i)
@@ -152,7 +166,19 @@ function MyPage() {
                 />
               </button>
               <button>
-                <img src={heartBtnBrown} alt="down" />
+                {item.likeStatus === false ? (
+                  <img
+                    src={heartBtnBrown}
+                    alt="unliked"
+                    onClick={() => onToggleLikeHandler(item.musicId)}
+                  />
+                ) : (
+                  <img
+                    src={heartBtnWhite}
+                    alt="like"
+                    onClick={() => onToggleLikeHandler(item.musicId)}
+                  />
+                )}
               </button>
               <div>
                 <ShowRepliesBtn onClick={() => toggleReplies(index)}>
@@ -187,8 +213,7 @@ function MyPage() {
           onChange={onPaginationHandler}
         />
       </MyPageContainer>
-      <MyPageBottomDiv/>
-      <Play />
+      <MyPageBottomDiv />
     </>
   )
 }
