@@ -34,7 +34,6 @@ import {
   RecieveData,
   ScrollChatData,
 } from './ChatRoomArray'
-import Play from '../../components/playbar/Play'
 
 const socket = io(`${process.env.REACT_APP_SERVER}`, {
   transports: ['websocket'],
@@ -127,26 +126,19 @@ function ChatRoom() {
   }, [])
 
   useEffect(() => {
-    setTimeout(() => {
-      if (scrollRef.current)
-        scrollRef.current.scrollTop =
-          scrollRef.current?.scrollHeight - prevScrollheight
-    }, 50)
+    if (scrollRef.current?.scrollHeight) {
+      setPrevScrollHeight(scrollRef.current.scrollHeight)
+    }
     socket.emit('scroll', index)
-  }, [index])
-
-  useEffect(() => {
-    setTimeout(() => {
-      if (scrollRef.current?.scrollHeight) {
-        setPrevScrollHeight(scrollRef.current.scrollHeight)
-      }
-    }, 50)
   }, [index])
 
   useEffect(() => {
     socket.on('plusScroll', (data) => {
       setScrollChatData([...data, ...scrollChatData])
     })
+    if (scrollRef.current)
+      scrollRef.current.scrollTop =
+        scrollRef.current?.scrollHeight - prevScrollheight
   }, [scrollChatData])
 
   const chatData: ChatData = {
