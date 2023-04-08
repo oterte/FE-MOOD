@@ -98,6 +98,7 @@ function MyPageLike() {
     scrapMutation.mutate({ musicId: i })
   }
 
+  console.log("테스트")
   return (
     <>
       <Header />
