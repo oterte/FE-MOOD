@@ -37,11 +37,11 @@ import {
 import Play from '../../components/playbar/Play'
 import LikeCount from '../../components/like/LikeCount'
 type Scrap = {
-  composer:string
-  musicContent:string
-  musicId:number
-  musicTitle:string
-  musicUrl:string
+  composer: string
+  musicContent: string
+  musicId: number
+  musicTitle: string
+  musicUrl: string
 }
 function MyPage() {
   const [currentPage, setCurrentPage] = useState(1)
@@ -187,8 +187,7 @@ function MyPage() {
           onChange={onPaginationHandler}
         />
       </MyPageContainer>
-      <MyPageBottomDiv/>
-      <Play />
+      <MyPageBottomDiv />
     </>
   )
 }

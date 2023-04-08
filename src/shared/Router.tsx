@@ -53,6 +53,9 @@ function Router() {
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/delete" element={<MyPageDeleteDone />} />
         </Route>
+
+  
+
       </Routes>
     </BrowserRouter>
   )

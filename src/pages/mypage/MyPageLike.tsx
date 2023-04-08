@@ -210,7 +210,6 @@ function MyPageLike() {
         />
       </MyPageContainer>
       <MyPageBottomDiv/>
-      <Play />
     </>
   )
 }

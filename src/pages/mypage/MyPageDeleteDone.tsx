@@ -1,11 +1,17 @@
 import React from 'react'
 import Header from '../../components/header/Header'
 import Play from '../../components/playbar/Play'
-import { DoneBtn, MyPageDoneDiv, PDone, PThin, TextDiv } from './mypagecontentsSC'
+import {
+  DoneBtn,
+  MyPageDoneDiv,
+  PDone,
+  PThin,
+  TextDiv,
+} from './mypagecontentsSC'
 import { useNavigate } from 'react-router-dom'
 
 function MyPageDeleteDone() {
-    const navigate = useNavigate()
+  const navigate = useNavigate()
   return (
     <>
       <Header />
@@ -17,7 +23,6 @@ function MyPageDeleteDone() {
           <DoneBtn onClick={() => navigate('/recommend')}>확인</DoneBtn>
         </TextDiv>
       </MyPageDoneDiv>
-      <Play />
     </>
   )
 }
