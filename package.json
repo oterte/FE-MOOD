@@ -28,6 +28,9 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.9.0",
     "react-scripts": "5.0.1",
+    "react-scroll": "^1.8.9",
+    "react-spring": "^9.7.1",
+    "react-transition-group": "^4.4.5",
     "redux": "^4.2.1",
     "socket.io-client": "^4.6.1",
     "styled-components": "^5.3.8",
@@ -60,6 +63,7 @@
   },
   "devDependencies": {
     "@types/react-query": "^1.2.9",
+    "@types/react-scroll": "^1.8.6",
     "@types/styled-components": "^5.1.26"
   }
 }

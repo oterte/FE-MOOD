@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { setMusicPlay } from '../../redux/modules/musicPlayer'
+import { useDispatch, useSelector } from 'react-redux'
+import { setIsPlaying, setTogglePlaying } from '../../redux/modules/isPlaying'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { scrapMusic } from '../../api/scrap'
 import { getSearch } from '../../api/search'
@@ -31,6 +31,8 @@ import {
   ToogleWrap,
   Wrap,
 } from './SearchBarSt'
+import { setMusicPlay } from '../../redux/modules/musicPlayer'
+import { RootState } from '../../redux/config/configStore'
 
 type ComposerInfo = {
   composerId: number
@@ -64,6 +66,7 @@ function SearchResultPage() {
   const navigate = useNavigate()
   const location = useLocation()
   const dispatch = useDispatch()
+  const isPlaying = useSelector((state: RootState) => state.isPlaying.state)
   const queryParams = new URLSearchParams(location.search)
   const searchTerm = queryParams.get('query')
   const [composerInfo, setComposerInfo] = useState<ComposerInfo | null>(null)
@@ -71,21 +74,21 @@ function SearchResultPage() {
   const [showReplies, setShowReplies] = useState<{ [key: number]: boolean }>({})
   const [musicInfos, setMusicInfos] = useState<ComposerSong[] | undefined>()
   const [scrapStatus, setScrapStatus] = useState<{ [key: number]: boolean }>({})
+  const [playingMusicId, setPlayingMusicId] = useState<number | null>(null)
 
-  const handleMusicClick = (
+  const handlePlayClick = (
     musicId: number,
     musicTitle: string,
     composer: string,
     musicUrl: string
   ) => {
-    dispatch(
-      setMusicPlay({
-        musicId,
-        musicTitle,
-        composer,
-        musicUrl,
-      })
-    )
+    if (isPlaying) {
+      dispatch(setTogglePlaying())
+    }
+
+    dispatch(setMusicPlay({ musicTitle, composer, musicId, musicUrl }))
+    dispatch(setIsPlaying())
+    setPlayingMusicId(musicId)
   }
 
   const toggleReplies = (musicId: number) => {
@@ -228,7 +231,7 @@ function SearchResultPage() {
                   <div>{index + 1}</div>
                   <H3
                     onClick={() =>
-                      handleMusicClick(
+                      handlePlayClick(
                         music.musicId,
                         music.musicTitle,
                         music.composer,
@@ -237,6 +240,7 @@ function SearchResultPage() {
                     }
                   >
                     {music.musicTitle}
+                    {playingMusicId === music.musicId && <img src="" alt="" />}
                   </H3>
                   <LikeCount
                     musicId={music.musicId}
