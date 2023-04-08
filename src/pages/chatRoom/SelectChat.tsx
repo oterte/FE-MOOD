@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import Header from '../../components/header/Header'
 import { roomArray } from './ChatRoomArray'
 import { useState, useRef } from 'react'
+import React from 'react'
 import {
   StDivSelectRoomWrap,
   StPTitle,
@@ -13,7 +14,6 @@ import {
   StDivMoveRoom,
   RoomImg,
 } from './SelectChatSt'
-import Play from '../../components/playbar/Play'
 
 function SelectChat() {
   const navigate = useNavigate()
@@ -82,10 +82,9 @@ function SelectChat() {
             </StDivRoomContain>
           )
         })}
-        <Play />
       </StDivSelectRoomWrap>
     </>
   )
 }
 
-export default SelectChat
+export default React.memo(SelectChat)

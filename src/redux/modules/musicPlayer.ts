@@ -5,7 +5,7 @@ const initialState = {
   fileName: '',
   musicContent: '',
   musicId: undefined,
-  musicTitle: '',
+  musicTitle: '선택된 음악이 없습니다',
   musicUrl: '',
   status: undefined,
   tag: null,

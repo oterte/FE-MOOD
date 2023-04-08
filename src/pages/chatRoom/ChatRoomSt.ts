@@ -4,7 +4,7 @@ export const StDivRoomTitle = styled.div`
   width: 1260px;
   height: 250px;
   padding-top: 50px;
-  margin: auto;
+  margin: 0px auto 140px auto;
   text-align: center;
 `
 export const StDivRoomImg = styled.div`
