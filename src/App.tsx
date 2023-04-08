@@ -10,14 +10,13 @@ import { createBrowserHistory } from 'history'
 function App() {
   const queryClient = new QueryClient()
 
-  const gaTrackingId: any = process.env.REACT_APP_GA_TRACKING_ID
-  ReactGA.initialize(gaTrackingId, { debug: true })
+  const gaTrackingId: any = process.env.REACT_APP_GA_TRACKING_ID;
+  ReactGA.initialize(gaTrackingId, {debug: false})
   ReactGA.pageview(window.location.pathname)
 
-  const history = createBrowserHistory()
+  const history = createBrowserHistory();
   history.listen((response) => {
-    console.log(response.location.pathname)
-    ReactGA.set({ page: response.location.pathname })
+    ReactGA.set({ page: response.location.pathname});
     ReactGA.pageview(response.location.pathname)
   })
 
