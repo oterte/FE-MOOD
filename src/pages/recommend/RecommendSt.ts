@@ -37,12 +37,14 @@ export const StDivMoodWrap = styled.div`
   cursor: pointer;
   font-family: var(--font-NotoSerifKR);
   font-size: 25px;
+  background-color: #ffffff;
 `
 export const StDIvMusicPlayer = styled.div`
   width: 492px;
   height: 582px;
   border: 1px solid #d6d6d6;
   box-sizing: border-box;
+  background-color: #ffffff;
 `
 export const StDivLike = styled.div`
   width: 25px;
@@ -52,16 +54,14 @@ export const StDivLike = styled.div`
 export const StDivComposerImg = styled.div`
   width: 180px;
   height: 180px;
-  border-radius: 50%;
-  margin: 39px auto 0px auto;
-  text-align: center;
+  margin: 30px auto 0px auto;
   line-height: 180px;
-  box-sizing: border-box;
 `
 export const ComposerImg = styled.img`
   width: 180px;
   height: 180px;
   border-radius: 50%;
+  background-color: lightgray;
 `
 export const StPVigor = styled.p`
   font-size: 25px;
@@ -134,6 +134,7 @@ export const DivChartWrap = styled.div`
   height: 582px;
   border: 1px solid #d6d6d6;
   box-sizing: border-box;
+  background-color: #ffffff;
 `
 export const AudioDiv = styled.div`
   margin-top: 20px;

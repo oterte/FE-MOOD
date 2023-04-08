@@ -5,6 +5,7 @@ export const LikeWrap = styled.div`
   width: 20px;
   height: 20px;
   cursor: pointer;
+  margin-right: 30px;
 
   span {
     margin-left: 0.5rem;

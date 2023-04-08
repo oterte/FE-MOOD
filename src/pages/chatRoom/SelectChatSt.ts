@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const StDivSelectRoomWrap = styled.div`
   width: 1260px;
-  margin: auto;
+  margin: 0px auto 140px auto;
   text-align: center;
 `
 export const StPTitle = styled.p`

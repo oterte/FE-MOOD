@@ -50,7 +50,7 @@ const LikeCount: React.FC<LikeCountProps> = React.memo(
           onClick={handleLikeButtonClick}
           style={{ width: '25px', height: '25px' }}
         />
-        {likeCount > 0 && <span>{likeCount}</span>}
+        {/* {likeCount > 0 && <span>{likeCount}</span>} */}
       </LikeWrap>
     )
   },

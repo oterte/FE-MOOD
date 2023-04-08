@@ -22,7 +22,8 @@ import {
   StPExplain,
   ComposerImg,
 } from './RecommendSt'
-import { useNavigate } from 'react-router'
+import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { QueryClient, useMutation } from 'react-query'
 import { getMusic } from '../../api/recommendApi'
@@ -32,7 +33,6 @@ import { getlikedMusicList } from '../../api/chart'
 import LikeCount from '../../components/like/LikeCount'
 import ChartTab from '../../components/chart/ChartTab'
 import { Music } from '../../components/chart/LikeChart'
-import Play from '../../components/playbar/Play'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../redux/config/configStore'
@@ -183,7 +183,7 @@ function Recommend() {
                 <StDivComposerImg>
                   <ComposerImg src={selectMusicData.imageUrl} />
                 </StDivComposerImg>
-                {!selectMusicData ? (
+                {!selectMusicData.composer ? (
                   <ClickBox>기분 영역을 클릭해보세요!</ClickBox>
                 ) : (
                   <MusicComtain>
@@ -216,10 +216,9 @@ function Recommend() {
             </div>
           </div>
         </StDivWrap>
-        <Play />
       </Wrapper>
     </>
   )
 }
 
-export default Recommend
+export default React.memo(Recommend)

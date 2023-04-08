@@ -35,15 +35,13 @@ function SurveyModal({ modalState, setModalState, status1, status2 }: Props) {
     }
   })
   const onClickMoveMusicDetailPageHandler = () => {
-    navigate(`/recommend/music/${data.data.musicId}`)
+    navigate(`/recommend/music/${data.music.musicId}`)
   }
   const onClickReSurveyHandler = () => {
     window.location.replace('/survey')
   }
   if (isLoading) return <h1>Loading</h1>
   if (isError) return <h1>Error 발생</h1>
-
-  console.log(data)
 
   return (
     <ModalContainer>
