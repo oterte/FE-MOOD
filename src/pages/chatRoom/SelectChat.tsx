@@ -63,6 +63,8 @@ function SelectChat() {
                 <StDivImg>
                   <RoomImg
                     src={hover === number.number ? number.imgHover : number.img}
+                    loading="lazy"
+                    alt="이미지가 제공되지 않았음"
                   />
                 </StDivImg>
                 <p>{number.emotion}</p>

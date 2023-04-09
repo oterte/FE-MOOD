@@ -71,7 +71,7 @@ function Survey() {
       setModalState(!modalState)
     } else {
       alert('설문을 모두 선택해주세요!')
-    }
+    } 
   }
 
   return (
@@ -93,12 +93,20 @@ function Survey() {
             <div style={{ width: '1280px', overflow: 'hidden' }}>
               <StDivSlide ref={slideRef}>
                 {questionArr.map((question) => {
+                  const props = {
+                    number: Object.keys(survey)[question.id],
+                    setSurvey,
+                    currentSlide,
+                    setCurrentSlide,
+                  }
+
                   return (
                     <StDIvPointWrap ref={containRef} key={question.id}>
                       <StPSurveyQuestion>
                         {question.questionNumber}. {question.question}
                       </StPSurveyQuestion>
                       <Point
+                        // prop={props}
                         number={Object.keys(survey)[question.id]}
                         setSurvey={setSurvey}
                         currentSlide={currentSlide}

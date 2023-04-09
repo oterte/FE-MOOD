@@ -209,7 +209,7 @@ function ChatRoom() {
         </StDivRoomTitle>
         <StDivChatRoomWrap>
           <StDivChatRoomChatListWrap ref={scrollRef}>
-            <div ref={target}></div>
+            <div style={{position: 'absolute', top: '100px'}} ref={target}></div>
             {scrollChatData?.map((scrollChatData) => {
               return (
                 <StDivChatRoomChatListContain key={scrollChatData.chatId}>
