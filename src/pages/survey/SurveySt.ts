@@ -69,7 +69,6 @@ export const StSpanCurrentSlide = styled.span`
   font-size: 20px;
   color: #888888;
 `
-
 export const StDivSubmit = styled.div`
   width: 156px;
   height: 45px;
