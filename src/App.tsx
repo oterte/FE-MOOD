@@ -13,7 +13,7 @@ function App() {
 
   const gaTrackingId: string | undefined = process.env.REACT_APP_GA_TRACKING_ID
   if (gaTrackingId) {
-    ReactGA.initialize(gaTrackingId, { debug: true })
+    ReactGA.initialize(gaTrackingId, { debug: false })
     ReactGA.pageview(window.location.pathname)
   }
 
@@ -23,7 +23,7 @@ function App() {
     ReactGA.pageview(response.location.pathname)
   })
 
-  RouteTrackering()
+  // RouteTrackering()
 
   return (
     <QueryClientProvider client={queryClient}>
