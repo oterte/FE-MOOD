@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-import { onSetCookieHandler, onSetLocalStorageHandler } from '../../util/cookie'
+import { onSetLocalStorageHandler } from '../../util/cookie'
 
 import jwtDecode from 'jwt-decode'
-
+// ${process.env.REACT_APP_SERVER}
 function Auth() {
   const code = new URL(window.location.href).searchParams.get('code')
+  console.log(code)
   const navigate = useNavigate()
   useEffect(() => {
     axios
-      .post(`${process.env.REACT_APP_SERVER}/api/kakao/login`, { code })
+      .post(`https://mozz-cd.shop/api/login/kakao`, { code })
       .then((r) => {
         const data: string = r.data.access_token
         const decodeUserInfo = JSON.stringify(jwtDecode(data))
@@ -23,6 +24,7 @@ function Auth() {
         navigate('/recommend')
       })
       .catch((err) => {
+        console.log(err)
         alert(err.response.data.message)
         navigate('/login')
       })
