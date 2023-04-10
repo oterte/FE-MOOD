@@ -73,6 +73,7 @@ export const SignupLabel = styled.label`
 `
 export const SignupDiv = styled.div`
   width: 100%;
+  height: 122px;
 `
 export const InputDiv = styled.div`
   width: 100%;

@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import Header from '../../components/header/Header'
 import {
+  MyPageGoSurvey,
   MyPageProfileBodyContainer,
   MyPageProfileContainer,
   MyPageProfileImg,
   MyPageProfileImgBox,
 } from './mypageSC'
 import heartBtnBrown from '../../assets/icons/Heart_brown.png'
-import heartBtnWhite from '../../assets/icons/heart_white.png'
+import heartBtnFilled from '../../assets/icons/Heart_fill_brown.png'
 import playBtnBrown from '../../assets/icons/music_play_brown.png'
 import moreBtn from '../../assets/icons/morebtn.png'
 import {
@@ -78,18 +79,10 @@ function MyPage() {
     setShowDesc((prevState) => (prevState === descIndex ? -1 : descIndex))
     console.log(showDesc)
   }
-  if (scrapLoading) {
-    return <h1>로딩중</h1>
-  }
-  if (isLoading) {
-    return <h1>로딩중</h1>
-  }
-  if (isError) {
-    console.log(isError)
-  }
-  console.log('스크랩 조회', scrapData)
-  console.log('스크랩 조회', scrapData)
-  console.log('스크랩 조회', scrapData)
+  if (scrapLoading) return <h1>로딩중</h1>
+  if (isLoading) return <h1>로딩중</h1>
+  if (isError) console.log(isError)
+  console.log(data)
   return (
     <>
       <Header />
@@ -100,13 +93,15 @@ function MyPage() {
             <MyPageProfileImg src={data.profileUrl} />
           </MyPageProfileImgBox>
           <div>
-            <p>{data.nickname} 님 환영합니다</p>
+            <p>{data.nickname}님 환영합니다</p>
           </div>
           <div>
-            <span>당신의 최근 감정 상태는 XXX 입니다.</span>
+            <span>{data.myStatus}</span>
           </div>
           <div>
-            <span>지금의 기분을 확인해보실래요?</span>
+            <MyPageGoSurvey onClick={() => navigate('/survey')}>
+              지금의 기분을 확인해보실래요?
+            </MyPageGoSurvey>
           </div>
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
@@ -176,7 +171,7 @@ function MyPage() {
                   />
                 ) : (
                   <img
-                    src={heartBtnWhite}
+                    src={heartBtnFilled}
                     alt="like"
                     onClick={() => onToggleLikeHandler(item.musicId)}
                   />
