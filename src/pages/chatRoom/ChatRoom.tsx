@@ -136,7 +136,20 @@ function ChatRoom() {
     if (scrollRef.current?.scrollHeight) {
       setPrevScrollHeight(scrollRef.current.scrollHeight)
     }
+    setTimeout(() => {
+      if (scrollRef.current)
+        scrollRef.current.scrollTop =
+          scrollRef.current?.scrollHeight - prevScrollheight
+    }, 100)
     socket.emit('scroll', index)
+  }, [index])
+
+  useEffect(() => {
+    setTimeout(() => {
+      if (scrollRef.current?.scrollHeight) {
+        setPrevScrollHeight(scrollRef.current.scrollHeight)
+      }
+    }, 100)
   }, [index])
 
   useEffect(() => {
