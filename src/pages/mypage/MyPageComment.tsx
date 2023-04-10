@@ -56,6 +56,7 @@ function MyPageComment() {
   if (isError) {
     return <h1>에러</h1>
   }
+  console.log(reviewData)
   return (
     <>
       <Header />
@@ -121,7 +122,7 @@ function MyPageComment() {
           <div>상세페이지로</div>
         </div>
         {reviewData.reviewList.map((item: Review, index: number) => (
-          <React.Fragment key={`${item.reviewId}`}>
+          <React.Fragment key={`${index}`}>
             <div>
               <div>{index + 1}</div>
               {item.review.length < 20 ? (
