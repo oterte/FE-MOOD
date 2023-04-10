@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Header from '../../components/header/Header'
 import {
   MyPageProfileBodyContainer,
@@ -87,6 +87,8 @@ function MyPage() {
   if (isError) {
     console.log(isError)
   }
+  console.log('스크랩 조회', scrapData)
+  console.log('스크랩 조회', scrapData)
   console.log('스크랩 조회', scrapData)
   return (
     <>

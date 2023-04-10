@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const Wrapper = styled.div`
   width: 100vw;
+  margin-bottom: 140px;
 `
 export const StDivSurveyWrap = styled.div`
   width: 1260px;

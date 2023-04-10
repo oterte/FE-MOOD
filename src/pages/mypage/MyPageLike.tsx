@@ -15,14 +15,12 @@ import {
   MyPageTabItem,
   MyPageTabItemLast,
 } from './mypagecontentsSC'
-import Play from '../../components/playbar/Play'
 import downBtnBrown from '../../assets/icons/down_brown.png'
 import downBtnWhite from '../../assets/icons/down_white.png'
 import playBtnBrown from '../../assets/icons/music_play_brown.png'
 import moreBtn from '../../assets/icons/morebtn.png'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
 import {
-  H3,
   ContentContainer,
   MusicDetailBtn,
   ShowRepliesBtn,
@@ -98,6 +96,7 @@ function MyPageLike() {
     scrapMutation.mutate({ musicId: i })
   }
 
+  console.log("테스트")
   return (
     <>
       <Header />
