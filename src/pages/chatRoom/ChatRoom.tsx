@@ -185,7 +185,12 @@ function ChatRoom() {
 
   useEffect(() => {
     socket.on('onUser', (data) => {
-      setUserList([...userList, data])
+      console.log('onuser', data)
+      if (data.level === 'error') {
+        return
+      } else {
+        setUserList([...userList, data])
+      }
     })
   }, [userList])
 
@@ -222,7 +227,10 @@ function ChatRoom() {
         </StDivRoomTitle>
         <StDivChatRoomWrap>
           <StDivChatRoomChatListWrap ref={scrollRef}>
-            <div ref={target}></div>
+            <div
+              style={{ position: 'absolute', top: '100px' }}
+              ref={target}
+            ></div>
             {scrollChatData?.map((scrollChatData) => {
               return (
                 <StDivChatRoomChatListContain key={scrollChatData.chatId}>
@@ -287,7 +295,7 @@ function ChatRoom() {
               userList.map((item) => {
                 return (
                   <StDivUserProfile key={item}>
-                    {/* <StDivProfileImg>img</StDivProfileImg> */}
+                    <StDivProfileImg>img</StDivProfileImg>
                     <StPProfileNickname>{item}</StPProfileNickname>
                   </StDivUserProfile>
                 )

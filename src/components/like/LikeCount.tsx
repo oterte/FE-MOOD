@@ -2,8 +2,8 @@ import React from 'react'
 import Heart from '../../assets/icons/Heart_brown.png'
 import FillHeart from '../../assets/icons/heart_white.png'
 import { toggleLike } from '../../api/chart'
-import { Cookies } from 'react-cookie'
 import { LikeWrap } from './LikeSt'
+import { onGetCookieHandler } from '../../util/cookie'
 
 interface LikeCountProps {
   musicId?: number
@@ -16,8 +16,6 @@ interface LikeCountProps {
   ) => void
 }
 
-const cookies = new Cookies()
-
 const LikeCount: React.FC<LikeCountProps> = React.memo(
   ({ musicId, likeCount, likeStatus, onLikeUpdate }) => {
     const handleLikeButtonClick = async () => {
@@ -25,7 +23,7 @@ const LikeCount: React.FC<LikeCountProps> = React.memo(
         console.log("id 없음")
         return
       }
-      const token = cookies.get('authorization')
+      const token = onGetCookieHandler('authorization')
       if (!token) {
         alert('로그인 후 이용 가능합니다.')
         return
