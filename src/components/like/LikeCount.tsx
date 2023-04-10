@@ -23,7 +23,7 @@ const LikeCount: React.FC<LikeCountProps> = React.memo(
         console.log("id 없음")
         return
       }
-      const token = onGetCookieHandler('authorization')
+      const token = onGetCookieHandler('accessToken')
       if (!token) {
         alert('로그인 후 이용 가능합니다.')
         return

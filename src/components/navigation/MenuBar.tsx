@@ -28,6 +28,7 @@ import menu3 from '../../assets/icons/menu_03.png'
 import menu4 from '../../assets/icons/menu_04.png'
 import menubtn from '../../assets/icons/menu_black.png'
 import closebtn from '../../assets/icons/xmark_black.png'
+import baseProifle from '../../assets/icons/Heart_fill_white copy.png'
 
 type Props = {
   items: string[]
@@ -54,7 +55,7 @@ const MenuBar: React.FC<Props> = () => {
           <Link to="/" style={{ textDecoration: 'none' }}>
             <H1>MOOD</H1>
           </Link>
-          <ProfileImg></ProfileImg>
+          <ProfileImg src={baseProifle}></ProfileImg>
           {nickname ? (
             <LoginMent>
               {nickname}님<br />
@@ -63,12 +64,12 @@ const MenuBar: React.FC<Props> = () => {
           ) : (
             <LoginMent>로그인 해주세요.</LoginMent>
           )}
-          {!onGetLocalStorage('authorization') ? (
+          {!onGetLocalStorage('accessToken') ? (
             <Link to="/login">
               <LoginBtn>로그인</LoginBtn>
             </Link>
           ) : null}
-          {onGetLocalStorage('authorization') ? (
+          {onGetLocalStorage('accessToken') ? (
             <Link to="/mypage">
               <LoginBtn>마이페이지 바로 가기</LoginBtn>
             </Link>
@@ -100,7 +101,7 @@ const MenuBar: React.FC<Props> = () => {
             </ChatBtn>
           </Link>
 
-          {onGetLocalStorage('authorization') ? (
+          {onGetLocalStorage('accessToken') ? (
             <LogoutBtn onClick={onLogout}>로그아웃</LogoutBtn>
           ) : null}
         </MenuItem>

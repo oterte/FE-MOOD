@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { likedMusic, showProfile } from '../../api/mypage'
 import Header from '../../components/header/Header'
 import {
+  MyPageGoSurvey,
   MyPageProfileBodyContainer,
   MyPageProfileContainer,
   MyPageProfileImg,
@@ -16,7 +17,7 @@ import {
   MyPageTabItemLast,
 } from './mypagecontentsSC'
 import downBtnBrown from '../../assets/icons/down_brown.png'
-import downBtnWhite from '../../assets/icons/down_white.png'
+import downBtnOutLine from '../../assets/icons/down_outline.png'
 import playBtnBrown from '../../assets/icons/music_play_brown.png'
 import moreBtn from '../../assets/icons/morebtn.png'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
@@ -72,15 +73,9 @@ function MyPageLike() {
       queryClient.invalidateQueries()
     },
   })
-  if (isLoading) {
-    return <h1>로딩중</h1>
-  }
-  if (profileLoading) {
-    return <h1>로딩중..</h1>
-  }
-  if (isError) {
-    return <h1>에러</h1>
-  }
+  if (isLoading) return <h1>로딩중</h1>
+  if (profileLoading) return <h1>로딩중..</h1>
+  if (isError) return <h1>에러</h1>
 
   console.log(likedata)
 
@@ -95,8 +90,6 @@ function MyPageLike() {
   const onScrapHanlder = (i: number) => {
     scrapMutation.mutate({ musicId: i })
   }
-
-  console.log("테스트")
   return (
     <>
       <Header />
@@ -110,10 +103,10 @@ function MyPageLike() {
             <p>{profileData.nickname}님 환영합니다</p>
           </div>
           <div>
-            <span>당신의 최근 감정 상태는 XXX 입니다.</span>
+            <span>{profileData.myStatus}</span>
           </div>
           <div>
-            <span>지금의 기분을 확인해보실래요?</span>
+            <MyPageGoSurvey>지금의 기분을 확인해보실래요?</MyPageGoSurvey>
           </div>
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
@@ -177,13 +170,13 @@ function MyPageLike() {
               <button>
                 {item.scrapStatus === false ? (
                   <img
-                    src={downBtnBrown}
+                    src={downBtnOutLine}
                     alt="down"
                     onClick={() => onScrapHanlder(item.musicId)}
                   />
                 ) : (
                   <img
-                    src={downBtnWhite}
+                    src={downBtnBrown}
                     alt="down"
                     onClick={() => onScrapHanlder(item.musicId)}
                   />
