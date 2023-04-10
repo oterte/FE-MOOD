@@ -1,36 +1,47 @@
-
 body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background:#F5F5F5;
+  background: #f5f5f5;
   font-family: NotoSansKR-Regular;
-  color:black;
+  color: black;
 }
 
 @font-face {
-  font-family: "Kaushan Script";
-  src: url(../src/assets/fonts/KaushanScript-Regular.ttf);
+  font-family: 'Kaushan Script';
+  font-display: swap;
+  src: url(../src/assets/fonts/Kaushan-Script-regular.woff2) format('woff2'),
+    url(../src/assets/fonts/Kaushan-Script-regular.woff) format('woff'),
+    url(../src/assets/fonts/KaushanScript-Regular.ttf) format('truetype');
 }
 
 @font-face {
-  font-family: "NotoSerifKR-Regular";
-  src: url(../src/assets/fonts/NotoSerifKR-Regular.otf);
+  font-family: 'NotoSerifKR-Regular';
+  font-display: swap;
+  src: url(../src/assets/fonts/NotoSerifKR-Regular.woff2) format('woff2'),
+    url(../src/assets/fonts/NotoSerifKR-Regular.woff) format('woff'),
+    url(../src/assets/fonts/NotoSerifKR-Regular.otf) format('truetype');
 }
 
 @font-face {
-  font-family: "NotoSansKR-Regular";
-  src: url(../src/assets/fonts/NotoSansKR-Regular.otf);
+  font-family: 'NotoSansKR-Regular';
+  font-display: swap;
+  src: url(../src/assets/fonts/NotoSansKR-Regular.woff2) format('woff2'),
+    url(../src/assets/fonts/NotoSansKR-Regular.woff) format('woff'),
+    url(../src/assets/fonts/NotoSansKR-Regular.otf) format('truetype');
 }
 
 @font-face {
-  font-family: "NotoSansKR-Thin";
-  src: url(../src/assets/fonts/NotoSansKR-Thin.otf);
+  font-family: 'NotoSansKR-Thin';
+  font-display: swap;
+  src: url(../src/assets/fonts/NotoSansKR-Thin.woff2) format('woff2'),
+    url(../src/assets/fonts/NotoSansKR-Thin.woff) format('woff'),
+    url(../src/assets/fonts/NotoSansKR-Thin.otf) format('truetype');
 }
 
 :root {
-	--font-googleGugi: "Kaushan Script";
-  --font-NotoSerifKR: "NotoSerifKR-Regular";
-  --font-NotoSansKR-Regular:"NotoSansKR-Regular";
-  --font-NotoSansKR-Thin:"NotoSansKR-Thin";
+  --font-googleGugi: 'Kaushan Script';
+  --font-NotoSerifKR: 'NotoSerifKR-Regular';
+  --font-NotoSansKR-Regular: 'NotoSansKR-Regular';
+  --font-NotoSansKR-Thin: 'NotoSansKR-Thin';
 }

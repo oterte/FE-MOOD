@@ -25,6 +25,7 @@ import {
   StInputChatSubmit,
   StBtnChatSubmit,
   RoomImg,
+  ProfileImg,
 } from './ChatRoomSt'
 import { onGetCookieHandler } from '../../util/cookie'
 import Header from '../../components/header/Header'
@@ -34,6 +35,7 @@ import {
   RecieveData,
   ScrollChatData,
 } from './ChatRoomArray'
+import { expireToken } from '../../api/instance'
 
 const socket = io(`${process.env.REACT_APP_SERVER}`, {
   transports: ['websocket'],
@@ -45,12 +47,17 @@ const disconnection = () => {
   socket.disconnect()
 }
 
+interface UserList {
+  nickname: string
+  image: string
+}
+
 function ChatRoom() {
   const [chatText, setChatText] = useState<string>('')
   const [recieveData, setRecieveData] = useState<RecieveData[]>([])
   const [beforeChatData, setBeforeChatData] = useState<BeforeChatData[]>([])
   const [scrollChatData, setScrollChatData] = useState<ScrollChatData[]>([])
-  const [userList, setUserList] = useState<string[]>([])
+  const [userList, setUserList] = useState<UserList[]>([])
   const [index, setIndex] = useState<number>(0)
   const [roomName, setRoomName] = useState<string>('')
   const [roomImg, setRoomImg] = useState<string>('')
@@ -143,6 +150,7 @@ function ChatRoom() {
 
   const chatData: ChatData = {
     message: chatText,
+    token: token,
   }
   const onSubmitChattingHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -172,13 +180,20 @@ function ChatRoom() {
 
   useEffect(() => {
     socket.on('onUser', (data) => {
-      setUserList([...userList, data])
+      console.log('onuser', data)
+      if (data.level === 'error') {
+        return
+      } else {
+        setUserList([...userList, data])
+      }
     })
   }, [userList])
 
   useEffect(() => {
     socket.on('offUser', (nickname) => {
-      setUserList(userList.filter((userList: string) => userList !== nickname))
+      setUserList(
+        userList.filter((userList: UserList) => userList !== nickname)
+      )
     })
   }, [userList])
 
@@ -193,6 +208,11 @@ function ChatRoom() {
       setRecieveData([...recieveData, data])
     })
   }, [recieveData])
+
+  socket.on('error', (data) => {
+    console.log(data.code)
+    expireToken()
+  })
 
   return (
     <>
@@ -209,7 +229,10 @@ function ChatRoom() {
         </StDivRoomTitle>
         <StDivChatRoomWrap>
           <StDivChatRoomChatListWrap ref={scrollRef}>
-            <div ref={target}></div>
+            <div
+              style={{ position: 'absolute', top: '100px' }}
+              ref={target}
+            ></div>
             {scrollChatData?.map((scrollChatData) => {
               return (
                 <StDivChatRoomChatListContain key={scrollChatData.chatId}>
@@ -273,9 +296,11 @@ function ChatRoom() {
             {userList &&
               userList.map((item) => {
                 return (
-                  <StDivUserProfile key={item}>
-                    {/* <StDivProfileImg>img</StDivProfileImg> */}
-                    <StPProfileNickname>{item}</StPProfileNickname>
+                  <StDivUserProfile key={item.nickname}>
+                    <StDivProfileImg>
+                      <ProfileImg src={item.image} />
+                    </StDivProfileImg>
+                    <StPProfileNickname>{item.nickname}</StPProfileNickname>
                   </StDivUserProfile>
                 )
               })}

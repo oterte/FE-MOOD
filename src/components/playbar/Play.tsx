@@ -32,11 +32,15 @@ function Play() {
     }
   }, [currentTime])
 
-  useEffect(() => {
+  const setTime = useCallback(() => {
     if (audioRef.current?.duration && audioRef.current.currentTime) {
       setCurrentTime(audioRef.current?.currentTime)
       setDuration(audioRef.current?.duration)
     }
+  }, [])
+
+  useEffect(() => {
+    setTime()
   }, [
     data,
     audioRef.current?.duration,

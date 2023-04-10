@@ -43,6 +43,11 @@ export const StDivProfileImg = styled.div`
   margin-left: 53px;
   line-height: 50px;
 `
+export const ProfileImg = styled.img`
+  width: 53px;
+  height: 53px;
+  border: 50%;
+`
 export const StPProfileNickname = styled.p`
   margin-left: 23px;
 `
