@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Header from '../../components/header/Header'
 import {
+  MyPageGoSurvey,
   MyPageProfileBodyContainer,
   MyPageProfileContainer,
   MyPageProfileImg,
@@ -47,15 +48,9 @@ function MyPageComment() {
   const onPaginationHandler = (i: number) => {
     setCurrentPage(i)
   }
-  if (isLoading) {
-    return <h1>로딩중</h1>
-  }
-  if (profileLoading) {
-    return <h1>로딩중..</h1>
-  }
-  if (isError) {
-    return <h1>에러</h1>
-  }
+  if (isLoading) return <h1>로딩중</h1>
+  if (profileLoading) return <h1>로딩중..</h1>
+  if (isError) return <h1>에러</h1>
   console.log(reviewData)
   return (
     <>
@@ -67,13 +62,13 @@ function MyPageComment() {
             <MyPageProfileImg src={profileData.profileUrl} />
           </MyPageProfileImgBox>
           <div>
-            <p>{profileData.nickname} 님 환영합니다</p>
+            <p>{profileData.nickname}님 환영합니다</p>
           </div>
           <div>
-            <span>당신의 최근 감정 상태는 XXX 입니다.</span>
+            <span>{profileData.myStatus}</span>
           </div>
           <div>
-            <span>지금의 기분을 확인해보실래요?</span>
+            <MyPageGoSurvey>지금의 기분을 확인해보실래요?</MyPageGoSurvey>
           </div>
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>

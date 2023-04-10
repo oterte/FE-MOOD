@@ -1,5 +1,6 @@
 import Header from '../../components/header/Header'
 import {
+  MyPageGoSurvey,
   MyPageProfileBodyContainer,
   MyPageProfileContainer,
   MyPageProfileImg,
@@ -24,10 +25,7 @@ import Play from '../../components/playbar/Play'
 import { useNavigate } from 'react-router'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { deleteAccount, showProfile } from '../../api/mypage'
-import {
-  onDeletetHandler,
-  onRemoveToken,
-} from '../../util/cookie'
+import { onDeletetHandler, onRemoveToken } from '../../util/cookie'
 function MyPageDelteAccount() {
   const { isLoading: profileLoading, data: profileData } = useQuery(
     ['profile'],
@@ -61,9 +59,7 @@ function MyPageDelteAccount() {
   }
   const navigate = useNavigate()
 
-  if (profileLoading) {
-    return <h1>로딩중..</h1>
-  }
+  if (profileLoading) return <h1>로딩중..</h1>
 
   return (
     <>
@@ -75,13 +71,13 @@ function MyPageDelteAccount() {
             <MyPageProfileImg src={profileData.profileUrl} />
           </MyPageProfileImgBox>
           <div>
-            <p>{profileData.nickname} 님 환영합니다</p>
+            <p>{profileData.nickname}님 환영합니다</p>
           </div>
           <div>
-            <span>당신의 최근 감정 상태는 XXX 입니다.</span>
+            <span>{profileData.myStatus}</span>
           </div>
           <div>
-            <span>지금의 기분을 확인해보실래요?</span>
+            <MyPageGoSurvey>지금의 기분을 확인해보실래요?</MyPageGoSurvey>
           </div>
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
