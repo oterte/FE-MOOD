@@ -1,12 +1,13 @@
 import React, { useRef, useState } from 'react'
 import Header from '../../components/header/Header'
 import {
+  MyPageGoSurvey,
   MyPageProfileBodyContainer,
   MyPageProfileContainer,
   MyPageProfileImg,
   MyPageProfileImgBox,
 } from './mypageSC'
-import Play from '../../components/playbar/Play'
+import baseProifle from '../../assets/icons/Heart_fill_white copy.png'
 import {
   ExternalContainer,
   MyPageBottomDiv,
@@ -76,7 +77,7 @@ function MyPageEditProfile() {
       checkNickname(newNickname)
         .then((res) => {
           console.log(res)
-          alert('사용 가능한 닉네임입니다.')
+          alert('변경되었습니다.')
           changeMutation.mutate(newNickname)
           setNewNickname('')
           onSetLocalStorageHandler('nickname', newNickname)
@@ -87,13 +88,9 @@ function MyPageEditProfile() {
         })
     }
   }
-  if (isLoading) {
-    return <h1>로딩중</h1>
-  }
+  if (isLoading) return <h1>로딩중</h1>
 
-  if (isError) {
-    return <h1>에러</h1>
-  }
+  if (isError) return <h1>에러</h1>
   return (
     <>
       <Header />
@@ -101,16 +98,20 @@ function MyPageEditProfile() {
         <MyPageProfileBodyContainer>
           <p>마이페이지</p>
           <MyPageProfileImgBox>
-            <MyPageProfileImg src={profileData.profileUrl} />
+            <MyPageProfileImg
+              src={
+                profileData.profileUrl ? profileData.profileUrl : baseProifle
+              }
+            />
           </MyPageProfileImgBox>
           <div>
-            <p>{profileData.nickname} 님 환영합니다</p>
+            <p>{profileData.nickname}님 환영합니다</p>
           </div>
           <div>
-            <span>당신의 최근 감정 상태는 XXX 입니다.</span>
+            <span>{profileData.myStatus}</span>
           </div>
           <div>
-            <span>지금의 기분을 확인해보실래요?</span>
+            <MyPageGoSurvey>지금의 기분을 확인해보실래요?</MyPageGoSurvey>
           </div>
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
@@ -156,7 +157,13 @@ function MyPageEditProfile() {
           <MyPageEditContainer>
             <label htmlFor="fileinput">
               <MyPageEditImg
-                src={imgUrl ? imgUrl : profileData.profileUrl}
+                src={
+                  !imgUrl
+                    ? profileData.profileUrl
+                      ? profileData.profileUrl
+                      : baseProifle
+                    : imgUrl
+                }
                 alt="이미지"
               />
             </label>
