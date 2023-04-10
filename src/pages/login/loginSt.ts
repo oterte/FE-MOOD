@@ -24,6 +24,7 @@ export const LoginContainer = styled.div`
     font-style: normal;
     font-weight: 400;
     margin-bottom:25px;
+    color: #4B372E;
   }
 `
 export const LoginLabelDiv = styled.div`
