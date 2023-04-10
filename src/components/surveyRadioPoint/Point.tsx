@@ -9,7 +9,7 @@ interface Props {
   setCurrentSlide: React.Dispatch<React.SetStateAction<number>>
 }
 
-const Point = ({ number, setSurvey, currentSlide, setCurrentSlide }: Props) => {
+const Point = (props : Props) => {
   const [btn, setBtn] = useState<number | null>(null)
 
   const onClickPointHandler = (
@@ -17,12 +17,12 @@ const Point = ({ number, setSurvey, currentSlide, setCurrentSlide }: Props) => {
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
     const point = Number(e.currentTarget.id)
-    setSurvey((prevState: SurveyData) => {
-      return { ...prevState, [number]: point }
+    props.setSurvey((prevState: SurveyData) => {
+      return { ...prevState, [props.number]: point }
     })
     setBtn(id)
     setTimeout(() => {
-      if (currentSlide < 9) setCurrentSlide(currentSlide + 1)
+      if (props.currentSlide < 9) props.setCurrentSlide(props.currentSlide + 1)
     }, 300)
   }
 
