@@ -97,7 +97,7 @@ function ChatRoom() {
   }, [])
 
   const roomId: number = Number(id)
-  const token = onGetCookieHandler('authorization')
+  const token = onGetCookieHandler('accessToken')
   useEffect(() => {
     if (roomId === 1) setRoomName('분노')
     setRoomImg(angry)

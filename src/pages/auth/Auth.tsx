@@ -5,7 +5,6 @@ import { onSetLocalStorageHandler } from '../../util/cookie'
 import jwtDecode from 'jwt-decode'
 function Auth() {
   const code = new URL(window.location.href).searchParams.get('code')
-  console.log(code)
   const navigate = useNavigate()
   useEffect(() => {
     axios
@@ -16,10 +15,9 @@ function Auth() {
         const nickname: string = r.data.nickname
         const refresh = r.data.refresh_token
         onSetLocalStorageHandler('refresh', refresh)
-        onSetLocalStorageHandler('authorization', data)
+        onSetLocalStorageHandler('accessToken', data)
         onSetLocalStorageHandler('nickname', nickname)
         onSetLocalStorageHandler('userInfo', decodeUserInfo)
-        console.log("로그인 성공")
         navigate('/recommend')
       })
       .catch((err) => {
