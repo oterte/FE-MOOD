@@ -70,6 +70,7 @@ export const roomArray = [
 export interface ChatData {
   param?: string
   message: string
+  token: string
 }
 export interface RecieveData {
   message: string | null

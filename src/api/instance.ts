@@ -1,7 +1,6 @@
 import axios, { AxiosInstance } from 'axios'
-import { onSetLocalStorageHandler } from '../util/cookie'
-
-
+import { onDeletetHandler, onSetCookieHandler, onSetLocalStorageHandler } from '../util/cookie'
+import { async } from 'q'
 
 const instance: AxiosInstance = axios.create({
   baseURL: process.env.REACT_APP_SERVER,
@@ -25,16 +24,26 @@ instance.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 )
-refreshInstance.interceptors.request.use((config) => {
-  const refresh = localStorage.getItem('refresh')
-  config.headers.Authorization = `Bearer ${refresh}`
-  return config
-},
-(error) => Promise.reject(error)
+refreshInstance.interceptors.request.use(
+  (config) => {
+    const refresh = localStorage.getItem('refresh')
+    config.headers.Authorization = `Bearer ${refresh}`
+    return config
+  },
+  (error) => Promise.reject(error)
 )
 //Axios의 인터셉터를 사용하여,
 //419 응답을 받았을 때 refresh token을 사용하여
 //새로운 access token을 가져오도록 설정
+export const expireToken = async () => {
+  const res = await refreshInstance.post(`/api/user/refresh`)
+  const data = res.data
+  console.log(data.accessToken)
+  onSetLocalStorageHandler('authorization', data.accessToken)
+  onDeletetHandler('authorization')
+  onSetCookieHandler('authorization', data.accessToken)
+}
+
 instance.interceptors.response.use(
   (response) => response,
   async (error) => {
