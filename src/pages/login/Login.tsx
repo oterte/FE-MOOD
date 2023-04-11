@@ -29,9 +29,11 @@ function Login() {
       .then((res) => {
         const authId = res.data.accessToken
         const nickname = res.data.nickname
+        const profileUrl = res.data.profileUrl
         const decodeUserInfo = JSON.stringify(jwt_Decode(authId))
         const refreshToken = res.data.refreshToken
         onSetCookieHandler('accessToken', authId)
+        onSetLocalStorageHandler("img", profileUrl)
         onSetLocalStorageHandler('accessToken', authId)
         onSetLocalStorageHandler('nickname', nickname)
         onSetLocalStorageHandler('refresh', refreshToken)

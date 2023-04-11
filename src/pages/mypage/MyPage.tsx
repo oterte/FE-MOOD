@@ -36,6 +36,7 @@ import {
   ToogleWrap,
 } from '../../components/composer/ComposerListSt'
 import { toggleLike } from '../../api/chart'
+import { onGetLocalStorage } from '../../util/cookie'
 type Scrap = {
   composer: string
   musicContent: string
@@ -77,12 +78,10 @@ function MyPage() {
   }
   const toggleReplies = (descIndex: number) => {
     setShowDesc((prevState) => (prevState === descIndex ? -1 : descIndex))
-    console.log(showDesc)
   }
   if (scrapLoading) return <h1>로딩중</h1>
   if (isLoading) return <h1>로딩중</h1>
-  if (isError) console.log(isError)
-  console.log(data)
+  if (isError) return <h1>에러..</h1>
   return (
     <>
       <Header />
@@ -90,7 +89,7 @@ function MyPage() {
         <MyPageProfileBodyContainer>
           <p>마이페이지</p>
           <MyPageProfileImgBox>
-            <MyPageProfileImg src={data.profileUrl} />
+            <MyPageProfileImg src={data.profileUrl ? data.profileUrl : onGetLocalStorage("img")} />
           </MyPageProfileImgBox>
           <div>
             <p>{data.nickname}님 환영합니다</p>

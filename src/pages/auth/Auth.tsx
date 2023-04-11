@@ -21,7 +21,6 @@ function Auth() {
         navigate('/recommend')
       })
       .catch((err) => {
-        console.log(err)
         alert(err.response.data.message)
         navigate('/login')
       })

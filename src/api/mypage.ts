@@ -1,5 +1,5 @@
-import { Nickname } from './../pages/musicDetail/MusicDetailSt'
 import { instance } from './instance'
+
 
 export const showProfile = async () => {
   const response = await instance.get('/api/user/userinfo')
@@ -35,7 +35,7 @@ export const changeNickname = async (newNickname: string) => {
   await instance.patch('/api/user/changenickname', body)
 }
 
-export const deleteAccount = async () => {
-  const response = await instance.delete('/api/user/delete')
+export const deleteAccount = async (password:any) => {
+  const response = await instance.delete('/api/user/delete', {data:{password: password}})
   return response
 }

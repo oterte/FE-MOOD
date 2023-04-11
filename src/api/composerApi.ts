@@ -5,6 +5,7 @@ const composerList = async ({ composer }: { composer: string }) => {
   const response = await withoutTokenInstance.get(
     `/api/music/?composer=${composer}`
   )
+  const response = await withoutTokenInstance.get(`/api/music/?composer=${composer}`)
   return response.data.data
 }
 
