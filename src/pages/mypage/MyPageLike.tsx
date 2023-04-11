@@ -37,6 +37,7 @@ import './mypagePagination.css'
 import { useDispatch } from 'react-redux'
 import { setIsPlaying } from '../../redux/modules/isPlaying'
 import { scrapMusic } from '../../api/scrap'
+import { onGetLocalStorage } from '../../util/cookie'
 
 type Like = {
   composer: string
@@ -77,11 +78,9 @@ function MyPageLike() {
   if (profileLoading) return <h1>로딩중..</h1>
   if (isError) return <h1>에러</h1>
 
-  console.log(likedata)
 
   const toggleReplies = (descIndex: number) => {
     setShowDesc((prevState) => (prevState === descIndex ? -1 : descIndex))
-    console.log(showDesc)
   }
 
   const onPaginationHandler = (i: number) => {
@@ -97,7 +96,7 @@ function MyPageLike() {
         <MyPageProfileBodyContainer>
           <p>마이페이지</p>
           <MyPageProfileImgBox>
-            <MyPageProfileImg src={profileData.profileUrl} />
+            <MyPageProfileImg src={profileData.profileUrl ? profileData.profileUrl : onGetLocalStorage("img")} />
           </MyPageProfileImgBox>
           <div>
             <p>{profileData.nickname}님 환영합니다</p>

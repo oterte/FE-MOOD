@@ -49,7 +49,6 @@ refreshInstance.interceptors.request.use(
 export const expireToken = async () => {
   const res = await refreshInstance.post(`/api/user/refresh`)
   const data = res.data
-  console.log(data.accessToken)
   onSetLocalStorageHandler('accessToken', data.accessToken)
   onDeletetHandler('authorization')
   onSetCookieHandler('accessToken', data.accessToken)
