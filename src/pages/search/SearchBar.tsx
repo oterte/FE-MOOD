@@ -18,7 +18,7 @@ function SearchBar() {
     setShowInput(false)
   }
 
-  const onChangeHandler = (e: any) => {
+  const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value)
   }
 

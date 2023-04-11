@@ -232,7 +232,7 @@ export const ReNickname = styled.p`
 export const WriteDate = styled.p`
   position: absolute;
   bottom: 5px;
-  left: 150px;
+  left: 170px;
   border: none;
   background: none;
   font-size: 1rem;
@@ -241,7 +241,7 @@ export const WriteDate = styled.p`
 export const ReWriteDate = styled.p`
   position: absolute;
   bottom: 5px;
-  left: 140px;
+  left: 170px;
   border: none;
   background: none;
   font-size: 0.9rem;

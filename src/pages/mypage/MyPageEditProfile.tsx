@@ -43,7 +43,6 @@ function MyPageEditProfile() {
   const [imgUrl, setImgUrl] = useState<string | ArrayBuffer | null>()
   const [imgFile, setImgFile] = useState<File>()
   const [newNickname, setNewNickname] = useState('')
-  const [nicknameCheck, setNicknameCheck] = useState(false)
 
   const editMutation = useMutation(editProfileImg, {
     onSuccess: () => {
@@ -79,7 +78,7 @@ function MyPageEditProfile() {
     e.preventDefault()
     if (newNickname !== '') {
       checkNickname(newNickname)
-        .then((res) => {
+        .then(() => {
           alert('변경되었습니다.')
           changeMutation.mutate(newNickname)
           setNewNickname('')

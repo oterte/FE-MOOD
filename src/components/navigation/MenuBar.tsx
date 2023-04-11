@@ -30,7 +30,7 @@ import menubtn from '../../assets/icons/menu_black.png'
 import closebtn from '../../assets/icons/xmark_black.png'
 import baseProifle from '../../assets/icons/Heart_fill_white copy.png'
 
-type Props = {
+interface Props {
   items: string[]
 }
 
