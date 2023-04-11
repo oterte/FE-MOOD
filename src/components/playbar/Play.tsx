@@ -70,31 +70,17 @@ function Play() {
     }
   }
 
-  // const onClickTimeChangeHandler = (e: React.MouseEvent<HTMLDivElement>) => {
-  //   if (targetRef) {
-  //     const targetCoordinate = Math.floor(
-  //       (e.nativeEvent.offsetX / progressBar.current!.clientWidth) * 100
-  //     )
-  //     console.log( ((audioRef.current!.currentTime) / targetCoordinate) * 100)
-  //     audioRef.current!.currentTime =  ((audioRef.current!.currentTime) / targetCoordinate) * 100
-  //   }
-  // }
-
   return (
     <>
       <AudioWrap>
-        <ProgressBar
-          ref={progressBar}
-          defaultValue="0"
-          // onClick={onClickTimeChangeHandler}
-        >
+        <ProgressBar ref={progressBar} defaultValue="0">
           <Dealt width={dealt} ref={targetRef}></Dealt>
         </ProgressBar>
         <AudioContain>
           <PlayExplain>
             <PlayTitle>
               {data.musicPlayer.musicTitle.length > 20
-                ? data.musicPlayer.musicTitle.substring(0, 20) + '...'
+                ? data.musicPlayer.musicTitle.substring(0, 40) + '...'
                 : data.musicPlayer.musicTitle}
             </PlayTitle>
             <p style={{ color: '#888888' }}>{data.musicPlayer.composer}</p>
@@ -163,7 +149,7 @@ const AudioContain = styled.div`
   position: relative;
 `
 const PlayExplain = styled.div`
-  width: 300px;
+  width: 400px;
 `
 const PlayTitle = styled.p`
   white-space: nowrap;

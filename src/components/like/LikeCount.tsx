@@ -20,7 +20,6 @@ const LikeCount: React.FC<LikeCountProps> = React.memo(
   ({ musicId, likeCount, likeStatus, onLikeUpdate }) => {
     const handleLikeButtonClick = async () => {
       if (!musicId) {
-        console.log("id 없음")
         return
       }
       const token = onGetCookieHandler('accessToken')

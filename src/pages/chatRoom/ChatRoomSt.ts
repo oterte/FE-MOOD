@@ -4,7 +4,7 @@ export const StDivRoomTitle = styled.div`
   width: 1260px;
   height: 250px;
   padding-top: 50px;
-  margin: 0px auto 140px auto;
+  margin: 0px auto 0px auto;
   text-align: center;
 `
 export const StDivRoomImg = styled.div`
@@ -79,10 +79,12 @@ export const StPChatListNickname = styled.p`
   margin: 30px 0px 11px 0px;
 `
 export const StDivChatListMessage = styled.div`
-  width: 383px;
+  max-width: 343px;
+  min-width: 100px;
   color: #ffffff;
-  background-color: #8b7d76;
   line-height: 45px;
+  padding: 0px 20px;
+  border-radius: 10px;
 `
 export const StDivChatSubmit = styled.div`
   width: 1260px;
