@@ -77,8 +77,6 @@ function MyPageLike() {
   if (isLoading) return <h1>로딩중</h1>
   if (profileLoading) return <h1>로딩중..</h1>
   if (isError) return <h1>에러</h1>
-
-
   const toggleReplies = (descIndex: number) => {
     setShowDesc((prevState) => (prevState === descIndex ? -1 : descIndex))
   }
@@ -96,7 +94,13 @@ function MyPageLike() {
         <MyPageProfileBodyContainer>
           <p>마이페이지</p>
           <MyPageProfileImgBox>
-            <MyPageProfileImg src={profileData.profileUrl ? profileData.profileUrl : onGetLocalStorage("img")} />
+            <MyPageProfileImg
+              src={
+                profileData.profileUrl
+                  ? profileData.profileUrl
+                  : onGetLocalStorage('img')
+              }
+            />
           </MyPageProfileImgBox>
           <div>
             <p>{profileData.nickname}님 환영합니다</p>
