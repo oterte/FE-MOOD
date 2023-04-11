@@ -105,6 +105,7 @@ export const MyPageEditContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   background-color: #fefefe;
+  position: relative;
 `
 export const MyPageEditBtn = styled.button`
   width: 675px;
@@ -113,11 +114,25 @@ export const MyPageEditBtn = styled.button`
   color: white;
   cursor: pointer;
 `
+export const EditDiv  = styled.div`
+  position: absolute;
+  background-color: rgba(217, 217, 217, 0.5);
+  width: 192px;
+  height: 192px;
+  left: 204px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 192px;
+  font-size: 64px;
+  color:#ffffff;
+  cursor: pointer;
+`
 export const MyPageEditImg = styled.img`
   width: 192px;
   height: 192px;
   background-color: rgba(217, 217, 217, 0.5);
   border-radius: 50%;
+  cursor: pointer;
 `
 export const MyPageInputContainer = styled.div`
   width: 100%;
