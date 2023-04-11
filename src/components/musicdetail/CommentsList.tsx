@@ -18,6 +18,7 @@ import {
 import { Wrap } from '../../pages/musicDetail/MusicDetailSt'
 import ReCommentsList from './ReCommentsList'
 import AddRecomment from './AddRecomment'
+import { onGetLocalStorage } from '../../util/cookie'
 
 interface Comment {
   reviewId: number
@@ -95,6 +96,8 @@ function CommentsList({ musicId }: { musicId: number }) {
   if (isLoading) return <h1>loading</h1>
   if (isError) return <h1>error</h1>
 
+  const userName = onGetLocalStorage('nickname')
+
   return (
     <Wrap>
       <Total>최신댓글 ({data?.count})</Total>
@@ -125,24 +128,31 @@ function CommentsList({ musicId }: { musicId: number }) {
                 ) : (
                   <>
                     <EditCommentInput>{item.review}</EditCommentInput>
-                    <DeleteBtn
-                      onClick={(e) => {
-                        onClickDeleteButtonHandler(item.musicId, item.reviewId)
-                      }}
-                    >
-                      <BsTrashFill size="24" color="4b372e" />
-                    </DeleteBtn>
-                    <EditBtn
-                      onClick={(e) => {
-                        onClickEditButtonHandler(item.reviewId)
-                        setInputValues((prevState) => ({
-                          ...prevState,
-                          [item.reviewId]: item.review,
-                        }))
-                      }}
-                    >
-                      <BsFillPencilFill size="23" color="4b372e" />
-                    </EditBtn>
+                    {userName === item.nickname ? (
+                      <>
+                        <DeleteBtn
+                          onClick={(e) => {
+                            onClickDeleteButtonHandler(
+                              item.musicId,
+                              item.reviewId
+                            )
+                          }}
+                        >
+                          <BsTrashFill size="24" color="4b372e" />
+                        </DeleteBtn>
+                        <EditBtn
+                          onClick={(e) => {
+                            onClickEditButtonHandler(item.reviewId)
+                            setInputValues((prevState) => ({
+                              ...prevState,
+                              [item.reviewId]: item.review,
+                            }))
+                          }}
+                        >
+                          <BsFillPencilFill size="23" color="4b372e" />
+                        </EditBtn>
+                      </>
+                    ) : null}
                   </>
                 )}
                 <ShowRepliesBtn

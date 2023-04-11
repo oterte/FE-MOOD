@@ -12,6 +12,7 @@ import Wrapper from '../../components/Wrapper'
 import Down from '../../assets/icons/down_brown.png'
 import down_outline from '../../assets/icons/down_outline.png'
 import morebtn from '../../assets/icons/morebtn.png'
+import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
 
 import {
   ComposerDesc,
@@ -251,11 +252,15 @@ function SearchResultPage() {
                     onLikeUpdate={handleLikeUpdate}
                   />
 
-                  <button onClick={() => handleScrapButtonClick(music.musicId)}>
-                    <img
-                      src={scrapStatus[music.musicId] ? Down : down_outline}
-                      alt="scrap"
-                    />
+                  <button
+                    onClick={() => handleScrapButtonClick(music.musicId)}
+                    style={{ cursor: 'pointer', marginBottom: '-5px' }}
+                  >
+                    {scrapStatus[music.musicId] ? (
+                      <BsBookmarkFill size="23" color="#8b7d76" />
+                    ) : (
+                      <BsBookmark size="23" color="#8b7d76" />
+                    )}
                   </button>
 
                   <div>

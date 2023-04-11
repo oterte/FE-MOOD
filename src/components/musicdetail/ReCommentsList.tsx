@@ -15,6 +15,7 @@ import {
 } from '../../pages/musicDetail/MusicDetailSt'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { BsFillPencilFill, BsCheck2All, BsTrashFill } from 'react-icons/bs'
+import { onGetLocalStorage } from '../../util/cookie'
 
 function ReCommentsList({ reviewId }: { reviewId: number }) {
   const queryClient = useQueryClient()
@@ -109,6 +110,8 @@ function ReCommentsList({ reviewId }: { reviewId: number }) {
     deleteRecommentMutation.mutate({ reviewId, recommentId: reCommentId })
   }
 
+  const userName = onGetLocalStorage('nickname')
+
   useEffect(() => {
     if (recommentsData) {
       setRecomments(recommentsData.recomments)
@@ -155,27 +158,31 @@ function ReCommentsList({ reviewId }: { reviewId: number }) {
                 ) : (
                   <>
                     <span>{recomment.comment}</span>
-                    <ReDeleteBtn
-                      onClick={() => {
-                        onClickDeleteRecommentButtonHandler(
-                          reviewId,
-                          recomment.reCommentId
-                        )
-                      }}
-                    >
-                      <BsTrashFill size="20" color="4b372e" />
-                    </ReDeleteBtn>
-                    <ReEditBtn
-                      onClick={() => {
-                        onClickEditRecommentButtonHandler(
-                          recomment.reCommentId,
-                          recomment.comment
-                        )
-                      }}
-                      disabled={edit !== 0}
-                    >
-                      <BsFillPencilFill size="20" color="4b372e" />
-                    </ReEditBtn>
+                    {userName === recomment.nickname ? (
+                      <>
+                        <ReDeleteBtn
+                          onClick={() => {
+                            onClickDeleteRecommentButtonHandler(
+                              reviewId,
+                              recomment.reCommentId
+                            )
+                          }}
+                        >
+                          <BsTrashFill size="20" color="4b372e" />
+                        </ReDeleteBtn>
+                        <ReEditBtn
+                          onClick={() => {
+                            onClickEditRecommentButtonHandler(
+                              recomment.reCommentId,
+                              recomment.comment
+                            )
+                          }}
+                          disabled={edit !== 0}
+                        >
+                          <BsFillPencilFill size="20" color="4b372e" />
+                        </ReEditBtn>
+                      </>
+                    ) : null}
                   </>
                 )}
               </ReCommentBox>
