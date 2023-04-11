@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useRef, useState, useEffect } from 'react'
+import { Dispatch, SetStateAction, useRef, useState } from 'react'
 import { postStreaming } from '../api/streamingApi'
 
 export type UseAudioReturnType = [

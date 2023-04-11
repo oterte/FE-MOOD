@@ -122,6 +122,7 @@ function ChatRoom() {
     if (!token) return
     socket.emit('newUser', token)
     return () => {
+      socket.emit('getout', token)
       disconnection()
     }
   }, [])

@@ -24,7 +24,7 @@ import {
   Circle1,
   Circle2,
   Circle3,
-  Circle4
+  Circle4,
 } from './RecommendSt'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -83,8 +83,8 @@ function Recommend() {
 
       queryClient.invalidateQueries('recommendMusic')
     },
-    onError: (error) => {
-      console.log(error)
+    onError: () => {
+      return
     },
   })
 

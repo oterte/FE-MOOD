@@ -41,8 +41,8 @@ function Login() {
         alert(res.data.message)
         navigate('/recommend')
       })
-      .catch((error) => {
-        alert(error.response.data.message)
+      .catch(() => {
+        alert('아이디 비밀번호가 일치하지 않습니다.')
       })
   }
 
