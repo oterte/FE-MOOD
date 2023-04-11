@@ -45,6 +45,7 @@ const MenuBar: React.FC<Props> = () => {
     onLogoutHandler('authorization')
   }
   const nickname = onGetLocalStorage('nickname')
+  const profile = onGetLocalStorage('img')
   return (
     <MenuWrapper isOpen={isOpen}>
       <HamburgerButton isOpen={isOpen} onClick={toggleMenu}>
@@ -55,7 +56,9 @@ const MenuBar: React.FC<Props> = () => {
           <Link to="/" style={{ textDecoration: 'none' }}>
             <H1>MOOD</H1>
           </Link>
-          <ProfileImg src={baseProifle}></ProfileImg>
+
+          <ProfileImg src={profile ? profile : baseProifle}></ProfileImg>
+
           {nickname ? (
             <LoginMent>
               {nickname}님<br />

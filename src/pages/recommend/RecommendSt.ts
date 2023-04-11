@@ -6,7 +6,7 @@ export const Wrap = styled.div`
 `
 export const StDivWrap = styled.div`
   width: 1260px;
-  margin: 50px auto 13rem auto;
+  margin: 0px auto 13rem auto;
 `
 export const StDivTitle = styled.div`
   width: 1260px;
@@ -61,7 +61,7 @@ export const ComposerImg = styled.img`
   width: 180px;
   height: 180px;
   border-radius: 50%;
-  background-color: lightgray;
+  background-color: rgba(75, 55, 46, 0.5);
 `
 export const StPVigor = styled.p`
   font-size: 25px;
@@ -86,6 +86,46 @@ export const StPCalm = styled.p`
   width: 100%;
   text-align: center;
   margin: 0px auto 38px auto;
+`
+export const Circle1 = styled.div`
+  width: 200px;
+  height: 200px;
+  border: 50%;
+  border-radius: 50%;
+  position: absolute;
+  left: 700px;
+  top: 200px;
+  background-color: rgba(75, 55, 46, 0.5);
+`
+export const Circle2 = styled.div`
+  width: 150px;
+  height: 150px;
+  border: 50%;
+  border-radius: 50%;
+  position: absolute;
+  left: 860px;
+  top: 300px;
+  background-color: rgba(139, 125, 118, 0.4);
+`
+export const Circle3 = styled.div`
+  width: 80px;
+  height: 80px;  
+  border: 50%;
+  border-radius: 50%;
+  position: absolute;
+  top: 200px;
+  left: 100px;
+  background-color: rgba(139, 125, 118, 0.4);
+`
+export const Circle4 = styled.div`
+  width: 100px;
+  height: 100px;  
+  border: 50%;
+  border-radius: 50%;
+  position: absolute;
+  top: 500px;
+  left: 300px;
+  background-color: rgba(139, 125, 118, 0.4);
 `
 export const CenterExplain = styled.p`
   margin: 40px 0px;

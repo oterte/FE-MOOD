@@ -1,6 +1,6 @@
 import React from 'react'
 import Heart from '../../assets/icons/Heart_brown.png'
-import FillHeart from '../../assets/icons/heart_white.png'
+import FillHeart from '../../assets/icons/Heart_fill_brown.png'
 import { toggleLike } from '../../api/chart'
 import { LikeWrap } from './LikeSt'
 import { onGetCookieHandler } from '../../util/cookie'
@@ -20,7 +20,6 @@ const LikeCount: React.FC<LikeCountProps> = React.memo(
   ({ musicId, likeCount, likeStatus, onLikeUpdate }) => {
     const handleLikeButtonClick = async () => {
       if (!musicId) {
-        console.log("id 없음")
         return
       }
       const token = onGetCookieHandler('accessToken')

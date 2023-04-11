@@ -44,7 +44,7 @@ function AddComment({ musicId }: Props) {
           placeholder="게시물의 저작권 등 분쟁, 개인정보 노출로 인한 책임은 작성자 또는 게시자에게 있음을 유의해 주세요."
         />
         <Hr />
-        <Characters>{review.length}/300</Characters>
+        <Characters>{review.length}/100</Characters>
         <CommentBtn type="submit">댓글 작성</CommentBtn>
       </Addform>
     </>

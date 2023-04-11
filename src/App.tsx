@@ -6,7 +6,6 @@ import { Provider } from 'react-redux'
 import store from './redux/config/configStore'
 import ReactGA from 'react-ga'
 import { createBrowserHistory } from 'history'
-import RouteTrackering from './components/ga/RouteTracking'
 
 function App() {
   const queryClient = new QueryClient()
@@ -22,8 +21,6 @@ function App() {
     ReactGA.set({ page: response.location.pathname })
     ReactGA.pageview(response.location.pathname)
   })
-
-  // RouteTrackering()
 
   return (
     <QueryClientProvider client={queryClient}>

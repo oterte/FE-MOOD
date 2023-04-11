@@ -27,14 +27,9 @@ import {
   RoomImg,
   ProfileImg,
 } from './ChatRoomSt'
-import { onGetCookieHandler } from '../../util/cookie'
+import { onGetCookieHandler, onGetLocalStorage } from '../../util/cookie'
 import Header from '../../components/header/Header'
-import {
-  BeforeChatData,
-  ChatData,
-  RecieveData,
-  ScrollChatData,
-} from './ChatRoomArray'
+import { BeforeChatData, ChatData, RecieveData } from './ChatRoomArray'
 import { expireToken } from '../../api/instance'
 
 const socket = io(`${process.env.REACT_APP_SERVER}`, {
@@ -49,14 +44,13 @@ const disconnection = () => {
 
 interface UserList {
   nickname: string
-  image: string
+  profileUrl: string
 }
 
 function ChatRoom() {
   const [chatText, setChatText] = useState<string>('')
   const [recieveData, setRecieveData] = useState<RecieveData[]>([])
   const [beforeChatData, setBeforeChatData] = useState<BeforeChatData[]>([])
-  const [scrollChatData, setScrollChatData] = useState<ScrollChatData[]>([])
   const [userList, setUserList] = useState<UserList[]>([])
   const [index, setIndex] = useState<number>(0)
   const [roomName, setRoomName] = useState<string>('')
@@ -136,11 +130,13 @@ function ChatRoom() {
     if (scrollRef.current?.scrollHeight) {
       setPrevScrollHeight(scrollRef.current.scrollHeight)
     }
-    setTimeout(() => {
-      if (scrollRef.current)
-        scrollRef.current.scrollTop =
-          scrollRef.current?.scrollHeight - prevScrollheight
-    }, 100)
+
+    if (scrollRef.current)
+      scrollRef.current.scrollTop =
+        scrollRef.current?.scrollHeight - prevScrollheight
+    if (scrollRef.current?.scrollHeight) {
+      setPrevScrollHeight(scrollRef.current.scrollHeight)
+    }
     socket.emit('scroll', index)
   }, [index])
 
@@ -154,12 +150,12 @@ function ChatRoom() {
 
   useEffect(() => {
     socket.on('plusScroll', (data) => {
-      setScrollChatData([...data, ...scrollChatData])
+      setBeforeChatData([...data, ...beforeChatData])
     })
     if (scrollRef.current)
       scrollRef.current.scrollTop =
         scrollRef.current?.scrollHeight - prevScrollheight
-  }, [scrollChatData])
+  }, [beforeChatData])
 
   const chatData: ChatData = {
     message: chatText,
@@ -189,23 +185,12 @@ function ChatRoom() {
 
   useEffect(() => {
     scrollToBottom()
-  }, [recieveData, beforeChatData])
-
-  useEffect(() => {
-    socket.on('onUser', (data) => {
-      console.log('onuser', data)
-      if (data.level === 'error') {
-        return
-      } else {
-        setUserList([...userList, data])
-      }
-    })
-  }, [userList])
+  }, [recieveData])
 
   useEffect(() => {
     socket.on('offUser', (nickname) => {
       setUserList(
-        userList.filter((userList: UserList) => userList !== nickname)
+        userList.filter((userList: UserList) => userList.nickname !== nickname)
       )
     })
   }, [userList])
@@ -222,10 +207,11 @@ function ChatRoom() {
     })
   }, [recieveData])
 
-  socket.on('error', (data) => {
-    console.log(data.code)
+  socket.on('error', () => {
     expireToken()
   })
+
+  const userName = onGetLocalStorage('nickname')
 
   return (
     <>
@@ -236,71 +222,88 @@ function ChatRoom() {
             <RoomImg src={roomImg} />
           </StDivRoomImg>
           <StPRoomName>{roomName}의 방</StPRoomName>
-          <p style={{ color: '#888888' }}>
+          <p style={{ color: '#999999' }}>
             당신의 감정을 실시간으로 나누어보세요
           </p>
         </StDivRoomTitle>
         <StDivChatRoomWrap>
           <StDivChatRoomChatListWrap ref={scrollRef}>
-            <div
-              style={{ position: 'absolute', top: '100px' }}
-              ref={target}
-            ></div>
-            {scrollChatData?.map((scrollChatData) => {
-              return (
-                <StDivChatRoomChatListContain key={scrollChatData.chatId}>
-                  <StDivChatRoom>
-                    <StPChatListNickname>
-                      <span style={{ marginLeft: '20px' }}>
-                        {scrollChatData.nickname}
-                      </span>
-                    </StPChatListNickname>
-                    <StDivChatListMessage>
-                      <span style={{ marginLeft: '20px' }}>
-                        {scrollChatData.message}
-                      </span>
-                    </StDivChatListMessage>
-                  </StDivChatRoom>
-                </StDivChatRoomChatListContain>
-              )
-            })}
+            <div ref={target}></div>
             {beforeChatData?.map((beforeChatData) => {
               return (
-                <StDivChatRoomChatListContain key={beforeChatData.chatId}>
-                  <StDivChatRoom>
-                    <StPChatListNickname>
-                      <span style={{ marginLeft: '20px' }}>
-                        {beforeChatData.nickname}
-                      </span>
-                    </StPChatListNickname>
-                    <StDivChatListMessage>
-                      <span style={{ marginLeft: '20px' }}>
-                        {beforeChatData.message}
-                      </span>
-                    </StDivChatListMessage>
-                  </StDivChatRoom>
-                </StDivChatRoomChatListContain>
+                <div key={beforeChatData.chatId}>
+                  {beforeChatData.nickname === userName ? (
+                    <StDivChatRoomChatListContain>
+                      <StDivChatRoom>
+                        <StPChatListNickname>
+                          <span>{beforeChatData.nickname}</span>
+                        </StPChatListNickname>
+                        <StDivChatListMessage
+                          style={{ backgroundColor: '#8b7d76' }}
+                        >
+                          <span>{beforeChatData.message}</span>
+                        </StDivChatListMessage>
+                      </StDivChatRoom>
+                    </StDivChatRoomChatListContain>
+                  ) : (
+                    <StDivChatRoomChatListContain
+                      style={{
+                        margin: '0px 30px 0px auto',
+                        textAlign: 'right',
+                      }}
+                    >
+                      <StDivChatRoom>
+                        <StPChatListNickname>
+                          <span>{beforeChatData.nickname}</span>
+                        </StPChatListNickname>
+                        <StDivChatListMessage
+                          style={{ backgroundColor: '#999999' }}
+                        >
+                          <span>{beforeChatData.message}</span>
+                        </StDivChatListMessage>
+                      </StDivChatRoom>
+                    </StDivChatRoomChatListContain>
+                  )}
+                </div>
               )
             })}
 
             {recieveData.map((recieveData, index) => {
               return (
-                <StDivChatRoomChatListContain
-                  key={`${recieveData.message} + ${index}`}
-                >
-                  <StDivChatRoom>
-                    <StPChatListNickname>
-                      <span style={{ marginLeft: '20px' }}>
-                        {recieveData.nickname}
-                      </span>
-                    </StPChatListNickname>
-                    <StDivChatListMessage>
-                      <span style={{ marginLeft: '20px' }}>
-                        {recieveData.message}
-                      </span>
-                    </StDivChatListMessage>
-                  </StDivChatRoom>
-                </StDivChatRoomChatListContain>
+                <div key={`${recieveData.message} + ${index}`}>
+                  {recieveData.nickname === userName ? (
+                    <StDivChatRoomChatListContain>
+                      <StDivChatRoom>
+                        <StPChatListNickname>
+                          <span>{recieveData.nickname}</span>
+                        </StPChatListNickname>
+                        <StDivChatListMessage
+                          style={{ backgroundColor: '#8b7d76' }}
+                        >
+                          <span>{recieveData.message}</span>
+                        </StDivChatListMessage>
+                      </StDivChatRoom>
+                    </StDivChatRoomChatListContain>
+                  ) : (
+                    <StDivChatRoomChatListContain
+                      style={{
+                        margin: '0px 30px 0px auto',
+                        textAlign: 'right',
+                      }}
+                    >
+                      <StDivChatRoom>
+                        <StPChatListNickname>
+                          <span>{recieveData.nickname}</span>
+                        </StPChatListNickname>
+                        <StDivChatListMessage
+                          style={{ backgroundColor: '#888888' }}
+                        >
+                          <span>{recieveData.message}</span>
+                        </StDivChatListMessage>
+                      </StDivChatRoom>
+                    </StDivChatRoomChatListContain>
+                  )}
+                </div>
               )
             })}
           </StDivChatRoomChatListWrap>
@@ -311,7 +314,7 @@ function ChatRoom() {
                 return (
                   <StDivUserProfile key={item.nickname}>
                     <StDivProfileImg>
-                      <ProfileImg src={item.image} />
+                      <ProfileImg src={item.profileUrl} />
                     </StDivProfileImg>
                     <StPProfileNickname>{item.nickname}</StPProfileNickname>
                   </StDivUserProfile>

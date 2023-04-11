@@ -21,6 +21,10 @@ import {
   StPTitle,
   StPExplain,
   ComposerImg,
+  Circle1,
+  Circle2,
+  Circle3,
+  Circle4
 } from './RecommendSt'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -160,6 +164,10 @@ function Recommend() {
             <StPExplain>영역을 기반으로 색다른 음악이 추천됩니다</StPExplain>
           </StDivTitle>
           <StDivMoodWrap ref={targetRef} onClick={onClickcoordinateHandler}>
+            <Circle1 />
+            <Circle2 />
+            <Circle3 />
+            <Circle4 />
             <StPVigor>생기 넘치는</StPVigor>
             <StDivXcoordinate>
               <StPDepress>우울한</StPDepress>

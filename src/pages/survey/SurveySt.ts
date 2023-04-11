@@ -18,7 +18,7 @@ export const StPSurveyExplanation = styled.p`
   width: 400px;
   font-size: 20px;
   font-weight: 400;
-  margin: 20px auto 100px auto;
+  margin: 20px auto 40px auto;
   color: #888888;
 `
 export const StDivSlide = styled.div`
@@ -89,7 +89,4 @@ export const BackgroundDesign = styled.div`
   transform: rotate(-53.65deg);
   position: fixed;
   z-index: 0;
-`
-export const ContainWrap = styled.div`
-  z-index: 1;
 `

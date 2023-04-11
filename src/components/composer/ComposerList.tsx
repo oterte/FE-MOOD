@@ -6,10 +6,9 @@ import { setMusicPlay } from '../../redux/modules/musicPlayer'
 import { setIsPlaying, setTogglePlaying } from '../../redux/modules/isPlaying'
 import { composerList } from '../../api/composerApi'
 import LikeCount from '../like/LikeCount'
-import Play from '../playbar/Play'
 import { scrapMusic } from '../../api/scrap'
-import Down from '../../assets/icons/down_brown.png'
-import pre_brown from '../../assets/icons/pre_brown.png'
+import Down from '../../assets/icons/download_after.png'
+import down_outline from '../../assets/icons/download_brown.png'
 import morebtn from '../../assets/icons/morebtn.png'
 import {
   Contents,
@@ -32,6 +31,7 @@ import {
   PaddingBottomDiv,
 } from './ComposerListSt'
 import { RootState } from '../../redux/config/configStore'
+import { onGetLocalStorage } from '../../util/cookie'
 
 type MusicInfo = {
   musicId: number
@@ -86,11 +86,9 @@ const ComposerList = () => {
     setShowReplies((prevState) => {
       const indexInState = prevState.indexOf(musicIndex)
       if (indexInState === -1) {
-        return [...prevState, musicIndex]
+        return [musicIndex]
       } else {
-        const newState = [...prevState]
-        newState.splice(indexInState, 1)
-        return newState
+        return []
       }
     })
   }
@@ -119,7 +117,7 @@ const ComposerList = () => {
   }
 
   const handleScrapButtonClick = async (musicId: number) => {
-    const token = localStorage.getItem('authorization')
+    const token = onGetLocalStorage('accessToken')
     if (!token) {
       alert('로그인 후 이용 가능합니다.')
       return
@@ -251,7 +249,7 @@ const ComposerList = () => {
                       <img
                         key={music.musicId}
                         src={`${
-                          scrapStatus[music.musicId] ? pre_brown : Down
+                          scrapStatus[music.musicId] ? Down : down_outline
                         }?t=${Date.now()}`}
                         alt="scrap"
                       />
@@ -289,7 +287,6 @@ const ComposerList = () => {
           <div>Loading</div>
         )}
       </Contents>
-      <Play />
     </Wrap>
   )
 }
