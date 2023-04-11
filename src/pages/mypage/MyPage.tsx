@@ -37,7 +37,7 @@ import {
 } from '../../components/composer/ComposerListSt'
 import { toggleLike } from '../../api/chart'
 import { onGetLocalStorage } from '../../util/cookie'
-type Scrap = {
+interface Scrap {
   composer: string
   musicContent: string
   musicId: number

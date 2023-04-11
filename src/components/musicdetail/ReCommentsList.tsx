@@ -14,9 +14,7 @@ import {
   ReWriteDate,
 } from '../../pages/musicDetail/MusicDetailSt'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { BsFillPencilFill } from 'react-icons/bs'
-import { BsCheck2All } from 'react-icons/bs'
-import { BsTrashFill } from 'react-icons/bs'
+import { BsFillPencilFill, BsCheck2All, BsTrashFill } from 'react-icons/bs'
 
 function ReCommentsList({ reviewId }: { reviewId: number }) {
   const queryClient = useQueryClient()
@@ -128,7 +126,7 @@ function ReCommentsList({ reviewId }: { reviewId: number }) {
           if (recomment.reviewId === reviewId) {
             return (
               <ReCommentBox key={recomment.reCommentId}>
-                <ReNickname>{recomment.nickname} &nbsp;|</ReNickname>
+                <ReNickname>{recomment.nickname}</ReNickname>
                 <ReWriteDate>
                   {new Date(recomment.createdAt).toLocaleString()}
                 </ReWriteDate>

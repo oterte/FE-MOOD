@@ -39,7 +39,7 @@ import { setIsPlaying } from '../../redux/modules/isPlaying'
 import { scrapMusic } from '../../api/scrap'
 import { onGetLocalStorage } from '../../util/cookie'
 
-type Like = {
+interface Like {
   composer: string
   musicId: number
   musicTitle: string

@@ -5,7 +5,7 @@ import { useQuery } from 'react-query'
 import { getSurveyMusic } from '../../api/recommendApi'
 import { AiOutlineClose } from 'react-icons/ai'
 
-type Props = {
+interface Props {
   modalState: boolean
   setModalState: React.Dispatch<React.SetStateAction<boolean>>
   status1: number

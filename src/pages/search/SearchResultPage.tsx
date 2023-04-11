@@ -34,7 +34,7 @@ import { setMusicPlay } from '../../redux/modules/musicPlayer'
 import { RootState } from '../../redux/config/configStore'
 import { onGetLocalStorage } from '../../util/cookie'
 
-type ComposerInfo = {
+interface ComposerInfo {
   composerId: number
   composer: string
   describe: string
@@ -43,7 +43,7 @@ type ComposerInfo = {
   birthDeath: number
 }
 
-type ComposerSong = {
+interface ComposerSong {
   musicId: number
   userId: number
   musicTitle: string

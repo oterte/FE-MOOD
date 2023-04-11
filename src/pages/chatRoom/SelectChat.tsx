@@ -1,8 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import Header from '../../components/header/Header'
 import { roomArray } from './ChatRoomArray'
-import { useState, useRef } from 'react'
-import React from 'react'
+import React, { useState, useRef } from 'react'
 import {
   StDivSelectRoomWrap,
   StPTitle,

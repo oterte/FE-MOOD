@@ -33,7 +33,7 @@ import {
 import { RootState } from '../../redux/config/configStore'
 import { onGetLocalStorage } from '../../util/cookie'
 
-type MusicInfo = {
+interface MusicInfo {
   musicId: number
   musicTitle: string
   musicContent: string

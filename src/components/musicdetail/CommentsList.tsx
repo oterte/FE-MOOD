@@ -1,9 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import React, { useEffect, useState } from 'react'
 import { getComment, removeComment, editComment } from '../../api/comments'
-import { BsFillPencilFill } from 'react-icons/bs'
-import { BsCheck2All } from 'react-icons/bs'
-import { BsTrashFill } from 'react-icons/bs'
+import { BsCheck2All, BsTrashFill, BsFillPencilFill } from 'react-icons/bs'
 
 import {
   Border,
