@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../../api/loginapi'
-import kakao from '../../assets/kakao_login_large_narrow.png'
+import kakao from '../../assets/images/kakao_login_large_narrow.png'
 import Header from '../../components/header/Header'
 import jwt_Decode from 'jwt-decode'
 import { onSetCookieHandler, onSetLocalStorageHandler } from '../../util/cookie'
@@ -29,9 +29,11 @@ function Login() {
       .then((res) => {
         const authId = res.data.accessToken
         const nickname = res.data.nickname
+        const profileUrl = res.data.profileUrl
         const decodeUserInfo = JSON.stringify(jwt_Decode(authId))
         const refreshToken = res.data.refreshToken
         onSetCookieHandler('accessToken', authId)
+        onSetLocalStorageHandler("img", profileUrl)
         onSetLocalStorageHandler('accessToken', authId)
         onSetLocalStorageHandler('nickname', nickname)
         onSetLocalStorageHandler('refresh', refreshToken)

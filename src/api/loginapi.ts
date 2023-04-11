@@ -7,7 +7,7 @@ export const login = async ({ id, password }: UserInfo) => {
     password: password,
   }
   const response = await axios.post(
-    `${process.env.REACT_APP_SERVER}/api/login/`,
+    `${process.env.REACT_APP_SERVER}/api/login`,
     body
   )
   return response

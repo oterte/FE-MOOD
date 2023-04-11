@@ -26,6 +26,7 @@ import {
 } from '../../components/composer/ComposerListSt'
 import Pagination from 'react-js-pagination'
 import './mypagePagination.css'
+import { onGetLocalStorage } from '../../util/cookie'
 type Review = {
   createdAt?: string
   musicId?: number
@@ -51,7 +52,6 @@ function MyPageComment() {
   if (isLoading) return <h1>로딩중</h1>
   if (profileLoading) return <h1>로딩중..</h1>
   if (isError) return <h1>에러</h1>
-  console.log(reviewData)
   return (
     <>
       <Header />
@@ -59,7 +59,7 @@ function MyPageComment() {
         <MyPageProfileBodyContainer>
           <p>마이페이지</p>
           <MyPageProfileImgBox>
-            <MyPageProfileImg src={profileData.profileUrl} />
+            <MyPageProfileImg src={profileData.profileUrl ? profileData.profileUrl : onGetLocalStorage("img")} />
           </MyPageProfileImgBox>
           <div>
             <p>{profileData.nickname}님 환영합니다</p>
