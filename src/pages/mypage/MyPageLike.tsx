@@ -38,6 +38,7 @@ import { useDispatch } from 'react-redux'
 import { setIsPlaying } from '../../redux/modules/isPlaying'
 import { scrapMusic } from '../../api/scrap'
 import { onGetLocalStorage } from '../../util/cookie'
+import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
 
 interface Like {
   composer: string
@@ -172,17 +173,19 @@ function MyPageLike() {
               </button>
               <button>
                 {item.scrapStatus === false ? (
-                  <img
-                    src={downBtnOutLine}
-                    alt="down"
+                  <p
                     onClick={() => onScrapHanlder(item.musicId)}
-                  />
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <BsBookmark size="22" color="#8b7d76" />
+                  </p>
                 ) : (
-                  <img
-                    src={downBtnBrown}
-                    alt="down"
+                  <p
                     onClick={() => onScrapHanlder(item.musicId)}
-                  />
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <BsBookmarkFill size="22" color="#8b7d76" />
+                  </p>
                 )}
               </button>
               <div>

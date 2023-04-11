@@ -7,9 +7,9 @@ import { setIsPlaying, setTogglePlaying } from '../../redux/modules/isPlaying'
 import { composerList } from '../../api/composerApi'
 import LikeCount from '../like/LikeCount'
 import { scrapMusic } from '../../api/scrap'
-import Down from '../../assets/icons/download_after.png'
-import down_outline from '../../assets/icons/download_brown.png'
 import morebtn from '../../assets/icons/morebtn.png'
+import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
+
 import {
   Contents,
   Desc,
@@ -246,13 +246,13 @@ const ComposerList = () => {
                     <button
                       onClick={() => handleScrapButtonClick(music.musicId)}
                     >
-                      <img
-                        key={music.musicId}
-                        src={`${
-                          scrapStatus[music.musicId] ? Down : down_outline
-                        }?t=${Date.now()}`}
-                        alt="scrap"
-                      />
+                      <p key={music.musicId} style={{ marginBottom:"9px", cursor:"pointer" }}>
+                        {scrapStatus[music.musicId] ? (
+                          <BsBookmarkFill size="23" color="#8b7d76" />
+                        ) : (
+                          <BsBookmark size="23" color="#8b7d76" />
+                        )}
+                      </p>
                     </button>
 
                     <div>
@@ -284,7 +284,7 @@ const ComposerList = () => {
             </Desc>
           </>
         ) : (
-          <div>Loading</div>
+          <div></div>
         )}
       </Contents>
     </Wrap>
