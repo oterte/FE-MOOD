@@ -1,6 +1,4 @@
-import React from 'react'
 import Header from '../../components/header/Header'
-import Play from '../../components/playbar/Play'
 import {
   DoneBtn,
   MyPageDoneDiv,
