@@ -79,7 +79,7 @@ function Survey() {
       <Wrapper>
         <Header />
         <StDivSurveyWrap>
-          <div style={{ marginTop: '100px' }}>
+          <div style={{ marginTop: '50px' }}>
             <StSpanSurveyTitle>
               기분에 따라 노래를 추천 받아보세요
             </StSpanSurveyTitle>
@@ -93,20 +93,12 @@ function Survey() {
             <div style={{ width: '1280px', overflow: 'hidden' }}>
               <StDivSlide ref={slideRef}>
                 {questionArr.map((question) => {
-                  const props = {
-                    number: Object.keys(survey)[question.id],
-                    setSurvey,
-                    currentSlide,
-                    setCurrentSlide,
-                  }
-
                   return (
                     <StDIvPointWrap ref={containRef} key={question.id}>
                       <StPSurveyQuestion>
                         {question.questionNumber}. {question.question}
                       </StPSurveyQuestion>
                       <Point
-                        // prop={props}
                         number={Object.keys(survey)[question.id]}
                         setSurvey={setSurvey}
                         currentSlide={currentSlide}

@@ -30,16 +30,14 @@ export const roomArray = [
     emotion: '슬픔',
     img: sad,
     imgHover: sadHover,
-    explain:
-      '베토벤의 론도 카프리치노(잃어버린 동전에 대한 분노)와 같이 분노의 감정을 느낀다면 참여해주세요',
+    explain: '모짜르트의 레퀴엠과 같이 슬픔의 감정을 느낀다면 참여해주세요',
   },
   {
     number: 3,
     emotion: '행복',
     img: happy,
     imgHover: happyHover,
-    explain:
-      '베토벤의 론도 카프리치노(잃어버린 동전에 대한 분노)와 같이 분노의 감정을 느낀다면 참여해주세요',
+    explain: '비발디의 사계 중 여름과 같이 행복의 감정을 느낀다면 참여해주세요',
   },
   {
     number: 4,
@@ -47,7 +45,7 @@ export const roomArray = [
     img: bore,
     imgHover: boreHover,
     explain:
-      '베토벤의 론도 카프리치노(잃어버린 동전에 대한 분노)와 같이 분노의 감정을 느낀다면 참여해주세요',
+      '쇼팽의 아제르바이잔 댄스와 같이 지루함의 감정을 느낀다면 참여해주세요',
   },
   {
     number: 5,
@@ -55,15 +53,14 @@ export const roomArray = [
     img: embarrass,
     imgHover: embarrassHover,
     explain:
-      '베토벤의 론도 카프리치노(잃어버린 동전에 대한 분노)와 같이 분노의 감정을 느낀다면 참여해주세요',
+      '모짜르트의 피아노 협주곡 제 21번, K.467과 같이 부끄러움의 감정을 느낀다면 참여해주세요',
   },
   {
     number: 6,
     emotion: '놀램',
     img: surprise,
     imgHover: surpriseHover,
-    explain:
-      '베토벤의 론도 카프리치노(잃어버린 동전에 대한 분노)와 같이 분노의 감정을 느낀다면 참여해주세요',
+    explain: '베토벤의 운명교향곡과 같이 놀램의 감정을 느낀다면 참여해주세요',
   },
 ]
 

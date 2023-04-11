@@ -73,8 +73,8 @@ export const ChartTitle = styled.p`
   margin-left: 34px;
 `
 export const ChartComposer = styled.p`
-  margin-left: auto;
-  margin-right: 40px;
+  margin-left: 30px;
+  margin-right: 20px;
   color: #666666;
   width: 100px;
 `
