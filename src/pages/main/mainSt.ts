@@ -96,34 +96,16 @@ export const SecondContain = styled.div`
   height: 100vh;
 `
 
-export const Left = styled.div`
+export const Center = styled.div`
   position: absolute;
-  width: 70%;
-  left: 16%;
+  width: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
 
   p {
     position: absolute;
     left: 25%;
     z-index: 9;
-  }
-`
-
-export const Right = styled.div`
-  position: absolute;
-  width: 70%;
-  height:100%;
-  text-align: right;
-  right: 0;
-
-  p {
-    position: absolute;
-    right: 62%;
-    z-index: 9;
-  }
-
-  img {
-    position: absolute;
-    left: 120%;
   }
 `
 
@@ -140,7 +122,7 @@ export const ComposerName = styled.p`
 
 export const ComposerImg = styled.div`
   position: absolute;
-  top: 160px;
+  top: 160px; left:-100px;
   width: 445px;
   height: 445px;
   border-radius: 50%;
