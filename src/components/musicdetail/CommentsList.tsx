@@ -94,15 +94,9 @@ function CommentsList({ musicId }: { musicId: number }) {
     }
   }, [data])
 
-  if (isLoading) {
-    return <h1>loading</h1>
-  }
+  if (isLoading) return <h1>loading</h1>
+  if (isError) return <h1>error</h1>
 
-  if (isError) {
-    return <h1>error</h1>
-  }
-  console.log(data);
-  
   return (
     <Wrap>
       <Total>최신댓글 ({data?.count})</Total>
@@ -132,11 +126,7 @@ function CommentsList({ musicId }: { musicId: number }) {
                   </form>
                 ) : (
                   <>
-                    <EditCommentInput
-                      type="text"
-                      value={item.review}
-                      disabled
-                    />
+                    <EditCommentInput>{item.review}</EditCommentInput>
                     <DeleteBtn
                       onClick={(e) => {
                         onClickDeleteButtonHandler(item.musicId, item.reviewId)
