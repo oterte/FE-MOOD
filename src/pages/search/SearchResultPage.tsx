@@ -8,7 +8,6 @@ import LikeCount from '../../components/like/LikeCount'
 import { H3 } from '../../components/composer/ComposerListSt'
 import { ShowRepliesBtn } from './SearchBarSt'
 import Header from '../../components/header/Header'
-import Play from '../../components/playbar/Play'
 import Wrapper from '../../components/Wrapper'
 import Down from '../../assets/icons/down_brown.png'
 import down_outline from '../../assets/icons/down_outline.png'
@@ -33,6 +32,7 @@ import {
 } from './SearchBarSt'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
 import { RootState } from '../../redux/config/configStore'
+import { onGetLocalStorage } from '../../util/cookie'
 
 type ComposerInfo = {
   composerId: number
@@ -93,7 +93,9 @@ function SearchResultPage() {
 
   const toggleReplies = (musicId: number) => {
     setShowReplies((prevState) => ({
-      ...prevState,
+      ...Object.fromEntries(
+        Object.entries(prevState).map(([key]) => [key, false])
+      ),
       [musicId]: !prevState[musicId],
     }))
   }
@@ -135,7 +137,7 @@ function SearchResultPage() {
   }
 
   const handleScrapButtonClick = async (musicId: number) => {
-    const token = localStorage.getItem('authorization')
+    const token = onGetLocalStorage('accessToken')
     if (!token) {
       alert('로그인 후 이용 가능합니다.')
       return
@@ -251,7 +253,7 @@ function SearchResultPage() {
 
                   <button onClick={() => handleScrapButtonClick(music.musicId)}>
                     <img
-                      src={scrapStatus[music.musicId] ? down_outline : Down}
+                      src={scrapStatus[music.musicId] ? Down : down_outline}
                       alt="scrap"
                     />
                   </button>
@@ -288,7 +290,6 @@ function SearchResultPage() {
           <p>검색에 대한 결과가 없습니다.</p>
         )}
       </Wrap>
-      <Play />
     </Wrapper>
   )
 }
