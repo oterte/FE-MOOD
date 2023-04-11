@@ -150,12 +150,10 @@ function SignUp() {
     if (id !== '') {
       checkId(id)
         .then((res) => {
-          console.log(res)
           setIdResponse(res.status)
           alert('사용 가능한 아이디입니다.')
         })
         .catch((error) => {
-          console.log(error)
           alert(error.response.data.message)
           setIdResponse(error.response.status)
         })
@@ -166,12 +164,10 @@ function SignUp() {
     if (nickname !== '') {
       checkNickname(nickname)
         .then((res) => {
-          console.log(res)
           alert('사용 가능한 닉네임입니다.')
           setNicknameResponse(res.status)
         })
         .catch((error) => {
-          console.log(error)
           alert(error.response.data.message)
           setNicknameResponse(error.response.status)
         })

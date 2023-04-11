@@ -5,7 +5,6 @@ import Header from '../../components/header/Header'
 import AddComment from '../../components/musicdetail/AddComment'
 import CommentsList from '../../components/musicdetail/CommentsList'
 import ReCommentsList from '../../components/musicdetail/ReCommentsList'
-import Play from '../../components/playbar/Play'
 import Wrapper from '../../components/Wrapper'
 import {
   ComposerImg,
@@ -16,10 +15,14 @@ import {
   MusicDesc,
   MusicTitle,
 } from './MusicDetailSt'
+import { useDispatch } from 'react-redux'
+import { setMusicPlay } from '../../redux/modules/musicPlayer'
+import { setIsPlaying } from '../../redux/modules/isPlaying'
 
 function MusicDetail() {
   const params = useParams()
   const musicId = Number(params.id)
+  const dispatch = useDispatch()
 
   const { isLoading, isError, data } = useQuery(
     ['musicDetail', musicId],
@@ -28,6 +31,11 @@ function MusicDetail() {
       enabled: !!musicId,
     }
   )
+
+  const onClickMusicChangeHandler = (music: any) => {
+    dispatch(setMusicPlay(music))
+    dispatch(setIsPlaying())
+  }
 
   const composerName = data?.composer
 
@@ -45,13 +53,10 @@ function MusicDetail() {
     }
   )
 
-  if (!data || !data.composer || !composer || isLoading || composerIsLoading) {
+  if (!data || !data.composer || !composer || isLoading || composerIsLoading)
     return <h1>Loading...</h1>
-  }
 
-  if (isError) {
-    return <h1>Error!</h1>
-  }
+  if (isError) return <h1>Error!</h1>
 
   return (
     <Wrapper>
@@ -60,7 +65,9 @@ function MusicDetail() {
       <Con>
         <ComposerImg src={composer} alt={`${data.composer} 이미지`} />
         <InfoContainer>
-          <MusicTitle>{data.musicTitle}</MusicTitle>
+          <MusicTitle onClick={() => onClickMusicChangeHandler(data)}>
+            {data.musicTitle}
+          </MusicTitle>
           <MusicDesc>{data.musicContent}</MusicDesc>
           <ComposerName>{data.composer}</ComposerName>
         </InfoContainer>
@@ -70,7 +77,6 @@ function MusicDetail() {
       <AddComment musicId={musicId} />
       <CommentsList musicId={musicId} />
       <ReCommentsList reviewId={musicId} />
-      <Play />
     </Wrapper>
   )
 }

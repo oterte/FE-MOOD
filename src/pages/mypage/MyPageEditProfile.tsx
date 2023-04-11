@@ -29,7 +29,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { changeNickname, editProfileImg, showProfile } from '../../api/mypage'
 import { useNavigate } from 'react-router-dom'
-import { onSetLocalStorageHandler } from '../../util/cookie'
+import { onGetLocalStorage, onSetLocalStorageHandler } from '../../util/cookie'
 import { checkNickname } from '../../api/signup'
 function MyPageEditProfile() {
   const navigate = useNavigate()
@@ -66,24 +66,26 @@ function MyPageEditProfile() {
   }
 
   const onSubmitImageHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    const data = new FormData()
-    data.append('image', imgFile as File)
-    editMutation.mutate(data)
+    if (!imgFile) {
+      alert('먼저 변경할 프로필 이미지를 등록해 주세요.')
+    } else {
+      e.preventDefault()
+      const data = new FormData()
+      data.append('image', imgFile as File)
+      editMutation.mutate(data)
+    }
   }
   const onChangeNicknameHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     if (newNickname !== '') {
       checkNickname(newNickname)
         .then((res) => {
-          console.log(res)
           alert('변경되었습니다.')
           changeMutation.mutate(newNickname)
           setNewNickname('')
           onSetLocalStorageHandler('nickname', newNickname)
         })
         .catch((error) => {
-          console.log(error)
           alert(error.response.data.message)
         })
     }
@@ -100,7 +102,7 @@ function MyPageEditProfile() {
           <MyPageProfileImgBox>
             <MyPageProfileImg
               src={
-                profileData.profileUrl ? profileData.profileUrl : baseProifle
+                profileData.profileUrl ? profileData.profileUrl : onGetLocalStorage("img")
               }
             />
           </MyPageProfileImgBox>

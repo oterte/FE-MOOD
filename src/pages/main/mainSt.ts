@@ -1,31 +1,43 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import shutterstock from '../../assets/images/shutterstock_411417082.jpg'
-import { animated } from 'react-spring'
 
 export const Wrap = styled.div`
   width: 100%;
-  height: 100vh;
-  position: relative;
+  height: auto;
   overflow-x: hidden;
 `
 export const FirstContainWrap = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100vh;
-  text-align: center;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  text-align: center;
   background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
     url(${shutterstock});
 `
 
-export const StyledTitle = styled(animated.h1)`
+export const titleAnimation = keyframes`
+0% {
+  transform: translateY(-100px);
+  opacity: 0;
+}
+100% {
+  transform: translateY(0);
+  opacity: 1;
+}
+`
+
+export const StyledTitle = styled.p`
   color: #ffffff;
   font-size: 4rem;
   font-family: var(--font-googleGugi);
+  animation: ${titleAnimation} 1s ease-in-out forwards;
+  animation-delay: 0.5s;
 `
+
 export const Condition = styled.p`
   color: #ffffff;
   font-size: 2.5rem;
@@ -72,81 +84,98 @@ export const Scroll = styled.p`
   font-size: 1.5rem;
   font-family: var(--font-googleGugi);
   bottom: 115px;
-`
-export const BgGradient = styled.div`
-  width: 4000px;
-  height: 2777px;
-  top: 2000px;
-  position: absolute;
-  background: linear-gradient(
-    180deg,
-    rgba(75, 55, 46, 0) 0%,
-    rgba(75, 55, 46, 0.9) 47.92%,
-    rgba(75, 55, 46, 0) 100%
-  );
-  transform: rotate(127, 75deg);
-  opacity: 50%;
-  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 export const SecondContain = styled.div`
   position: relative;
-  top: 100vh;
   background-color: #281d18;
   width: 100%;
   height: 100vh;
-  box-sizing: border-box;
 `
+
+export const Left = styled.div`
+  position: absolute;
+  width: 70%;
+  left: 16%;
+
+  p {
+    position: absolute;
+    left: 25%;
+    z-index: 9;
+  }
+`
+
+export const Right = styled.div`
+  position: absolute;
+  width: 70%;
+  height:100%;
+  text-align: right;
+  right: 0;
+
+  p {
+    position: absolute;
+    right: 62%;
+    z-index: 9;
+  }
+
+  img {
+    position: absolute;
+    left: 120%;
+  }
+`
+
 export const ComposerName = styled.p`
   position: absolute;
-  margin: auto;
-  top: 100px;
-  left: 500px;
+  top: 150px;
   color: #f4f4f4;
   font-size: 80px;
   font-family: var(--font-googleGugi);
   z-index: 2;
   opacity: 50%;
+  white-space: nowrap;
 `
+
 export const ComposerImg = styled.div`
   position: absolute;
-  margin: auto;
-  top: 260px;
-  left: 460px;
+  top: 160px;
   width: 445px;
   height: 445px;
   border-radius: 50%;
   z-index: 2;
 `
+
 export const ComposerImgFile = styled.img`
   width: 445px;
   height: 445px;
   border-radius: 50%;
 `
+
 export const ComposerNameKr = styled.p`
   position: absolute;
-  margin: auto;
-  top: 380px;
-  left: 850px;
+  top: 360px;
   width: 100%;
   font-size: 2rem;
   color: #ffffff;
   font-family: var(--font-NotoSerifKR);
   z-index: 2;
 `
+
 export const ComposerDesc = styled.p`
   position: absolute;
   top: 450px;
-  left: 850px;
   width: 665px;
   line-height: 32px;
   font-size: 1.1rem;
   color: #ffffff;
   z-index: 2;
 `
+
 export const RepresentativeSong = styled.div`
   position: absolute;
-  top: 820px;
+  top: 800px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -170,18 +199,19 @@ export const Songs = styled.div`
 `
 
 export const SongsDiv = styled.div`
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   background-color: #736b62;
   display: flex;
   justify-content: center;
   align-items: center;
   color: #dbdbdb;
-  margin-top: 900px;
+  margin-top: 890px;
   margin-right: 1rem;
   font-weight: bold;
   font-family: var(--font-NotoSerifKR);
+  text-align: center;
 `
 
 export const MoveRecommendPage = styled.button`
@@ -214,21 +244,106 @@ export const ScrollBtn = styled.div`
   position: fixed;
   top: 50%;
   transform: translateY(-50%);
-  right: 80px;
-  width: 10px;
-  height: 400px;
-  background-color: rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-  border-radius: 5px;
+  right: -30px;
+  width: 2px;
+  height: 330px;
+  z-index: 99;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  p {
+    position: absolute;
+    color: white;
+    font-family: var(--font-NotoSerifKR);
+    margin-right: 18px;
+    right: 10px;
+    text-align: right;
+  }
+`
+
+export const Border = styled.div`
+  position: absolute;
+  right: -250px;
+  width: 340px;
+  height: 340px;
+  border: 2px solid white;
+  border-radius: 50%;
+  opacity: 50%;
 `
 
 export const ScrollMove = styled.button`
   position: absolute;
-  top: 0;
-  width: 100%;
-  height: 80px;
-  background-color: white;
-  border-radius: 5px;
+  top: 60px;
+  right: 55px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #c9c5b9;
   transition: top 0.3s ease-out;
-  border:none;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+`
+
+export const ScrollMove2 = styled.button`
+  position: absolute;
+  top: 110px;
+  right: 80px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #c9c5b9;
+  transition: top 0.3s ease-out;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+`
+
+export const ScrollMove3 = styled.button`
+  position: absolute;
+  top: 160px;
+  right: 87px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #c9c5b9;
+  transition: top 0.3s ease-out;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+`
+
+export const ScrollMove4 = styled.button`
+  position: absolute;
+  top: 210px;
+  right: 78px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #c9c5b9;
+  transition: top 0.3s ease-out;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+`
+
+export const ScrollMove5 = styled.button`
+  position: absolute;
+  top: 260px;
+  right: 55px;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+  background-color: #c9c5b9;
+  transition: top 0.3s ease-out;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 `

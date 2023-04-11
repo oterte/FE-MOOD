@@ -117,13 +117,8 @@ function ReCommentsList({ reviewId }: { reviewId: number }) {
     }
   }, [recommentsData])
 
-  if (isLoadingRecomments) {
-    return <h1>loading</h1>
-  }
-
-  if (isErrorRecomments) {
-    return <h1>error</h1>
-  }
+  if (isLoadingRecomments) return <h1>loading</h1>
+  if (isErrorRecomments) return <h1>error</h1>
 
   return (
     <ReCommentsListWrap>

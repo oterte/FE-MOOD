@@ -48,6 +48,7 @@ export const MusicTitle = styled.h3`
   font-family: var(--font-NotoSerifKR);
   color: white;
   text-align: left;
+  cursor:pointer;
 `
 
 export const MusicDesc = styled.p`
@@ -80,8 +81,8 @@ export const CommentsBox = styled.div`
   height: 120px;
   box-sizing: border-box;
   padding: 10px;
-  border-bottom: 1px solid #d9d9d9;
   background: #fefefe;
+  border-bottom: 1px solid #e3e3e3;
 `
 
 export const Total = styled.p`
@@ -94,11 +95,11 @@ export const Addform = styled.form`
 `
 
 export const AddCommentTextArea = styled.textarea.attrs({
-  maxLength: 300,
+  maxLength: 99,
 })`
   width: 1000px;
   max-width: 900px;
-  height: 180px;
+  height: 150px;
   padding: 1.5rem;
   border: 2px solid #d9d9d9;
   resize: none;
@@ -107,10 +108,11 @@ export const AddCommentTextArea = styled.textarea.attrs({
   white-space: pre-wrap;
   line-height: 1.5rem;
   background: #fefefe;
+  font-size: 1rem;
 `
 
 export const AddReCommentTextArea = styled.textarea.attrs({
-  maxLength: 50,
+  maxLength: 49,
 })`
   width: 850px;
   max-width: 850px;
@@ -124,12 +126,14 @@ export const AddReCommentTextArea = styled.textarea.attrs({
   padding: 1.5rem;
   margin: 1rem 1.55rem;
 `
+
 export const Characters = styled.p`
   position: absolute;
   bottom: 18px;
   right: 218px;
   color: gray;
 `
+
 export const ReCharacters = styled.p`
   position: absolute;
   bottom: 23px;
@@ -158,11 +162,11 @@ export const Hr = styled.hr`
 
 export const Border = styled.div`
   width: 950px;
-  height: 840px;
-  border: 2px solid #d9d9d9;
+  height: auto;
+  border: 1px solid #d9d9d9;
   background: white;
-  overflow-y: auto;
 `
+
 export const ReCommentBox = styled.div`
   position: relative;
   top: 0;
@@ -181,29 +185,30 @@ export const ReCommentBox = styled.div`
   justify-content: center;
 `
 
-export const CommentInput = styled.input`
+export const CommentInput = styled.input.attrs({ maxLength: 100 })`
   position: absolute;
   top: 10px;
   left: 40px;
   width: 700px;
   height: 38px;
   margin: 10px;
-  font-size: 1.18rem;
+  font-size: 1rem;
   border: 2px solid #dedede;
   padding-left: 0.8rem;
 `
 
-export const EditCommentInput = styled.input`
+export const EditCommentInput = styled.div`
   position: absolute;
-  top: 0;
+  top: 20px;
   left: 50px;
-  width: 700px;
-  height: 80px;
   border: none;
   background: none;
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: black;
+  white-space: pre-line;
+  width: 80%;
 `
+
 export const Nickname = styled.p`
   position: absolute;
   bottom: 5px;
@@ -213,6 +218,7 @@ export const Nickname = styled.p`
   font-size: 1rem;
   color: gray;
 `
+
 export const ReNickname = styled.p`
   position: absolute;
   bottom: 5px;
@@ -267,10 +273,10 @@ export const EditBtn = styled.button`
   color: white;
 `
 
-export const ReCommentInput = styled.input`
+export const ReCommentInput = styled.input.attrs({ maxLength: 50 })`
   width: 700px;
   height: 26px;
-  font-size: 1.18rem;
+  font-size: 1rem;
   border: 2px solid #dedede;
   padding-left: 0.8rem;
 `
