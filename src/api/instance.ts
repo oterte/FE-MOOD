@@ -57,7 +57,6 @@ export const expireToken = async () => {
 instance.interceptors.response.use(
   (response) => response,
   async (error) => {
-    console.log(error)
     const originalRequest = error.config
     if (error.response.status === 419 || error.response.status === 401) {
       originalRequest._retry = true
@@ -65,7 +64,6 @@ instance.interceptors.response.use(
         const res = await refreshInstance.post(`/api/user/refresh`)
         const data = res.data
         onSetLocalStorageHandler('accessToken', data.accessToken)
-        console.log("기존 요청 재요청...")
         return instance.request(originalRequest)
       } catch (error) {
         return Promise.reject(error)

@@ -16,8 +16,6 @@ import {
   MyPageTabItem,
   MyPageTabItemLast,
 } from './mypagecontentsSC'
-import downBtnBrown from '../../assets/icons/down_brown.png'
-import downBtnOutLine from '../../assets/icons/down_outline.png'
 import playBtnBrown from '../../assets/icons/music_play_brown.png'
 import moreBtn from '../../assets/icons/morebtn.png'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
