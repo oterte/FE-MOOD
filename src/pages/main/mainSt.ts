@@ -93,7 +93,7 @@ export const SecondContain = styled.div`
   position: relative;
   background-color: #281d18;
   width: 100%;
-  height: 100vh;
+  height: auto;
 `
 
 export const Center = styled.div`
@@ -122,7 +122,8 @@ export const ComposerName = styled.p`
 
 export const ComposerImg = styled.div`
   position: absolute;
-  top: 160px; left:-100px;
+  top: 160px;
+  left: -100px;
   width: 445px;
   height: 445px;
   border-radius: 50%;
@@ -190,6 +191,7 @@ export const SongsDiv = styled.div`
   align-items: center;
   color: #dbdbdb;
   margin-top: 890px;
+  margin-bottom: 100px;
   margin-right: 1rem;
   font-weight: bold;
   font-family: var(--font-NotoSerifKR);
