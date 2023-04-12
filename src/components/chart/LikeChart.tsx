@@ -92,7 +92,7 @@ function LikeChart({
             </Con>
           ))
       ) : (
-        <p>Loading...</p>
+        null
       )}
     </Wrap>
   )
