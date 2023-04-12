@@ -1,31 +1,26 @@
 import { instance } from './instance'
 
+
 export const showProfile = async () => {
   const response = await instance.get('/api/user/userinfo')
   return response.data.userInfo
 }
-
-export const showComment = async () => {
-  const response = await instance.get('/api/user/reviewlist')
-  return response.data.reviesList
+export const showScrap = async (id: number) => {
+  const response = await instance.get(`/api/user/scraplist?page=${id}`)
+  return response.data
 }
 
-export const showReComment = async () => {
-  const response = await instance.get('/api/user/recommentlist')
-  return response.data.recommentList
-}
-export const likedMusic = async () => {
-  const response = await instance.get('/api/user/likelist')
-  return response.data.likeList
+export const showComment = async (id: number) => {
+  const response = await instance.get(`/api/user/reviewlist?page=${id}`)
+  return response.data
 }
 
-export const scrappedMusic = async () => {
-  const response = await instance.get('/api/user/scraplist')
-  return response.data.scrapList
+export const likedMusic = async (id: number) => {
+  const response = await instance.get(`/api/user/likelist?page=${id}`)
+  return response.data
 }
 
 export const editProfileImg = async (newProfile: any) => {
-  console.log(newProfile)
   await instance.patch('/api/user/uploadprofile', newProfile, {
     headers: {
       'Content-Type': 'multipart/form-data',
@@ -33,8 +28,14 @@ export const editProfileImg = async (newProfile: any) => {
   })
 }
 
-export const deleteAccount = async () => {
-  await instance.delete('/api/user/delete')
+export const changeNickname = async (newNickname: string) => {
+  const body = {
+    nickname: newNickname,
+  }
+  await instance.patch('/api/user/changenickname', body)
 }
 
-export const emotionHistory = async () => {}
+export const deleteAccount = async (password:any) => {
+  const response = await instance.delete('/api/user/delete', {data:{password: password}})
+  return response
+}

@@ -1,53 +1,57 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Header from '../../components/header/Header'
-import Footer from '../../components/footer/Footer'
 import {
+  MyPageGoSurvey,
   MyPageProfileBodyContainer,
   MyPageProfileContainer,
   MyPageProfileImg,
   MyPageProfileImgBox,
 } from './mypageSC'
-import { MyPageContentsContainer } from './mypagecontentsSC'
+import {
+  MyPageBottomDiv,
+  MyPageCommentTab,
+  MyPageTab,
+  MyPageTabItem,
+  MyPageTabItemLast,
+} from './mypagecontentsSC'
 import { useNavigate } from 'react-router'
 import { useQuery } from 'react-query'
 import { showComment, showProfile } from '../../api/mypage'
-import MyPageBody from './MyPageBody'
+import Play from '../../components/playbar/Play'
+import { MyPageContainer } from './MyPageTable'
 import {
-  MyPageBodyDiv,
-  MyPageBodyMiddle,
-  MyPageBodyMiddleContainer,
-  MyPageBodyMiddleDiv,
-  MyPageBodyTop,
-  MyPageMiddleDivCursor,
-} from './MyPageTable'
-
+  H2,
+  H3,
+  ShowRepliesBtn,
+} from '../../components/composer/ComposerListSt'
+import Pagination from 'react-js-pagination'
+import './mypagePagination.css'
+import { onGetLocalStorage } from '../../util/cookie'
 type Review = {
-  musicId?: string
-  reviewId?: string
-  review?: string
+  createdAt?: string
+  musicId?: number
+  reviewId?: number
+  review: string
 }
 function MyPageComment() {
+  const [currentPage, setCurrentPage] = useState(1)
   const {
     isLoading,
     isError,
     data: reviewData,
-  } = useQuery<Review[]>(['myComment'], showComment)
+  } = useQuery(['myComment', currentPage], () => showComment(currentPage))
+
   const { isLoading: profileLoading, data: profileData } = useQuery(
     ['profile'],
     showProfile
   )
   const navigate = useNavigate()
-  if (isLoading) {
-    return <h1>로딩중</h1>
+  const onPaginationHandler = (i: number) => {
+    setCurrentPage(i)
   }
-  if (profileLoading) {
-    return <h1>로딩중..</h1>
-  }
-  if (isError) {
-    return <h1>에러</h1>
-  }
-
-  console.log(reviewData)
+  if (isLoading) return <h1>로딩중</h1>
+  if (profileLoading) return <h1>로딩중..</h1>
+  if (isError) return <h1>에러</h1>
   return (
     <>
       <Header />
@@ -55,39 +59,93 @@ function MyPageComment() {
         <MyPageProfileBodyContainer>
           <p>마이페이지</p>
           <MyPageProfileImgBox>
-            <MyPageProfileImg src={profileData.profileUrl} />
+            <MyPageProfileImg src={profileData.profileUrl ? profileData.profileUrl : onGetLocalStorage("img")} />
           </MyPageProfileImgBox>
           <div>
-            <p>{profileData.nickname} 님 환영합니다</p>
+            <p>{profileData.nickname}님 환영합니다</p>
           </div>
           <div>
-            <span>당신의 최근 감정 상태는 XXX 입니다.</span>
+            <span>{profileData.myStatus}</span>
           </div>
           <div>
-            <span>지금의 기분을 확인해보실래요?</span>
+            <MyPageGoSurvey>지금의 기분을 확인해보실래요?</MyPageGoSurvey>
           </div>
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
-      <MyPageBody />
-      <MyPageContentsContainer>
-        <MyPageBodyTop>
-          <MyPageBodyDiv>곡명</MyPageBodyDiv>
-          <MyPageBodyDiv>댓글 내용</MyPageBodyDiv>
-          <MyPageBodyDiv>댓글 페이지로</MyPageBodyDiv>
-        </MyPageBodyTop>
-        <MyPageBodyMiddle>
-          {
-           reviewData?.map((item) => (
-            <MyPageBodyMiddleContainer key={item.reviewId}>
-              <MyPageBodyMiddleDiv>{item.musicId}</MyPageBodyMiddleDiv>
-              <MyPageBodyMiddleDiv>{item.review}</MyPageBodyMiddleDiv>
-              <MyPageMiddleDivCursor onClick={() => navigate(`/recommend/music/${item.musicId}`)}>댓글남기기</MyPageMiddleDivCursor>
-            </MyPageBodyMiddleContainer>
-           ))
-          }
-        </MyPageBodyMiddle>
-      </MyPageContentsContainer>
-      <Footer />
+      <MyPageTab>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypage')
+          }}
+        >
+          스크랩
+        </MyPageTabItem>
+        <MyPageCommentTab
+          onClick={() => {
+            navigate('/mypageComment')
+          }}
+        >
+          남긴 댓글
+        </MyPageCommentTab>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageLike')
+          }}
+        >
+          좋아요
+        </MyPageTabItem>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageEditprofile')
+          }}
+        >
+          프로필 사진 변경
+        </MyPageTabItem>
+        <MyPageTabItemLast
+          onClick={() => {
+            navigate('/mypageDeleteaccount')
+          }}
+        >
+          회원 탈퇴
+        </MyPageTabItemLast>
+      </MyPageTab>
+
+      <MyPageContainer>
+        <div>
+          <div>no</div>
+          <div>댓글</div>
+          <div>상세페이지로</div>
+        </div>
+        {reviewData.reviewList.map((item: Review, index: number) => (
+          <React.Fragment key={`${index}`}>
+            <div>
+              <div>{index + 1}</div>
+              {item.review.length < 20 ? (
+                <H2>{item.review}</H2>
+              ) : (
+                <H2>{item.review.slice(0, 20) + '...'}</H2>
+              )}
+              <div>
+                <ShowRepliesBtn
+                  onClick={() => navigate(`/recommend/music/${item?.musicId}`)}
+                >
+                  댓글작성
+                </ShowRepliesBtn>
+              </div>
+            </div>
+          </React.Fragment>
+        ))}
+        <Pagination
+          activePage={currentPage}
+          itemsCountPerPage={10}
+          totalItemsCount={reviewData.reviewCount}
+          pageRangeDisplayed={5}
+          prevPageText={'<'}
+          nextPageText={'>'}
+          onChange={onPaginationHandler}
+        />
+      </MyPageContainer>
+      <MyPageBottomDiv />
     </>
   )
 }

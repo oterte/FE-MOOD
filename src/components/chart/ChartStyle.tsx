@@ -15,7 +15,6 @@ export const ChartTopP = styled.p`
 export const ChartBtnWrap = styled.div`
   width: 172px;
   height: 30px;
-  /* margin: 57px 0px 51px 60px; */
   border: 1px solid #8b7d76;
   display: flex;
   align-items: center;
@@ -59,20 +58,23 @@ export const Chartnumber = styled.p`
 export const ChartImg = styled.div`
   width: 62px;
   height: 62px;
-  border: 1px solid blue;
-  box-sizing: border-box;
   border-radius: 50%;
   text-align: center;
   line-height: 62px;
   margin-left: 52px;
+`
+export const ComposerImg = styled.img`
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
 `
 export const ChartTitle = styled.p`
   width: 300px;
   margin-left: 34px;
 `
 export const ChartComposer = styled.p`
-  margin-left: auto;
-  margin-right: 50px;
+  margin-left: 30px;
+  margin-right: 20px;
   color: #666666;
   width: 100px;
 `

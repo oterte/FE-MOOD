@@ -6,14 +6,16 @@ export const LoginContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: #fefefe;
-  width: 749px;
+  width: 600px;
   height: 685px;
   margin: auto;
+  margin-top: 50px;
   border: 1px solid #8b7d76;
   p{
+    font-family: var(--font-NotoSerifKR);
     font-style: normal;
     font-size: 32px;
-    font-weight: 500;
+    font-weight: 700;
     line-height: 46px;
   }
   span{
@@ -21,21 +23,35 @@ export const LoginContainer = styled.div`
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
+    margin-bottom:25px;
+    color: #4B372E;
   }
 `
+export const LoginLabelDiv = styled.div`
+  width:125px;
+  height:24px;
+  font-style:normal;
+  font-weight:400;
+  font-size:16px;
+  line-height:23px;
+  color:#000000;
+`
+
+export const LoginInputDiv = styled.div`
+  margin:auto;
+`
 export const LoginInput = styled.input`
-  width: 551px;
+  width: 430px;
   height: 45px;
   background-color: #f4f4f4;
   border: 2px solid #4b372e;
-  margin-left: 100px;
   margin-top: 25px;
+  margin-bottom:25px;
 `
 export const LoginBtn = styled.button`
-  width: 551px;
-  height: 60px;
+  width: 430px;
+  height: 50px;
   background-color: #4b372e;
-  margin-left: 100px;
   margin-top: 25px;
   color: #ffffff;
   cursor: pointer;

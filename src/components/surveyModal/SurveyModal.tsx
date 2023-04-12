@@ -5,7 +5,7 @@ import { useQuery } from 'react-query'
 import { getSurveyMusic } from '../../api/recommendApi'
 import { AiOutlineClose } from 'react-icons/ai'
 
-type Props = {
+interface Props {
   modalState: boolean
   setModalState: React.Dispatch<React.SetStateAction<boolean>>
   status1: number
@@ -35,15 +35,13 @@ function SurveyModal({ modalState, setModalState, status1, status2 }: Props) {
     }
   })
   const onClickMoveMusicDetailPageHandler = () => {
-    navigate(`/recommend/music/${data.data.musicId}`)
+    navigate(`/recommend/music/${data.music.musicId}`)
   }
-  const onClickMoveReccomendPageHandler = () => {
-    navigate('/recommend')
+  const onClickReSurveyHandler = () => {
+    window.location.replace('/survey')
   }
   if (isLoading) return <h1>Loading</h1>
   if (isError) return <h1>Error 발생</h1>
-
-  console.log(data)
 
   return (
     <ModalContainer>
@@ -52,19 +50,30 @@ function SurveyModal({ modalState, setModalState, status1, status2 }: Props) {
           <StModalClose onClick={onClickCloseModalHandler}>
             <AiOutlineClose />
           </StModalClose>
-          <StPCondition>{data.msg}</StPCondition>
-          <StPRecommend>
-            {data.data.composer}의 {data.data.musicTitle}를 <br />
-            들어보시는건 어떠세요?
-          </StPRecommend>
-          <MoveBtnWrap>
-            <StDivMoveBtn onClick={onClickMoveMusicDetailPageHandler}>
-              <StSpanMoveMusic>곡 들으러 가기</StSpanMoveMusic>
-            </StDivMoveBtn>
-            <StDivMoveBtn onClick={onClickMoveReccomendPageHandler}>
-              <StSpanMoveMusic>홈페이지로 돌아가기</StSpanMoveMusic>
-            </StDivMoveBtn>
-          </MoveBtnWrap>
+          <ModalWrap>
+            <BackgroundDesign></BackgroundDesign>
+            <ContainWrap>
+              <StPCondition>{data.message}</StPCondition>
+              <DivBar></DivBar>
+              <StPRecommend color="#efefef">당신에게 추천 드릴 곡</StPRecommend>
+              <StPRecommend color="#bf9b30">
+                {data.music.musicTitle}
+              </StPRecommend>
+              <StPRecommend color="#efefef">{data.music.composer}</StPRecommend>
+              <StPRecommend color="#efefef">들어보시는건 어떠세요?</StPRecommend>
+              <MoveBtnWrap>
+                <StDivMoveBtn color="#AAAAAA" onClick={onClickReSurveyHandler}>
+                  <StSpanMoveMusic>설문조사 다시 하기</StSpanMoveMusic>
+                </StDivMoveBtn>
+                <StDivMoveBtn
+                  color="#bf9b30"
+                  onClick={onClickMoveMusicDetailPageHandler}
+                >
+                  <StSpanMoveMusic>곡 들으러 가기</StSpanMoveMusic>
+                </StDivMoveBtn>
+              </MoveBtnWrap>
+            </ContainWrap>
+          </ModalWrap>
         </div>
       </StModalContents>
     </ModalContainer>
@@ -109,9 +118,12 @@ const StModalContents = styled.div`
   }
 `
 const StModalClose = styled.div`
+  position: absolute;
+  width: 30px;
   color: #ffffff;
   margin-left: 550px;
   font-size: 22px;
+  cursor: pointer;
 `
 const StPCondition = styled.p`
   color: #efefef;
@@ -120,8 +132,17 @@ const StPCondition = styled.p`
   font-weight: 500;
   font-family: var(--font-NotoSerifKR);
 `
+const DivBar = styled.div`
+  width: 100px;
+  height: 2px;
+  background-color: #bf8b30;
+  margin: 35px auto;
+`
 const StPRecommend = styled.p`
-  color: #efefef;
+  width: 300px;
+  margin: auto;
+  text-align: center;
+  color: ${(props) => props.color};
   font-size: 16px;
   margin-top: 30px;
   font-family: var(--font-NotoSerifKR);
@@ -130,7 +151,7 @@ const StDivMoveBtn = styled.div`
   width: 170px;
   height: 44px;
   line-height: 44px;
-  background-color: #bf9b30;
+  background-color: ${(props) => props.color};
   cursor: pointer;
 `
 const StSpanMoveMusic = styled.span`
@@ -139,7 +160,34 @@ const StSpanMoveMusic = styled.span`
 `
 const MoveBtnWrap = styled.div`
   width: 380px;
-  margin: 100px auto;
+  margin: 60px auto;
   display: flex;
   justify-content: space-evenly;
+`
+export const ModalWrap = styled.div`
+  width: 530px;
+  height: 550px;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+`
+export const BackgroundDesign = styled.div`
+  width: 350px;
+  height: 636px;
+  margin: auto;
+  background: linear-gradient(
+    180deg,
+    rgba(75, 55, 46, 0) 0%,
+    #46342b 46.35%,
+    rgba(40, 29, 24, 0) 100%
+  );
+  transform: rotate(-53.65deg);
+  position: absolute;
+  top: -40px;
+  left: 100px;
+  z-index: 0;
+`
+export const ContainWrap = styled.div`
+  position: relative;
+  z-index: 2;
 `

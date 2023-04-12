@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import LikeCount from '../like/LikeCount'
 import {
   Con,
@@ -7,7 +7,11 @@ import {
   ChartImg,
   ChartTitle,
   ChartComposer,
+  ComposerImg,
 } from './ChartStyle'
+import { useDispatch } from 'react-redux'
+import { setMusicPlay } from '../../redux/modules/musicPlayer'
+import { setIsPlaying } from '../../redux/modules/isPlaying'
 
 export interface Music {
   id: number
@@ -20,6 +24,7 @@ export interface Music {
   likesCount: number
   likeStatus: boolean
   streamCount?: number
+  imageUrl: string
 }
 
 interface LikeChartProps {
@@ -54,15 +59,26 @@ function LikeChart({
     }
   }, [])
 
+  const dispatch = useDispatch()
+  const onClickMusicChangeHandler = (music: Music) => {
+    dispatch(setMusicPlay(music))
+    dispatch(setIsPlaying())
+  }
+
   return (
     <Wrap>
       {musicList.length > 0 ? (
         musicList
           .slice(visibleRange.start, visibleRange.end)
           .map((music, index) => (
-            <Con key={music.musicId}>
+            <Con
+              key={music.musicId}
+              onClick={() => onClickMusicChangeHandler(music)}
+            >
               <Chartnumber>{index + visibleRange.start + 1}</Chartnumber>
-              <ChartImg>IMG</ChartImg>
+              <ChartImg>
+                <ComposerImg src={music.imageUrl} />
+              </ChartImg>
               <ChartTitle>{music.musicTitle}</ChartTitle>
               <ChartComposer>{music.composer}</ChartComposer>
               <LikeCount
@@ -76,10 +92,10 @@ function LikeChart({
             </Con>
           ))
       ) : (
-        <p>Loading...</p>
+        null
       )}
     </Wrap>
   )
 }
 
-export default LikeChart
+export default React.memo(LikeChart)

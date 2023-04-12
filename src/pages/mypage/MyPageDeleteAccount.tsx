@@ -1,42 +1,62 @@
-import React from 'react'
 import Header from '../../components/header/Header'
-import Footer from '../../components/footer/Footer'
 import {
+  MyPageGoSurvey,
   MyPageProfileBodyContainer,
   MyPageProfileContainer,
   MyPageProfileImg,
   MyPageProfileImgBox,
 } from './mypageSC'
-import { MyPageContentsContainer } from './mypagecontentsSC'
+import {
+  MyPageBottomDiv,
+  MyPageContentsContainer,
+  MyPageDeleteBtn,
+  MyPageDeleteBtnDiv,
+  MyPageDeleteDivOne,
+  MyPageDeleteDivTwo,
+  MyPageDeleteInput,
+  MyPageDeleteTab,
+  MyPageTab,
+  MyPageTabItem,
+  POne,
+  PThree,
+  PTwo,
+} from './mypagecontentsSC'
 import { useNavigate } from 'react-router'
 import { useQuery } from 'react-query'
 import { deleteAccount, showProfile } from '../../api/mypage'
-import { onLogoutHandler, onRemoveToken } from '../../util/cookie'
-import MyPageBody from './MyPageBody'
+import { onDeletetHandler, onGetLocalStorage, onRemoveToken } from '../../util/cookie'
+import { useState } from 'react'
+
 function MyPageDelteAccount() {
   const { isLoading: profileLoading, data: profileData } = useQuery(
     ['profile'],
     showProfile
   )
+  const [password, setPassword] = useState('')
 
+  const onChangePasswordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    setPassword(e.target.value)
+  }
   const onDeleteAccountHandler = () => {
     if (!window.confirm('정말 회원 탈퇴를 진행하시겠습니까?')) {
       alert('취소되었습니다.')
     } else {
-      alert('탈퇴했습니다.')
-      onLogoutHandler('authorization')
-      onRemoveToken()
-      navigate('/login')
-      deleteAccount()
+      deleteAccount(password)
+        .then((res) => {
+          onDeletetHandler('accessToken')
+          onRemoveToken()
+          navigate('/delete')
+        })
+        .catch((error) => {
+          alert(error.response.data.message)
+        })
     }
   }
   const navigate = useNavigate()
 
-  if (profileLoading) {
-    return <h1>로딩중..</h1>
-  }
+  if (profileLoading) return <h1>로딩중..</h1>
 
-  console.log(profileData)
   return (
     <>
       <Header />
@@ -44,24 +64,79 @@ function MyPageDelteAccount() {
         <MyPageProfileBodyContainer>
           <p>마이페이지</p>
           <MyPageProfileImgBox>
-            <MyPageProfileImg src={profileData.profileUrl} />
+            <MyPageProfileImg src={profileData.profileUrl ? profileData.profileUrl : onGetLocalStorage("img")} />
           </MyPageProfileImgBox>
           <div>
-            <p>{profileData.nickname} 님 환영합니다</p>
+            <p>{profileData.nickname}님 환영합니다</p>
           </div>
           <div>
-            <span>당신의 최근 감정 상태는 XXX 입니다.</span>
+            <span>{profileData.myStatus}</span>
           </div>
           <div>
-            <span>지금의 기분을 확인해보실래요?</span>
+            <MyPageGoSurvey>지금의 기분을 확인해보실래요?</MyPageGoSurvey>
           </div>
         </MyPageProfileBodyContainer>
       </MyPageProfileContainer>
-      <MyPageBody />
+      <MyPageTab>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypage')
+          }}
+        >
+          스크랩
+        </MyPageTabItem>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageComment')
+          }}
+        >
+          남긴 댓글
+        </MyPageTabItem>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageLike')
+          }}
+        >
+          좋아요
+        </MyPageTabItem>
+        <MyPageTabItem
+          onClick={() => {
+            navigate('/mypageEditprofile')
+          }}
+        >
+          프로필 사진 변경
+        </MyPageTabItem>
+        <MyPageDeleteTab
+          onClick={() => {
+            navigate('/mypageDeleteaccount')
+          }}
+        >
+          회원 탈퇴
+        </MyPageDeleteTab>
+      </MyPageTab>
       <MyPageContentsContainer>
-        <button onClick={onDeleteAccountHandler}>회원 탈퇴하기</button>
+        <MyPageDeleteDivOne>
+          <POne>정말로 회원탈퇴 하시겠습니까?</POne>
+          <PTwo>
+            * 회원탈퇴 시 모든 회원정보는 삭제되며 복구할 수 없습니다.
+          </PTwo>
+        </MyPageDeleteDivOne>
+        <MyPageDeleteDivTwo>
+          <PThree>탈퇴하시려면 비밀번호를 입력해주세요.</PThree>
+          <MyPageDeleteInput
+            type="password"
+            placeholder="비밀번호를 입력해주세요"
+            value={password}
+            onChange={onChangePasswordHandler}
+          />
+          <MyPageDeleteBtnDiv>
+            <MyPageDeleteBtn onClick={onDeleteAccountHandler}>
+              탈퇴하기
+            </MyPageDeleteBtn>
+          </MyPageDeleteBtnDiv>
+        </MyPageDeleteDivTwo>
       </MyPageContentsContainer>
-      <Footer />
+      <MyPageBottomDiv />
     </>
   )
 }

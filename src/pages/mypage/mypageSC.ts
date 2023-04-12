@@ -2,7 +2,6 @@ import styled from 'styled-components'
 
 export const MyPageProfileContainer = styled.div`
   width: 1200px;
-  height: 500px;
   margin: auto;
   display: flex;
   justify-content: center;
@@ -17,10 +16,14 @@ export const MyPageProfileImgBox = styled.div`
   height: 200px;
   margin: 0 auto;
 `
+export const MyPageGoSurvey = styled.span`
+  cursor: pointer;
+`
 export const MyPageProfileImg = styled.img`
   max-width: 100%;
   max-height: 100%;
   object-fit: cover;
+  border-radius:50%;
 `
 
 export const MyPageProfileBodyContainer = styled.div`

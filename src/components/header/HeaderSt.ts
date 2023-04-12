@@ -1,25 +1,33 @@
 import styled from 'styled-components'
 
 export const Wrap = styled.div`
+  display: flex;
+  align-items: center;
   width: 100%;
-  height: 70px;
-  text-align: center;
+  height: 100px;
   border-bottom: 1px solid #bcbeb3;
+  justify-content: space-between;
 `
 
 export const Left = styled.div`
-  float: left;
-  margin-left: 10px;
-  margin-top: 10px;
+  flex-basis: calc(100% / 3);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 `
+
 export const Center = styled.div`
-  width: 500px;
-  margin: 0 auto;
+  flex-basis: calc(100% / 3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `
 
 export const Right = styled.div`
-  float: right;
-  margin-top: -65px;
+  flex-basis: calc(100% / 3);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 `
 
 export const H1 = styled.h1`

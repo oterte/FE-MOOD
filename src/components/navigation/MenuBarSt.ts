@@ -26,6 +26,7 @@ export const MenuItem = styled.li`
 `
 
 export const HamburgerButton = styled.button<{ isOpen: boolean }>`
+  position: ${({ isOpen }) => (isOpen ? 'fixed' : 'absolute')};
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -38,27 +39,13 @@ export const HamburgerButton = styled.button<{ isOpen: boolean }>`
   box-sizing: border-box;
   z-index: 100;
 
-  span {
+  img {
     width: 100%;
-    height: 2px;
-    background-color: black;
     transition: all 0.1s linear;
     position: relative;
+    top: -10px;
     left: 50px;
-    transform-origin: 1px;
     z-index: 100;
-
-    &:first-child {
-      transform: ${({ isOpen }) => (isOpen ? 'rotate(29deg)' : 'rotate(0)')};
-    }
-
-    &:nth-child(2) {
-      opacity: ${({ isOpen }) => (isOpen ? '0' : '1')};
-    }
-
-    &:last-child {
-      transform: ${({ isOpen }) => (isOpen ? 'rotate(-29deg)' : 'rotate(0)')};
-    }
   }
 `
 
@@ -100,12 +87,15 @@ export const LoginMent = styled.p`
   left: 50%;
   transform: translate(-50%, 0%);
   font-family: var(--font-NotoSerifKR);
-  font-size: 1.2rem;
+  font-size: 1.15rem;
+  width: 100%;
+  text-align: center;
+  line-height: 30px;
 `
 
 export const LoginBtn = styled.button`
   position: absolute;
-  top: 340px;
+  top: 370px;
   left: 50%;
   transform: translate(-50%, 0%);
   width: 192px;
@@ -123,7 +113,7 @@ export const LoginBtn = styled.button`
 
 export const RecommendBtn = styled.button`
   position: absolute;
-  top: 450px;
+  top: 480px;
   left: 50%;
   transform: translate(-50%, 0%);
   width: 280px;
@@ -137,11 +127,25 @@ export const RecommendBtn = styled.button`
   border-top: 3px solid #8b7d76;
   border-bottom: 1px solid #8b7d76;
   font-family: var(--font-NotoSansKR-Thin);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 18px;
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+
+  img {
+    width: 40px;
+    margin-right: 5px;
+  }
 `
 
 export const ComposerBtn = styled.button`
   position: absolute;
-  top: 520px;
+  top: 550px;
   left: 50%;
   transform: translate(-50%, 0%);
   width: 280px;
@@ -154,10 +158,24 @@ export const ComposerBtn = styled.button`
   font-weight: bold;
   border-bottom: 1px solid #8b7d76;
   font-family: var(--font-NotoSansKR-Thin);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 32px;
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+
+  img {
+    width: 32px;
+    margin-right: 10px;
+  }
 `
 export const SurveyBtn = styled.button`
   position: absolute;
-  top: 590px;
+  top: 620px;
   left: 50%;
   transform: translate(-50%, 0%);
   width: 280px;
@@ -170,10 +188,24 @@ export const SurveyBtn = styled.button`
   font-weight: bold;
   border-bottom: 1px solid #8b7d76;
   font-family: var(--font-NotoSansKR-Thin);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 50px;
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+
+  img {
+    width: 36px;
+    margin-right: 10px;
+  }
 `
 export const ChatBtn = styled.button`
   position: absolute;
-  top: 660px;
+  top: 690px;
   left: 50%;
   transform: translate(-50%, 0%);
   width: 280px;
@@ -186,6 +218,20 @@ export const ChatBtn = styled.button`
   font-weight: bold;
   border-bottom: 3px solid #8b7d76;
   font-family: var(--font-NotoSansKR-Thin);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 100px;
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+
+  img {
+    width: 32px;
+    margin-right: 15px;
+  }
 `
 export const LogoutBtn = styled.button`
   width: 280px;
@@ -196,7 +242,8 @@ export const LogoutBtn = styled.button`
   text-align: right;
   font-size: 1.1rem;
   font-weight: bold;
-  margin-top: 760px;
+  margin-top: 790px;
+  margin-left: 70px;
   font-family: var(--font-NotoSansKR-Thin);
   color: #888888;
 `

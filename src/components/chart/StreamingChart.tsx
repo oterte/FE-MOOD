@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { getstreamingMusicList } from '../../api/chart'
 import {
   ChartComposer,
@@ -7,8 +7,12 @@ import {
   ChartTitle,
   Con,
   Wrap,
+  ComposerImg,
 } from './ChartStyle'
 import { Music } from './LikeChart'
+import { useDispatch } from 'react-redux'
+import { setMusicPlay } from '../../redux/modules/musicPlayer'
+import { setIsPlaying } from '../../redux/modules/isPlaying'
 
 function StreamingChart() {
   const [streamingList, setStreamingList] = useState<Music[]>([])
@@ -36,14 +40,25 @@ function StreamingChart() {
     }
   }, [visibleRankStart])
 
+  const dispatch = useDispatch()
+  const onClickMusicChangeHandler = (music: Music) => {
+    dispatch(setMusicPlay(music))
+    dispatch(setIsPlaying())
+  }
+
   return (
     <Wrap>
       {streamingList
         .slice(visibleRankStart, visibleRankStart + 5)
         .map((music, index) => (
-          <Con key={music.musicId}>
+          <Con
+            key={music.musicId}
+            onClick={() => onClickMusicChangeHandler(music)}
+          >
             <Chartnumber>{visibleRankStart + index + 1} </Chartnumber>
-            <ChartImg>IMG</ChartImg>
+            <ChartImg>
+              <ComposerImg src={music.imageUrl} />
+            </ChartImg>
             <ChartTitle>{music.musicTitle}</ChartTitle>
             <ChartComposer>{music.composer}</ChartComposer>
           </Con>
@@ -52,4 +67,4 @@ function StreamingChart() {
   )
 }
 
-export default StreamingChart
+export default React.memo(StreamingChart)

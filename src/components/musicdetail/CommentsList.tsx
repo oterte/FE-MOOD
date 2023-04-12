@@ -1,9 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import React, { useEffect, useState } from 'react'
 import { getComment, removeComment, editComment } from '../../api/comments'
-import { BsFillPencilFill } from 'react-icons/bs'
-import { BsCheck2All } from 'react-icons/bs'
-import { BsTrashFill } from 'react-icons/bs'
+import { BsCheck2All, BsTrashFill, BsFillPencilFill } from 'react-icons/bs'
 
 import {
   Border,
@@ -17,9 +15,10 @@ import {
   Total,
   WriteDate,
 } from '../../pages/musicDetail/MusicDetailSt'
-import { Wrap } from '../header/HeaderSt'
+import { Wrap } from '../../pages/musicDetail/MusicDetailSt'
 import ReCommentsList from './ReCommentsList'
 import AddRecomment from './AddRecomment'
+import { onGetLocalStorage } from '../../util/cookie'
 
 interface Comment {
   reviewId: number
@@ -94,13 +93,10 @@ function CommentsList({ musicId }: { musicId: number }) {
     }
   }, [data])
 
-  if (isLoading) {
-    return <h1>loading</h1>
-  }
+  if (isLoading) return <h1>loading</h1>
+  if (isError) return <h1>error</h1>
 
-  if (isError) {
-    return <h1>error</h1>
-  }
+  const userName = onGetLocalStorage('nickname')
 
   return (
     <Wrap>
@@ -112,7 +108,7 @@ function CommentsList({ musicId }: { musicId: number }) {
               <CommentsBox>
                 <Nickname>{item.nickname}</Nickname>
                 <WriteDate>
-                  작성 시간: {new Date(item.createdAt).toLocaleString()}
+                  {new Date(item.createdAt).toLocaleString()}
                 </WriteDate>
                 {edit === item.reviewId ? (
                   <form
@@ -131,29 +127,32 @@ function CommentsList({ musicId }: { musicId: number }) {
                   </form>
                 ) : (
                   <>
-                    <EditCommentInput
-                      type="text"
-                      value={item.review}
-                      disabled
-                    />
-                    <DeleteBtn
-                      onClick={(e) => {
-                        onClickDeleteButtonHandler(item.musicId, item.reviewId)
-                      }}
-                    >
-                      <BsTrashFill size="24" color="4b372e" />
-                    </DeleteBtn>
-                    <EditBtn
-                      onClick={(e) => {
-                        onClickEditButtonHandler(item.reviewId)
-                        setInputValues((prevState) => ({
-                          ...prevState,
-                          [item.reviewId]: item.review,
-                        }))
-                      }}
-                    >
-                      <BsFillPencilFill size="23" color="4b372e" />
-                    </EditBtn>
+                    <EditCommentInput>{item.review}</EditCommentInput>
+                    {userName === item.nickname ? (
+                      <>
+                        <DeleteBtn
+                          onClick={(e) => {
+                            onClickDeleteButtonHandler(
+                              item.musicId,
+                              item.reviewId
+                            )
+                          }}
+                        >
+                          <BsTrashFill size="24" color="4b372e" />
+                        </DeleteBtn>
+                        <EditBtn
+                          onClick={(e) => {
+                            onClickEditButtonHandler(item.reviewId)
+                            setInputValues((prevState) => ({
+                              ...prevState,
+                              [item.reviewId]: item.review,
+                            }))
+                          }}
+                        >
+                          <BsFillPencilFill size="23" color="4b372e" />
+                        </EditBtn>
+                      </>
+                    ) : null}
                   </>
                 )}
                 <ShowRepliesBtn

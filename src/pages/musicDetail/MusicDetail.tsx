@@ -5,19 +5,24 @@ import Header from '../../components/header/Header'
 import AddComment from '../../components/musicdetail/AddComment'
 import CommentsList from '../../components/musicdetail/CommentsList'
 import ReCommentsList from '../../components/musicdetail/ReCommentsList'
+import Wrapper from '../../components/Wrapper'
 import {
   ComposerImg,
   ComposerName,
   Con,
+  InfoContainer,
   Ment,
   MusicDesc,
   MusicTitle,
-  Wrap,
 } from './MusicDetailSt'
+import { useDispatch } from 'react-redux'
+import { setMusicPlay } from '../../redux/modules/musicPlayer'
+import { setIsPlaying } from '../../redux/modules/isPlaying'
 
 function MusicDetail() {
   const params = useParams()
   const musicId = Number(params.id)
+  const dispatch = useDispatch()
 
   const { isLoading, isError, data } = useQuery(
     ['musicDetail', musicId],
@@ -26,6 +31,11 @@ function MusicDetail() {
       enabled: !!musicId,
     }
   )
+
+  const onClickMusicChangeHandler = (music: any) => {
+    dispatch(setMusicPlay(music))
+    dispatch(setIsPlaying())
+  }
 
   const composerName = data?.composer
 
@@ -43,36 +53,31 @@ function MusicDetail() {
     }
   )
 
-  if (!data || !data.composer || !composer || isLoading || composerIsLoading) {
+  if (!data || !data.composer || !composer || isLoading || composerIsLoading)
     return <h1>Loading...</h1>
-  }
 
-  if (isError) {
-    return <h1>Error!</h1>
-  }
+  if (isError) return <h1>Error!</h1>
+
   return (
-    <>
+    <Wrapper>
       <Header />
-      <Wrap>
-        <Ment>다른 회원들과 음악 감상평을 공유해 보세요.</Ment>
-        <Con>
-          <ComposerImg src={composer} alt={`${data.composer} 이미지`} />
-          <MusicTitle>{data.musicTitle}</MusicTitle>
+      <Ment>다른 회원들과 음악 감상평을 공유해 보세요.</Ment>
+      <Con>
+        <ComposerImg src={composer} alt={`${data.composer} 이미지`} />
+        <InfoContainer>
+          <MusicTitle onClick={() => onClickMusicChangeHandler(data)}>
+            {data.musicTitle}
+          </MusicTitle>
           <MusicDesc>{data.musicContent}</MusicDesc>
           <ComposerName>{data.composer}</ComposerName>
-        </Con>
+        </InfoContainer>
+      </Con>
 
-        <Ment>좋아하는 음악에 대해 댓글을 남겨보세요.</Ment>
-        <AddComment musicId={musicId} />
-        <CommentsList musicId={musicId} />
-        <ReCommentsList reviewId={musicId} />
-
-        {/* <audio controls>
-          <source src={data.musicUrl} type="audio/mpeg" />
-        </audio> */}
-      </Wrap>
-      {/* <Footer /> */}
-    </>
+      <Ment>좋아하는 음악에 대해 댓글을 남겨보세요.</Ment>
+      <AddComment musicId={musicId} />
+      <CommentsList musicId={musicId} />
+      <ReCommentsList reviewId={musicId} />
+    </Wrapper>
   )
 }
 

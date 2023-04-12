@@ -1,8 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../../api/loginapi'
-import Footer from '../../components/footer/Footer'
-import kakao from '../../assets/kakao_login_large_narrow.png'
+import kakao from '../../assets/images/kakao_login_large_narrow.png'
 import Header from '../../components/header/Header'
 import jwt_Decode from 'jwt-decode'
 import { onSetCookieHandler, onSetLocalStorageHandler } from '../../util/cookie'
@@ -10,9 +9,10 @@ import {
   LoginBtn,
   LoginContainer,
   LoginInput,
+  LoginInputDiv,
+  LoginLabelDiv,
   LoginSocialContainer,
 } from './loginSt'
-
 function Login() {
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`
 
@@ -27,19 +27,22 @@ function Login() {
     e.preventDefault()
     login({ id: id, password: password })
       .then((res) => {
-        console.log('res', res)
         const authId = res.data.accessToken
+        const nickname = res.data.nickname
+        const profileUrl = res.data.profileUrl
         const decodeUserInfo = JSON.stringify(jwt_Decode(authId))
         const refreshToken = res.data.refreshToken
-        onSetCookieHandler('authorization', authId)
+        onSetCookieHandler('accessToken', authId)
+        onSetLocalStorageHandler("img", profileUrl)
+        onSetLocalStorageHandler('accessToken', authId)
+        onSetLocalStorageHandler('nickname', nickname)
         onSetLocalStorageHandler('refresh', refreshToken)
-        onSetLocalStorageHandler('authorization', authId)
         onSetLocalStorageHandler('userInfo', decodeUserInfo)
         alert(res.data.message)
         navigate('/recommend')
       })
-      .catch((error) => {
-        alert(error.response.data.message)
+      .catch(() => {
+        alert('아이디 비밀번호가 일치하지 않습니다.')
       })
   }
 
@@ -57,26 +60,40 @@ function Login() {
     <>
       <Header />
       <LoginContainer>
-        <p>로그인</p>
-        <span onClick={() => {navigate("/signup")}}>MOOD 회원이 아니신가요?</span>
+        <p>Log in</p>
+        <span
+          onClick={() => {
+            navigate('/signup')
+          }}
+        >
+          MOOD 회원이 아니신가요?
+        </span>
         <form>
-          <LoginInput
-            type="text"
-            placeholder="아이디를 입력하세요."
-            name="id"
-            value={id}
-            onChange={(e) => setId(e.target.value)}
-          />
-          <LoginInput
-            type="password"
-            placeholder="비밀번호를 입력하세요"
-            name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <LoginBtn onClick={(e) => onClickLoginHandler(e)}>
-            로그인 하기
-          </LoginBtn>
+          <LoginLabelDiv>
+            <label>아이디</label>
+          </LoginLabelDiv>
+          <LoginInputDiv>
+            <LoginInput
+              type="text"
+              placeholder="아이디를 입력하세요."
+              name="id"
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+            />
+          </LoginInputDiv>
+          <LoginLabelDiv>
+            <label>비밀번호</label>
+          </LoginLabelDiv>
+          <LoginInputDiv>
+            <LoginInput
+              type="password"
+              placeholder="비밀번호를 입력하세요"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </LoginInputDiv>
+          <LoginBtn onClick={(e) => onClickLoginHandler(e)}>Log in</LoginBtn>
         </form>
         <LoginSocialContainer>
           <img
@@ -91,7 +108,6 @@ function Login() {
 
       {/* <button onClick={onGoogleLoginHanlder}>구글 로그인</button>
       <button onClick={onNaverLoginHandler}>네이버 로그인</button> */}
-      <Footer />
     </>
   )
 }

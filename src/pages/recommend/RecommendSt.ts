@@ -1,25 +1,50 @@
 import styled from 'styled-components'
 
+export const Wrap = styled.div`
+  width: 100%;
+  height: auto;
+`
 export const StDivWrap = styled.div`
   width: 1260px;
-  height: 400px;
-  margin: 50px auto;
+  margin: 0px auto 13rem auto;
 `
+export const StDivTitle = styled.div`
+  width: 1260px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+`
+export const StPTitle = styled.p`
+  font-size: 32px;
+  font-weight: 700;
+  font-family: var(--font-NotoSerifKR);
+`
+export const StPExplain = styled.p`
+  font-size: 20px;
+  color: #888888;
+`
+
 export const StDivMoodWrap = styled.div`
   width: 1260px;
   height: 700px;
-  border: 1px solid red;
+  border: 1px solid #d6d6d6;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   position: relative;
   cursor: pointer;
+  font-family: var(--font-NotoSerifKR);
+  font-size: 25px;
+  background-color: #ffffff;
 `
 export const StDIvMusicPlayer = styled.div`
   width: 492px;
   height: 582px;
   border: 1px solid #d6d6d6;
   box-sizing: border-box;
+  background-color: #ffffff;
 `
 export const StDivLike = styled.div`
   width: 25px;
@@ -29,47 +54,91 @@ export const StDivLike = styled.div`
 export const StDivComposerImg = styled.div`
   width: 180px;
   height: 180px;
-  border-radius: 50%;
-  border: 1px solid blue;
-  margin: 39px auto 0px auto;
-  text-align: center;
+  margin: 30px auto 0px auto;
   line-height: 180px;
-  box-sizing: border-box;
+`
+export const ComposerImg = styled.img`
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background-color: rgba(75, 55, 46, 0.5);
 `
 export const StPVigor = styled.p`
   font-size: 25px;
-  width: 200px;
+  width: 100%;
   margin: 30px auto 0px auto;
+  text-align: center;
 `
 export const StDivXcoordinate = styled.div`
   display: flex;
-  font-size: 25px;
+  justify-content: center;
+  align-items: center;
 `
 export const StPDepress = styled.p`
   width: 100px;
   margin: 0px auto 0px 38px;
-  font-size: 25px;
 `
 export const StPPositive = styled.p`
   width: 100px;
   margin-right: 38px;
-  font-size: 25px;
 `
 export const StPCalm = styled.p`
-  width: 100px;
+  width: 100%;
+  text-align: center;
   margin: 0px auto 38px auto;
-  font-size: 25px;
+`
+export const Circle1 = styled.div`
+  width: 200px;
+  height: 200px;
+  border: 50%;
+  border-radius: 50%;
+  position: absolute;
+  left: 700px;
+  top: 200px;
+  background-color: rgba(75, 55, 46, 0.5);
+`
+export const Circle2 = styled.div`
+  width: 150px;
+  height: 150px;
+  border: 50%;
+  border-radius: 50%;
+  position: absolute;
+  left: 860px;
+  top: 300px;
+  background-color: rgba(139, 125, 118, 0.4);
+`
+export const Circle3 = styled.div`
+  width: 80px;
+  height: 80px;  
+  border: 50%;
+  border-radius: 50%;
+  position: absolute;
+  top: 200px;
+  left: 100px;
+  background-color: rgba(139, 125, 118, 0.4);
+`
+export const Circle4 = styled.div`
+  width: 100px;
+  height: 100px;  
+  border: 50%;
+  border-radius: 50%;
+  position: absolute;
+  top: 500px;
+  left: 300px;
+  background-color: rgba(139, 125, 118, 0.4);
 `
 export const CenterExplain = styled.p`
   margin: 40px 0px;
   font-size: 25px;
+  font-family: var(--font-NotoSerifKR);
 `
 export const ClickBox = styled.p`
   font-size: 25px;
   margin: 80px auto;
+  font-family: var(--font-NotoSerifKR);
 `
 export const MusicComtain = styled.div`
-height: 300px;
+  height: 300px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -77,7 +146,7 @@ height: 300px;
   position: relative;
 `
 export const StPMusicTitle = styled.p`
-  width: 500px;
+  width: 480px;
   font-size: 20px;
   margin: 22px auto 5px auto;
 `
@@ -89,6 +158,7 @@ export const StPMusicComposer = styled.p`
 export const LikeMusic = styled.p`
   font-size: 20px;
   margin-top: 48px;
+  font-family: var(--font-NotoSerifKR);
 `
 export const MoveDetail = styled.div`
   width: 170px;
@@ -104,6 +174,7 @@ export const DivChartWrap = styled.div`
   height: 582px;
   border: 1px solid #d6d6d6;
   box-sizing: border-box;
+  background-color: #ffffff;
 `
 export const AudioDiv = styled.div`
   margin-top: 20px;

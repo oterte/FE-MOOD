@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useState } from 'react'
-import { FaAngleLeft, FaAngleRight } from 'react-icons/fa'
 import Header from '../../components/header/Header'
 import SurveyModal from '../../components/surveyModal/SurveyModal'
 import Point from '../../components/surveyRadioPoint/Point'
@@ -72,7 +71,7 @@ function Survey() {
       setModalState(!modalState)
     } else {
       alert('설문을 모두 선택해주세요!')
-    }
+    } 
   }
 
   return (
@@ -80,7 +79,7 @@ function Survey() {
       <Wrapper>
         <Header />
         <StDivSurveyWrap>
-          <div style={{ marginTop: '100px' }}>
+          <div style={{ marginTop: '50px' }}>
             <StSpanSurveyTitle>
               기분에 따라 노래를 추천 받아보세요
             </StSpanSurveyTitle>
@@ -119,13 +118,19 @@ function Survey() {
             {currentSlide !== 9 ? (
               <>
                 <StDivCarouselWrap>
-                  <StDivMoveBtn onClick={prevSlide}>이전 문항으로</StDivMoveBtn>
-                  <StDivMoveBtn onClick={nextSlide}>다음 문항으로</StDivMoveBtn>
+                  <StDivMoveBtn onClick={prevSlide} color="#cdcdcd">
+                    이전 문항으로
+                  </StDivMoveBtn>
+                  <StDivMoveBtn onClick={nextSlide} color="#4b372e">
+                    다음 문항으로
+                  </StDivMoveBtn>
                 </StDivCarouselWrap>
               </>
             ) : (
               <StDivCarouselWrap>
-                <StDivMoveBtn onClick={prevSlide}>이전 문항으로</StDivMoveBtn>
+                <StDivMoveBtn onClick={prevSlide} color="#cdcdcd">
+                  이전 문항으로
+                </StDivMoveBtn>
                 <StDivSubmit onClick={onClickModalOpenHandler}>
                   결과 확인하기
                 </StDivSubmit>

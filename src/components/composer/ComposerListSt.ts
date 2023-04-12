@@ -1,19 +1,21 @@
 import styled from 'styled-components'
 
 export const Wrap = styled.div`
+  position: relative;
   width: 100%;
-  height: 100%;
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-top: 7rem;
 `
 
 export const Ment = styled.p`
   font-family: var(--font-NotoSerifKR);
   font-size: 1.2rem;
   font-weight: bold;
-  margin: 80px;
+  margin-bottom: 7rem;
 `
 
 export const Contents = styled.div`
@@ -22,7 +24,6 @@ export const Contents = styled.div`
   flex-grow: 1;
   display: flex;
   justify-content: center;
-  border-bottom: 2px solid #8b7d76;
   justify-content: flex-start;
 `
 
@@ -40,6 +41,7 @@ export const Li = styled.li`
   cursor: pointer;
   border-left: 1px solid #8b7d76;
   text-align: left;
+  position: relative;
 
   &:first-child {
     border-left: none;
@@ -50,36 +52,70 @@ export const Li = styled.li`
     font-weight: bold;
     color: white;
   }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 250px;
+    transform: translateX(-50%);
+    width: 500px;
+    height: 2px;
+    background-color: #8b7d76;
+  }
 `
 
 export const Desc = styled.div`
   position: absolute;
-  top: 750px;
+  top: 730px;
   text-align: center;
-  background: #FEFEFE;
+  background: #fefefe;
   width: 1180px;
   height: auto;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
+  min-height: 500px;
+  text-align: center;
 
   & > div {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr 5fr repeat(2, 1fr) 1fr;
     align-items: center;
     border-bottom: 1px solid #ddd;
     font-size: 1rem;
-    padding:1rem;
+    padding: 1rem;
 
-  &:first-child {
-    background-color: #4B372E;
-    color: white;
+    img {
+      width: 23px;
+      cursor: pointer;
+    }
+
+    button {
+      border: none;
+      background: none;
+    }
+
+    &:first-child {
+      background-color: #4b372e;
+      color: white;
+    }
+
+    & > div:last-child {
+      border-bottom: none;
+    }
+
+    & > div:nth-child(3) {
+      text-align: left;
+      justify-self: start;
+    }
+
+    & > div:not(:nth-child(2)) {
+      justify-self: center;
+    }
   }
-    
-  & > div:last-child {
-    border-bottom: none;
-  }
+`
+
+export const PaddingBottomDiv = styled.div`
+  height: 20rem;
+  background: #f5f5f5;
 `
 
 export const Inpo = styled.div`
@@ -113,10 +149,69 @@ export const Describe = styled.p`
 
 export const H3 = styled.h3`
   font-size: 1rem;
+  cursor: pointer;
+`
+export const H2 = styled.h3`
+  font-size: 1rem;
 `
 
 export const P = styled.p`
   font-size: 1rem;
 `
 
-export const PlayButton = styled.button``
+export const ContentContainer = styled.div`
+  position: relative;
+  width: 900px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  word-break: break-word;
+  text-align: left;
+  padding: 5rem;
+`
+export const MusicDetailBtn = styled.span`
+  position: absolute;
+  bottom: 35px;
+  left: 105px;
+  font-size: 1.15rem;
+  color: #4b372e;
+  border-radius: 20px;
+  font-weight: bold;
+  width: 160px;
+  height: 35px;
+  cursor: pointer;
+  text-align: center;
+  line-height: 34px;
+`
+
+export const SpanMusicTitle = styled.span`
+  position: absolute;
+  top: 35px;
+  left: 110px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+`
+
+export const SpanMusicContent = styled.span`
+  position: absolute;
+  top: 85px;
+  left: 110px;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+`
+
+export const ToogleWrap = styled.div`
+  width: 97.3%;
+  background: #fcfcfc;
+`
+
+export const ShowRepliesBtn = styled.button`
+  border: none;
+  background: none;
+  color: var(--color-brown);
+  font-size: 1rem;
+  cursor: pointer;
+`
