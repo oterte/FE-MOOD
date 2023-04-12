@@ -54,16 +54,16 @@ function ChartTab({
         </ChartBtnWrap>
       </ChartTopWrap>
 
-      {activeTab === 'like' && (
+      {activeTab === 'like' ? (
         <LikeChart
           musicId={musicId}
           likeStatus={likeStatus}
           musicList={musicList}
           onLikeUpdate={onLikeUpdate}
         />
+      ) : (
+        <StreamingChart />
       )}
-
-      {activeTab === 'stream' && <StreamingChart />}
     </div>
   )
 }

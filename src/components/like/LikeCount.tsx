@@ -3,7 +3,7 @@ import Heart from '../../assets/icons/Heart_brown.png'
 import FillHeart from '../../assets/icons/Heart_fill_brown.png'
 import { toggleLike } from '../../api/chart'
 import { LikeWrap } from './LikeSt'
-import { onGetCookieHandler } from '../../util/cookie'
+import { onGetCookieHandler, onGetLocalStorage } from '../../util/cookie'
 
 interface LikeCountProps {
   musicId?: number
@@ -22,7 +22,7 @@ const LikeCount: React.FC<LikeCountProps> = React.memo(
       if (!musicId) {
         return
       }
-      const token = onGetCookieHandler('accessToken')
+      const token = onGetLocalStorage('accessToken')
       if (!token) {
         alert('로그인 후 이용 가능합니다.')
         return

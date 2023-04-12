@@ -64,7 +64,7 @@ instance.interceptors.response.use(
         const res = await refreshInstance.post(`/api/user/refresh`)
         const data = res.data
         onSetLocalStorageHandler('accessToken', data.accessToken)
-        return axios(originalRequest)
+        return instance.request(originalRequest)
       } catch (error) {
         return Promise.reject(error)
       }
@@ -83,7 +83,7 @@ withoutTokenInstance.interceptors.response.use(
         const res = await refreshInstance.post(`/api/user/refresh`)
         const data = res.data
         onSetLocalStorageHandler('accessToken', data.accessToken)
-        return axios(originalRequest)
+        return withoutTokenInstance.request(originalRequest)
       } catch (error) {
         return Promise.reject(error)
       }
