@@ -20,6 +20,13 @@ export const MyPageTabItem = styled.div`
     background-color: #4b372e;
     color: #ffffff;
   }
+  &.focused{
+    background-color: #4b372e;
+    color: #ffffff;
+  }
+  &:last-child{
+    border-right: none;
+  }
 `
 export const MyPageScrapTab = styled.div`
   width: 129px;
@@ -105,6 +112,7 @@ export const MyPageEditContainer = styled.div`
   justify-content: center;
   flex-direction: column;
   background-color: #fefefe;
+  position: relative;
 `
 export const MyPageEditBtn = styled.button`
   width: 675px;
@@ -113,11 +121,25 @@ export const MyPageEditBtn = styled.button`
   color: white;
   cursor: pointer;
 `
+export const EditDiv  = styled.div`
+  position: absolute;
+  background-color: rgba(217, 217, 217, 0.5);
+  width: 192px;
+  height: 192px;
+  left: 204px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 192px;
+  font-size: 64px;
+  color:#ffffff;
+  cursor: pointer;
+`
 export const MyPageEditImg = styled.img`
   width: 192px;
   height: 192px;
   background-color: rgba(217, 217, 217, 0.5);
   border-radius: 50%;
+  cursor: pointer;
 `
 export const MyPageInputContainer = styled.div`
   width: 100%;
@@ -154,8 +176,21 @@ export const MyPageInputBtn = styled.button`
   font-weight: 400;
   font-size: 16px;
   text-align: center;
+  cursor: pointer;
+`
+export const MyPageEditBtnTwo = styled.button`
+  width: 144px;
+  height: 45px;
+  background-color: #8b7d76;
+  border: 1px solid #8b7d76;
+  color: #ffffff;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  text-align: center;
   margin-left: 20px;
   cursor: pointer;
+
 `
 export const MyPageImgEditInput = styled.input`
   display: none;

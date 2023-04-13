@@ -16,8 +16,6 @@ import {
   MyPageTabItem,
   MyPageTabItemLast,
 } from './mypagecontentsSC'
-import downBtnBrown from '../../assets/icons/down_brown.png'
-import downBtnOutLine from '../../assets/icons/down_outline.png'
 import playBtnBrown from '../../assets/icons/music_play_brown.png'
 import moreBtn from '../../assets/icons/morebtn.png'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
@@ -38,8 +36,9 @@ import { useDispatch } from 'react-redux'
 import { setIsPlaying } from '../../redux/modules/isPlaying'
 import { scrapMusic } from '../../api/scrap'
 import { onGetLocalStorage } from '../../util/cookie'
+import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
 
-type Like = {
+interface Like {
   composer: string
   musicId: number
   musicTitle: string
@@ -140,7 +139,7 @@ function MyPageLike() {
             navigate('/mypageEditprofile')
           }}
         >
-          프로필 사진 변경
+          회원정보 수정
         </MyPageTabItem>
         <MyPageTabItemLast
           onClick={() => {
@@ -172,17 +171,19 @@ function MyPageLike() {
               </button>
               <button>
                 {item.scrapStatus === false ? (
-                  <img
-                    src={downBtnOutLine}
-                    alt="down"
+                  <p
                     onClick={() => onScrapHanlder(item.musicId)}
-                  />
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <BsBookmark size="22" color="#8b7d76" />
+                  </p>
                 ) : (
-                  <img
-                    src={downBtnBrown}
-                    alt="down"
+                  <p
                     onClick={() => onScrapHanlder(item.musicId)}
-                  />
+                    style={{ cursor: 'pointer' }}
+                  >
+                    <BsBookmarkFill size="22" color="#8b7d76" />
+                  </p>
                 )}
               </button>
               <div>

@@ -9,9 +9,9 @@ import { H3 } from '../../components/composer/ComposerListSt'
 import { ShowRepliesBtn } from './SearchBarSt'
 import Header from '../../components/header/Header'
 import Wrapper from '../../components/Wrapper'
-import Down from '../../assets/icons/down_brown.png'
-import down_outline from '../../assets/icons/down_outline.png'
 import morebtn from '../../assets/icons/morebtn.png'
+import play from '../../assets/icons/music_play_brown.png'
+import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
 
 import {
   ComposerDesc,
@@ -34,7 +34,7 @@ import { setMusicPlay } from '../../redux/modules/musicPlayer'
 import { RootState } from '../../redux/config/configStore'
 import { onGetLocalStorage } from '../../util/cookie'
 
-type ComposerInfo = {
+interface ComposerInfo {
   composerId: number
   composer: string
   describe: string
@@ -43,7 +43,7 @@ type ComposerInfo = {
   birthDeath: number
 }
 
-type ComposerSong = {
+interface ComposerSong {
   musicId: number
   userId: number
   musicTitle: string
@@ -223,6 +223,7 @@ function SearchResultPage() {
             <div>
               <div>no</div>
               <div>곡명</div>
+              <div>재생</div>
               <div>좋아요</div>
               <div>스크랩</div>
               <div>더보기</div>
@@ -244,6 +245,18 @@ function SearchResultPage() {
                     {music.musicTitle}
                     {playingMusicId === music.musicId && <img src="" alt="" />}
                   </H3>
+                  <img
+                    onClick={() =>
+                      handlePlayClick(
+                        music.musicId,
+                        music.musicTitle,
+                        music.composer,
+                        music.musicUrl
+                      )
+                    }
+                    src={play}
+                    alt="music_play"
+                  />
                   <LikeCount
                     musicId={music.musicId}
                     likeCount={music.likeCount}
@@ -251,11 +264,15 @@ function SearchResultPage() {
                     onLikeUpdate={handleLikeUpdate}
                   />
 
-                  <button onClick={() => handleScrapButtonClick(music.musicId)}>
-                    <img
-                      src={scrapStatus[music.musicId] ? Down : down_outline}
-                      alt="scrap"
-                    />
+                  <button
+                    onClick={() => handleScrapButtonClick(music.musicId)}
+                    style={{ cursor: 'pointer', marginBottom: '-5px' }}
+                  >
+                    {scrapStatus[music.musicId] ? (
+                      <BsBookmarkFill size="23" color="#8b7d76" />
+                    ) : (
+                      <BsBookmark size="23" color="#8b7d76" />
+                    )}
                   </button>
 
                   <div>

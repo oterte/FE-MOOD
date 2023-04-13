@@ -20,8 +20,7 @@ import {
   StyledTitle,
   Border,
   SecondContain,
-  Left,
-  Right,
+  Center,
 } from './mainSt'
 import chopin from '../../assets/composer/쇼팽.png'
 import vivaldi from '../../assets/composer/비발디.png'
@@ -99,7 +98,7 @@ const Main: React.FC = () => {
       </FirstContainWrap>
 
       <SecondContain id="section2" ref={sectionRefs[1]}>
-        <Left>
+        <Center>
           <ComposerName>Frédéric Chopin</ComposerName>
           <ComposerImg>
             <ComposerImgFile src={chopin} />
@@ -111,7 +110,7 @@ const Main: React.FC = () => {
             생각합니다. 그는 그 어떤, 그 어느 작곡가보다도 훨씬 더 피아노와
             밀접하게 연관되어 있습니다.
           </ComposerDesc>
-        </Left>
+        </Center>
         <RepresentativeSong>
           <Hr />
           대표작
@@ -137,7 +136,7 @@ const Main: React.FC = () => {
       </SecondContain>
 
       <SecondContain id="section3" ref={sectionRefs[2]}>
-        <Right>
+        <Center>
           <ComposerName>Antonio Vivaldi</ComposerName>
           <ComposerNameKr>안토니오 비발디 (1695-1741)</ComposerNameKr>
           <ComposerDesc>
@@ -149,7 +148,7 @@ const Main: React.FC = () => {
           <ComposerImg>
             <ComposerImgFile src={vivaldi} />
           </ComposerImg>
-        </Right>
+        </Center>
         <RepresentativeSong>
           <Hr />
           대표작
@@ -175,7 +174,7 @@ const Main: React.FC = () => {
       </SecondContain>
 
       <SecondContain id="section4" ref={sectionRefs[3]}>
-        <Left>
+        <Center>
           <ComposerName>Ludwig van Beethoven</ComposerName>
           <ComposerImg>
             <ComposerImgFile src={beethoven} />
@@ -188,7 +187,7 @@ const Main: React.FC = () => {
             일구었기 때문에 불굴의 의지와 인간승리를 상징하는 인물로 유명합니다.
             그의 음악에서도 이러한 고뇌와 인생 역전의 분위기가 잘 드러납니다.
           </ComposerDesc>
-        </Left>
+        </Center>
         <RepresentativeSong>
           <Hr />
           대표작
@@ -214,7 +213,7 @@ const Main: React.FC = () => {
       </SecondContain>
 
       <SecondContain id="section5" ref={sectionRefs[4]}>
-        <Right>
+        <Center>
           <ComposerName>Wolfgang Amadeus Mozart</ComposerName>
           <ComposerNameKr>
             볼프강 아마데우스 모차르트 (1756-1791)
@@ -228,7 +227,7 @@ const Main: React.FC = () => {
           <ComposerImg>
             <ComposerImgFile src={mozart} />
           </ComposerImg>
-        </Right>
+        </Center>
         <RepresentativeSong>
           <Hr />
           대표작

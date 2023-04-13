@@ -91,7 +91,7 @@ function ChatRoom() {
   }, [])
 
   const roomId: number = Number(id)
-  const token = onGetCookieHandler('accessToken')
+  const token = onGetLocalStorage('accessToken')
   useEffect(() => {
     if (roomId === 1) setRoomName('분노')
     setRoomImg(angry)
@@ -122,6 +122,7 @@ function ChatRoom() {
     if (!token) return
     socket.emit('newUser', token)
     return () => {
+      socket.emit('getout', token)
       disconnection()
     }
   }, [])
@@ -146,6 +147,9 @@ function ChatRoom() {
     if (scrollRef.current)
       scrollRef.current.scrollTop =
         scrollRef.current?.scrollHeight - prevScrollheight
+    socket.on('receive', (data) => {
+      setBeforeChatData(data)
+    })
   }, [beforeChatData])
 
   const chatData: ChatData = {
@@ -185,12 +189,6 @@ function ChatRoom() {
       )
     })
   }, [userList])
-
-  useEffect(() => {
-    socket.on('receive', (data) => {
-      setBeforeChatData(data)
-    })
-  }, [beforeChatData])
 
   useEffect(() => {
     socket.on('receiveMessage', (data) => {
@@ -248,7 +246,7 @@ function ChatRoom() {
                           <span>{beforeChatData.nickname}</span>
                         </StPChatListNickname>
                         <StDivChatListMessage
-                          style={{ backgroundColor: '#999999' }}
+                          style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
                         >
                           <span>{beforeChatData.message}</span>
                         </StDivChatListMessage>

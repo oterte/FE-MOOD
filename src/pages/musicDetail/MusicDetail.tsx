@@ -63,13 +63,21 @@ function MusicDetail() {
       <Header />
       <Ment>다른 회원들과 음악 감상평을 공유해 보세요.</Ment>
       <Con>
-        <ComposerImg src={composer} alt={`${data.composer} 이미지`} />
+        <ComposerImg
+          src={composer}
+          alt={`${data.composer} 이미지`}
+          onClick={() => onClickMusicChangeHandler(data)}
+        />
         <InfoContainer>
           <MusicTitle onClick={() => onClickMusicChangeHandler(data)}>
             {data.musicTitle}
           </MusicTitle>
-          <MusicDesc>{data.musicContent}</MusicDesc>
-          <ComposerName>{data.composer}</ComposerName>
+          <MusicDesc onClick={() => onClickMusicChangeHandler(data)}>
+            {data.musicContent}
+          </MusicDesc>
+          <ComposerName onClick={() => onClickMusicChangeHandler(data)}>
+            {data.composer}
+          </ComposerName>
         </InfoContainer>
       </Con>
 

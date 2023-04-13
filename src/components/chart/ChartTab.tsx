@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import LikeChart from '../chart/LikeChart'
-import { Music } from '../chart/LikeChart'
+import LikeChart, { Music } from '../chart/LikeChart'
 import StreamingChart from '../chart/StreamingChart'
 import {
   ChartBtnWrap,
@@ -55,16 +54,16 @@ function ChartTab({
         </ChartBtnWrap>
       </ChartTopWrap>
 
-      {activeTab === 'like' && (
+      {activeTab === 'like' ? (
         <LikeChart
           musicId={musicId}
           likeStatus={likeStatus}
           musicList={musicList}
           onLikeUpdate={onLikeUpdate}
         />
+      ) : (
+        <StreamingChart />
       )}
-
-      {activeTab === 'stream' && <StreamingChart />}
     </div>
   )
 }

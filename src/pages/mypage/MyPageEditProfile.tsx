@@ -9,6 +9,7 @@ import {
 } from './mypageSC'
 import baseProifle from '../../assets/icons/Heart_fill_white copy.png'
 import {
+  EditDiv,
   ExternalContainer,
   MyPageBottomDiv,
   MyPageContentsContainer,
@@ -31,6 +32,8 @@ import { changeNickname, editProfileImg, showProfile } from '../../api/mypage'
 import { useNavigate } from 'react-router-dom'
 import { onGetLocalStorage, onSetLocalStorageHandler } from '../../util/cookie'
 import { checkNickname } from '../../api/signup'
+import { BsPlusLg } from 'react-icons/bs'
+
 function MyPageEditProfile() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
@@ -43,7 +46,6 @@ function MyPageEditProfile() {
   const [imgUrl, setImgUrl] = useState<string | ArrayBuffer | null>()
   const [imgFile, setImgFile] = useState<File>()
   const [newNickname, setNewNickname] = useState('')
-  const [nicknameCheck, setNicknameCheck] = useState(false)
 
   const editMutation = useMutation(editProfileImg, {
     onSuccess: () => {
@@ -73,13 +75,14 @@ function MyPageEditProfile() {
       const data = new FormData()
       data.append('image', imgFile as File)
       editMutation.mutate(data)
+      alert('변경되었습니다.')
     }
   }
   const onChangeNicknameHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     if (newNickname !== '') {
       checkNickname(newNickname)
-        .then((res) => {
+        .then(() => {
           alert('변경되었습니다.')
           changeMutation.mutate(newNickname)
           setNewNickname('')
@@ -102,7 +105,9 @@ function MyPageEditProfile() {
           <MyPageProfileImgBox>
             <MyPageProfileImg
               src={
-                profileData.profileUrl ? profileData.profileUrl : onGetLocalStorage("img")
+                profileData.profileUrl
+                  ? profileData.profileUrl
+                  : onGetLocalStorage('img')
               }
             />
           </MyPageProfileImgBox>
@@ -144,7 +149,7 @@ function MyPageEditProfile() {
             navigate('/mypageEditprofile')
           }}
         >
-          프로필 사진 변경
+          회원정보 수정
         </MyPageEditTab>
         <MyPageTabItemLast
           onClick={() => {
@@ -158,17 +163,21 @@ function MyPageEditProfile() {
         <ExternalContainer>
           <MyPageEditContainer>
             <label htmlFor="fileinput">
-              <MyPageEditImg
-                src={
-                  !imgUrl
-                    ? profileData.profileUrl
-                      ? profileData.profileUrl
-                      : baseProifle
-                    : imgUrl
-                }
-                alt="이미지"
-              />
+              <EditDiv>
+                  <BsPlusLg/>
+              </EditDiv>
             </label>
+            <MyPageEditImg
+              src={
+                !imgUrl
+                  ? profileData.profileUrl
+                    ? profileData.profileUrl
+                    : baseProifle
+                  : imgUrl
+              }
+              alt="이미지"
+            />
+
             <MyPageImgEditInput
               id="fileinput"
               ref={imgRef}
@@ -178,7 +187,7 @@ function MyPageEditProfile() {
             />
             <MyPageImgBtnWrap>
               <MyPageInputBtn onClick={onSubmitImageHandler}>
-                프로필 사진 수정
+                수정하기
               </MyPageInputBtn>
             </MyPageImgBtnWrap>
             <MyPageInputContainer>

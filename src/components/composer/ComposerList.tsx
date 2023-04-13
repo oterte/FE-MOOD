@@ -7,9 +7,10 @@ import { setIsPlaying, setTogglePlaying } from '../../redux/modules/isPlaying'
 import { composerList } from '../../api/composerApi'
 import LikeCount from '../like/LikeCount'
 import { scrapMusic } from '../../api/scrap'
-import Down from '../../assets/icons/download_after.png'
-import down_outline from '../../assets/icons/download_brown.png'
 import morebtn from '../../assets/icons/morebtn.png'
+import play from '../../assets/icons/music_play_brown.png'
+import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
+
 import {
   Contents,
   Desc,
@@ -33,7 +34,7 @@ import {
 import { RootState } from '../../redux/config/configStore'
 import { onGetLocalStorage } from '../../util/cookie'
 
-type MusicInfo = {
+interface MusicInfo {
   musicId: number
   musicTitle: string
   musicContent: string
@@ -212,6 +213,7 @@ const ComposerList = () => {
               <div>
                 <div>no</div>
                 <div>곡명</div>
+                <div>재생</div>
                 <div>좋아요</div>
                 <div>스크랩</div>
                 <div>더보기</div>
@@ -235,24 +237,37 @@ const ComposerList = () => {
                         <img src="" alt="" />
                       )}
                     </H3>
-
+                    <img
+                      onClick={() =>
+                        handlePlayClick(
+                          music.musicId,
+                          music.musicTitle,
+                          composerInfo.composer,
+                          music.musicUrl
+                        )
+                      }
+                      src={play}
+                      alt="music_play"
+                    />
                     <LikeCount
                       musicId={music.musicId}
                       likeCount={music.likeCount}
                       likeStatus={music.likeStatus}
                       onLikeUpdate={handleLikeUpdate}
                     />
-
                     <button
                       onClick={() => handleScrapButtonClick(music.musicId)}
                     >
-                      <img
+                      <p
                         key={music.musicId}
-                        src={`${
-                          scrapStatus[music.musicId] ? Down : down_outline
-                        }?t=${Date.now()}`}
-                        alt="scrap"
-                      />
+                        style={{ marginBottom: '9px', cursor: 'pointer' }}
+                      >
+                        {scrapStatus[music.musicId] ? (
+                          <BsBookmarkFill size="23" color="#8b7d76" />
+                        ) : (
+                          <BsBookmark size="23" color="#8b7d76" />
+                        )}
+                      </p>
                     </button>
 
                     <div>
@@ -284,7 +299,7 @@ const ComposerList = () => {
             </Desc>
           </>
         ) : (
-          <div>Loading</div>
+          <div></div>
         )}
       </Contents>
     </Wrap>
