@@ -12,11 +12,11 @@ import {
   SignupErrorDiv,
   SignupLabelDiv,
   SingupButtonDisabled,
-  SpanDiv,
   SignupDiv,
   InputDiv,
   SignUpUpperDiv,
   SignupCheckBtnDisabled,
+  TitleDiv,
 } from './singup'
 
 import { checkId, checkNickname, register } from '../../api/signup'
@@ -30,6 +30,7 @@ function SignUp() {
   const [email, setEmail] = useState('')
   const [nickname, setNickname] = useState('')
 
+  const [isFocused, setIsFocused] = useState(false)
   const [idMessage, setIdMessage] = useState('')
   const [nicknameMessage, setNicknameMessage] = useState('')
   const [emailMessage, setEmailMessage] = useState('')
@@ -91,8 +92,9 @@ function SignUp() {
 
   const onCheckNicknameHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value)
-    if (e.target.value.length < 2) {
-      setNicknameMessage('닉네임은 두글자 이상이어야 합니다.')
+    let regExp: RegExp = /^[^\s]{2,8}$/
+    if (regExp.test(e.target.value) === false) {
+      setNicknameMessage('닉네임은 두글자 이상, 8글자 이하여야 합니다.')
       setNicknameCheck(false)
     } else {
       setNicknameMessage('올바른 닉네임 형식입니다.')
@@ -179,8 +181,10 @@ function SignUp() {
       <SignupContainer>
         <SignUpUpperDiv>
           <SignupForm>
-            <p>Sign Up</p>
-            <SpanDiv>
+            <TitleDiv>
+              <p>Sign Up</p>
+            </TitleDiv>
+            {/* <SpanDiv>
               <span
                 onClick={() => {
                   navigate('/login')
@@ -188,7 +192,7 @@ function SignUp() {
               >
                 MOOD에 이미 가입하셨나요?
               </span>
-            </SpanDiv>
+            </SpanDiv> */}
             <SignupDiv>
               <SignupLabelDiv>
                 <SignupLabel>아이디</SignupLabel>
@@ -203,7 +207,9 @@ function SignUp() {
                   onChange={onCheckIdHandler}
                 />
                 {idCheck === false ? (
-                  <SignupCheckBtnDisabled disabled>중복확인</SignupCheckBtnDisabled>
+                  <SignupCheckBtnDisabled disabled>
+                    중복확인
+                  </SignupCheckBtnDisabled>
                 ) : (
                   <SignupCheckBtn onClick={onCheckExistId}>
                     중복확인
@@ -211,7 +217,7 @@ function SignUp() {
                 )}
               </InputDiv>
               <SignupErrorDiv>
-                {idCheck === false ? (
+                {idCheck === false || id === ''? (
                   <SignupErrorSpan style={{ color: 'red' }}>
                     {idMessage}
                   </SignupErrorSpan>
@@ -235,7 +241,9 @@ function SignUp() {
                   onChange={onCheckNicknameHandler}
                 />
                 {nicknameCheck === false ? (
-                  <SignupCheckBtnDisabled disabled>중복확인</SignupCheckBtnDisabled>
+                  <SignupCheckBtnDisabled disabled>
+                    중복확인
+                  </SignupCheckBtnDisabled>
                 ) : (
                   <SignupCheckBtn onClick={onCheckExistNickName}>
                     중복확인
