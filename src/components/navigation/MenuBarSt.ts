@@ -111,22 +111,16 @@ export const LoginBtn = styled.button`
   text-align: center;
 `
 
-export const RecommendBtn = styled.button`
+export const RecommendBtn = styled.button<{ active?: boolean }>`
   position: absolute;
   top: 480px;
-  left: 50%;
-  transform: translate(-50%, 0%);
-  width: 280px;
+  width: 100%;
   height: 70px;
   cursor: pointer;
   border: none;
   background: none;
   text-align: left;
   font-size: 1.1rem;
-  font-weight: bold;
-  border-top: 3px solid #8b7d76;
-  border-bottom: 1px solid #8b7d76;
-  font-family: var(--font-NotoSansKR-Thin);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -138,26 +132,40 @@ export const RecommendBtn = styled.button`
   }
 
   img {
+    position: absolute;
+    left: 10%;
     width: 40px;
-    margin-right: 5px;
   }
+
+  p {
+    position: absolute;
+    left: 22%;
+    top: 9px;
+  }
+
+  ${({ active }) =>
+    active &&
+    `
+    background-color: #b3a69f;
+    color: white;
+    font-weight: 900;
+    width:100%;
+    height: 70px;
+  `}
 `
 
-export const ComposerBtn = styled.button`
+export const ComposerBtn = styled.button<{ active?: boolean }>`
   position: absolute;
   top: 550px;
   left: 50%;
   transform: translate(-50%, 0%);
-  width: 280px;
+  width: 100%;
   height: 70px;
   cursor: pointer;
   border: none;
   background: none;
   text-align: left;
   font-size: 1.1rem;
-  font-weight: bold;
-  border-bottom: 1px solid #8b7d76;
-  font-family: var(--font-NotoSansKR-Thin);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -169,25 +177,39 @@ export const ComposerBtn = styled.button`
   }
 
   img {
-    width: 32px;
-    margin-right: 10px;
+    position: absolute;
+    left: 10%;
+    width: 35px;
   }
+
+  p {
+    position: absolute;
+    left: 22%;
+    top: 9px;
+  }
+
+  ${({ active }) =>
+    active &&
+    `
+    background-color: #b3a69f;
+    color: white;
+    font-weight: 900;
+    width:100%;
+    height: 70px;
+  `}
 `
-export const SurveyBtn = styled.button`
+export const SurveyBtn = styled.button<{ active?: boolean }>`
   position: absolute;
   top: 620px;
   left: 50%;
   transform: translate(-50%, 0%);
-  width: 280px;
+  width: 100%;
   height: 70px;
   cursor: pointer;
   border: none;
   background: none;
   text-align: left;
   font-size: 1.1rem;
-  font-weight: bold;
-  border-bottom: 1px solid #8b7d76;
-  font-family: var(--font-NotoSansKR-Thin);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -199,25 +221,39 @@ export const SurveyBtn = styled.button`
   }
 
   img {
-    width: 36px;
-    margin-right: 10px;
+    position: absolute;
+    left: 10%;
+    width: 38px;
   }
+
+  p {
+    position: absolute;
+    left: 22%;
+    top: 9px;
+  }
+
+  ${({ active }) =>
+    active &&
+    `
+    background-color: #b3a69f;
+    color: white;
+    font-weight: 900;
+    width:100%;
+    height: 70px;
+  `}
 `
-export const ChatBtn = styled.button`
+export const ChatBtn = styled.button<{ active?: boolean }>`
   position: absolute;
   top: 690px;
   left: 50%;
   transform: translate(-50%, 0%);
-  width: 280px;
+  width: 100%;
   height: 70px;
   cursor: pointer;
   border: none;
   background: none;
   text-align: left;
   font-size: 1.1rem;
-  font-weight: bold;
-  border-bottom: 3px solid #8b7d76;
-  font-family: var(--font-NotoSansKR-Thin);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -229,9 +265,26 @@ export const ChatBtn = styled.button`
   }
 
   img {
-    width: 32px;
-    margin-right: 15px;
+    position: absolute;
+    left: 10%;
+    width: 33px;
   }
+
+  p {
+    position: absolute;
+    left: 22%;
+    top: 9px;
+  }
+
+  ${({ active }) =>
+    active &&
+    `
+    background-color: #b3a69f;
+    color: white;
+    font-weight: 900;
+    width:100%;
+    height: 70px;
+  `}
 `
 export const LogoutBtn = styled.button`
   width: 280px;
@@ -241,9 +294,7 @@ export const LogoutBtn = styled.button`
   background: none;
   text-align: right;
   font-size: 1.1rem;
-  font-weight: bold;
   margin-top: 790px;
   margin-left: 70px;
-  font-family: var(--font-NotoSansKR-Thin);
   color: #888888;
 `
