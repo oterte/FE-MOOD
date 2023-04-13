@@ -27,6 +27,13 @@ export const LoginContainer = styled.div`
     color: #4B372E;
   }
 `
+export const LoginContainerForm = styled.form`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`
 export const LoginLabelDiv = styled.div`
   width:125px;
   height:24px;
@@ -45,19 +52,35 @@ export const LoginInput = styled.input`
   height: 45px;
   background-color: #f4f4f4;
   border: 2px solid #4b372e;
-  margin-top: 25px;
+  margin-top: 10px;
   margin-bottom:25px;
 `
 export const LoginBtn = styled.button`
   width: 430px;
   height: 50px;
   background-color: #4b372e;
+  border: none;
   margin-top: 25px;
   color: #ffffff;
   cursor: pointer;
 `
 
 export const LoginSocialContainer = styled.div`
-  margin-top: 50px;
+  margin-top: 25px;
+  cursor: pointer;
+`
+export const KakaoLoginImg = styled.img`
+  width: 430px;
+  height: 50px;
+  object-fit: cover;
+`
+export const KakaoLoginBtn = styled.button`
+  width: 430px;
+  height: 50px;
+  background-color: #FEE500;
+  color: #000000 85%;
+  font-size: 16px;
+  font-style: normal;
+  border: none;
   cursor: pointer;
 `
