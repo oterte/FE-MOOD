@@ -42,13 +42,14 @@ export const ComposerImg = styled.img`
   height: 220px;
   border-radius: 50%;
   margin-right: 5rem;
+  cursor: pointer;
 `
 export const MusicTitle = styled.h3`
   font-size: 1.2rem;
   font-family: var(--font-NotoSerifKR);
   color: white;
   text-align: left;
-  cursor:pointer;
+  cursor: pointer;
 `
 
 export const MusicDesc = styled.p`
@@ -56,12 +57,14 @@ export const MusicDesc = styled.p`
   font-size: 1.2rem;
   max-width: 800px;
   text-align: left;
+  cursor: pointer;
 `
 
 export const ComposerName = styled.h3`
   color: white;
   font-size: 1rem;
   text-align: left;
+  cursor: pointer;
 `
 
 export const CommentsWrap = styled.div`
