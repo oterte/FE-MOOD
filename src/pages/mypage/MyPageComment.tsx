@@ -27,12 +27,7 @@ import {
 import Pagination from 'react-js-pagination'
 import './mypagePagination.css'
 import { onGetLocalStorage } from '../../util/cookie'
-type Review = {
-  createdAt?: string
-  musicId?: number
-  reviewId?: number
-  review: string
-}
+
 function MyPageComment() {
   const [currentPage, setCurrentPage] = useState(1)
   const {
@@ -99,7 +94,7 @@ function MyPageComment() {
             navigate('/mypageEditprofile')
           }}
         >
-          프로필 사진 변경
+          회원정보 수정
         </MyPageTabItem>
         <MyPageTabItemLast
           onClick={() => {
@@ -110,7 +105,7 @@ function MyPageComment() {
         </MyPageTabItemLast>
       </MyPageTab>
 
-      <MyPageContainer>
+      {/* <MyPageContainer>
         <div>
           <div>no</div>
           <div>댓글</div>
@@ -144,7 +139,7 @@ function MyPageComment() {
           nextPageText={'>'}
           onChange={onPaginationHandler}
         />
-      </MyPageContainer>
+      </MyPageContainer> */}
       <MyPageBottomDiv />
     </>
   )

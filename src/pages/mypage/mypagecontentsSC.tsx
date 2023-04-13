@@ -20,6 +20,13 @@ export const MyPageTabItem = styled.div`
     background-color: #4b372e;
     color: #ffffff;
   }
+  &.focused{
+    background-color: #4b372e;
+    color: #ffffff;
+  }
+  &:last-child{
+    border-right: none;
+  }
 `
 export const MyPageScrapTab = styled.div`
   width: 129px;
@@ -169,8 +176,21 @@ export const MyPageInputBtn = styled.button`
   font-weight: 400;
   font-size: 16px;
   text-align: center;
+  cursor: pointer;
+`
+export const MyPageEditBtnTwo = styled.button`
+  width: 144px;
+  height: 45px;
+  background-color: #8b7d76;
+  border: 1px solid #8b7d76;
+  color: #ffffff;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  text-align: center;
   margin-left: 20px;
   cursor: pointer;
+
 `
 export const MyPageImgEditInput = styled.input`
   display: none;

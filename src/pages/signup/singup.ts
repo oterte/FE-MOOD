@@ -29,6 +29,9 @@ export const SignUpUpperDiv = styled.div`
   justify-content: center;
   align-items: center;
 `
+export const TitleDiv = styled.div`
+  margin-bottom: 50px;
+`
 
 export const SpanDiv = styled.div`
   margin-bottom: 25px;
@@ -44,7 +47,7 @@ export const SpanDiv = styled.div`
 export const SignupForm = styled.form``
 export const SignupErrorDiv = styled.div`
   width: 100%;
-  margin-top: -10px;
+  margin-top: -23px;
   text-align: left;
   span {
     font-size: 13px;
@@ -74,6 +77,7 @@ export const SignupLabel = styled.label`
 export const SignupDiv = styled.div`
   width: 100%;
   height: 122px;
+  margin-bottom: 10px;
 `
 export const InputDiv = styled.div`
   width: 100%;
@@ -85,7 +89,7 @@ export const SignupInput = styled.input`
   width: 276px;
   height: 45px;
   background-color: #f4f4f4;
-  border: 2px solid #8b7d76;
+  /* border: 2px solid #8b7d76; */
   margin-bottom: 25px;
 `
 export const SignupInputTwo = styled.input`
