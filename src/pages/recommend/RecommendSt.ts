@@ -5,11 +5,11 @@ export const Wrap = styled.div`
   height: auto;
 `
 export const StDivWrap = styled.div`
-  width: 1260px;
+  width: 65%;
   margin: 0px auto 13rem auto;
 `
 export const StDivTitle = styled.div`
-  width: 1260px;
+  width: 100%;
   height: 300px;
   display: flex;
   justify-content: center;
@@ -26,26 +26,6 @@ export const StPExplain = styled.p`
   color: #888888;
 `
 
-export const StDivMoodWrap = styled.div`
-  width: 1260px;
-  height: 700px;
-  border: 1px solid #d6d6d6;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  position: relative;
-  cursor: pointer;
-  font-family: var(--font-NotoSerifKR);
-  font-size: 25px;
-  background-color: #ffffff;
-`
-export const StDIvMusicPlayer = styled.div`
-  width: 492px;
-  height: 582px;
-  border: 1px solid #d6d6d6;
-  box-sizing: border-box;
-  background-color: #ffffff;
-`
 export const StDivLike = styled.div`
   width: 25px;
   height: 25px;
@@ -88,28 +68,28 @@ export const StPCalm = styled.p`
   margin: 0px auto 38px auto;
 `
 export const Circle1 = styled.div`
-  width: 200px;
-  height: 200px;
+  width: 160px;
+  height: 160px;
   border: 50%;
   border-radius: 50%;
   position: absolute;
-  left: 700px;
+  left: 60%;
   top: 200px;
   background-color: rgba(75, 55, 46, 0.5);
 `
 export const Circle2 = styled.div`
-  width: 150px;
-  height: 150px;
+  width: 130px;
+  height: 130px;
   border: 50%;
   border-radius: 50%;
   position: absolute;
-  left: 860px;
+  left: 70%;
   top: 300px;
   background-color: rgba(139, 125, 118, 0.4);
 `
 export const Circle3 = styled.div`
   width: 80px;
-  height: 80px;  
+  height: 80px;
   border: 50%;
   border-radius: 50%;
   position: absolute;
@@ -119,7 +99,7 @@ export const Circle3 = styled.div`
 `
 export const Circle4 = styled.div`
   width: 100px;
-  height: 100px;  
+  height: 100px;
   border: 50%;
   border-radius: 50%;
   position: absolute;
@@ -127,7 +107,58 @@ export const Circle4 = styled.div`
   left: 300px;
   background-color: rgba(139, 125, 118, 0.4);
 `
+export const StDivMoodWrap = styled.div`
+  width: 100%;
+  min-width: 600px;
+  height: 700px;
+  border: 1px solid #d6d6d6;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  cursor: pointer;
+  font-family: var(--font-NotoSerifKR);
+  font-size: 25px;
+  background-color: #ffffff;
+`
+export const CenterContain = styled.div`
+  @media screen and (max-width: 1530px) {
+    flex-direction: column;
+    width: 100%;
+    margin: auto;
+  }
+  width: 600px;
+  display: flex;
+  text-align: center;
+  flex-direction: row;
+`
+export const MusicPlayWrap = styled.div`
+  @media screen and (max-width: 1530px) {
+    width: 600px;
+    margin: auto;
+  }
+  width: 100%;
+`
+export const StDIvMusicPlayer = styled.div`
+  width: 100%;
+  height: 582px;
+  border: 1px solid #d6d6d6;
+  box-sizing: border-box;
+  background-color: #ffffff;
+`
+export const DivChartWrap = styled.div`
+  margin-left: auto;
+  width: 50%;
+  @media screen and (max-width: 1530px) {
+    margin: auto;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+`
 export const CenterExplain = styled.p`
+  width: 500px;
   margin: 40px 0px;
   font-size: 25px;
   font-family: var(--font-NotoSerifKR);
@@ -137,7 +168,7 @@ export const ClickBox = styled.p`
   margin: 80px auto;
   font-family: var(--font-NotoSerifKR);
 `
-export const MusicComtain = styled.div`
+export const MusicContain = styled.div`
   height: 300px;
   display: flex;
   align-items: center;
@@ -169,7 +200,7 @@ export const MoveDetail = styled.div`
   line-height: 44px;
   cursor: pointer;
 `
-export const DivChartWrap = styled.div`
+export const DivChartContain = styled.div`
   width: 746px;
   height: 582px;
   border: 1px solid #d6d6d6;
