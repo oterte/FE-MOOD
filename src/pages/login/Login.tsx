@@ -47,7 +47,7 @@ function Login() {
   const onKakaoLoginHandler = async () => {
     window.location.href = KAKAO_AUTH_URL
   }
-
+  
   return (
     <>
       <Header />

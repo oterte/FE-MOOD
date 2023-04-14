@@ -1,6 +1,7 @@
 import {
   StDivWrap,
   StDivMoodWrap,
+  MusicPlayWrap,
   StDIvMusicPlayer,
   StDivComposerImg,
   StPVigor,
@@ -11,12 +12,12 @@ import {
   StPMusicTitle,
   StPMusicComposer,
   StDivLike,
-  DivChartWrap,
+  DivChartContain,
   MoveDetail,
   LikeMusic,
   CenterExplain,
   ClickBox,
-  MusicComtain,
+  MusicContain,
   StDivTitle,
   StPTitle,
   StPExplain,
@@ -25,6 +26,8 @@ import {
   Circle2,
   Circle3,
   Circle4,
+  CenterContain,
+  DivChartWrap,
 } from './RecommendSt'
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -184,8 +187,8 @@ function Recommend() {
               <StPCalm>차분한</StPCalm>
             </StDivMoodWrap>
 
-            <div style={{ display: 'flex', textAlign: 'center' }}>
-              <div>
+            <CenterContain>
+              <MusicPlayWrap>
                 <CenterExplain>지금 듣는 이 곡은?</CenterExplain>
                 <StDIvMusicPlayer>
                   <StDivLike>
@@ -202,7 +205,7 @@ function Recommend() {
                   {!selectMusicData.composer ? (
                     <ClickBox>기분 영역을 클릭해보세요!</ClickBox>
                   ) : (
-                    <MusicComtain>
+                    <MusicContain>
                       <StPMusicTitle>
                         {selectMusicData.musicTitle}
                       </StPMusicTitle>
@@ -219,24 +222,24 @@ function Recommend() {
                       >
                         댓글 남기기
                       </MoveDetail>
-                    </MusicComtain>
+                    </MusicContain>
                   )}
                 </StDIvMusicPlayer>
-              </div>
-              <div style={{ marginLeft: 'auto' }}>
+              </MusicPlayWrap>
+              <DivChartWrap>
                 <CenterExplain>
                   다른 회원들은 어떤 곡을 좋아할까요?
                 </CenterExplain>
-                <DivChartWrap>
+                <DivChartContain>
                   <ChartTab
                     musicId={selectMusicData?.musicId}
                     likeStatus={likeStatus}
                     musicList={musicList}
                     onLikeUpdate={handleLikeUpdate}
                   />
-                </DivChartWrap>
-              </div>
-            </div>
+                </DivChartContain>
+              </DivChartWrap>
+            </CenterContain>
           </StDivWrap>
         </Wrapper>
       </div>

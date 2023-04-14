@@ -106,7 +106,7 @@ export const SignupErrorSpan = styled.span`
   font-size: 13px;
 `
 export const SignupCheckBtnDisabled = styled.button`
-  width: 144px;
+  width: 130px;
   height: 45px;
   background-color: gray;
   border: 1px solid #8b7d76;
@@ -114,7 +114,7 @@ export const SignupCheckBtnDisabled = styled.button`
   color: #ffffff;
 `
 export const SignupCheckBtn = styled.button`
-  width: 144px;
+  width: 130px;
   height: 45px;
   background-color: #8b7d76;
   border: 1px solid #8b7d76;
