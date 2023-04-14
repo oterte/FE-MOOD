@@ -14,7 +14,7 @@ export const ChartTopP = styled.p`
 `
 export const ChartBtnWrap = styled.div`
   width: 172px;
-  height: 30px;
+  height: 40px;
   border: 1px solid #8b7d76;
   display: flex;
   align-items: center;
@@ -22,10 +22,11 @@ export const ChartBtnWrap = styled.div`
 `
 export const OrderBtn = styled.div`
   width: 78px;
-  height: 20px;
+  height: 25px;
+  font-weight: 600;
   color: #ffffff;
   cursor: pointer;
-  line-height: 20px;
+  line-height: 25px;
 `
 export const OrderSpan = styled.span`
   font-size: 12px;
@@ -49,6 +50,7 @@ export const Con = styled.div`
     background-color: #4b372e;
     color: #ffffff;
   }
+  cursor: pointer;
 `
 export const Chartnumber = styled.p`
   width: 30px;
