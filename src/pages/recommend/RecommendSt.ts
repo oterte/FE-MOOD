@@ -134,7 +134,8 @@ export const MusicPlayWrap = styled.div`
     width: 600px;
     margin: auto;
   }
-  width: 592px;
+  width: 492px;
+  gap: 100px;
 `
 export const StDIvMusicPlayer = styled.div`
   width: 100%;
@@ -160,7 +161,7 @@ export const CenterExplain = styled.p`
   font-size: 25px;
   font-family: var(--font-NotoSerifKR);
   @media screen and (max-width: 1530px) {
-    width: 100%;
+    margin-top: 72px;
   }
 `
 export const ClickBox = styled.p`
@@ -210,7 +211,4 @@ export const DivChartContain = styled.div`
   @media screen and (max-width: 1530px) {
     margin-left: 0px;
   }
-`
-export const AudioDiv = styled.div`
-  margin-top: 20px;
 `
