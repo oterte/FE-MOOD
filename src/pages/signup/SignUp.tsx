@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 import {
   SignupContainer,
@@ -19,7 +19,13 @@ import {
   TitleDiv,
 } from './singup'
 
-import { checkId, checkNickname, register } from '../../api/signup'
+import {
+  authEmail,
+  checkAuthEmailNumber,
+  checkId,
+  checkNickname,
+  register,
+} from '../../api/signup'
 import { useNavigate } from 'react-router-dom'
 import Header from '../../components/header/Header'
 
@@ -29,14 +35,11 @@ function SignUp() {
   const [confirm, setConfirm] = useState('')
   const [email, setEmail] = useState('')
   const [nickname, setNickname] = useState('')
-
-  const [isFocused, setIsFocused] = useState(false)
   const [idMessage, setIdMessage] = useState('')
   const [nicknameMessage, setNicknameMessage] = useState('')
   const [emailMessage, setEmailMessage] = useState('')
   const [passwordMessage, setPasswordMessage] = useState('')
   const [confirmCheckMessage, setConfirmCheckMessage] = useState('')
-
   const [idResponse, setIdResponse] = useState(0)
   const [nicknameResponse, setNicknameResponse] = useState(0)
   const [idCheck, setIdCheck] = useState(false)
@@ -44,8 +47,29 @@ function SignUp() {
   const [confirmCheck, setConfirmCheck] = useState(false)
   const [emailCheck, setEmailCheck] = useState(false)
   const [nicknameCheck, setNicknameCheck] = useState(false)
+  const [checkAuthEmail, setCheckAuthEmail] = useState('')
+  const [isSend, setIsSend] = useState(false)
+  const [isAuth, setIsAuth] = useState(false)
   const navigate = useNavigate()
-
+  const onClickIdHandler = () => {
+    setIdMessage(
+      '아이디는 영어 소문자와 숫자를 포함한 4글자 이상이어야 합니다.'
+    )
+  }
+  const onClickNickHandler = () => {
+    setNicknameMessage('닉네임은 두글자 이상, 8글자 이하여야 합니다.')
+  }
+  const onClickEmailHandler = () => {
+    setEmailMessage('올바른 이메일 형식이 아닙니다.')
+  }
+  const onClickPWHandler = () => {
+    setPasswordMessage(
+      '비밀번호는 영문 대소문자와 숫자, 특수문자를 포함한 8글자 이상이어야 합니다.'
+    )
+  }
+  const onClickCheckHandler = () => {
+    setConfirmCheckMessage('비밀번호가 동일하지 않습니다.')
+  }
   const onCheckIdHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     setId(e.target.value)
     let regExp: RegExp = /^(?=.*[a-z])(?=.*\d)[a-z\d]{4,}$/
@@ -64,7 +88,7 @@ function SignUp() {
     setEmail(e.target.value)
 
     let regExp: RegExp =
-      /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
+    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
     if (regExp.test(e.target.value) === false) {
       setEmailMessage('올바른 이메일 형식이 아닙니다.')
       setEmailCheck(false)
@@ -117,6 +141,26 @@ function SignUp() {
       setConfirmCheck(true)
     }
   }, [confirm, password])
+
+  const onCheckAuthEmailPw = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCheckAuthEmail(e.target.value)
+  }
+  const onCheckAuthEmailPwHandler = (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    e.preventDefault()
+    const emailPw = checkAuthEmail
+    checkAuthEmailNumber(email, emailPw)
+      .then((res) => {
+        alert(res.data.check.message)
+        setIsAuth(true)
+      })
+      .catch((error) => {
+        console.log(error)
+        alert(error.response.data.message)
+      })
+  }
+
   const onSubmitSignUpHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     const body = { id, password, confirm, email, nickname }
@@ -134,7 +178,8 @@ function SignUp() {
       nicknameCheck &&
       emailCheck &&
       passwordCheck &&
-      confirmCheck
+      confirmCheck && 
+      isAuth
     ) {
       register(body)
         .then((res) => {
@@ -175,6 +220,19 @@ function SignUp() {
         })
     }
   }
+  const onCheckEmail = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    if (email !== '' && emailCheck === true) {
+      authEmail(email)
+        .then((res) => {
+          alert(res.data.message)
+          setIsSend(true)
+        })
+        .catch((error) => {
+          alert('인증 이메일 전송에 실패했습니다.')
+        })
+    }
+  }
   return (
     <>
       <Header />
@@ -184,15 +242,6 @@ function SignUp() {
             <TitleDiv>
               <p>Sign Up</p>
             </TitleDiv>
-            {/* <SpanDiv>
-              <span
-                onClick={() => {
-                  navigate('/login')
-                }}
-              >
-                MOOD에 이미 가입하셨나요?
-              </span>
-            </SpanDiv> */}
             <SignupDiv>
               <SignupLabelDiv>
                 <SignupLabel>아이디</SignupLabel>
@@ -205,6 +254,7 @@ function SignUp() {
                   placeholder="아이디를 입력하세요"
                   value={id}
                   onChange={onCheckIdHandler}
+                  onClick={onClickIdHandler}
                 />
                 {idCheck === false ? (
                   <SignupCheckBtnDisabled disabled>
@@ -217,7 +267,7 @@ function SignUp() {
                 )}
               </InputDiv>
               <SignupErrorDiv>
-                {idCheck === false || id === ''? (
+                {idCheck === false ? (
                   <SignupErrorSpan style={{ color: 'red' }}>
                     {idMessage}
                   </SignupErrorSpan>
@@ -239,6 +289,7 @@ function SignUp() {
                   placeholder="닉네임을 입력하세요"
                   value={nickname}
                   onChange={onCheckNicknameHandler}
+                  onClick={onClickNickHandler}
                 />
                 {nicknameCheck === false ? (
                   <SignupCheckBtnDisabled disabled>
@@ -267,13 +318,23 @@ function SignUp() {
                 <SignupLabel>이메일</SignupLabel>
               </SignupLabelDiv>
               <InputDiv>
-                <SignupInputTwo
+                <SignupInput
                   type="email"
                   name="email"
                   placeholder="이메일을 입력하세요"
                   value={email}
                   onChange={onCheckEmailHandler}
+                  onClick={onClickEmailHandler}
                 />
+                {emailCheck === false ? (
+                  <SignupCheckBtnDisabled disabled>
+                    인증 메일 발송
+                  </SignupCheckBtnDisabled>
+                ) : (
+                  <SignupCheckBtn onClick={onCheckEmail}>
+                    인증 메일 발송
+                  </SignupCheckBtn>
+                )}
               </InputDiv>
               <SignupErrorDiv>
                 {emailCheck === false ? (
@@ -287,6 +348,25 @@ function SignUp() {
                 )}
               </SignupErrorDiv>
             </SignupDiv>
+            {isSend === true ? (
+              <SignupDiv>
+                <SignupLabelDiv>
+                  <SignupLabel>이메일 인증 번호 입력</SignupLabel>
+                </SignupLabelDiv>
+                <InputDiv>
+                  <SignupInput
+                    type="email"
+                    name="email"
+                    placeholder="인증번호를 입력하세요"
+                    value={checkAuthEmail}
+                    onChange={onCheckAuthEmailPw}
+                  />
+                  <SignupCheckBtn onClick={onCheckAuthEmailPwHandler}>
+                    인증하기
+                  </SignupCheckBtn>
+                </InputDiv>
+              </SignupDiv>
+            ) : null}
             <SignupDiv>
               <SignupLabelDiv>
                 <SignupLabel>비밀번호</SignupLabel>
@@ -298,6 +378,7 @@ function SignUp() {
                   placeholder="비밀번호를 입력하세요"
                   value={password}
                   onChange={onCheckPasswordHandler}
+                  onClick={onClickPWHandler}
                 />
               </InputDiv>
               <SignupErrorDiv>
@@ -323,6 +404,7 @@ function SignUp() {
                   placeholder="동일한 비밀번호를 입력하세요."
                   value={confirm}
                   onChange={onCheckConfirmHandler}
+                  onClick={onClickCheckHandler}
                 />
               </InputDiv>
               <SignupErrorDiv>
@@ -337,7 +419,7 @@ function SignUp() {
                 )}
               </SignupErrorDiv>
             </SignupDiv>
-            {idResponse === 200 && nicknameResponse === 200 ? (
+            {idResponse === 200 && nicknameResponse === 200 && isAuth === true? (
               <div>
                 <SingupButton
                   onClick={(e) => {
