@@ -1,12 +1,12 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { io } from 'socket.io-client'
-import angry from '../../assets/icons/angry_brown.png'
-import sad from '../../assets/icons/sad_brown.png'
-import happy from '../../assets/icons/happy_brown.png'
-import bore from '../../assets/icons/boring_brown.png'
-import embarrass from '../../assets/icons/embarrass_brown.png'
-import surprise from '../../assets/icons/surprise_brown.png'
+import angry from '../../assets/icons/angry_brown.webp'
+import sad from '../../assets/icons/sad_brown.webp'
+import happy from '../../assets/icons/happy_brown.webp'
+import bore from '../../assets/icons/boring_brown.webp'
+import embarrass from '../../assets/icons/embarrass_brown.webp'
+import surprise from '../../assets/icons/surprise_brown.webp'
 import {
   StDivChatRoomChatListContain,
   StDivChatRoomChatListWrap,
@@ -26,11 +26,12 @@ import {
   StBtnChatSubmit,
   RoomImg,
   ProfileImg,
+  StRedirectBtn,
 } from './ChatRoomSt'
-import { onGetCookieHandler, onGetLocalStorage } from '../../util/cookie'
-import Header from '../../components/header/Header'
+import { onGetLocalStorage } from '../../util/cookie'
 import { BeforeChatData, ChatData, RecieveData } from './ChatRoomArray'
 import { expireToken } from '../../api/instance'
+import Header from '../../components/header/Header'
 
 const socket = io(`${process.env.REACT_APP_SERVER}`, {
   transports: ['websocket'],
@@ -92,6 +93,7 @@ function ChatRoom() {
 
   const roomId: number = Number(id)
   const token = onGetLocalStorage('accessToken')
+
   useEffect(() => {
     if (roomId === 1) setRoomName('분노')
     setRoomImg(angry)
@@ -119,8 +121,11 @@ function ChatRoom() {
         setUserList(beforeUserList)
       })
     })
-    if (!token) return
-    socket.emit('newUser', token)
+    if (!token) {
+      socket.emit('newUser', undefined)
+    } else {
+      socket.emit('newUser', token)
+    }
     return () => {
       socket.emit('getout', token)
       disconnection()
@@ -168,9 +173,13 @@ function ChatRoom() {
   const onSubmitChattingHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
   }
-  const onChangeChatTextHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setChatText(e.target.value)
-  }
+  const onChangeChatTextHandler = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setChatText(e.target.value)
+    },
+    []
+  )
+
   const onClickSendMessageHandler = useCallback(() => {
     const noContent = chatText.trim() === ''
     if (noContent) {
@@ -189,6 +198,9 @@ function ChatRoom() {
 
   useEffect(() => {
     scrollToBottom()
+    socket.on('receiveMessage', (data) => {
+      setRecieveData([...recieveData, data])
+    })
   }, [recieveData])
 
   useEffect(() => {
@@ -199,140 +211,145 @@ function ChatRoom() {
     })
   }, [userList])
 
-  useEffect(() => {
-    socket.on('receiveMessage', (data) => {
-      setRecieveData([...recieveData, data])
-    })
-  }, [recieveData])
-
   socket.on('error', () => {
     expireToken()
   })
 
   const userName = onGetLocalStorage('nickname')
+  const navigate = useNavigate()
 
   return (
     <>
-      <div style={{ marginBottom: '140px' }}>
-        <Header />
-        <StDivRoomTitle>
-          <StDivRoomImg>
-            <RoomImg src={roomImg} />
-          </StDivRoomImg>
-          <StPRoomName>{roomName}의 방</StPRoomName>
-          <p style={{ color: '#999999' }}>
-            당신의 감정을 실시간으로 나누어보세요
-          </p>
-        </StDivRoomTitle>
-        <StDivChatRoomWrap>
-          <StDivChatRoomChatListWrap ref={scrollRef}>
-            <div ref={target}></div>
-            {beforeChatData?.map((beforeChatData) => {
-              return (
-                <div key={beforeChatData.chatId}>
-                  {beforeChatData.nickname === userName ? (
-                    <StDivChatRoomChatListContain>
-                      <StDivChatRoom>
-                        <StPChatListNickname>
-                          <span>{beforeChatData.nickname}</span>
-                        </StPChatListNickname>
-                        <StDivChatListMessage
-                          style={{ backgroundColor: '#8b7d76' }}
-                        >
-                          <span>{beforeChatData.message}</span>
-                        </StDivChatListMessage>
-                      </StDivChatRoom>
-                    </StDivChatRoomChatListContain>
-                  ) : (
-                    <StDivChatRoomChatListContain
-                      style={{
-                        margin: '0px 30px 0px auto',
-                        textAlign: 'right',
-                      }}
-                    >
-                      <StDivChatRoom>
-                        <StPChatListNickname>
-                          <span>{beforeChatData.nickname}</span>
-                        </StPChatListNickname>
-                        <StDivChatListMessage
-                          style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
-                        >
-                          <span>{beforeChatData.message}</span>
-                        </StDivChatListMessage>
-                      </StDivChatRoom>
-                    </StDivChatRoomChatListContain>
-                  )}
-                </div>
-              )
-            })}
-
-            {recieveData.map((recieveData, index) => {
-              return (
-                <div key={`${recieveData.message} + ${index}`}>
-                  {recieveData.nickname === userName ? (
-                    <StDivChatRoomChatListContain>
-                      <StDivChatRoom>
-                        <StPChatListNickname>
-                          <span>{recieveData.nickname}</span>
-                        </StPChatListNickname>
-                        <StDivChatListMessage
-                          style={{ backgroundColor: '#8b7d76' }}
-                        >
-                          <span>{recieveData.message}</span>
-                        </StDivChatListMessage>
-                      </StDivChatRoom>
-                    </StDivChatRoomChatListContain>
-                  ) : (
-                    <StDivChatRoomChatListContain
-                      style={{
-                        margin: '0px 30px 0px auto',
-                        textAlign: 'right',
-                      }}
-                    >
-                      <StDivChatRoom>
-                        <StPChatListNickname>
-                          <span>{recieveData.nickname}</span>
-                        </StPChatListNickname>
-                        <StDivChatListMessage
-                          style={{ backgroundColor: '#888888' }}
-                        >
-                          <span>{recieveData.message}</span>
-                        </StDivChatListMessage>
-                      </StDivChatRoom>
-                    </StDivChatRoomChatListContain>
-                  )}
-                </div>
-              )
-            })}
-          </StDivChatRoomChatListWrap>
-          <StDivUserList>
-            <p>참여자 인원 ({userList.length})</p>
-            {userList &&
-              userList.map((item) => {
+      {roomId > 6 ? (
+        <div style={{ margin: '50px' }}>
+          <h1>존재하지 않는 페이지입니다.</h1>
+          <StRedirectBtn onClick={() => navigate('/')}>
+            메인 화면으로 돌아가기
+          </StRedirectBtn>
+        </div>
+      ) : (
+        <>
+          <Header />
+          <StDivRoomTitle>
+            <StDivRoomImg>
+              <RoomImg src={roomImg} />
+            </StDivRoomImg>
+            <StPRoomName>{roomName}의 방</StPRoomName>
+            <p style={{ color: '#999999' }}>
+              당신의 감정을 실시간으로 나누어보세요
+            </p>
+          </StDivRoomTitle>
+          <StDivChatRoomWrap>
+            <StDivChatRoomChatListWrap ref={scrollRef}>
+              <div ref={target}></div>
+              {beforeChatData?.map((beforeChatData) => {
                 return (
-                  <StDivUserProfile key={item.nickname}>
-                    <StDivProfileImg>
-                      <ProfileImg src={item.profileUrl} />
-                    </StDivProfileImg>
-                    <StPProfileNickname>{item.nickname}</StPProfileNickname>
-                  </StDivUserProfile>
+                  <div key={beforeChatData.chatId}>
+                    {beforeChatData.nickname === userName ? (
+                      <StDivChatRoomChatListContain>
+                        <StDivChatRoom>
+                          <StPChatListNickname>
+                            <span>{beforeChatData.nickname}</span>
+                          </StPChatListNickname>
+                          <StDivChatListMessage
+                            style={{ backgroundColor: '#8b7d76' }}
+                          >
+                            <span>{beforeChatData.message}</span>
+                          </StDivChatListMessage>
+                        </StDivChatRoom>
+                      </StDivChatRoomChatListContain>
+                    ) : (
+                      <StDivChatRoomChatListContain
+                        style={{
+                          margin: '0px 30px 0px auto',
+                          textAlign: 'right',
+                        }}
+                      >
+                        <StDivChatRoom>
+                          <StPChatListNickname>
+                            <span>{beforeChatData.nickname}</span>
+                          </StPChatListNickname>
+                          <StDivChatListMessage
+                            style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
+                          >
+                            <span>{beforeChatData.message}</span>
+                          </StDivChatListMessage>
+                        </StDivChatRoom>
+                      </StDivChatRoomChatListContain>
+                    )}
+                  </div>
                 )
               })}
-          </StDivUserList>
-        </StDivChatRoomWrap>
-        <StDivChatSubmit>
-          <form onSubmit={onSubmitChattingHandler}>
-            <StInputChatSubmit
-              value={chatText}
-              onChange={onChangeChatTextHandler}
-              placeholder="채팅 입력"
-            />
-            <StBtnChatSubmit onClick={onClickSendMessageHandler}>
-              보내기
-            </StBtnChatSubmit>
-          </form>
-        </StDivChatSubmit>
-      </div>
+
+              {recieveData.map((recieveData, index) => {
+                return (
+                  <div key={`${recieveData.message} + ${index}`}>
+                    {recieveData.nickname === userName ? (
+                      <StDivChatRoomChatListContain>
+                        <StDivChatRoom>
+                          <StPChatListNickname>
+                            <span>{recieveData.nickname}</span>
+                          </StPChatListNickname>
+                          <StDivChatListMessage
+                            style={{ backgroundColor: '#8b7d76' }}
+                          >
+                            <span>{recieveData.message}</span>
+                          </StDivChatListMessage>
+                        </StDivChatRoom>
+                      </StDivChatRoomChatListContain>
+                    ) : (
+                      <StDivChatRoomChatListContain
+                        style={{
+                          margin: '0px 30px 0px auto',
+                          textAlign: 'right',
+                        }}
+                      >
+                        <StDivChatRoom>
+                          <StPChatListNickname>
+                            <span>{recieveData.nickname}</span>
+                          </StPChatListNickname>
+                          <StDivChatListMessage
+                            style={{ backgroundColor: 'rgba(0, 0, 0, 0.2)' }}
+                          >
+                            <span>{recieveData.message}</span>
+                          </StDivChatListMessage>
+                        </StDivChatRoom>
+                      </StDivChatRoomChatListContain>
+                    )}
+                  </div>
+                )
+              })}
+            </StDivChatRoomChatListWrap>
+            <StDivUserList>
+              <p>참여자 인원 ({userList.length})</p>
+              {userList &&
+                userList.map((item) => {
+                  return (
+                    <StDivUserProfile key={item.nickname}>
+                      <StDivProfileImg>
+                        <ProfileImg src={item.profileUrl} />
+                      </StDivProfileImg>
+                      <StPProfileNickname>{item.nickname}</StPProfileNickname>
+                    </StDivUserProfile>
+                  )
+                })}
+            </StDivUserList>
+          </StDivChatRoomWrap>
+          <StDivChatSubmit>
+            <form onSubmit={onSubmitChattingHandler}>
+              <StInputChatSubmit
+                value={chatText}
+                onChange={onChangeChatTextHandler}
+                placeholder="채팅 입력"
+                maxLength={50}
+              />
+              <StBtnChatSubmit onClick={onClickSendMessageHandler}>
+                보내기
+              </StBtnChatSubmit>
+            </form>
+          </StDivChatSubmit>
+        </>
+      )}
     </>
   )
 }

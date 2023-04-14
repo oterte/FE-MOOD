@@ -34,9 +34,17 @@ function Survey() {
     number10: undefined,
   })
   const [modalState, setModalState] = useState<boolean>(false)
+  const [currentSlide, setCurrentSlide] = useState<number>(0)
+  // const [currentNumber, setCurrentNumber] = useState<number>(0)
+
+  // useEffect(() => {
+  //   if(survey.number1 === Number) {
+  //     setCurrentNumber((prev) => prev + 1)
+  //   }
+  // }, [currentNumber])
+
   const slideRef = useRef<HTMLDivElement>(null)
   const containRef = useRef<HTMLDivElement>(null)
-  const [currentSlide, setCurrentSlide] = useState<number>(0)
 
   const nextSlide = () => {
     if (currentSlide < 9) setCurrentSlide(currentSlide + 1)
@@ -71,7 +79,7 @@ function Survey() {
       setModalState(!modalState)
     } else {
       alert('설문을 모두 선택해주세요!')
-    } 
+    }
   }
 
   return (
@@ -115,27 +123,20 @@ function Survey() {
             </div>
 
             <StSpanCurrentSlide> {currentSlide + 1} / 10</StSpanCurrentSlide>
-            {currentSlide !== 9 ? (
-              <>
-                <StDivCarouselWrap>
-                  <StDivMoveBtn onClick={prevSlide} color="#cdcdcd">
-                    이전 문항으로
-                  </StDivMoveBtn>
-                  <StDivMoveBtn onClick={nextSlide} color="#4b372e">
-                    다음 문항으로
-                  </StDivMoveBtn>
-                </StDivCarouselWrap>
-              </>
-            ) : (
-              <StDivCarouselWrap>
-                <StDivMoveBtn onClick={prevSlide} color="#cdcdcd">
-                  이전 문항으로
+            <StDivCarouselWrap>
+              <StDivMoveBtn onClick={prevSlide} color="#8b7d76">
+                이전 문항으로
+              </StDivMoveBtn>
+              {currentSlide !== 9 ? (
+                <StDivMoveBtn onClick={nextSlide} color="#4b372e">
+                  다음 문항으로
                 </StDivMoveBtn>
+              ) : (
                 <StDivSubmit onClick={onClickModalOpenHandler}>
                   결과 확인하기
                 </StDivSubmit>
-              </StDivCarouselWrap>
-            )}
+              )}
+            </StDivCarouselWrap>
           </form>
         </StDivSurveyWrap>
         {modalState === true ? (

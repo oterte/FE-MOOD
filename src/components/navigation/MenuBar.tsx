@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import {
   onGetLocalStorage,
   onLogoutHandler,
@@ -9,6 +9,7 @@ import {
   ChatBtn,
   H1,
   LoginMent,
+  MainBtn,
   ProfileImg,
   RecommendBtn,
   SurveyBtn,
@@ -36,19 +37,38 @@ interface Props {
 
 const MenuBar: React.FC<Props> = () => {
   const [isOpen, setIsOpen] = useState(false)
+  const location = useLocation()
 
   const toggleMenu = () => {
     setIsOpen(!isOpen)
   }
+
+  const isActivePage = (path: string) => {
+    return location.pathname === path
+  }
+
+  const onHamburgerClick = (event: React.MouseEvent) => {
+    event.stopPropagation()
+    toggleMenu()
+  }
+
   const onLogout = () => {
     onRemoveToken()
     onLogoutHandler('authorization')
   }
   const nickname = onGetLocalStorage('nickname')
   const profile = onGetLocalStorage('img')
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isOpen])
   return (
-    <MenuWrapper isOpen={isOpen}>
-      <HamburgerButton isOpen={isOpen} onClick={toggleMenu}>
+    <MenuWrapper isOpen={isOpen} onClick={isOpen ? toggleMenu : undefined}>
+      <HamburgerButton isOpen={isOpen} onClick={onHamburgerClick}>
         <img src={isOpen ? closebtn : menubtn} alt="menu_toggle" />
       </HamburgerButton>
       <MenuItems isOpen={isOpen}>
@@ -77,30 +97,39 @@ const MenuBar: React.FC<Props> = () => {
               <LoginBtn>마이페이지 바로 가기</LoginBtn>
             </Link>
           ) : null}
-          <Link to="/recommend">
-            <RecommendBtn>
+
+          <Link to="/main">
+            <MainBtn active={isActivePage('/main')}>
+              <img src={menu1} alt="main" />
+              <p>Mood</p>
+            </MainBtn>
+          </Link>
+
+          <Link to="/">
+            <RecommendBtn active={isActivePage('/')}>
               <img src={menu1} alt="recommend" />
-              기분에 따라 노래 추천받기
+              <p>기분에 따라 노래 추천받기</p>
             </RecommendBtn>
           </Link>
 
           <Link to="/composer">
-            <ComposerBtn>
+            <ComposerBtn active={isActivePage('/composer')}>
               <img src={menu2} alt="composer" />
-              작곡가별 음악 추천받기
+              <p>작곡가별 음악 추천받기</p>
             </ComposerBtn>
           </Link>
 
           <Link to="/survey">
-            <SurveyBtn>
-              <img src={menu3} alt="survey" />내 기분 상태 체크하기
+            <SurveyBtn active={isActivePage('/survey')}>
+              <img src={menu3} alt="survey" />
+              <p>내 기분 상태 체크하기</p>
             </SurveyBtn>
           </Link>
 
           <Link to="/selectroom">
-            <ChatBtn>
+            <ChatBtn active={isActivePage('/selectroom')}>
               <img src={menu4} alt="selectroom" />
-              채팅하러 가기
+              <p>채팅하러 가기</p>
             </ChatBtn>
           </Link>
 

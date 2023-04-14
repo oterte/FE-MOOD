@@ -45,19 +45,22 @@ function LikeChart({
   musicList,
 }: LikeChartProps) {
   const [visibleRange, setVisibleRange] = useState({ start: 0, end: 5 })
+  const [stopTimer, setStopTimer] = useState(false)
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setVisibleRange((prevRange) => {
-        const newIndex = prevRange.start === 0 ? 5 : 0
-        return { start: newIndex, end: newIndex + 5 }
-      })
-    }, 5000)
+    if (!stopTimer) {
+      const timer = setTimeout(() => {
+        setVisibleRange((prevRange) => {
+          const newIndex = prevRange.start === 0 ? 5 : 0
+          return { start: newIndex, end: newIndex + 5 }
+        })
+      }, 5000)
 
-    return () => {
-      clearInterval(interval)
+      return () => {
+        clearTimeout(timer)
+      }
     }
-  }, [])
+  }, [visibleRange, stopTimer])
 
   const dispatch = useDispatch()
   const onClickMusicChangeHandler = (music: Music) => {
@@ -65,35 +68,42 @@ function LikeChart({
     dispatch(setIsPlaying())
   }
 
+  const onMouseEnterHandler = () => {
+    setStopTimer(true)
+  }
+  const onMouseLeaveHandler = () => {
+    setStopTimer(false)
+  }
+
   return (
     <Wrap>
-      {musicList.length > 0 ? (
-        musicList
-          .slice(visibleRange.start, visibleRange.end)
-          .map((music, index) => (
-            <Con
-              key={music.musicId}
-              onClick={() => onClickMusicChangeHandler(music)}
-            >
-              <Chartnumber>{index + visibleRange.start + 1}</Chartnumber>
-              <ChartImg>
-                <ComposerImg src={music.imageUrl} />
-              </ChartImg>
-              <ChartTitle>{music.musicTitle}</ChartTitle>
-              <ChartComposer>{music.composer}</ChartComposer>
-              <LikeCount
-                musicId={music.musicId}
-                likeCount={music.likesCount}
-                likeStatus={
-                  musicId === music.musicId ? likeStatus : music.likeStatus
-                }
-                onLikeUpdate={onLikeUpdate}
-              />
-            </Con>
-          ))
-      ) : (
-        null
-      )}
+      {musicList.length > 0
+        ? musicList
+            .slice(visibleRange.start, visibleRange.end)
+            .map((music, index) => (
+              <Con
+                onMouseEnter={onMouseEnterHandler}
+                onMouseLeave={onMouseLeaveHandler}
+                key={music.musicId}
+                onClick={() => onClickMusicChangeHandler(music)}
+              >
+                <Chartnumber>{index + visibleRange.start + 1}</Chartnumber>
+                <ChartImg>
+                  <ComposerImg src={music.imageUrl} />
+                </ChartImg>
+                <ChartTitle>{music.musicTitle}</ChartTitle>
+                <ChartComposer>{music.composer}</ChartComposer>
+                <LikeCount
+                  musicId={music.musicId}
+                  likeCount={music.likesCount}
+                  likeStatus={
+                    musicId === music.musicId ? likeStatus : music.likeStatus
+                  }
+                  onLikeUpdate={onLikeUpdate}
+                />
+              </Con>
+            ))
+        : null}
     </Wrap>
   )
 }

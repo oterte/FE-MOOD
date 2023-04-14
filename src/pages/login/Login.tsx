@@ -1,13 +1,16 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { login } from '../../api/loginapi'
-import kakao from '../../assets/images/kakao_login_large_narrow.png'
+import kakao from '../../assets/images/kakao_login_large_wide.png'
 import Header from '../../components/header/Header'
 import jwt_Decode from 'jwt-decode'
 import { onSetCookieHandler, onSetLocalStorageHandler } from '../../util/cookie'
 import {
+  KakaoLoginBtn,
+  KakaoLoginImg,
   LoginBtn,
   LoginContainer,
+  LoginContainerForm,
   LoginInput,
   LoginInputDiv,
   LoginLabelDiv,
@@ -33,13 +36,14 @@ function Login() {
         const decodeUserInfo = JSON.stringify(jwt_Decode(authId))
         const refreshToken = res.data.refreshToken
         onSetCookieHandler('accessToken', authId)
-        onSetLocalStorageHandler("img", profileUrl)
+        onSetLocalStorageHandler('img', profileUrl)
         onSetLocalStorageHandler('accessToken', authId)
         onSetLocalStorageHandler('nickname', nickname)
         onSetLocalStorageHandler('refresh', refreshToken)
         onSetLocalStorageHandler('userInfo', decodeUserInfo)
         alert(res.data.message)
-        navigate('/recommend')
+        navigate('/')
+        alert(nickname + "님 환영합니다.")
       })
       .catch(() => {
         alert('아이디 비밀번호가 일치하지 않습니다.')
@@ -61,42 +65,47 @@ function Login() {
       <Header />
       <LoginContainer>
         <p>Log in</p>
-        <span
+        {/* <span
           onClick={() => {
             navigate('/signup')
           }}
         >
           MOOD 회원이 아니신가요?
-        </span>
-        <form>
-          <LoginLabelDiv>
-            <label>아이디</label>
-          </LoginLabelDiv>
-          <LoginInputDiv>
-            <LoginInput
-              type="text"
-              placeholder="아이디를 입력하세요."
-              name="id"
-              value={id}
-              onChange={(e) => setId(e.target.value)}
-            />
-          </LoginInputDiv>
-          <LoginLabelDiv>
-            <label>비밀번호</label>
-          </LoginLabelDiv>
-          <LoginInputDiv>
-            <LoginInput
-              type="password"
-              placeholder="비밀번호를 입력하세요"
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </LoginInputDiv>
+        </span> */}
+        <LoginContainerForm>
+          <div>
+            <LoginLabelDiv>
+              <label>아이디</label>
+            </LoginLabelDiv>
+            <LoginInputDiv>
+              <LoginInput
+                type="text"
+                placeholder="아이디를 입력하세요."
+                name="id"
+                value={id}
+                onChange={(e) => setId(e.target.value)}
+              />
+            </LoginInputDiv>
+          </div>
+          <div>
+            <LoginLabelDiv>
+              <label>비밀번호</label>
+            </LoginLabelDiv>
+            <LoginInputDiv>
+              <LoginInput
+                type="password"
+                placeholder="비밀번호를 입력하세요"
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </LoginInputDiv>
+          </div>
           <LoginBtn onClick={(e) => onClickLoginHandler(e)}>Log in</LoginBtn>
-        </form>
+          <LoginBtn onClick={() => navigate('/signup')}>Sign Up</LoginBtn>
+        </LoginContainerForm>
         <LoginSocialContainer>
-          <img
+          <KakaoLoginImg
             src={kakao}
             alt="카카오 로그인"
             onClick={() => {

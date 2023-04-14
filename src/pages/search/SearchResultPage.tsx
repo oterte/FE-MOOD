@@ -9,10 +9,9 @@ import { H3 } from '../../components/composer/ComposerListSt'
 import { ShowRepliesBtn } from './SearchBarSt'
 import Header from '../../components/header/Header'
 import Wrapper from '../../components/Wrapper'
-import Down from '../../assets/icons/down_brown.png'
-import down_outline from '../../assets/icons/down_outline.png'
 import morebtn from '../../assets/icons/morebtn.png'
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
+import play from '../../assets/icons/music_play_brown.png'
 
 import {
   ComposerDesc,
@@ -34,6 +33,7 @@ import {
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
 import { RootState } from '../../redux/config/configStore'
 import { onGetLocalStorage } from '../../util/cookie'
+import CustomAlert from '../../components/alret/CustomAlert'
 
 interface ComposerInfo {
   composerId: number
@@ -76,6 +76,8 @@ function SearchResultPage() {
   const [musicInfos, setMusicInfos] = useState<ComposerSong[] | undefined>()
   const [scrapStatus, setScrapStatus] = useState<{ [key: number]: boolean }>({})
   const [playingMusicId, setPlayingMusicId] = useState<number | null>(null)
+  const [hasSearchResult, setHasSearchResult] = useState<boolean | null>(null)
+  const [showCustomAlert, setShowCustomAlert] = useState<boolean>(false)
 
   const handlePlayClick = (
     musicId: number,
@@ -102,15 +104,22 @@ function SearchResultPage() {
   }
 
   useEffect(() => {
+    setComposerInfo(null)
+    setComposerSongs([])
+
     if (searchTerm) {
       getSearch(searchTerm).then((data) => {
         setComposerInfo(data.composerInfo)
         if (data.composer.length > 0) {
           setComposerSongs(data.composer)
+          setHasSearchResult(true)
         } else {
           setComposerSongs(data.musicTitle)
+          setHasSearchResult(data.musicTitle.length > 0)
         }
       })
+    } else {
+      setHasSearchResult(null)
     }
   }, [searchTerm])
 
@@ -140,7 +149,7 @@ function SearchResultPage() {
   const handleScrapButtonClick = async (musicId: number) => {
     const token = onGetLocalStorage('accessToken')
     if (!token) {
-      alert('로그인 후 이용 가능합니다.')
+      setShowCustomAlert(true)
       return
     }
     try {
@@ -204,8 +213,20 @@ function SearchResultPage() {
     <Wrapper>
       <Header />
       <Wrap>
-        {searchTerm && <Term>"{searchTerm}"에 대한 검색 결과입니다.</Term>}
-        <Line />
+        <CustomAlert
+          showAlert={showCustomAlert}
+          onHide={() => setShowCustomAlert(false)}
+          message="로그인 후 이용 가능합니다."
+        />
+        {searchTerm &&
+          (composerInfo || (composerSongs && composerSongs.length > 0) ? (
+            <>
+              <Term>"{searchTerm}"에 대한 검색 결과입니다.</Term>
+              <Line />
+            </>
+          ) : (
+            <p>검색어가 표시되지 않습니다.</p>
+          ))}
 
         {composerInfo && (
           <Inpo>
@@ -224,6 +245,7 @@ function SearchResultPage() {
             <div>
               <div>no</div>
               <div>곡명</div>
+              <div>재생</div>
               <div>좋아요</div>
               <div>스크랩</div>
               <div>더보기</div>
@@ -245,6 +267,18 @@ function SearchResultPage() {
                     {music.musicTitle}
                     {playingMusicId === music.musicId && <img src="" alt="" />}
                   </H3>
+                  <img
+                    onClick={() =>
+                      handlePlayClick(
+                        music.musicId,
+                        music.musicTitle,
+                        music.composer,
+                        music.musicUrl
+                      )
+                    }
+                    src={play}
+                    alt="music_play"
+                  />
                   <LikeCount
                     musicId={music.musicId}
                     likeCount={music.likeCount}
@@ -289,10 +323,6 @@ function SearchResultPage() {
               </React.Fragment>
             ))}
           </List>
-        )}
-
-        {!composerInfo && (!composerSongs || composerSongs.length === 0) && (
-          <p>검색에 대한 결과가 없습니다.</p>
         )}
       </Wrap>
     </Wrapper>

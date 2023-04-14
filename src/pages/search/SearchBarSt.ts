@@ -46,7 +46,7 @@ export const SearchInput = styled.div`
     overflow: visible;
 
     input {
-      width: 300px;
+      width: 310px;
       animation: ${fadeIn} 0.7s;
       box-shadow: 10px 10px 5px -6px rgba(133, 110, 99, 0.18);
       -webkit-box-shadow: 10px 10px 5px -6px rgba(133, 110, 99, 0.18);
@@ -150,11 +150,11 @@ export const List = styled.div`
   width: 1180px;
   height: auto;
   margin-bottom: 20rem;
-  text-align: center;
+  text-align: left;
 
   & > div {
     display: grid;
-    grid-template-columns: 1fr 5fr repeat(2, 1fr) 1fr;
+    grid-template-columns: 1.1fr 5fr 1fr 1fr 1fr 1fr;
     align-items: center;
     border-bottom: 1px solid #ddd;
     font-size: 1rem;
@@ -163,6 +163,7 @@ export const List = styled.div`
     img {
       width: 23px;
       cursor: pointer;
+      margin: auto;
     }
 
     button {

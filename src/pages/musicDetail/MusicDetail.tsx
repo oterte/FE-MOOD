@@ -14,6 +14,7 @@ import {
   Ment,
   MusicDesc,
   MusicTitle,
+  PlayBtn,
 } from './MusicDetailSt'
 import { useDispatch } from 'react-redux'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
@@ -67,6 +68,9 @@ function MusicDetail() {
         <InfoContainer>
           <MusicTitle onClick={() => onClickMusicChangeHandler(data)}>
             {data.musicTitle}
+            <PlayBtn onClick={() => onClickMusicChangeHandler(data)}>
+              음악 재생
+            </PlayBtn>
           </MusicTitle>
           <MusicDesc>{data.musicContent}</MusicDesc>
           <ComposerName>{data.composer}</ComposerName>

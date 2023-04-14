@@ -16,6 +16,7 @@ import {
 import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { BsFillPencilFill, BsCheck2All, BsTrashFill } from 'react-icons/bs'
 import { onGetLocalStorage } from '../../util/cookie'
+import { IoReturnDownForwardSharp } from 'react-icons/io5'
 
 function ReCommentsList({ reviewId }: { reviewId: number }) {
   const queryClient = useQueryClient()
@@ -129,6 +130,7 @@ function ReCommentsList({ reviewId }: { reviewId: number }) {
           if (recomment.reviewId === reviewId) {
             return (
               <ReCommentBox key={recomment.reCommentId}>
+                <IoReturnDownForwardSharp className="icon" size="20" />
                 <ReNickname>{recomment.nickname}</ReNickname>
                 <ReWriteDate>
                   {new Date(recomment.createdAt).toLocaleString()}

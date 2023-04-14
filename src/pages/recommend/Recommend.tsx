@@ -134,6 +134,13 @@ function Recommend() {
     )
   }
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0 })
+  }
+  useEffect(() => {
+    scrollToTop()
+  }, [])
+
   useEffect(() => {
     const fetchMusicList = async () => {
       const response = await getlikedMusicList()
@@ -156,75 +163,83 @@ function Recommend() {
 
   return (
     <>
-      <Wrapper>
-        <Header />
-        <StDivWrap>
-          <StDivTitle>
-            <StPTitle>듣고 싶은 음악의 영역을 클릭하세요</StPTitle>
-            <StPExplain>영역을 기반으로 색다른 음악이 추천됩니다</StPExplain>
-          </StDivTitle>
-          <StDivMoodWrap ref={targetRef} onClick={onClickcoordinateHandler}>
-            <Circle1 />
-            <Circle2 />
-            <Circle3 />
-            <Circle4 />
-            <StPVigor>생기 넘치는</StPVigor>
-            <StDivXcoordinate>
-              <StPDepress>우울한</StPDepress>
-              <StPPositive>긍정적인</StPPositive>
-            </StDivXcoordinate>
-            <StPCalm>차분한</StPCalm>
-          </StDivMoodWrap>
+      <div>
+        <Wrapper>
+          <Header />
+          <StDivWrap>
+            <StDivTitle>
+              <StPTitle>듣고 싶은 음악의 영역을 클릭하세요</StPTitle>
+              <StPExplain>영역을 기반으로 색다른 음악이 추천됩니다</StPExplain>
+            </StDivTitle>
+            <StDivMoodWrap ref={targetRef} onClick={onClickcoordinateHandler}>
+              <Circle1 />
+              <Circle2 />
+              <Circle3 />
+              <Circle4 />
+              <StPVigor>생기 넘치는</StPVigor>
+              <StDivXcoordinate>
+                <StPDepress>우울한</StPDepress>
+                <StPPositive>긍정적인</StPPositive>
+              </StDivXcoordinate>
+              <StPCalm>차분한</StPCalm>
+            </StDivMoodWrap>
 
-          <div style={{ display: 'flex', textAlign: 'center' }}>
-            <div>
-              <CenterExplain>지금 듣는 이 곡은?</CenterExplain>
-              <StDIvMusicPlayer>
-                <StDivLike>
-                  <LikeCount
+            <div style={{ display: 'flex', textAlign: 'center' }}>
+              <div>
+                <CenterExplain>지금 듣는 이 곡은?</CenterExplain>
+                <StDIvMusicPlayer>
+                  <StDivLike>
+                    <LikeCount
+                      musicId={selectMusicData?.musicId}
+                      likeCount={likeCount}
+                      likeStatus={likeStatus}
+                      onLikeUpdate={handleLikeUpdate}
+                    />
+                  </StDivLike>
+                  <StDivComposerImg>
+                    <ComposerImg src={selectMusicData.imageUrl} />
+                  </StDivComposerImg>
+                  {!selectMusicData.composer ? (
+                    <ClickBox>기분 영역을 클릭해보세요!</ClickBox>
+                  ) : (
+                    <MusicComtain>
+                      <StPMusicTitle>
+                        {selectMusicData.musicTitle}
+                      </StPMusicTitle>
+                      <StPMusicComposer>
+                        {selectMusicData.composer}
+                      </StPMusicComposer>
+                      <LikeMusic>음악이 마음에 들었다면?</LikeMusic>
+                      <MoveDetail
+                        onClick={() =>
+                          navigate(
+                            `/recommend/music/${selectMusicData?.musicId}`
+                          )
+                        }
+                      >
+                        댓글 남기기
+                      </MoveDetail>
+                    </MusicComtain>
+                  )}
+                </StDIvMusicPlayer>
+              </div>
+              <div style={{ marginLeft: 'auto' }}>
+                <CenterExplain>
+                  다른 회원들은 어떤 곡을 좋아할까요?
+                </CenterExplain>
+                <DivChartWrap>
+                  <ChartTab
                     musicId={selectMusicData?.musicId}
-                    likeCount={likeCount}
                     likeStatus={likeStatus}
+                    musicList={musicList}
                     onLikeUpdate={handleLikeUpdate}
                   />
-                </StDivLike>
-                <StDivComposerImg>
-                  <ComposerImg src={selectMusicData.imageUrl} />
-                </StDivComposerImg>
-                {!selectMusicData.composer ? (
-                  <ClickBox>기분 영역을 클릭해보세요!</ClickBox>
-                ) : (
-                  <MusicComtain>
-                    <StPMusicTitle>{selectMusicData.musicTitle}</StPMusicTitle>
-                    <StPMusicComposer>
-                      {selectMusicData.composer}
-                    </StPMusicComposer>
-                    <LikeMusic>음악이 마음에 들었다면?</LikeMusic>
-                    <MoveDetail
-                      onClick={() =>
-                        navigate(`/recommend/music/${selectMusicData?.musicId}`)
-                      }
-                    >
-                      댓글 남기기
-                    </MoveDetail>
-                  </MusicComtain>
-                )}
-              </StDIvMusicPlayer>
+                </DivChartWrap>
+              </div>
             </div>
-            <div style={{ marginLeft: 'auto' }}>
-              <CenterExplain>다른 회원들은 어떤 곡을 좋아할까요?</CenterExplain>
-              <DivChartWrap>
-                <ChartTab
-                  musicId={selectMusicData?.musicId}
-                  likeStatus={likeStatus}
-                  musicList={musicList}
-                  onLikeUpdate={handleLikeUpdate}
-                />
-              </DivChartWrap>
-            </div>
-          </div>
-        </StDivWrap>
-      </Wrapper>
+          </StDivWrap>
+        </Wrapper>
+      </div>
     </>
   )
 }

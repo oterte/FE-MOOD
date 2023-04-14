@@ -4,6 +4,9 @@ import { useNavigate } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { getSurveyMusic } from '../../api/recommendApi'
 import { AiOutlineClose } from 'react-icons/ai'
+import { setMusicPlay } from '../../redux/modules/musicPlayer'
+import { useDispatch } from 'react-redux'
+import { setIsPlaying } from '../../redux/modules/isPlaying'
 
 interface Props {
   modalState: boolean
@@ -20,6 +23,7 @@ function SurveyModal({ modalState, setModalState, status1, status2 }: Props) {
     getSurveyMusic(status1, status2)
   )
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   useEffect(() => {
     document.body.style.cssText = `
@@ -35,13 +39,15 @@ function SurveyModal({ modalState, setModalState, status1, status2 }: Props) {
     }
   })
   const onClickMoveMusicDetailPageHandler = () => {
+    dispatch(setMusicPlay(data.music))
+    dispatch(setIsPlaying())
     navigate(`/recommend/music/${data.music.musicId}`)
   }
   const onClickReSurveyHandler = () => {
     window.location.replace('/survey')
   }
-  if (isLoading) return <h1>Loading</h1>
-  if (isError) return <h1>Error 발생</h1>
+  if (isLoading) return null
+  if (isError) return null
 
   return (
     <ModalContainer>

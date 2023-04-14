@@ -8,6 +8,7 @@ import { composerList } from '../../api/composerApi'
 import LikeCount from '../like/LikeCount'
 import { scrapMusic } from '../../api/scrap'
 import morebtn from '../../assets/icons/morebtn.png'
+import play from '../../assets/icons/music_play_brown.png'
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
 
 import {
@@ -32,6 +33,7 @@ import {
 } from './ComposerListSt'
 import { RootState } from '../../redux/config/configStore'
 import { onGetLocalStorage } from '../../util/cookie'
+import CustomAlert from '../alret/CustomAlert'
 
 interface MusicInfo {
   musicId: number
@@ -58,6 +60,7 @@ const ComposerList = () => {
   const [showReplies, setShowReplies] = useState<number[]>([])
   const [scrapStatus, setScrapStatus] = useState<{ [key: number]: boolean }>({})
   const [playingMusicId, setPlayingMusicId] = useState<number | null>(null)
+  const [showCustomAlert, setShowCustomAlert] = useState<boolean>(false)
 
   const handlePlayClick = (
     musicId: number,
@@ -119,7 +122,7 @@ const ComposerList = () => {
   const handleScrapButtonClick = async (musicId: number) => {
     const token = onGetLocalStorage('accessToken')
     if (!token) {
-      alert('로그인 후 이용 가능합니다.')
+      setShowCustomAlert(true)
       return
     }
     try {
@@ -181,6 +184,11 @@ const ComposerList = () => {
 
   return (
     <Wrap>
+      <CustomAlert
+        showAlert={showCustomAlert}
+        onHide={() => setShowCustomAlert(false)}
+        message="로그인 후 이용 가능합니다."
+      />
       <Ment>작곡가별 음악을 추천받아 보세요.</Ment>
       <Contents>
         {composers.map((composerName) => (
@@ -212,6 +220,7 @@ const ComposerList = () => {
               <div>
                 <div>no</div>
                 <div>곡명</div>
+                <div>재생</div>
                 <div>좋아요</div>
                 <div>스크랩</div>
                 <div>더보기</div>
@@ -235,18 +244,31 @@ const ComposerList = () => {
                         <img src="" alt="" />
                       )}
                     </H3>
-
+                    <img
+                      onClick={() =>
+                        handlePlayClick(
+                          music.musicId,
+                          music.musicTitle,
+                          composerInfo.composer,
+                          music.musicUrl
+                        )
+                      }
+                      src={play}
+                      alt="music_play"
+                    />
                     <LikeCount
                       musicId={music.musicId}
                       likeCount={music.likeCount}
                       likeStatus={music.likeStatus}
                       onLikeUpdate={handleLikeUpdate}
                     />
-
                     <button
                       onClick={() => handleScrapButtonClick(music.musicId)}
                     >
-                      <p key={music.musicId} style={{ marginBottom:"9px", cursor:"pointer" }}>
+                      <p
+                        key={music.musicId}
+                        style={{ marginBottom: '9px', cursor: 'pointer' }}
+                      >
                         {scrapStatus[music.musicId] ? (
                           <BsBookmarkFill size="23" color="#8b7d76" />
                         ) : (
