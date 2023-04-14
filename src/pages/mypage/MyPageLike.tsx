@@ -139,7 +139,7 @@ function MyPageLike() {
             navigate('/mypageEditprofile')
           }}
         >
-          프로필 사진 변경
+          회원정보 수정
         </MyPageTabItem>
         <MyPageTabItemLast
           onClick={() => {

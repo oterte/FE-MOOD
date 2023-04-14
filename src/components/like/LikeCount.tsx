@@ -5,6 +5,8 @@ import { toggleLike } from '../../api/chart'
 import { LikeWrap } from './LikeSt'
 import { onGetCookieHandler } from '../../util/cookie'
 import CustomAlert from '../alret/CustomAlert'
+import { onGetCookieHandler, onGetLocalStorage } from '../../util/cookie'
+
 
 interface LikeCountProps {
   musicId?: number
@@ -25,7 +27,7 @@ const LikeCount: React.FC<LikeCountProps> = React.memo(
       if (!musicId) {
         return
       }
-      const token = onGetCookieHandler('accessToken')
+      const token = onGetLocalStorage('accessToken')
       if (!token) {
         setShowCustomAlert(true)
         return
