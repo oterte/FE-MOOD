@@ -234,6 +234,7 @@ export const MyPageDeleteInput = styled.input`
   height: 45px;
   background-color: #f4f4f4;
   border: 1px solid #888888;
+  padding-left: 10px;
 `
 export const MyPageDeleteBtnDiv = styled.div`
   margin-top: 50px;
