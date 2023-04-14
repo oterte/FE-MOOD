@@ -41,9 +41,7 @@ function Login() {
         onSetLocalStorageHandler('nickname', nickname)
         onSetLocalStorageHandler('refresh', refreshToken)
         onSetLocalStorageHandler('userInfo', decodeUserInfo)
-        alert(res.data.message)
         navigate('/recommend')
-        alert(nickname + "님 환영합니다.")
       })
       .catch(() => {
         alert('아이디 비밀번호가 일치하지 않습니다.')
@@ -53,25 +51,11 @@ function Login() {
   const onKakaoLoginHandler = async () => {
     window.location.href = KAKAO_AUTH_URL
   }
-
-  const onGoogleLoginHanlder = () => {
-    window.location.assign(googleLoginUrl)
-  }
-  const onNaverLoginHandler = () => {
-    window.location.href = naverLoginUrl
-  }
   return (
     <>
       <Header />
       <LoginContainer>
         <p>Log in</p>
-        {/* <span
-          onClick={() => {
-            navigate('/signup')
-          }}
-        >
-          MOOD 회원이 아니신가요?
-        </span> */}
         <LoginContainerForm>
           <div>
             <LoginLabelDiv>
@@ -114,9 +98,6 @@ function Login() {
           />
         </LoginSocialContainer>
       </LoginContainer>
-
-      {/* <button onClick={onGoogleLoginHanlder}>구글 로그인</button>
-      <button onClick={onNaverLoginHandler}>네이버 로그인</button> */}
     </>
   )
 }

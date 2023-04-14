@@ -48,7 +48,7 @@ export const LoginInputDiv = styled.div`
   margin:auto;
 `
 export const LoginInput = styled.input`
-  width: 430px;
+  width: 410px;
   height: 45px;
   background-color: #f4f4f4;
   border: 2px solid #4b372e;
