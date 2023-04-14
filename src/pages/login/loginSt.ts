@@ -54,6 +54,7 @@ export const LoginInput = styled.input`
   border: 2px solid #4b372e;
   margin-top: 10px;
   margin-bottom:25px;
+  padding-left: 10px;
 `
 export const LoginBtn = styled.button`
   width: 430px;

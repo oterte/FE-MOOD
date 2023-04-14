@@ -42,7 +42,7 @@ function Login() {
         onSetLocalStorageHandler('refresh', refreshToken)
         onSetLocalStorageHandler('userInfo', decodeUserInfo)
         alert(res.data.message)
-        navigate('/')
+        navigate('/recommend')
         alert(nickname + "님 환영합니다.")
       })
       .catch(() => {
