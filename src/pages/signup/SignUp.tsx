@@ -86,7 +86,7 @@ function SignUp() {
     setEmail(e.target.value)
 
     let regExp: RegExp =
-      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
+    /^[^\W_]+(?:\.[^\W_]{3})?@(?:[^\W_]+\.)+[A-Za-z]{3,}$/;
     if (regExp.test(e.target.value) === false) {
       setEmailMessage('올바른 이메일 형식이 아닙니다.')
       setEmailCheck(false)
