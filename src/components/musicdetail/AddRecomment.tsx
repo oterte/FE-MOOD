@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 import { useMutation, useQueryClient } from 'react-query'
 import { addRecomment } from '../../api/comments'
 import {
@@ -7,25 +7,41 @@ import {
   ReCharacters,
   ReCommentBtn,
 } from '../../pages/musicDetail/MusicDetailSt'
+import { onGetLocalStorage } from '../../util/cookie'
+import CustomAlert from '../alret/CustomAlert'
 
 function AddRecomment({ reviewId }: { reviewId: number }) {
   const [comment, setComment] = useState<string>('')
   const queryClient = useQueryClient()
+  const [showCustomAlert, setShowCustomAlert] = useState<boolean>(false)
   const mutation = useMutation(addRecomment, {
     onSuccess: () => {
       queryClient.invalidateQueries(['recomments', reviewId])
     },
   })
 
-  const onSubmitCommentHandler = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    if (comment === '') return
-    mutation.mutate({ reviewId, comment })
-    setComment('')
-  }
+  const onSubmitCommentHandler = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault()
+      const isLoggedIn = onGetLocalStorage('accessToken')
+      if (isLoggedIn === null) {
+        setShowCustomAlert(true)
+        return
+      }
+      if (comment.trim() === '') return
+      mutation.mutate({ reviewId, comment })
+      setComment('')
+    },
+    [mutation, reviewId, comment]
+  )
 
   return (
     <>
+      <CustomAlert
+        showAlert={showCustomAlert}
+        onHide={() => setShowCustomAlert(false)}
+        message="로그인 후 이용 가능합니다."
+      />
       <AddReform onSubmit={onSubmitCommentHandler}>
         <AddReCommentTextArea
           value={comment}
