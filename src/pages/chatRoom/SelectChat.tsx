@@ -1,7 +1,6 @@
 import { useNavigate } from 'react-router-dom'
-import Header from '../../components/header/Header'
 import { roomArray } from './ChatRoomArray'
-import React, { useState, useRef } from 'react'
+import { useState, useRef, useCallback } from 'react'
 import {
   StDivSelectRoomWrap,
   StPTitle,
@@ -13,6 +12,7 @@ import {
   StDivMoveRoom,
   RoomImg,
 } from './SelectChatSt'
+import Header from '../../components/header/Header'
 
 function SelectChat() {
   const navigate = useNavigate()
@@ -23,12 +23,12 @@ function SelectChat() {
     navigate(`/chatroom/${id}`)
   }
 
-  const onMouseOVerHandler = (number: number) => {
+  const onMouseOVerHandler = useCallback((number: number) => {
     setHover(number)
-  }
-  const onMouseOutHandler = () => {
+  }, [])
+  const onMouseOutHandler = useCallback(() => {
     setHover(0)
-  }
+  }, [])
 
   return (
     <>
@@ -88,4 +88,4 @@ function SelectChat() {
   )
 }
 
-export default React.memo(SelectChat)
+export default SelectChat
