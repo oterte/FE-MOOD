@@ -24,6 +24,7 @@ import {
   ExternalContainer,
   MyPageContentsContainer,
   MyPageDeleteBtn,
+  MyPageDeleteBtnDisabled,
   MyPageDeleteBtnDiv,
   MyPageDeleteDivOne,
   MyPageDeleteDivTwo,
@@ -31,6 +32,8 @@ import {
   MyPageEditBtnTwo,
   MyPageEditContainer,
   MyPageEditImg,
+  MyPageEmailBtn,
+  MyPageEmailDiv,
   MyPageImgBtnWrap,
   MyPageImgEditInput,
   MyPageInput,
@@ -60,7 +63,11 @@ import {
   onRemoveToken,
   onSetLocalStorageHandler,
 } from '../../util/cookie'
-import { checkNickname } from '../../api/signup'
+import {
+  authEmail,
+  checkAuthEmailNumber,
+  checkNickname,
+} from '../../api/signup'
 interface MyPageProps {
   items: string
 }
@@ -74,6 +81,10 @@ function MyPageTabs({ items }: MyPageProps) {
   const [currentPage, setCurrentPage] = useState(1)
   const [showDesc, setShowDesc] = useState<number>(-1)
   const [password, setPassword] = useState('')
+  const [authNumber, setAuthNmber] = useState('')
+  const [isAuth, setIsAuth] = useState(false)
+  const [isSend, setIsSend] = useState(false)
+
   const queryClient = useQueryClient()
   const likeMutation = useMutation(toggleLike, {
     onSuccess: () => {
@@ -130,15 +141,26 @@ function MyPageTabs({ items }: MyPageProps) {
   const onChangeImageHandler = () => {
     const reader = new FileReader()
     const file = imgRef.current.files[0]
-    reader.readAsDataURL(file)
-    reader.onloadend = () => {
-      setImgUrl(reader.result)
-      setImgFile(file)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('파일 크기는 최대 5MB 입니다')
+      setImgUrl(null)
+    } else {
+      reader.readAsDataURL(file)
+      reader.onloadend = () => {
+        setImgUrl(reader.result)
+        setImgFile(file)
+      }
     }
   }
   const onChangePasswordHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault()
     setPassword(e.target.value)
+  }
+  const onChangeAuthNumberHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    e.preventDefault()
+    setAuthNmber(e.target.value)
   }
   const onDeleteAccountHandler = () => {
     if (!window.confirm('정말 회원 탈퇴를 진행하시겠습니까?')) {
@@ -151,6 +173,7 @@ function MyPageTabs({ items }: MyPageProps) {
           navigate('/delete')
         })
         .catch((error) => {
+          console.log(error)
           alert(error.response.data.message)
         })
     }
@@ -171,7 +194,7 @@ function MyPageTabs({ items }: MyPageProps) {
   const onChangeNicknameHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     let regExp: RegExp = /^[^\s]{2,8}$/
-    if (regExp.test(newNickname) && newNickname !== "") {
+    if (regExp.test(newNickname) && newNickname !== '') {
       checkNickname(newNickname)
         .then(() => {
           changeMutation.mutate(newNickname)
@@ -182,9 +205,32 @@ function MyPageTabs({ items }: MyPageProps) {
         .catch((error) => {
           alert(error.response.data.message)
         })
-    }else if(regExp.test(newNickname) === false){
-      alert("닉네임은 2자리 이상, 8자리 이하여야 합니다.")
+    } else if (regExp.test(newNickname) === false) {
+      alert('닉네임은 2자리 이상, 8자리 이하여야 합니다.')
     }
+  }
+  const onSendAuthEmail = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    authEmail(password)
+      .then((res) => {
+        alert(res.data.message)
+        setIsSend(true)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+  const onCheckAuthNumber = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    checkAuthEmailNumber(password, authNumber)
+      .then((res) => {
+        alert(res.data.check.message)
+        setIsAuth(true)
+      })
+      .catch((error) => {
+        console.log(error)
+        alert(error.data.message)
+      })
   }
   if (profLoading) return <p></p>
   if (scrapLoading) return <p></p>
@@ -435,17 +481,43 @@ function MyPageTabs({ items }: MyPageProps) {
             </PTwo>
           </MyPageDeleteDivOne>
           <MyPageDeleteDivTwo>
-            <PThree>탈퇴하시려면 비밀번호를 입력해주세요.</PThree>
-            <MyPageDeleteInput
-              type="password"
-              placeholder="비밀번호를 입력해주세요"
-              value={password}
-              onChange={onChangePasswordHandler}
-            />
+            <PThree>탈퇴하시려면 이메일 인증을 하셔야 합니다.</PThree>
+            <MyPageEmailDiv>
+              <MyPageDeleteInput
+                type="text"
+                placeholder="이메일을 입력해주세요"
+                value={password}
+                onChange={onChangePasswordHandler}
+              />
+              <MyPageEmailBtn onClick={onSendAuthEmail}>
+                인증 메일 발송
+              </MyPageEmailBtn>
+            </MyPageEmailDiv>
+            <MyPageEmailDiv>
+              {isSend === true ? (
+                <div>
+                  <MyPageDeleteInput
+                    type="text"
+                    placeholder="인증번호를 입력하세요"
+                    value={authNumber}
+                    onChange={onChangeAuthNumberHandler}
+                  />
+                  <MyPageEmailBtn onClick={onCheckAuthNumber}>
+                    인증 하기
+                  </MyPageEmailBtn>
+                </div>
+              ) : null}
+            </MyPageEmailDiv>
             <MyPageDeleteBtnDiv>
-              <MyPageDeleteBtn onClick={onDeleteAccountHandler}>
-                탈퇴하기
-              </MyPageDeleteBtn>
+              {isAuth === true ? (
+                <MyPageDeleteBtn onClick={onDeleteAccountHandler}>
+                  탈퇴하기
+                </MyPageDeleteBtn>
+              ) : (
+                <MyPageDeleteBtnDisabled disabled>
+                  탈퇴하기
+                </MyPageDeleteBtnDisabled>
+              )}
             </MyPageDeleteBtnDiv>
           </MyPageDeleteDivTwo>
         </MyPageContentsContainer>

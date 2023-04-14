@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Header from '../../components/header/Header'
 import {
   MyPageGoSurvey,
@@ -9,10 +9,8 @@ import {
 } from './mypageSC'
 import {
   MyPageBottomDiv,
-  MyPageScrapTab,
   MyPageTab,
   MyPageTabItem,
-  MyPageTabItemLast,
 } from './mypagecontentsSC'
 import { useQuery } from 'react-query'
 import { showProfile } from '../../api/mypage'
@@ -82,11 +80,6 @@ function MyPage() {
             {item}
           </MyPageTabItem>
         ))}
-        {/* <MyPageTabItem className='' onClick={onToggleTab}>Scrap</MyPageTabItem>
-        <MyPageTabItem className='' onClick={onToggleTab}>Comment</MyPageTabItem>
-        <MyPageTabItem className='' onClick={onToggleTab}>Like</MyPageTabItem>
-        <MyPageTabItem className='' onClick={onToggleTab}>Edit Profile</MyPageTabItem>
-        <MyPageTabItem className='' onClick={onToggleTab}>Delete Account</MyPageTabItem> */}
       </MyPageTab>
       <MyPageTabs items={myTab} />
       <MyPageBottomDiv />

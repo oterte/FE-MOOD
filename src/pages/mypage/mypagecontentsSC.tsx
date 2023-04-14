@@ -225,6 +225,10 @@ export const MyPageDeleteDivTwo = styled.div`
   background-color: #ffffff;
   text-align: center;
 `
+export const MyPageEmailDiv = styled.div`
+  width: 100%;
+  margin-bottom: 25px;
+`
 export const MyPageDeleteInput = styled.input`
   width: 366px;
   height: 45px;
@@ -235,6 +239,17 @@ export const MyPageDeleteBtnDiv = styled.div`
   margin-top: 50px;
 
 `
+export const MyPageEmailBtn = styled.button`
+  width: 144px;
+  height: 45px;
+  background-color: #4b372e;
+  border: 1px solid #4b372e;
+  cursor: pointer;
+  color: #ffffff;
+  margin-left: 25px;
+
+`
+
 export const MyPageDeleteBtn = styled.button`
   width: 144px;
   height: 45px;
@@ -242,6 +257,14 @@ export const MyPageDeleteBtn = styled.button`
   border: 1px solid #4b372e;
   cursor: pointer;
   color: #ffffff;
+`
+export const MyPageDeleteBtnDisabled = styled.button`
+    width: 144px;
+  height: 45px;
+  background-color: gray;
+  border: none;
+  color: #ffffff;
+
 `
 export const MyPageDoneDiv = styled.div`
   width: 100%;

@@ -89,8 +89,9 @@ export const SignupInput = styled.input`
   width: 276px;
   height: 45px;
   background-color: #f4f4f4;
-  /* border: 2px solid #8b7d76; */
+  border: 2px solid #8b7d76;
   margin-bottom: 25px;
+  padding-left: 10px;
 `
 export const SignupInputTwo = styled.input`
   width: 430px;
@@ -98,6 +99,7 @@ export const SignupInputTwo = styled.input`
   background-color: #f4f4f4;
   border: 2px solid #8b7d76;
   margin-bottom: 25px;
+  padding-left: 10px;
 `
 
 export const SignupErrorSpan = styled.span`
