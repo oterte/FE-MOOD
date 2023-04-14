@@ -20,7 +20,7 @@ export const likedMusic = async (id: number) => {
   return response.data
 }
 
-export const editProfileImg = async (newProfile: any) => {
+export const editProfileImg = async (newProfile: FormData) => {
   await instance.patch('/api/user/uploadprofile', newProfile, {
     headers: {
       'Content-Type': 'multipart/form-data',

@@ -13,12 +13,6 @@ import Auth from '../pages/auth/Auth'
 import MyPage from '../pages/mypage/MyPage'
 import ChatRoom from '../pages/chatRoom/ChatRoom'
 import SelectChat from '../pages/chatRoom/SelectChat'
-import MyPageLike from '../pages/mypage/MyPageLike'
-import MyPageComment from '../pages/mypage/MyPageComment'
-import MyPageEditProfile from '../pages/mypage/MyPageEditProfile'
-import MyPageDeleteAccount from '../pages/mypage/MyPageDeleteAccount'
-import GoogleAuth from '../pages/auth/GoogleAuth'
-import NaverAuth from '../pages/auth/NaverAuth'
 import MyPageDeleteDone from '../pages/mypage/MyPageDeleteDone'
 import MusicPlayLayout from '../pages/MusicPlayLayout/MusicPlayLayout'
 
@@ -30,9 +24,6 @@ function Router() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/api/kakao/callback" element={<Auth />} />
-        <Route path="/api/google/callback" element={<GoogleAuth />} />
-        <Route path="/api/naver/callback" element={<NaverAuth />} />
-
         <Route element={<MusicPlayLayout />}>
           <Route path="/recommend" element={<Recommend />} />
           <Route path="/recommend/music/:id" element={<MusicDetail />} />
@@ -43,13 +34,6 @@ function Router() {
           <Route path="/searchresultpage" element={<SearchResultPage />} />
           <Route path="/selectroom" element={<SelectChat />} />
           <Route path="/chatroom/:id" element={<ChatRoom />} />
-          <Route path="/mypageLike" element={<MyPageLike />} />
-          <Route path="/mypageComment" element={<MyPageComment />} />
-          <Route path="/mypageEditprofile" element={<MyPageEditProfile />} />
-          <Route
-            path="/mypageDeleteaccount"
-            element={<MyPageDeleteAccount />}
-          />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/delete" element={<MyPageDeleteDone />} />
         </Route>
