@@ -160,7 +160,7 @@ export const CenterExplain = styled.p`
   font-size: 25px;
   font-family: var(--font-NotoSerifKR);
   @media screen and (max-width: 1530px) {
-    width: 500px;
+    width: 100%;
   }
 `
 export const ClickBox = styled.p`
