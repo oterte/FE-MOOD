@@ -189,7 +189,11 @@ function Recommend() {
 
             <CenterContain>
               <MusicPlayWrap>
-                <CenterExplain>지금 듣는 이 곡은?</CenterExplain>
+                <CenterExplain>
+                  {selectMusicData.composer
+                    ? '지금 듣는 이 곡은?'
+                    : '기분 영역을 클릭해보세요!'}
+                </CenterExplain>
                 <StDIvMusicPlayer>
                   <StDivLike>
                     <LikeCount

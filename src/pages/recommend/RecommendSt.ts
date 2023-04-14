@@ -139,6 +139,7 @@ export const MusicPlayWrap = styled.div`
 `
 export const StDIvMusicPlayer = styled.div`
   width: 100%;
+  min-width: 480px;
   height: 582px;
   border: 1px solid #d6d6d6;
   box-sizing: border-box;
@@ -178,7 +179,7 @@ export const MusicContain = styled.div`
   position: relative;
 `
 export const StPMusicTitle = styled.p`
-  width: 480px;
+  width: 400px;
   font-size: 20px;
   margin: 22px auto 5px auto;
 `
