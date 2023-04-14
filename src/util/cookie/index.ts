@@ -21,7 +21,7 @@ export const onSetLocalStorageHandler = (
   return localStorage.setItem(name, decodedUserInfo)
 }
 
-export const onLogoutHandler = (name:string) => {
+export const onLogoutHandler = () => {
     document.cookie.split(";").forEach((c) => {
       document.cookie = c
         .replace(/^ +/, "")
@@ -31,7 +31,7 @@ export const onLogoutHandler = (name:string) => {
     window.location.assign('/')
 }
 
-export const onDeletetHandler = (name:string) => {
+export const onDeletetHandler = () => {
   document.cookie.split(";").forEach((c) => {
     document.cookie = c
       .replace(/^ +/, "")

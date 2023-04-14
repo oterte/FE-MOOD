@@ -18,7 +18,6 @@ const musicSlice = createSlice({
   initialState,
   reducers: {
     setMusicPlay: (state, action) => {
-      console.log(action)
       state.imageUrl = action.payload.imageUrl
       state.musicTitle = action.payload.musicTitle
       state.composer = action.payload.composer

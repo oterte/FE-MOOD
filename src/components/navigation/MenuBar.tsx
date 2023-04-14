@@ -54,7 +54,7 @@ const MenuBar: React.FC<Props> = () => {
 
   const onLogout = () => {
     onRemoveToken()
-    onLogoutHandler('authorization')
+    onLogoutHandler()
   }
   const nickname = onGetLocalStorage('nickname')
   const profile = onGetLocalStorage('img')
