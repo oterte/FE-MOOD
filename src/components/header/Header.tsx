@@ -12,7 +12,7 @@ function Header() {
       </Left>
 
       <Center>
-        <Link to="/" style={{ textDecoration: 'none' }}>
+        <Link to="/recommend" style={{ textDecoration: 'none' }}>
           <H1>MOOD</H1>
         </Link>
       </Center>

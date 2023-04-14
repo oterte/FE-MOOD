@@ -91,7 +91,7 @@ const Main: React.FC = () => {
         </Explain>
         {!onGetLocalStorage('accessToken') ? (
           <MoveBtn onClick={() => navigate('/login')}>로그인</MoveBtn>
-        ) : <MoveBtn onClick={() => navigate('/')}>음악 감상하러 가기</MoveBtn>}
+        ) : <MoveBtn onClick={() => navigate('/recommend')}>음악 감상하러 가기</MoveBtn>}
         <Scroll>
           scroll &nbsp;
           <HiArrowLongDown />
@@ -274,7 +274,7 @@ const Main: React.FC = () => {
           }
         )}
       </ScrollBtn>
-      <MoveRecommendPage onClick={() => navigate('/')}>
+      <MoveRecommendPage onClick={() => navigate('/recommend')}>
         음악 <br />
         감상하러
         <br />
