@@ -24,7 +24,7 @@ export const Con = styled.div`
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 350px;
+  height: 420px;
   background: #4b372e;
   box-shadow: 8px 8px 5px -3px rgba(75, 55, 46, 0.27);
   -webkit-box-shadow: 8px 8px 5px -3px rgba(75, 55, 46, 0.27);
@@ -41,7 +41,7 @@ export const ComposerImg = styled.img`
   width: 220px;
   height: 220px;
   border-radius: 50%;
-  margin-right: 5rem;
+  margin-right: 3rem;
   cursor: pointer;
 `
 export const MusicTitle = styled.h3`
@@ -65,6 +65,19 @@ export const ComposerName = styled.h3`
   font-size: 1rem;
   text-align: left;
   cursor: pointer;
+`
+
+export const PlayBtn = styled.button`
+  width: 150px;
+  height: 40px;
+  cursor: pointer;
+  background: none;
+  color: white;
+  border: 2px solid #d1d1d1;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-left: 50px;
 `
 
 export const CommentsWrap = styled.div`
@@ -317,8 +330,14 @@ export const ShowRepliesBtn = styled.button`
 `
 
 export const ReCommentsListWrap = styled.div`
-  background: #fafafa;
-  width: 100%;
+  background: #f7f6f5;
+  width: 95.8%;
+  padding-left: 2.5rem;
+
+  .icon {
+    position: absolute;
+    left: 20px;
+  }
 `
 export const ReDeleteBtn = styled.button`
   position: absolute;

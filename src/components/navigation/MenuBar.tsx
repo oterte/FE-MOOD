@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import {
   onGetLocalStorage,
@@ -9,6 +9,7 @@ import {
   ChatBtn,
   H1,
   LoginMent,
+  MainBtn,
   ProfileImg,
   RecommendBtn,
   SurveyBtn,
@@ -57,6 +58,14 @@ const MenuBar: React.FC<Props> = () => {
   }
   const nickname = onGetLocalStorage('nickname')
   const profile = onGetLocalStorage('img')
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isOpen])
   return (
     <MenuWrapper isOpen={isOpen} onClick={isOpen ? toggleMenu : undefined}>
       <HamburgerButton isOpen={isOpen} onClick={onHamburgerClick}>
@@ -88,8 +97,16 @@ const MenuBar: React.FC<Props> = () => {
               <LoginBtn>마이페이지 바로 가기</LoginBtn>
             </Link>
           ) : null}
-          <Link to="/recommend">
-            <RecommendBtn active={isActivePage('/recommend')}>
+
+          <Link to="/main">
+            <MainBtn active={isActivePage('/main')}>
+              <img src={menu1} alt="main" />
+              <p>Mood</p>
+            </MainBtn>
+          </Link>
+
+          <Link to="/">
+            <RecommendBtn active={isActivePage('/')}>
               <img src={menu1} alt="recommend" />
               <p>기분에 따라 노래 추천받기</p>
             </RecommendBtn>

@@ -8,6 +8,8 @@ import {
   CommentBtn,
   Hr,
 } from '../../pages/musicDetail/MusicDetailSt'
+import { onGetLocalStorage } from '../../util/cookie'
+import CustomAlert from '../alret/CustomAlert'
 
 interface Props {
   musicId: number
@@ -15,6 +17,8 @@ interface Props {
 
 function AddComment({ musicId }: Props) {
   const [review, setReview] = useState('')
+  const [showCustomAlert, setShowCustomAlert] = useState<boolean>(false)
+
   const queryClient = useQueryClient()
   const mutation = useMutation(addComment, {
     onSuccess: () => {
@@ -25,7 +29,12 @@ function AddComment({ musicId }: Props) {
   const onSubmitHandler = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault()
-      if (review === '') return
+      const isLoggedIn = onGetLocalStorage('accessToken')
+      if (isLoggedIn === null) {
+        setShowCustomAlert(true)
+        return
+      }
+      if (review.trim() === '') return
       mutation.mutate({ musicId, review })
       setReview('')
     },
@@ -34,6 +43,11 @@ function AddComment({ musicId }: Props) {
 
   return (
     <>
+      <CustomAlert
+        showAlert={showCustomAlert}
+        onHide={() => setShowCustomAlert(false)}
+        message="로그인 후 이용 가능합니다."
+      />
       <Addform onSubmit={onSubmitHandler}>
         <AddCommentTextArea
           value={review}

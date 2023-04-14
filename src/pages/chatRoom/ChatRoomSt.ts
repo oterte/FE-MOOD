@@ -1,5 +1,15 @@
 import styled from 'styled-components'
 
+export const StRedirectBtn = styled.div`
+  width: 180px;
+  height: 50px;
+  text-align: center;
+  border-radius: 10px;
+  background-color: #8b7d76;
+  line-height: 50px;
+  color: #efefef;
+  cursor: pointer;
+`
 export const StDivRoomTitle = styled.div`
   width: 1260px;
   height: 250px;
@@ -82,9 +92,10 @@ export const StDivChatListMessage = styled.div`
   max-width: 343px;
   min-width: 100px;
   color: #ffffff;
-  line-height: 45px;
+  line-height: 30px;
   padding: 0px 20px;
   border-radius: 10px;
+  padding: 10px 10px;
 `
 export const StDivChatSubmit = styled.div`
   width: 1260px;
@@ -103,6 +114,7 @@ export const StInputChatSubmit = styled.input`
   border: 1px solid #8b7d76;
   box-sizing: border-box;
   margin-left: 21px;
+  padding-left: 15px;
 `
 export const StBtnChatSubmit = styled.button`
   width: 125px;

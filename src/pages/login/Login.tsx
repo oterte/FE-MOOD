@@ -42,7 +42,8 @@ function Login() {
         onSetLocalStorageHandler('refresh', refreshToken)
         onSetLocalStorageHandler('userInfo', decodeUserInfo)
         alert(res.data.message)
-        navigate('/recommend')
+        navigate('/')
+        alert(nickname + "님 환영합니다.")
       })
       .catch(() => {
         alert('아이디 비밀번호가 일치하지 않습니다.')

@@ -36,7 +36,7 @@ function ChartTab({
           <OrderBtn
             style={{
               backgroundColor: activeTab === 'like' ? '#4B372E' : '#f5f5f5',
-              color: activeTab === 'like' ? '#EFEFEF' : '#888888',
+              color: activeTab === 'like' ? '#EFEFEF' : 'black',
             }}
             onClick={() => setActiveTab('like')}
           >
@@ -45,7 +45,7 @@ function ChartTab({
           <OrderBtn
             style={{
               backgroundColor: activeTab === 'stream' ? '#4B372E' : '#f5f5f5',
-              color: activeTab === 'stream' ? '#EFEFEF' : '#888888',
+              color: activeTab === 'stream' ? '#EFEFEF' : 'black',
             }}
             onClick={() => setActiveTab('stream')}
           >

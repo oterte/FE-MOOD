@@ -26,7 +26,7 @@ function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Main />} />
+        <Route path="/main" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/api/kakao/callback" element={<Auth />} />
@@ -34,7 +34,7 @@ function Router() {
         <Route path="/api/naver/callback" element={<NaverAuth />} />
 
         <Route element={<MusicPlayLayout />}>
-          <Route path="/recommend" element={<Recommend />} />
+          <Route path="/" element={<Recommend />} />
           <Route path="/recommend/music/:id" element={<MusicDetail />} />
           <Route path="/composer" element={<Composer />} />
           <Route path="/musicpost" element={<MusicPost />} />

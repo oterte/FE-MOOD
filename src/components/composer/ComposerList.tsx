@@ -33,6 +33,7 @@ import {
 } from './ComposerListSt'
 import { RootState } from '../../redux/config/configStore'
 import { onGetLocalStorage } from '../../util/cookie'
+import CustomAlert from '../alret/CustomAlert'
 
 interface MusicInfo {
   musicId: number
@@ -59,6 +60,7 @@ const ComposerList = () => {
   const [showReplies, setShowReplies] = useState<number[]>([])
   const [scrapStatus, setScrapStatus] = useState<{ [key: number]: boolean }>({})
   const [playingMusicId, setPlayingMusicId] = useState<number | null>(null)
+  const [showCustomAlert, setShowCustomAlert] = useState<boolean>(false)
 
   const handlePlayClick = (
     musicId: number,
@@ -120,7 +122,7 @@ const ComposerList = () => {
   const handleScrapButtonClick = async (musicId: number) => {
     const token = onGetLocalStorage('accessToken')
     if (!token) {
-      alert('로그인 후 이용 가능합니다.')
+      setShowCustomAlert(true)
       return
     }
     try {
@@ -182,6 +184,11 @@ const ComposerList = () => {
 
   return (
     <Wrap>
+      <CustomAlert
+        showAlert={showCustomAlert}
+        onHide={() => setShowCustomAlert(false)}
+        message="로그인 후 이용 가능합니다."
+      />
       <Ment>작곡가별 음악을 추천받아 보세요.</Ment>
       <Contents>
         {composers.map((composerName) => (
