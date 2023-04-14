@@ -40,7 +40,7 @@ function SearchBar() {
       <SearchInput className={showInput ? 'show' : ''}>
         <input
           type="text"
-          placeholder="작곡가, 곡명, 감정을 검색해 보세요.   ex) 우울, 활기"
+          placeholder="작곡가, 곡명, 감정을 검색해 보세요."
           style={{ paddingLeft: '1.4rem', fontSize: '0.9rem' }}
           value={searchTerm}
           onChange={onChangeHandler}
