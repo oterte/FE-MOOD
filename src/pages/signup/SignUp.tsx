@@ -1,5 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
-
+import React, { useState, useEffect } from 'react'
 import {
   SignupContainer,
   SignupInput,
@@ -18,7 +17,6 @@ import {
   SignupCheckBtnDisabled,
   TitleDiv,
 } from './singup'
-
 import {
   authEmail,
   checkAuthEmailNumber,
@@ -88,7 +86,7 @@ function SignUp() {
     setEmail(e.target.value)
 
     let regExp: RegExp =
-    /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i
     if (regExp.test(e.target.value) === false) {
       setEmailMessage('올바른 이메일 형식이 아닙니다.')
       setEmailCheck(false)
@@ -156,7 +154,6 @@ function SignUp() {
         setIsAuth(true)
       })
       .catch((error) => {
-        console.log(error)
         alert(error.response.data.message)
       })
   }
@@ -178,7 +175,7 @@ function SignUp() {
       nicknameCheck &&
       emailCheck &&
       passwordCheck &&
-      confirmCheck && 
+      confirmCheck &&
       isAuth
     ) {
       register(body)
@@ -419,7 +416,9 @@ function SignUp() {
                 )}
               </SignupErrorDiv>
             </SignupDiv>
-            {idResponse === 200 && nicknameResponse === 200 && isAuth === true? (
+            {idResponse === 200 &&
+            nicknameResponse === 200 &&
+            isAuth === true ? (
               <div>
                 <SingupButton
                   onClick={(e) => {

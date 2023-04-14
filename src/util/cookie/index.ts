@@ -21,17 +21,17 @@ export const onSetLocalStorageHandler = (
   return localStorage.setItem(name, decodedUserInfo)
 }
 
-export const onLogoutHandler = (name:string) => {
+export const onLogoutHandler = () => {
     document.cookie.split(";").forEach((c) => {
       document.cookie = c
         .replace(/^ +/, "")
         .replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`);
     });
     window.location.reload()
-    window.location.assign('/')
+    window.location.assign('/recommend')
 }
 
-export const onDeletetHandler = (name:string) => {
+export const onDeletetHandler = () => {
   document.cookie.split(";").forEach((c) => {
     document.cookie = c
       .replace(/^ +/, "")

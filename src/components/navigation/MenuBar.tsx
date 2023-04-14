@@ -54,7 +54,7 @@ const MenuBar: React.FC<Props> = () => {
 
   const onLogout = () => {
     onRemoveToken()
-    onLogoutHandler('authorization')
+    onLogoutHandler()
   }
   const nickname = onGetLocalStorage('nickname')
   const profile = onGetLocalStorage('img')
@@ -105,7 +105,7 @@ const MenuBar: React.FC<Props> = () => {
             </MainBtn>
           </Link>
 
-          <Link to="/">
+          <Link to="/recommend">
             <RecommendBtn active={isActivePage('/recommend')}>
               <img src={menu1} alt="recommend" />
               <p>기분에 따라 노래 추천받기</p>
