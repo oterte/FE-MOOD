@@ -70,7 +70,6 @@ export const StPCalm = styled.p`
 export const Circle1 = styled.div`
   width: 160px;
   height: 160px;
-  border: 50%;
   border-radius: 50%;
   position: absolute;
   left: 60%;
@@ -80,7 +79,6 @@ export const Circle1 = styled.div`
 export const Circle2 = styled.div`
   width: 130px;
   height: 130px;
-  border: 50%;
   border-radius: 50%;
   position: absolute;
   left: 70%;
@@ -90,7 +88,6 @@ export const Circle2 = styled.div`
 export const Circle3 = styled.div`
   width: 80px;
   height: 80px;
-  border: 50%;
   border-radius: 50%;
   position: absolute;
   top: 200px;
@@ -100,7 +97,6 @@ export const Circle3 = styled.div`
 export const Circle4 = styled.div`
   width: 100px;
   height: 100px;
-  border: 50%;
   border-radius: 50%;
   position: absolute;
   top: 500px;
@@ -112,6 +108,7 @@ export const StDivMoodWrap = styled.div`
   min-width: 600px;
   height: 700px;
   border: 1px solid #d6d6d6;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -127,7 +124,7 @@ export const CenterContain = styled.div`
     width: 100%;
     margin: auto;
   }
-  width: 600px;
+  width: 100%;
   display: flex;
   text-align: center;
   flex-direction: row;
@@ -137,7 +134,7 @@ export const MusicPlayWrap = styled.div`
     width: 600px;
     margin: auto;
   }
-  width: 100%;
+  width: 592px;
 `
 export const StDIvMusicPlayer = styled.div`
   width: 100%;
@@ -147,8 +144,8 @@ export const StDIvMusicPlayer = styled.div`
   background-color: #ffffff;
 `
 export const DivChartWrap = styled.div`
+  width: 746px;
   margin-left: auto;
-  width: 50%;
   @media screen and (max-width: 1530px) {
     margin: auto;
     width: 100%;
@@ -158,10 +155,13 @@ export const DivChartWrap = styled.div`
   }
 `
 export const CenterExplain = styled.p`
-  width: 500px;
+  width: 100%;
   margin: 40px 0px;
   font-size: 25px;
   font-family: var(--font-NotoSerifKR);
+  @media screen and (max-width: 1530px) {
+    width: 500px;
+  }
 `
 export const ClickBox = styled.p`
   font-size: 25px;
@@ -203,9 +203,13 @@ export const MoveDetail = styled.div`
 export const DivChartContain = styled.div`
   width: 746px;
   height: 582px;
+  margin-left: auto;
   border: 1px solid #d6d6d6;
   box-sizing: border-box;
   background-color: #ffffff;
+  @media screen and (max-width: 1530px) {
+    margin-left: 0px;
+  }
 `
 export const AudioDiv = styled.div`
   margin-top: 20px;
