@@ -14,6 +14,7 @@ import {
   Ment,
   MusicDesc,
   MusicTitle,
+  PlayBtn,
 } from './MusicDetailSt'
 import { useDispatch } from 'react-redux'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
@@ -63,21 +64,16 @@ function MusicDetail() {
       <Header />
       <Ment>다른 회원들과 음악 감상평을 공유해 보세요.</Ment>
       <Con>
-        <ComposerImg
-          src={composer}
-          alt={`${data.composer} 이미지`}
-          onClick={() => onClickMusicChangeHandler(data)}
-        />
+        <ComposerImg src={composer} alt={`${data.composer} 이미지`} />
         <InfoContainer>
           <MusicTitle onClick={() => onClickMusicChangeHandler(data)}>
             {data.musicTitle}
+            <PlayBtn onClick={() => onClickMusicChangeHandler(data)}>
+              음악 재생
+            </PlayBtn>
           </MusicTitle>
-          <MusicDesc onClick={() => onClickMusicChangeHandler(data)}>
-            {data.musicContent}
-          </MusicDesc>
-          <ComposerName onClick={() => onClickMusicChangeHandler(data)}>
-            {data.composer}
-          </ComposerName>
+          <MusicDesc>{data.musicContent}</MusicDesc>
+          <ComposerName>{data.composer}</ComposerName>
         </InfoContainer>
       </Con>
 

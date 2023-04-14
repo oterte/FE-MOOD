@@ -111,7 +111,7 @@ export const LoginBtn = styled.button`
   text-align: center;
 `
 
-export const RecommendBtn = styled.button<{ active?: boolean }>`
+export const MainBtn = styled.button<{ active?: boolean }>`
   position: absolute;
   top: 480px;
   width: 100%;
@@ -154,9 +154,52 @@ export const RecommendBtn = styled.button<{ active?: boolean }>`
   `}
 `
 
-export const ComposerBtn = styled.button<{ active?: boolean }>`
+export const RecommendBtn = styled.button<{ active?: boolean }>`
   position: absolute;
   top: 550px;
+  width: 100%;
+  height: 70px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 18px;
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+
+  img {
+    position: absolute;
+    left: 10%;
+    width: 40px;
+  }
+
+  p {
+    position: absolute;
+    left: 22%;
+    top: 9px;
+  }
+
+  ${({ active }) =>
+    active &&
+    `
+    background-color: #b3a69f;
+    color: white;
+    font-weight: 900;
+    width:100%;
+    height: 70px;
+  `}
+`
+
+export const ComposerBtn = styled.button<{ active?: boolean }>`
+  position: absolute;
+  top: 620px;
   left: 50%;
   transform: translate(-50%, 0%);
   width: 100%;
@@ -200,7 +243,7 @@ export const ComposerBtn = styled.button<{ active?: boolean }>`
 `
 export const SurveyBtn = styled.button<{ active?: boolean }>`
   position: absolute;
-  top: 620px;
+  top: 690px;
   left: 50%;
   transform: translate(-50%, 0%);
   width: 100%;
@@ -244,7 +287,7 @@ export const SurveyBtn = styled.button<{ active?: boolean }>`
 `
 export const ChatBtn = styled.button<{ active?: boolean }>`
   position: absolute;
-  top: 690px;
+  top: 760px;
   left: 50%;
   transform: translate(-50%, 0%);
   width: 100%;
@@ -294,7 +337,7 @@ export const LogoutBtn = styled.button`
   background: none;
   text-align: right;
   font-size: 1.1rem;
-  margin-top: 790px;
+  margin-top: 870px;
   margin-left: 70px;
   color: #888888;
 `

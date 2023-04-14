@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import Heart from '../../assets/icons/Heart_brown.png'
 import FillHeart from '../../assets/icons/Heart_fill_brown.png'
 import { toggleLike } from '../../api/chart'
 import { LikeWrap } from './LikeSt'
+import { onGetCookieHandler } from '../../util/cookie'
+import CustomAlert from '../alret/CustomAlert'
 import { onGetCookieHandler, onGetLocalStorage } from '../../util/cookie'
+
 
 interface LikeCountProps {
   musicId?: number
@@ -18,13 +21,15 @@ interface LikeCountProps {
 
 const LikeCount: React.FC<LikeCountProps> = React.memo(
   ({ musicId, likeCount, likeStatus, onLikeUpdate }) => {
-    const handleLikeButtonClick = async () => {
+    const [showCustomAlert, setShowCustomAlert] = useState<boolean>(false)
+
+    const handleLikeButtonClick = useCallback(async () => {
       if (!musicId) {
         return
       }
       const token = onGetLocalStorage('accessToken')
       if (!token) {
-        alert('로그인 후 이용 가능합니다.')
+        setShowCustomAlert(true)
         return
       }
       const newIsLiked = !likeStatus
@@ -35,24 +40,32 @@ const LikeCount: React.FC<LikeCountProps> = React.memo(
       } catch (error) {
         console.error(error)
       }
-    }
+    }, [musicId, likeCount, likeStatus, onLikeUpdate])
 
     const likeImage = likeStatus ? FillHeart : Heart
 
     return (
-      <LikeWrap>
-        <img
-          src={likeImage}
-          alt={likeStatus ? 'liked' : 'unliked'}
-          onClick={handleLikeButtonClick}
-          style={{ width: '25px', height: '25px' }}
+      <>
+        <CustomAlert
+          showAlert={showCustomAlert}
+          onHide={() => setShowCustomAlert(false)}
+          message="로그인 후 이용 가능합니다."
         />
-        {/* {likeCount > 0 && <span>{likeCount}</span>} */}
-      </LikeWrap>
+        <LikeWrap>
+          <img
+            src={likeImage}
+            alt={likeStatus ? 'liked' : 'unliked'}
+            onClick={handleLikeButtonClick}
+            style={{ width: '25px', height: '25px' }}
+          />
+          {likeCount > 0 && <span>{likeCount}</span>}
+        </LikeWrap>
+      </>
     )
   },
   (prevProps, nextProps) => {
     return (
+      prevProps.musicId === nextProps.musicId &&
       prevProps.likeCount === nextProps.likeCount &&
       prevProps.likeStatus === nextProps.likeStatus
     )
