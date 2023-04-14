@@ -98,15 +98,15 @@ const MenuBar: React.FC<Props> = () => {
             </Link>
           ) : null}
 
-          <Link to="/main">
-            <MainBtn active={isActivePage('/main')}>
+          <Link to="/">
+            <MainBtn active={isActivePage('/')}>
               <img src={menu1} alt="main" />
               <p>Mood</p>
             </MainBtn>
           </Link>
 
           <Link to="/">
-            <RecommendBtn active={isActivePage('/')}>
+            <RecommendBtn active={isActivePage('/recommend')}>
               <img src={menu1} alt="recommend" />
               <p>기분에 따라 노래 추천받기</p>
             </RecommendBtn>
