@@ -20,11 +20,9 @@ function Auth() {
         onSetLocalStorageHandler('accessToken', token)
         onSetLocalStorageHandler('nickname', nickname)
         onSetLocalStorageHandler('userInfo', decodeUserInfo)
-        alert(r.data.message)
         navigate('/')
       })
       .catch((err) => {
-        alert(err.response.data.message)
         navigate('/login')
       })
   }, [])

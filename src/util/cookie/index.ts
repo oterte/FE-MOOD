@@ -28,7 +28,7 @@ export const onLogoutHandler = () => {
         .replace(/=.*/, `=;expires=${new Date().toUTCString()};path=/`);
     });
     window.location.reload()
-    window.location.assign('/')
+    window.location.assign('/recommend')
 }
 
 export const onDeletetHandler = () => {
