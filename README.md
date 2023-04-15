@@ -110,7 +110,7 @@ ERD 사진
 | 곽승민 | Back End | https://github.com/UkTheBlood |
 
 
-# 💻FE Role
+# 👩‍💻FE Role
 
 
 | 이재욱👑 | 이인영 | 김명주 |
