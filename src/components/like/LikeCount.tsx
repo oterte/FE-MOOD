@@ -49,6 +49,7 @@ const LikeCount: React.FC<LikeCountProps> = React.memo(
           showAlert={showCustomAlert}
           onHide={() => setShowCustomAlert(false)}
           message="로그인 후 이용 가능합니다."
+          loginState={true}
         />
         <LikeWrap>
           <img

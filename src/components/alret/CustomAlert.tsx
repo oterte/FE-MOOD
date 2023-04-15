@@ -7,18 +7,19 @@ import {
   LoginButton,
 } from './CustomAlertSt'
 import { Link } from 'react-router-dom'
-import { FcLock } from 'react-icons/fc'
 
 interface CustomAlertProps {
   showAlert: boolean
   onHide: () => void
   message: string
+  loginState: boolean
 }
 
 const CustomAlert: React.FC<CustomAlertProps> = ({
   showAlert,
   onHide,
   message,
+  loginState,
 }) => {
   useEffect(() => {
     if (showAlert) {
@@ -33,16 +34,19 @@ const CustomAlert: React.FC<CustomAlertProps> = ({
       className={`custom-alert${showAlert ? ' show' : ''}`}
       onClick={onHide}
     >
-      {' '}
       <AlertContent>
         <p>{message}</p>
         <Btn>
-          <Link to="/login" style={{ textDecoration: 'none' }}>
-            <LoginButton>
-              <FcLock size="28" className="icon" /> &nbsp; 로그인
-            </LoginButton>
-          </Link>
-          <CloseButton>닫기</CloseButton>
+          {loginState ? (
+            <>
+              <Link to="/login" style={{ textDecoration: 'none' }}>
+                <LoginButton>로그인</LoginButton>
+              </Link>
+              <CloseButton>닫기</CloseButton>
+            </>
+          ) : (
+            <CloseButton>닫기</CloseButton>
+          )}
         </Btn>
       </AlertContent>
     </AlertWrapper>

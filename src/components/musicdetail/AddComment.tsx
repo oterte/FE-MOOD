@@ -6,7 +6,6 @@ import {
   Addform,
   Characters,
   CommentBtn,
-  Hr,
   AddFromWrap,
   InputAreaBottom,
 } from '../../pages/musicDetail/MusicDetailSt'
@@ -49,6 +48,7 @@ function AddComment({ musicId }: Props) {
         showAlert={showCustomAlert}
         onHide={() => setShowCustomAlert(false)}
         message="로그인 후 이용 가능합니다."
+        loginState={true}
       />
       <AddFromWrap>
         <Addform onSubmit={onSubmitHandler}>

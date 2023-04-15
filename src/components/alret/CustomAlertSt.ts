@@ -52,7 +52,7 @@ export const LoginButton = styled.button`
   border-radius: 5px;
   margin-right: 10px;
   border: none;
-  background: #e6c177;
+  background: #4b372e;
   color: white;
   line-height: 50px;
 
@@ -65,7 +65,7 @@ export const LoginButton = styled.button`
 
 export const CloseButton = styled.button`
   background-color: white;
-  color: white;
+  color: #333333;
   font-weight: bold;
   cursor: pointer;
   background: #bdbdbd;
