@@ -8,6 +8,9 @@ export const StDivSurveyWrap = styled.div`
   width: 1260px;
   margin: auto;
   text-align: center;
+  @media screen and (max-width: 1260px) {
+    width: 700px;
+  }
 `
 export const StSpanSurveyTitle = styled.span`
   width: 500px;
@@ -21,9 +24,16 @@ export const StPSurveyExplanation = styled.p`
   margin: 20px auto 40px auto;
   color: #888888;
 `
+export const StDivCarouselWrap = styled.div`
+  width: 1280px;
+  overflow: hidden;
+  @media screen and (max-width: 1260px) {
+    width: 700px;
+    margin: auto;
+  }
+`
 export const StDivSlide = styled.div`
   display: inline-flex;
-  flex-wrap: nowrap;
 `
 export const StDIvPointWrap = styled.div`
   width: 1260px;
@@ -32,6 +42,9 @@ export const StDIvPointWrap = styled.div`
   border: 1px solid #d0d9d9;
   background-color: #fefefe;
   box-sizing: border-box;
+  @media screen and (max-width: 1260px) {
+    width: 700px;
+  }
 `
 export const StPSurveyQuestion = styled.p`
   margin-top: 66px;
@@ -41,6 +54,9 @@ export const StDivAnswer = styled.div`
   display: flex;
   width: 700px;
   margin: auto;
+  @media screen and (max-width: 1260px) {
+    width: 600px;
+  }
 `
 export const StPAnswerLeft = styled.p`
   margin-right: auto;
@@ -49,7 +65,7 @@ export const StPAnswerLeft = styled.p`
 export const StPAnswerRight = styled.p`
   color: #888888;
 `
-export const StDivCarouselWrap = styled.div`
+export const StDivCarouselBtn = styled.div`
   margin: 20px auto;
   width: 330px;
   height: 100px;

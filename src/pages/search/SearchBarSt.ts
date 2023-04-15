@@ -147,7 +147,8 @@ export const List = styled.div`
   position: relative;
   text-align: center;
   background: #fefefe;
-  width: 1180px;
+  width: 100%;
+  min-width: 700px;
   height: auto;
   margin-bottom: 20rem;
   text-align: left;
@@ -189,6 +190,10 @@ export const List = styled.div`
       justify-self: center;
     }
   }
+`
+export const MusicTitle = styled.p`
+  width: 100%;
+  font-weight: 600;
 `
 
 export const ToogleWrap = styled.div`

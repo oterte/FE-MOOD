@@ -1,7 +1,8 @@
 import styled from 'styled-components'
 
 export const StDivSelectRoomWrap = styled.div`
-  width: 1260px;
+  width: 60%;
+  min-width: 700px;
   margin: 0px auto 140px auto;
   text-align: center;
 `
@@ -15,18 +16,22 @@ export const StPEmotionExplain = styled.p`
   color: #888888;
   margin-bottom: 134px;
 `
-export const StDivRoomContain = styled.div`
-  width: 1260px;
+export const StDivRoomWrap = styled.div`
+  width: 100%;
   height: 260px;
   border: 1px solid #d9d9d9;
-  margin: 20px;
+  box-sizing: border-box;
+  margin: 20px auto;
   display: flex;
   align-items: center;
+`
+export const StRoomContain = styled.div`
+  display: flex;
+  margin: auto;
 `
 export const StDivEmotionContain = styled.div`
   width: 170px;
   height: 170px;
-  margin-left: 320px;
 `
 export const StDivImg = styled.div`
   width: 90px;

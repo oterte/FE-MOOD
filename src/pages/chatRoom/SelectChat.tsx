@@ -5,12 +5,13 @@ import {
   StDivSelectRoomWrap,
   StPTitle,
   StPEmotionExplain,
-  StDivRoomContain,
+  StDivRoomWrap,
   StDivEmotionContain,
   StDivImg,
   StDivExplain,
   StDivMoveRoom,
   RoomImg,
+  StRoomContain,
 } from './SelectChatSt'
 import Header from '../../components/header/Header'
 
@@ -40,7 +41,7 @@ function SelectChat() {
         </StPEmotionExplain>
         {roomArray.map((number) => {
           return (
-            <StDivRoomContain
+            <StDivRoomWrap
               ref={hoverRef}
               key={number.number}
               onMouseOver={() => onMouseOVerHandler(number.number)}
@@ -51,36 +52,40 @@ function SelectChat() {
                   hover === number.number ? '#4b372e' : '#efefef',
               }}
             >
-              <StDivEmotionContain
-                style={{
-                  border:
-                    hover === number.number
-                      ? '2px solid #ffffff'
-                      : '2px solid #4b372e',
-                }}
-              >
-                <StDivImg>
-                  <RoomImg
-                    src={hover === number.number ? number.imgHover : number.img}
-                    loading="lazy"
-                    alt="이미지가 제공되지 않았음"
-                  />
-                </StDivImg>
-                <p>{number.emotion}</p>
-              </StDivEmotionContain>
-              <StDivExplain>
-                <p>{number.explain}</p>
-                <StDivMoveRoom
+              <StRoomContain style={{ display: 'flex' }}>
+                <StDivEmotionContain
                   style={{
-                    backgroundColor:
-                      hover === number.number ? '#8b7d76' : '#4b372e',
+                    border:
+                      hover === number.number
+                        ? '2px solid #ffffff'
+                        : '2px solid #4b372e',
                   }}
-                  onClick={() => onClickEnterChatRoomHandler(number.number)}
                 >
-                  참여하기
-                </StDivMoveRoom>
-              </StDivExplain>
-            </StDivRoomContain>
+                  <StDivImg>
+                    <RoomImg
+                      src={
+                        hover === number.number ? number.imgHover : number.img
+                      }
+                      loading="lazy"
+                      alt="이미지가 제공되지 않았음"
+                    />
+                  </StDivImg>
+                  <p>{number.emotion}</p>
+                </StDivEmotionContain>
+                <StDivExplain>
+                  <p>{number.explain}</p>
+                  <StDivMoveRoom
+                    style={{
+                      backgroundColor:
+                        hover === number.number ? '#8b7d76' : '#4b372e',
+                    }}
+                    onClick={() => onClickEnterChatRoomHandler(number.number)}
+                  >
+                    참여하기
+                  </StDivMoveRoom>
+                </StDivExplain>
+              </StRoomContain>
+            </StDivRoomWrap>
           )
         })}
       </StDivSelectRoomWrap>
