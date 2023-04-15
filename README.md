@@ -18,22 +18,22 @@
 7. [FE Role](#FE-Role)
 
 
-# Feature
+# 🎹Feature
 
 
 
 
-# Architecture
+# 🛠Architecture
 아키텍처 사진
 
 
 
-# ERD 데이터 구조
+# 📊ERD 데이터 구조
 ERD 사진
 
 
 
-# Stacks
+# 🎩Stacks
 ### Front End
 
 <div>
@@ -82,7 +82,7 @@ ERD 사진
 
 
 
-# Trouble Shooting
+# 🩸Trouble Shooting
 <details>
   <summary>Typescript</summary>
   <div>내용</div>
@@ -98,7 +98,7 @@ ERD 사진
 
 
 
-# Team
+# 👨‍💻Team
 
 | Name | Position | Github |
 |:-:|:-:|:-:|
@@ -110,7 +110,7 @@ ERD 사진
 | 곽승민 | Back End | https://github.com/UkTheBlood |
 
 
-# FE Role
+# 💻FE Role
 
 
 | 이재욱👑 | 이인영 | 김명주 |
