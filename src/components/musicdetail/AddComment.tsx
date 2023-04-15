@@ -7,6 +7,8 @@ import {
   Characters,
   CommentBtn,
   Hr,
+  AddFromWrap,
+  InputAreaBottom,
 } from '../../pages/musicDetail/MusicDetailSt'
 import { onGetLocalStorage } from '../../util/cookie'
 import CustomAlert from '../alret/CustomAlert'
@@ -48,19 +50,22 @@ function AddComment({ musicId }: Props) {
         onHide={() => setShowCustomAlert(false)}
         message="로그인 후 이용 가능합니다."
       />
-      <Addform onSubmit={onSubmitHandler}>
-        <AddCommentTextArea
-          value={review}
-          onChange={(e) => {
-            const text = e.target.value
-            setReview(text)
-          }}
-          placeholder="게시물의 저작권 등 분쟁, 개인정보 노출로 인한 책임은 작성자 또는 게시자에게 있음을 유의해 주세요."
-        />
-        <Hr />
-        <Characters>{review.length}/100</Characters>
-        <CommentBtn type="submit">댓글 작성</CommentBtn>
-      </Addform>
+      <AddFromWrap>
+        <Addform onSubmit={onSubmitHandler}>
+          <AddCommentTextArea
+            value={review}
+            onChange={(e) => {
+              const text = e.target.value
+              setReview(text)
+            }}
+            placeholder="게시물의 저작권 등 분쟁, 개인정보 노출로 인한 책임은 작성자 또는 게시자에게 있음을 유의해 주세요."
+          />
+          <InputAreaBottom>
+            <Characters>{review.length}/100</Characters>
+            <CommentBtn type="submit">댓글 작성</CommentBtn>
+          </InputAreaBottom>
+        </Addform>
+      </AddFromWrap>
     </>
   )
 }
