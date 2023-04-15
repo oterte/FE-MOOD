@@ -49,11 +49,11 @@ export const ComposerImg = styled.img`
   cursor: pointer;
 `
 export const TitleAndBtn = styled.div`
+  width: 80%;
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 570px;
-  /* background-color: red; */
+  min-width: 600px;
 `
 export const MusicTitle = styled.h3`
   font-size: 1.2rem;
@@ -117,28 +117,44 @@ export const Total = styled.p`
   margin-top: 50px;
   margin-right: 800px;
 `
-
+export const AddFromWrap = styled.div`
+  width: 90%;
+  max-width: 950px;
+  min-width: 700px;
+  @media screen and(max-width: 1260px) {
+    width: 700px;
+  }
+`
 export const Addform = styled.form`
-  position: relative;
+  width: 100%;
 `
 
 export const AddCommentTextArea = styled.textarea.attrs({
   maxLength: 99,
 })`
-  width: 1000px;
-  max-width: 900px;
-  height: 150px;
-  padding: 1.5rem;
+  width: 100%;
+  height: 80px;
+  padding: 1.5rem 0px;
   border: 2px solid #d9d9d9;
   resize: none;
-  overflow: auto;
-  word-wrap: break-word;
   white-space: pre-wrap;
   line-height: 1.5rem;
   background: #fefefe;
   font-size: 1rem;
+  margin: 0px;
+  :focus {
+    outline: none;
+  }
 `
-
+export const InputAreaBottom = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 15px 0px;
+  background-color: #fefefe;
+  border: 1px solid #d9d9d9;
+  margin-top: -10px;
+`
 export const AddReCommentTextArea = styled.textarea.attrs({
   maxLength: 49,
 })`
@@ -156,9 +172,7 @@ export const AddReCommentTextArea = styled.textarea.attrs({
 `
 
 export const Characters = styled.p`
-  position: absolute;
-  bottom: 18px;
-  right: 218px;
+  margin: 0px 20px 0px auto;
   color: gray;
 `
 
@@ -170,11 +184,9 @@ export const ReCharacters = styled.p`
 `
 
 export const CommentBtn = styled.button`
-  position: absolute;
-  bottom: 25px;
-  right: 20px;
   width: 170px;
   height: 40px;
+  margin-right: 20px;
   text-align: center;
   cursor: pointer;
   background: #4b372e;
