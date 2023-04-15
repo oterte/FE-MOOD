@@ -10,9 +10,8 @@ export const Wrap = styled.div`
   margin: auto;
   padding: 0 20px;
   margin-bottom: 15rem;
-  @media screen and (max-width:768px){
-    position: static;
-    min-width: 700px;
+  @media screen and (max-width: 1200px) {
+    min-width: 600px;
   }
 `
 
@@ -116,6 +115,12 @@ export const CommentsBox = styled.div`
 export const Total = styled.p`
   margin-top: 50px;
   margin-right: 800px;
+  @media screen and (max-width: 1200px) {
+    width: 100%;
+    min-width: 800px;
+    margin-top: 50px;
+    margin-right: -350px;
+  }
 `
 export const AddFromWrap = styled.div`
   width: 90%;
@@ -169,6 +174,14 @@ export const AddReCommentTextArea = styled.textarea.attrs({
   border: 2px solid #d9d9d9;
   padding: 1.5rem;
   margin: 1rem 1.55rem;
+  @media screen and (max-width: 1200px) {
+    width:782px;
+    height:100px;
+    margin: 0;
+    padding: 0;
+    padding-left: 15px;
+    padding-top: 15px;
+  }
 `
 
 export const Characters = styled.p`
@@ -181,6 +194,10 @@ export const ReCharacters = styled.p`
   bottom: 23px;
   right: 230px;
   color: gray;
+  @media screen and (max-width: 1200px) {
+    bottom: 0;
+    right: 130px;
+  }
 `
 
 export const CommentBtn = styled.button`
@@ -205,9 +222,8 @@ export const Border = styled.div`
   height: auto;
   border: 1px solid #d9d9d9;
   background: white;
-  @media screen and (max-width:768px){
-    position: static;
-    min-width: 700px;
+  @media screen and (max-width: 1200px) {
+    max-width: 800px;
   }
 `
 
@@ -227,6 +243,9 @@ export const ReCommentBox = styled.div`
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  @media screen and (max-width: 1200px) {
+    font-size: 12px;
+  }
 `
 
 export const CommentInput = styled.input.attrs({ maxLength: 100 })`
@@ -327,6 +346,9 @@ export const ReCommentInput = styled.input.attrs({ maxLength: 50 })`
 
 export const AddReform = styled.form`
   position: relative;
+  @media screen and (max-width: 1200px) {
+    max-width: 800px;
+  }
 `
 
 export const ReCommentBtn = styled.button`
@@ -340,6 +362,13 @@ export const ReCommentBtn = styled.button`
   background: #4b372e;
   border: none;
   color: white;
+  @media screen and (max-width: 1200px) {
+    width: 100px;
+    height: 30px;
+    /* margin-top: 50px; */
+    top: 65px;
+    right: 10px;
+  }
 `
 
 export const ShowRepliesBtn = styled.button`
@@ -361,7 +390,10 @@ export const ReCommentsListWrap = styled.div`
   background: #f7f6f5;
   width: 95.8%;
   padding-left: 2.5rem;
-
+  @media screen and (max-width: 1200px) {
+    width: 775px;
+    padding: 0.8rem;
+  }
   .icon {
     position: absolute;
     left: 20px;
@@ -378,6 +410,9 @@ export const ReDeleteBtn = styled.button`
   margin-right: 50px;
   background: none;
   color: white;
+  @media screen and (max-width: 1200px) {
+    top: 18px;
+  }
 `
 export const ReEditBtn = styled.button`
   position: absolute;
@@ -390,4 +425,7 @@ export const ReEditBtn = styled.button`
   margin-right: 3rem;
   background: none;
   color: white;
+  @media screen and (max-width: 1200px) {
+    top: 18px;
+  }
 `
