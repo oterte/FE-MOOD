@@ -10,6 +10,10 @@ export const Wrap = styled.div`
   margin: auto;
   padding: 0 20px;
   margin-bottom: 15rem;
+  @media screen and (max-width:768px){
+    position: static;
+    min-width: 700px;
+  }
 `
 
 export const Ment = styled.p`
@@ -189,6 +193,10 @@ export const Border = styled.div`
   height: auto;
   border: 1px solid #d9d9d9;
   background: white;
+  @media screen and (max-width:768px){
+    position: static;
+    min-width: 700px;
+  }
 `
 
 export const ReCommentBox = styled.div`
