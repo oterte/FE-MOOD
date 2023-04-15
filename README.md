@@ -57,14 +57,12 @@ ERD 사진
   <img src="https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white"> 
   <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=FIGMA&logoColor=white"> 
   <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white"> 
-  <img src="https://img.shields.io/badge/amazons3-569A31?style=for-the-badge&logo=amazons3&logoColor=white"> 
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white"> 
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white"> 
-  <img src="https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=Python&logoColor=white"> 
+  <img src="https://img.shields.io/badge/amazons 3-569A31?style=for-the-badge&logo=amazons3&logoColor=white"> 
 </div>
 
-
-
+<br />
+<br />
+<br />
 
 기술적 의사 결정 
 <details>
