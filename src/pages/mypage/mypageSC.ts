@@ -6,6 +6,12 @@ export const MyPageProfileContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  @media screen and (max-width:768px){
+    width: 100%;
+  }
+  @media screen and (min-width:768px){
+    width: 100%;
+  }
 `
 export const MyPageProfileImgContainer = styled.div`
   width: 400px;

@@ -58,6 +58,7 @@ function SignUp() {
     setNicknameMessage('닉네임은 두글자 이상, 8글자 이하여야 합니다.')
   }
   const onClickEmailHandler = () => {
+    if(emailMessage.length > 1) return
     setEmailMessage('올바른 이메일 형식이 아닙니다.')
   }
   const onClickPWHandler = () => {
@@ -86,7 +87,7 @@ function SignUp() {
     setEmail(e.target.value)
 
     let regExp: RegExp =
-    /^[^\W_]+(?:\.[^\W_]{3})?@(?:[^\W_]+\.)+[A-Za-z]{3,}$/;
+    /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
     if (regExp.test(e.target.value) === false) {
       setEmailMessage('올바른 이메일 형식이 아닙니다.')
       setEmailCheck(false)
