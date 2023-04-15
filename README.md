@@ -45,7 +45,7 @@ ERD 사진
   <img src="https://img.shields.io/badge/AXIOS-5A29E4?style=for-the-badge&logo=AXIOS&logoColor=white"> 
   <img src="https://img.shields.io/badge/REACT ROUTER-CA4245?style=for-the-badge&logo=REACTROUTER&logoColor=white"> 
   <img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=#764ABC&logoColor=white"> 
-  <img src="https://img.shields.io/badge/socketdotio-3010101?style=for-the-badge&logo=socketdotio&logoColor=white"> 
+  <img src="https://img.shields.io/badge/socket.io-3010101?style=for-the-badge&logo=socketdotio&logoColor=white"> 
 </div>
 
 <br />
