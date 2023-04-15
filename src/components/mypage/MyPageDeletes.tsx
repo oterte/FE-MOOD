@@ -127,4 +127,4 @@ function MyPageDeletes() {
   )
 }
 
-export default MyPageDeletes
+export default React.memo(MyPageDeletes)

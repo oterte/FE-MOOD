@@ -29,6 +29,7 @@ import {
   Term,
   ToogleWrap,
   Wrap,
+  MusicTitle,
 } from './SearchBarSt'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
 import { RootState } from '../../redux/config/configStore'
@@ -241,88 +242,94 @@ function SearchResultPage() {
           </Inpo>
         )}
         {musicInfos && musicInfos.length > 0 && (
-          <List>
-            <div>
-              <div>no</div>
-              <div>곡명</div>
-              <div>재생</div>
-              <div>좋아요</div>
-              <div>스크랩</div>
-              <div>더보기</div>
-            </div>
-            {musicInfos.map((music, index) => (
-              <React.Fragment key={`music-fragment-${music.musicId}`}>
-                <div key={`music-${music.musicId}`}>
-                  <div>{index + 1}</div>
-                  <H3
-                    onClick={() =>
-                      handlePlayClick(
-                        music.musicId,
-                        music.musicTitle,
-                        music.composer,
-                        music.musicUrl
-                      )
-                    }
-                  >
-                    {music.musicTitle}
-                    {playingMusicId === music.musicId && <img src="" alt="" />}
-                  </H3>
-                  <img
-                    onClick={() =>
-                      handlePlayClick(
-                        music.musicId,
-                        music.musicTitle,
-                        music.composer,
-                        music.musicUrl
-                      )
-                    }
-                    src={play}
-                    alt="music_play"
-                  />
-                  <LikeCount
-                    musicId={music.musicId}
-                    likeCount={music.likeCount}
-                    likeStatus={music.likeStatus}
-                    onLikeUpdate={handleLikeUpdate}
-                  />
-
-                  <button
-                    onClick={() => handleScrapButtonClick(music.musicId)}
-                    style={{ cursor: 'pointer', marginBottom: '-5px' }}
-                  >
-                    {scrapStatus[music.musicId] ? (
-                      <BsBookmarkFill size="23" color="#8b7d76" />
-                    ) : (
-                      <BsBookmark size="23" color="#8b7d76" />
-                    )}
-                  </button>
-
-                  <div>
-                    <ShowRepliesBtn
-                      onClick={() => toggleReplies(music.musicId)}
+          <div style={{ width: '65%' }}>
+            <List>
+              <div>
+                <div>no</div>
+                <div>곡명</div>
+                <div>재생</div>
+                <div>좋아요</div>
+                <div>스크랩</div>
+                <div>더보기</div>
+              </div>
+              {musicInfos.map((music, index) => (
+                <React.Fragment key={`music-fragment-${music.musicId}`}>
+                  <div key={`music-${music.musicId}`}>
+                    <div>{index + 1}</div>
+                    <MusicTitle
+                      onClick={() =>
+                        handlePlayClick(
+                          music.musicId,
+                          music.musicTitle,
+                          music.composer,
+                          music.musicUrl
+                        )
+                      }
                     >
-                      <img src={morebtn} alt="More" />
-                    </ShowRepliesBtn>
-                  </div>
-                </div>
-                {showReplies[music.musicId] && (
-                  <ToogleWrap key={`music-info-${music.musicId}`}>
-                    <ContentContainer>
-                      <SpanMusicTitle>{music.musicTitle}</SpanMusicTitle>
-                      <SpanMusicContent>{music.musicContent}</SpanMusicContent>
-                      <MusicDetailBtn
-                        onClick={() =>
-                          navigate(`/recommend/music/${music?.musicId}`)
-                        }
+                      {music.musicTitle}
+                      {playingMusicId === music.musicId && (
+                        <img src="" alt="" />
+                      )}
+                    </MusicTitle>
+                    <img
+                      onClick={() =>
+                        handlePlayClick(
+                          music.musicId,
+                          music.musicTitle,
+                          music.composer,
+                          music.musicUrl
+                        )
+                      }
+                      src={play}
+                      alt="music_play"
+                    />
+                    <LikeCount
+                      musicId={music.musicId}
+                      likeCount={music.likeCount}
+                      likeStatus={music.likeStatus}
+                      onLikeUpdate={handleLikeUpdate}
+                    />
+
+                    <button
+                      onClick={() => handleScrapButtonClick(music.musicId)}
+                      style={{ cursor: 'pointer', marginBottom: '-5px' }}
+                    >
+                      {scrapStatus[music.musicId] ? (
+                        <BsBookmarkFill size="23" color="#8b7d76" />
+                      ) : (
+                        <BsBookmark size="23" color="#8b7d76" />
+                      )}
+                    </button>
+
+                    <div>
+                      <ShowRepliesBtn
+                        onClick={() => toggleReplies(music.musicId)}
                       >
-                        댓글 남기러 가기&nbsp;&nbsp;{'>'}
-                      </MusicDetailBtn>
-                    </ContentContainer>
-                  </ToogleWrap>
-                )}
-              </React.Fragment>
-            ))}
-          </List>
+                        <img src={morebtn} alt="More" />
+                      </ShowRepliesBtn>
+                    </div>
+                  </div>
+                  {showReplies[music.musicId] && (
+                    <ToogleWrap key={`music-info-${music.musicId}`}>
+                      <ContentContainer>
+                        <SpanMusicTitle>{music.musicTitle}</SpanMusicTitle>
+                        <SpanMusicContent>
+                          {music.musicContent}
+                        </SpanMusicContent>
+                        <MusicDetailBtn
+                          onClick={() =>
+                            navigate(`/recommend/music/${music?.musicId}`)
+                          }
+                        >
+                          댓글 남기러 가기&nbsp;&nbsp;{'>'}
+                        </MusicDetailBtn>
+                      </ContentContainer>
+                    </ToogleWrap>
+                  )}
+                </React.Fragment>
+              ))}
+            </List>
+          </div>
         )}
       </Wrap>
     </Wrapper>

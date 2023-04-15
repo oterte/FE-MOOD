@@ -137,4 +137,4 @@ function MyPageEdits() {
   )
 }
 
-export default MyPageEdits
+export default React.memo(MyPageEdits)

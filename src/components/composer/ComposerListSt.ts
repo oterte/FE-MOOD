@@ -25,6 +25,10 @@ export const Contents = styled.div`
   display: flex;
   justify-content: center;
   justify-content: flex-start;
+  @media screen and (max-width:1200px){
+    width: 100%;
+    min-width: 600px;
+  }
 `
 
 export const Li = styled.li`
@@ -74,7 +78,10 @@ export const Desc = styled.div`
   height: auto;
   min-height: 500px;
   text-align: left;
-
+  @media screen and (max-width:1200px){
+    width: 100%;
+    min-width: 600px;
+  }
   & > div {
     display: grid;
     grid-template-columns: 1.1fr 5fr 1fr 1fr 1fr 1fr;
@@ -127,6 +134,10 @@ export const Inpo = styled.div`
   transform: translateX(-50%);
   text-align: center;
   background: #f6f6f6;
+  @media screen and (max-width:1200px){
+    width: 100%;
+    min-width: 600px;
+  }
 `
 
 export const ComposerImg = styled.img`

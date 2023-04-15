@@ -21,6 +21,12 @@ export const SignupContainer = styled.div`
     line-height: 46px;
     margin-bottom: 15px;
   }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    min-width: 600px;
+    margin: auto;
+    margin-top: 50px;
+  }
 `
 export const SignUpUpperDiv = styled.div`
   width: 100%;

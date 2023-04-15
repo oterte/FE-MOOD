@@ -22,6 +22,7 @@ import { setIsPlaying } from '../../redux/modules/isPlaying'
 import { useNavigate } from 'react-router'
 import { scrapMusic } from '../../api/scrap'
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
+import { PThree } from '../../pages/mypage/mypagecontentsSC'
 
 function MyPageLikes() {
   const navigate = useNavigate()
@@ -61,7 +62,7 @@ function MyPageLikes() {
         <div>스크랩</div>
         <div>더보기</div>
       </div>
-      {likedata.likeList.map((item: Like, index: number) => (
+      {likedata.likeList.length > 0 ? likedata.likeList.map((item: Like, index: number) => (
         <React.Fragment key={`${item.musicId}`}>
           <div>
             <div>{index + 1}</div>
@@ -110,8 +111,8 @@ function MyPageLikes() {
             </ToogleWrap>
           )}
         </React.Fragment>
-      ))}
-      <Pagination
+      )) : <PThree>좋아요한 목록이 없습니다.</PThree>}
+      {likedata.likeList.length > 0 ? <Pagination
         activePage={currentPage}
         itemsCountPerPage={10}
         totalItemsCount={likedata.likeCount}
@@ -119,9 +120,9 @@ function MyPageLikes() {
         prevPageText={'<'}
         nextPageText={'>'}
         onChange={onPaginationHandler}
-      />
+      /> : null}
     </MyPageContainer>
   )
 }
 
-export default MyPageLikes
+export default React.memo(MyPageLikes)

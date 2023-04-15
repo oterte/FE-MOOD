@@ -18,6 +18,7 @@ import {
   StDivCarouselWrap,
   StDivMoveBtn,
   StSpanCurrentSlide,
+  StDivCarouselBtn
 } from './SurveySt'
 
 function Survey() {
@@ -35,13 +36,6 @@ function Survey() {
   })
   const [modalState, setModalState] = useState<boolean>(false)
   const [currentSlide, setCurrentSlide] = useState<number>(0)
-  // const [currentNumber, setCurrentNumber] = useState<number>(0)
-
-  // useEffect(() => {
-  //   if(survey.number1 === Number) {
-  //     setCurrentNumber((prev) => prev + 1)
-  //   }
-  // }, [currentNumber])
 
   const slideRef = useRef<HTMLDivElement>(null)
   const containRef = useRef<HTMLDivElement>(null)
@@ -98,7 +92,7 @@ function Survey() {
             </StPSurveyExplanation>
           </div>
           <form onSubmit={onSubmitHandler}>
-            <div style={{ width: '1280px', overflow: 'hidden' }}>
+            <StDivCarouselWrap>
               <StDivSlide ref={slideRef}>
                 {questionArr.map((question) => {
                   return (
@@ -120,10 +114,10 @@ function Survey() {
                   )
                 })}
               </StDivSlide>
-            </div>
+            </StDivCarouselWrap>
 
             <StSpanCurrentSlide> {currentSlide + 1} / 10</StSpanCurrentSlide>
-            <StDivCarouselWrap>
+            <StDivCarouselBtn>
               <StDivMoveBtn onClick={prevSlide} color="#8b7d76">
                 이전 문항으로
               </StDivMoveBtn>
@@ -136,7 +130,7 @@ function Survey() {
                   결과 확인하기
                 </StDivSubmit>
               )}
-            </StDivCarouselWrap>
+            </StDivCarouselBtn>
           </form>
         </StDivSurveyWrap>
         {modalState === true ? (
