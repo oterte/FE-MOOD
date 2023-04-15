@@ -81,10 +81,10 @@ ERD 사진
 
 | Name | Position | Github |
 |:-:|:-:|:-:|
-| 이재욱 | Front End | https://github.com/UkTheBlood |
+| 이재욱👑 | Front End | https://github.com/UkTheBlood |
 | 이인영 | Front End | https://github.com/UkTheBlood |
 | 김명주 | Front End | https://github.com/UkTheBlood |
-| 김상목 | Back End | https://github.com/UkTheBlood |
+| 김상목👑 | Back End | https://github.com/UkTheBlood |
 | 신동윤 | Back End | https://github.com/UkTheBlood |
 | 곽승민 | Back End | https://github.com/UkTheBlood |
 
