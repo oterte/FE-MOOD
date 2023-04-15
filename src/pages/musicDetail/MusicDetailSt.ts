@@ -35,8 +35,8 @@ export const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  min-width: 570px;
 `
-
 export const ComposerImg = styled.img`
   width: 220px;
   height: 220px;
@@ -44,11 +44,19 @@ export const ComposerImg = styled.img`
   margin-right: 3rem;
   cursor: pointer;
 `
+export const TitleAndBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 570px;
+  /* background-color: red; */
+`
 export const MusicTitle = styled.h3`
   font-size: 1.2rem;
   font-family: var(--font-NotoSerifKR);
   color: white;
   text-align: left;
+  width: 450px;
   cursor: pointer;
 `
 

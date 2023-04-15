@@ -1,20 +1,14 @@
 import styled from 'styled-components'
 
-export const StRedirectBtn = styled.div`
-  width: 180px;
-  height: 50px;
-  text-align: center;
-  border-radius: 10px;
-  background-color: #8b7d76;
-  line-height: 50px;
-  color: #efefef;
-  cursor: pointer;
+export const Wrap = styled.div`
+  width: 100%;
+  margin: auto;
 `
 export const StDivRoomTitle = styled.div`
   width: 1260px;
   height: 250px;
   padding-top: 50px;
-  margin: 0px auto 0px auto;
+  margin: auto;
   text-align: center;
 `
 export const StDivRoomImg = styled.div`
@@ -33,6 +27,7 @@ export const StPRoomName = styled.p`
 `
 export const StDivUserList = styled.div`
   width: 428px;
+  min-width: 312px;
   height: 705px;
   border: 1px solid #8b7d76;
   overflow: auto;
@@ -62,19 +57,20 @@ export const StPProfileNickname = styled.p`
   margin-left: 23px;
 `
 export const StDivChatRoomWrap = styled.div`
-  position: relative;
-  width: 1260px;
+  width: 60%;
+  min-width: 819px;
   margin: auto;
   display: flex;
+  background-color: #ffffff;
 `
 export const StDivChatRoomChatListWrap = styled.div`
-  width: 1024px;
+  width: 85%;
+  min-width: 500px;
   height: 705px;
   overflow-y: auto;
   border: 1px solid #8b7d76;
   box-sizing: border-box;
-  position: relative;
-  padding-bottom: 20px;
+  padding: 0px 0px 20px 0px;
 `
 export const StDivChatRoomChatListContain = styled.div`
   width: max-content;
@@ -97,19 +93,22 @@ export const StDivChatListMessage = styled.div`
   border-radius: 10px;
   padding: 10px 10px;
 `
+export const StSubmitWrap = styled.div`
+  width: 60%;
+  min-width: 819px;
+  margin: 0px auto 200px auto;
+  background-color: #ffffff;
+`
 export const StDivChatSubmit = styled.div`
-  width: 1260px;
+  width: 100%;
   height: 86px;
-  margin: 0px auto 100px auto;
+  margin: auto;
   border: 1px solid #8b7d76;
   box-sizing: border-box;
   line-height: 86px;
-  display: flex;
-  align-items: center;
-  align-content: center;
 `
 export const StInputChatSubmit = styled.input`
-  width: 1050px;
+  width: 80%;
   height: 50px;
   border: 1px solid #8b7d76;
   box-sizing: border-box;
@@ -117,10 +116,11 @@ export const StInputChatSubmit = styled.input`
   padding-left: 15px;
 `
 export const StBtnChatSubmit = styled.button`
-  width: 125px;
+  width: 12%;
   height: 50px;
   color: #ffffff;
   background-color: #4b372e;
   border: none;
   margin-left: 30px;
+  cursor: pointer;
 `
