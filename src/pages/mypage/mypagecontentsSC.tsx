@@ -8,6 +8,9 @@ export const MyPageTab = styled.div`
   color: #888888;
   text-align: center;
   line-height: 45px;
+  @media screen and (max-width:768px){
+    width: 100%;
+  }
 `
 export const MyPageTabItem = styled.div`
   width: 129px;
@@ -26,6 +29,9 @@ export const MyPageTabItem = styled.div`
   }
   &:last-child{
     border-right: none;
+  }
+  @media screen and (max-width:768px){
+    width: 20%;
   }
 `
 export const MyPageScrapTab = styled.div`
@@ -98,6 +104,9 @@ export const MyPageContentsContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 25px;
+  @media screen and (max-width:1300px){
+    width: 100%;
+  }
 `
 export const ExternalContainer = styled.div`
   display: flex;
@@ -197,7 +206,7 @@ export const MyPageImgEditInput = styled.input`
 `
 
 export const MyPageDeleteDivOne = styled.div`
-  width: 1302px;
+  width: 100%;
   text-align: center;
 `
 export const POne = styled.p`
@@ -220,7 +229,7 @@ export const PThree = styled.p`
   color: #000000;
 `
 export const MyPageDeleteDivTwo = styled.div`
-  width: 1302px;
+  width: 100%;
   height: 300px;
   background-color: #ffffff;
   text-align: center;
@@ -274,9 +283,12 @@ export const MyPageDoneDiv = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+  @media screen and (max-width:1300px){
+    width: 100%;
+  }
 `
 export const TextDiv = styled.div`
-  width: 500px;
+  width: auto;
   height: 500px;
   text-align: center;
   margin-top: 10%;

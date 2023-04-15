@@ -33,7 +33,7 @@ export const MyPageBodyMiddleContainer = styled.div`
 `
 export const MyPageBodyMiddleDiv = styled.div`
   width: 33%;
-  height:60px;
+  height: 60px;
   font-style: normal;
   font-size: 20px;
   font-weight: 400;
@@ -104,7 +104,7 @@ export const MyPageLikeMiddleContainer = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
-  line-height:60px;
+  line-height: 60px;
 `
 export const MyPageLikeDescDiv = styled.div`
   width: 1259px;
@@ -171,7 +171,7 @@ export const MyPageLikeScrapBtn = styled.img`
   cursor: pointer;
 `
 export const MyPageLikeMoreBtn = styled.button`
- border: none;
+  border: none;
   background: none;
   color: var(--color-brown);
   font-size: 1rem;
@@ -183,9 +183,12 @@ export const MyPageContainer = styled.div`
   width: 1200px;
   height: auto;
   padding-bottom: 10rem;
-  margin:auto;
+  margin: auto;
   margin-top: 20px;
-
+  @media screen and (max-width:1300px){
+    width: 100%;
+    min-width: 600px;
+  }
   & > div {
     display: grid;
     grid-template-columns: 1fr 5fr repeat(2, 1fr) 1fr;
@@ -193,7 +196,10 @@ export const MyPageContainer = styled.div`
     border-bottom: 1px solid #ddd;
     font-size: 1rem;
     padding: 0.5rem;
-
+    @media screen and (max-width: 768px) {
+      width: 100%;
+      font-size: 12px;
+    }
     img {
       width: 23px;
       cursor: pointer;
