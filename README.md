@@ -9,12 +9,12 @@
 
 
 ## Contents (목차)
-1. [Feature](#-Feature)
-2. [Architecture](#-Architecture)
-3. [ERD 데이터 구조](#-ERD-데이터-구조)
-4. [Stacks](#-Stacks)
-5. [Trouble Shooting](#-Trouble-Shooting)
-6. [Team](#-Team)
+1. [Feature](#Feature)
+2. [Architecture](#Architecture)
+3. [ERD 데이터 구조](#ERD-데이터-구조)
+4. [Stacks](#Stacks)
+5. [Trouble Shooting](#Trouble-Shooting)
+6. [Team](#Team)
 7. [FE Role](#FE-Role)
 
 
@@ -116,21 +116,6 @@ ERD 사진
 | 이재욱👑 | 이인영 | 김명주 |
 |:-:|:-:|:-:|
 | Redux를 이용하여 play bar 구현<br/> 영역 클릭을 통한 음악 추천 <br/> 설문 조사 <br/> 채팅방 | 좋아요 순/ 스트리밍 순 차트 <br/> 작곡가 별 음악 추천 <br/> 검색 기능 <br/> 음악 상세 페이지 <br/> | 소셜 / 로컬 로그인 <br/> 마이페이지 <br/> refresh token |
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
