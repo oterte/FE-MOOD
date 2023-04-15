@@ -4,6 +4,7 @@ export const MenuWrapper = styled.div<{ isOpen: boolean }>`
   position: relative;
   height: 100%;
   z-index: 1;
+  min-width: 300;
 
   ${({ isOpen }) =>
     isOpen &&
@@ -53,7 +54,9 @@ export const MenuItems = styled.ul<{ isOpen: boolean }>`
   position: fixed;
   top: 0px;
   left: ${({ isOpen }) => (isOpen ? '0' : '-100%')};
-  width: 400px;
+  width: 30%;
+  max-width: 400px;
+  min-width: 330px;
   height: 100%;
   background: #ffffff;
   list-style-type: none;
