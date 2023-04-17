@@ -120,18 +120,18 @@
     <div>
       
        1. <b>채팅방에서 무한 스크롤 구현 시 스크롤이 맨 위로 고정되는 문제 </b> 
-<br />  스크롤을 최상단으로 올렸을 때, 새로운 데이터들이 로딩이 되면서
-<br />  스크롤의 위치가 최상단에서 이전 스크롤 위치로 변경돼야 한다.
-<br />     → 즉, 데이터가 로딩이 되고 스크롤의 위치가 맨 위로 되어 있어,
-<br />      보여지는 데이터의 값들이 순서대로 보여지지 않는데,
-<br />      스크롤의 위치를 변경하여 순서대로 보이도록 해야 한다.
-<br />2. <b>접근</b>
-<br />  1) prevScroll을 state 값으로 만들고, 들어왔을 때, scrollRef.current.scrollHeight 값으로 지정해준다.
-<br />  2) target이 들어왔을 때, 바뀐 scrollRef.current.scrollHeight 에서 prevScroll을 뺀 것을 scrollTop으로 옮겨준다.
-<br />  3) prevScroll을 scrollRef.current.scrollHeight로 지정해준다.
-<br />     -> 바로바로 적용이 될 줄 알았지만, prevScroll이 scrollRef.current.scrollHeight로 지정되었을 때, 채팅 방의 채팅 내역을               불러오기 전에 prevScroll이 지정되어 문제가 생겼다.
-<br />3. <b>해결</b>
-<br />
+        스크롤을 최상단으로 올렸을 때, 새로운 데이터들이 로딩이 되면서
+        스크롤의 위치가 최상단에서 이전 스크롤 위치로 변경돼야 한다.
+         → 즉, 데이터가 로딩이 되고 스크롤의 위치가 맨 위로 되어 있어,
+        보여지는 데이터의 값들이 순서대로 보여지지 않는데,
+        스크롤의 위치를 변경하여 순서대로 보이도록 해야 한다.
+      2. <b>접근</b>
+        1) prevScroll을 state 값으로 만들고, 들어왔을 때, scrollRef.current.scrollHeight 값으로 지정해준다.
+        2) target이 들어왔을 때, 바뀐 scrollRef.current.scrollHeight 에서 prevScroll을 뺀 것을 scrollTop으로 옮겨준다.
+        <br />  3) prevScroll을 scrollRef.current.scrollHeight로 지정해준다.
+           -> 바로바로 적용이 될 줄 알았지만, prevScroll이 scrollRef.current.scrollHeight로 지정되었을 때, 채팅 방의 채팅 내역을               불러오기 전에 prevScroll이 지정되어 문제가 생겼다.
+      3. <b>해결</b>
+
     </div>
   </div>
 </details>
