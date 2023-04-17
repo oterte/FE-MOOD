@@ -98,8 +98,8 @@
 기술적 의사 결정 
 <details>
   <summary>Typescript</summary>
-  <div>
-    <div markdown="2">
+  <div markdown="2">
+    <div>
       - 높은 수준의 코드 탐색과 디버깅으로 버그 예방
         → 코드의 목적을 명시하고 목적에 맞지 않는 타입의 변수나 함수들에서 에러를 발생시켜 버그를 사전에 제거
         → 코드 자동 완성이나 실행 전 피드백을 제공하여 작업과 동시에 디버깅이 가능하여 생산성을 높일 수 있음
@@ -117,8 +117,9 @@
 </details>
 <details>
   <summary>Redux</summary>
-  <div>
-    <div markdown="2">
+  <div markdown="2">
+    <div>
+      
       1. 요구사항
         - 음악 플레이어 바를 구현하는데 있어 전역적으로 상태를 관리할 수 있어야 함
       
