@@ -79,7 +79,6 @@
 </div>
 
 <br />
-<br />
 
 ### Dev tools
 <div>
@@ -91,7 +90,6 @@
   <img src="https://img.shields.io/badge/amazons 3-569A31?style=for-the-badge&logo=amazons3&logoColor=white"> 
 </div>
 
-<br />
 <br />
 <br />
 
