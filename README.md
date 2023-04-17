@@ -115,7 +115,7 @@
 
 # 🩸Trouble Shooting
 <details>
-  <summary>[이재욱]채팅방 역방향 무한 스크롤</summary>
+  <summary>[이재욱] 채팅방 역방향 무한 스크롤</summary>
   <div markdown="2">
     <div>
       
@@ -148,7 +148,7 @@
   </div>
 </details>
 <details>
-  <summary>[이재욱]Music Player Bar</summary>
+  <summary>[이재욱] Music Player Bar</summary>
   <div markdown="2">
     <div>
       
