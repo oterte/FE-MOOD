@@ -26,8 +26,12 @@ import {
 } from '../../api/signup'
 import { useNavigate } from 'react-router-dom'
 import Header from '../../components/header/Header'
+import CustomAlert from '../../components/alret/CustomAlert'
 
 function SignUp() {
+
+  const [alertMessage, setAlertMessage] = useState('')
+  const [showCustomAlert, setShowCustomAlert] = useState<boolean>(false)
   const [id, setId] = useState('')
   const [password, setPassword] = useState('')
   const [confirm, setConfirm] = useState('')
@@ -151,11 +155,13 @@ function SignUp() {
     const emailPw = checkAuthEmail
     checkAuthEmailNumber(email, emailPw)
       .then((res) => {
-        alert(res.data.check.message)
         setIsAuth(true)
+        setAlertMessage(res.data.check.message)
+        setShowCustomAlert(true)
       })
       .catch((error) => {
-        alert(error.response.data.message)
+        setAlertMessage(error.response.data.message)
+        setShowCustomAlert(true)
       })
   }
 
@@ -169,7 +175,8 @@ function SignUp() {
       !confirmCheck ||
       !nicknameCheck
     ) {
-      alert('모든 입력칸을 입력해주세요.')
+      setAlertMessage('모든 입력칸을 입력해주세요.')
+      setShowCustomAlert(true)
     }
     if (
       idCheck &&
@@ -181,12 +188,14 @@ function SignUp() {
     ) {
       register(body)
         .then((res) => {
-          alert(res.data.message)
+          setAlertMessage(res.data.message)
+          setShowCustomAlert(true)
           navigate('/login')
           return res
         })
         .catch((error) => {
-          alert(error.response.data.message)
+          setAlertMessage(error.response.data.message)
+          setShowCustomAlert(true)
         })
     }
   }
@@ -196,10 +205,12 @@ function SignUp() {
       checkId(id)
         .then((res) => {
           setIdResponse(res.status)
-          alert('사용 가능한 아이디입니다.')
+          setAlertMessage('사용 가능한 아이디입니다.')
+          setShowCustomAlert(true)
         })
         .catch((error) => {
-          alert(error.response.data.message)
+          setAlertMessage(error.response.data.message)
+          setShowCustomAlert(true)
           setIdResponse(error.response.status)
         })
     }
@@ -209,11 +220,13 @@ function SignUp() {
     if (nickname !== '') {
       checkNickname(nickname)
         .then((res) => {
-          alert('사용 가능한 닉네임입니다.')
+          setAlertMessage('사용 가능한 닉네임입니다.')
+          setShowCustomAlert(true)
           setNicknameResponse(res.status)
         })
         .catch((error) => {
-          alert(error.response.data.message)
+          setAlertMessage(error.response.data.message)
+          setShowCustomAlert(true)
           setNicknameResponse(error.response.status)
         })
     }
@@ -223,16 +236,24 @@ function SignUp() {
     if (email !== '' && emailCheck === true) {
       authEmail(email)
         .then((res) => {
-          alert(res.data.message)
+          setAlertMessage(res.data.message)
+          setShowCustomAlert(true)
           setIsSend(true)
         })
         .catch((error) => {
-          alert('인증 이메일 전송에 실패했습니다.')
+          setAlertMessage('인증 이메일 전송에 실패했습니다.')
+          setShowCustomAlert(true)
         })
     }
   }
   return (
     <>
+      <CustomAlert 
+        showAlert={showCustomAlert}
+        onHide={() => setShowCustomAlert(false)}
+        message={alertMessage}
+        loginState={false}
+      />
       <Header />
       <SignupContainer>
         <SignUpUpperDiv>
