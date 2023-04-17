@@ -264,11 +264,11 @@
 | Name | Position | Github |
 |:-:|:-:|:-:|
 | 이재욱👑 | Front End | https://github.com/UkTheBlood |
-| 이인영 | Front End | https://github.com/UkTheBlood |
-| 김명주 | Front End | https://github.com/UkTheBlood |
-| 김상목👑 | Back End | https://github.com/UkTheBlood |
-| 신동윤 | Back End | https://github.com/UkTheBlood |
-| 곽승민 | Back End | https://github.com/UkTheBlood |
+| 이인영 | Front End | https://github.com/yeooong-dev |
+| 김명주 | Front End | https://github.com/oterte |
+| 김상목👑 | Back End | https://github.com/SangmokKIM1994 |
+| 신동윤 | Back End | https://github.com/zmtlzmtl |
+| 곽승민 | Back End | https://github.com/kwakseungmin23 |
 
 
 # 👩‍💻FE Role
