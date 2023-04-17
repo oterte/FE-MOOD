@@ -149,6 +149,7 @@
   <summary>[이재욱]Music Player Bar</summary>
   <div markdown="2">
     <div>
+      
       1. 많은 페이지에서 사용하는 Music Player Bar를 만들어야 하는 문제
         많은 페이지에서 music player를 사용할 수 있는 컴포넌트를 만들어야 했다.
         요구 사항:  페이지 이동을 해도 음악이 끊기지 않아야 함
@@ -176,7 +177,6 @@
           - 전역으로 관리 : redux를 통해 모든 컴포넌트에서 접근할 수 있도록 구현
           - 페이지 이동시 음악이 끊기지 않도록 구현
             : react-router-dom에서 제공하는 outlet 메서드를 통해 layout을 구상하여 해결
-    </div>
   </div>
 </details>
 <details>
