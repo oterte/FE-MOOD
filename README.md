@@ -23,7 +23,7 @@
 ![기술적 아키텍처 완](https://user-images.githubusercontent.com/103476685/232488401-21e8ec99-7748-460f-b92c-7357f0772e08.png)
 
 # 📖One Page Notion
-[One page Notion 바로가기](https://www.notion.so/Mood-Classic-c51f26f6ce2f4442a747f01959dcbc94)
+[📕 One page Notion 바로가기](https://www.notion.so/Mood-Classic-c51f26f6ce2f4442a747f01959dcbc94)
 
 # 🎹Feature 
 #### 🎻 아 오늘 행복한데 어떤 노래를 듣지??
