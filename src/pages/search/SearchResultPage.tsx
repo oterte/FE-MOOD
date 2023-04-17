@@ -5,7 +5,6 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { scrapMusic } from '../../api/scrap'
 import { getSearch } from '../../api/search'
 import LikeCount from '../../components/like/LikeCount'
-import { H3 } from '../../components/composer/ComposerListSt'
 import { ShowRepliesBtn } from './SearchBarSt'
 import Header from '../../components/header/Header'
 import Wrapper from '../../components/Wrapper'
@@ -218,6 +217,7 @@ function SearchResultPage() {
           showAlert={showCustomAlert}
           onHide={() => setShowCustomAlert(false)}
           message="로그인 후 이용 가능합니다."
+          loginState={true}
         />
         {searchTerm &&
           (composerInfo || (composerSongs && composerSongs.length > 0) ? (

@@ -41,6 +41,7 @@ function AddRecomment({ reviewId }: { reviewId: number }) {
         showAlert={showCustomAlert}
         onHide={() => setShowCustomAlert(false)}
         message="로그인 후 이용 가능합니다."
+        loginState={true}
       />
       <AddReform onSubmit={onSubmitCommentHandler}>
         <AddReCommentTextArea

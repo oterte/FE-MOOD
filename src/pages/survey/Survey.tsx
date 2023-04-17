@@ -18,8 +18,9 @@ import {
   StDivCarouselWrap,
   StDivMoveBtn,
   StSpanCurrentSlide,
-  StDivCarouselBtn
+  StDivCarouselBtn,
 } from './SurveySt'
+import CustomAlert from '../../components/alret/CustomAlert'
 
 function Survey() {
   const [survey, setSurvey] = useState<SurveyData>({
@@ -36,6 +37,7 @@ function Survey() {
   })
   const [modalState, setModalState] = useState<boolean>(false)
   const [currentSlide, setCurrentSlide] = useState<number>(0)
+  const [showCustomAlert, setShowCustomAlert] = useState<boolean>(false)
 
   const slideRef = useRef<HTMLDivElement>(null)
   const containRef = useRef<HTMLDivElement>(null)
@@ -72,7 +74,7 @@ function Survey() {
     if (0 <= status1 && 0 <= status2) {
       setModalState(!modalState)
     } else {
-      alert('설문을 모두 선택해주세요!')
+      setShowCustomAlert(true)
     }
   }
 
@@ -80,6 +82,12 @@ function Survey() {
     <>
       <Wrapper>
         <Header />
+        <CustomAlert
+          showAlert={showCustomAlert}
+          onHide={() => setShowCustomAlert(false)}
+          message="설문을 모두 선택해주세요!"
+          loginState={false}
+        />
         <StDivSurveyWrap>
           <div style={{ marginTop: '50px' }}>
             <StSpanSurveyTitle>

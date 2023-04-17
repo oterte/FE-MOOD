@@ -188,6 +188,7 @@ const ComposerList = () => {
         showAlert={showCustomAlert}
         onHide={() => setShowCustomAlert(false)}
         message="로그인 후 이용 가능합니다."
+        loginState={true}
       />
       <Ment>작곡가별 음악을 추천받아 보세요.</Ment>
       <Contents>
