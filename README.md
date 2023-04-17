@@ -125,12 +125,14 @@
          → 즉, 데이터가 로딩이 되고 스크롤의 위치가 맨 위로 되어 있어,
         보여지는 데이터의 값들이 순서대로 보여지지 않는데,
         스크롤의 위치를 변경하여 순서대로 보이도록 해야 한다.
+      
       2. 접근
         1) prevScroll을 state 값으로 만들고, 들어왔을 때, scrollRef.current.scrollHeight 값으로 지정해준다.
         2) target이 들어왔을 때, 바뀐 scrollRef.current.scrollHeight 에서 prevScroll을 뺀 것을 scrollTop으로 옮겨준다.
         3) prevScroll을 scrollRef.current.scrollHeight로 지정해준다.
            -> 바로바로 적용이 될 줄 알았지만, prevScroll이 scrollRef.current.scrollHeight로 지정되었을 때, 
               채팅 방의 채팅 내역을 불러오기 전에 prevScroll이 지정되어 문제가 생겼다.
+      
       3. 해결
         - prevScroll을 시간 차를 두어 prevScroll을 지정해주어 채팅방 내역이 들어왔을 때, 
         prevScroll을 지정할 수 있도록 setTimeout을 사용하여 해결
