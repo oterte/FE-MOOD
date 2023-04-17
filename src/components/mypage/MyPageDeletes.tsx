@@ -26,8 +26,11 @@ import {
   authEmail,
   checkAuthEmailNumber
 } from '../../api/signup'
+import CustomAlert from '../alret/CustomAlert'
 function MyPageDeletes() {
   const navigate = useNavigate()
+  const [alertMessage, setAlertMessage] = useState('')
+  const [showCustomAlert, setShowCustomAlert] = useState<boolean>(false)
   const [password, setPassword] = useState('')
   const [authNumber, setAuthNmber] = useState('')
   const [isAuth, setIsAuth] = useState(false)
@@ -44,7 +47,8 @@ function MyPageDeletes() {
   }
   const onDeleteAccountHandler = () => {
     if (!window.confirm('정말 회원 탈퇴를 진행하시겠습니까?')) {
-      alert('취소되었습니다.')
+      setAlertMessage('취소되었습니다.')
+      setShowCustomAlert(true)
     } else {
       deleteAccount(password)
         .then((res) => {
@@ -53,7 +57,8 @@ function MyPageDeletes() {
           navigate('/delete')
         })
         .catch((error) => {
-          alert(error.response.data.message)
+          setAlertMessage(error.response.data.message)
+          setShowCustomAlert(true)
         })
     }
   }
@@ -61,25 +66,36 @@ function MyPageDeletes() {
     e.preventDefault()
     authEmail(password)
       .then((res) => {
-        alert(res.data.message)
         setIsSend(true)
+        setAlertMessage(res.data.message)
+        setShowCustomAlert(true)
       })
       .catch((error) => {
-        alert("인증 메일 발송에 실패했습니다.")
+        setAlertMessage("인증 메일 발송에 실패했습니다.")
+        setShowCustomAlert(true)
       })
   }
   const onCheckAuthNumber = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     checkAuthEmailNumber(password, authNumber)
       .then((res) => {
-        alert(res.data.check.message)
         setIsAuth(true)
+        setAlertMessage(res.data.check.message)
+        setShowCustomAlert(true)
       })
       .catch((error) => {
-        alert("인증번호 또는 가입에 사용하신 이메일 주소를 확인해주세요.")
+        setAlertMessage("인증번호 또는 가입에 사용하신 이메일 주소를 확인해주세요.")
+        setShowCustomAlert(true)
       })
   }
   return (
+    <>
+    <CustomAlert 
+      showAlert={showCustomAlert}
+      onHide={() => setShowCustomAlert(false)}
+      message={alertMessage}
+      loginState={false}
+    />
     <MyPageContentsContainer>
       <MyPageDeleteDivOne>
         <POne>정말로 회원탈퇴 하시겠습니까?</POne>
@@ -124,6 +140,7 @@ function MyPageDeletes() {
         </MyPageDeleteBtnDiv>
       </MyPageDeleteDivTwo>
     </MyPageContentsContainer>
+    </>
   )
 }
 

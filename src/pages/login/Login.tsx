@@ -15,11 +15,14 @@ import {
   LoginLabelDiv,
   LoginSocialContainer,
 } from './loginSt'
+import CustomAlert from '../../components/alret/CustomAlert'
 function Login() {
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_KAKAO_REST_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`
 
   const [id, setId] = useState('')
   const [password, setPassword] = useState('')
+  const [alertMessage, setAlertMessage] = useState('')
+  const [showCustomAlert, setShowCustomAlert] = useState<boolean>(false)
   const navigate = useNavigate()
 
   const onClickLoginHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -40,7 +43,8 @@ function Login() {
         navigate('/recommend')
       })
       .catch(() => {
-        alert('아이디 또는 비밀번호가 일치하지 않습니다.')
+        setAlertMessage('아이디 또는 비밀번호가 일치하지 않습니다.')
+        setShowCustomAlert(true)
       })
   }
 
@@ -50,6 +54,12 @@ function Login() {
   
   return (
     <>
+      <CustomAlert 
+        showAlert={showCustomAlert}
+        onHide={() => setShowCustomAlert(false)}
+        message={alertMessage}
+        loginState={false}
+      />
       <Header />
       <LoginContainer>
         <p>Log in</p>

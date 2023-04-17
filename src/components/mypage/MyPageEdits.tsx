@@ -20,9 +20,12 @@ import baseProifle from '../../assets/icons/Heart_fill_white copy.png'
 import { BsPlusLg } from 'react-icons/bs'
 import { onSetLocalStorageHandler } from '../../util/cookie'
 import { checkNickname } from '../../api/signup'
+import CustomAlert from '../alret/CustomAlert'
 function MyPageEdits() {
   const queryClient = useQueryClient()
-  const imgRef:any  = useRef<HTMLInputElement | null>(null)
+  const imgRef: any = useRef<HTMLInputElement | null>(null)
+  const [alertMessage, setAlertMessage] = useState('')
+  const [showCustomAlert, setShowCustomAlert] = useState<boolean>(false)
   const [imgUrl, setImgUrl] = useState<string | ArrayBuffer | null>()
   const [imgFile, setImgFile] = useState<File>()
   const [newNickname, setNewNickname] = useState('')
@@ -44,7 +47,8 @@ function MyPageEdits() {
     const reader = new FileReader()
     const file = imgRef.current.files[0]
     if (file.size > 5 * 1024 * 1024) {
-      alert('파일 크기는 최대 5MB 입니다')
+      setAlertMessage('파일 크기는 최대 5MB 입니다')
+      setShowCustomAlert(true)
       setImgUrl(null)
     } else {
       reader.readAsDataURL(file)
@@ -56,14 +60,16 @@ function MyPageEdits() {
   }
   const onSubmitImageHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (!imgFile) {
-      alert('먼저 변경할 프로필 이미지를 등록해 주세요.')
+      setAlertMessage('먼저 변경할 프로필 이미지를 등록해 주세요.')
+      setShowCustomAlert(true)
     } else {
       e.preventDefault()
       const data = new FormData()
       data.append('image', imgFile as File)
       editMutation.mutate(data)
       onSetLocalStorageHandler('img', imgUrl)
-      alert('변경되었습니다.')
+      setAlertMessage('변경되었습니다.')
+      setShowCustomAlert(true)
     }
   }
   const onChangeNicknameHandler = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -73,67 +79,80 @@ function MyPageEdits() {
       checkNickname(newNickname)
         .then(() => {
           changeMutation.mutate(newNickname)
-          alert('변경되었습니다.')
+          setAlertMessage('변경되었습니다.')
+          setShowCustomAlert(true)
           setNewNickname('')
           onSetLocalStorageHandler('nickname', newNickname)
         })
         .catch((error) => {
-          alert(error.response.data.message)
+          setAlertMessage(error.response.data.message)
         })
     } else if (regExp.test(newNickname) === false) {
-      alert('닉네임은 2자리 이상, 8자리 이하여야 합니다.')
+      setAlertMessage('닉네임은 2자리 이상, 8자리 이하여야 합니다.')
+      setShowCustomAlert(true)
     }
   }
   if (profLoading) return <p></p>
   return (
-    <MyPageContentsContainer>
-      <ExternalContainer>
-        <MyPageEditContainer>
-          <label htmlFor="fileinput">
-            <EditDiv>
-              <BsPlusLg />
-            </EditDiv>
-          </label>
-          <MyPageEditImg
-            src={
-              !imgUrl
-                ? profData.profileUrl
+    <>
+      <CustomAlert 
+        showAlert={showCustomAlert}
+        onHide={() => setShowCustomAlert(false)}
+        message={alertMessage}
+        loginState={false}
+      />
+      <MyPageContentsContainer>
+        <ExternalContainer>
+          <MyPageEditContainer>
+            <label htmlFor="fileinput">
+              <EditDiv>
+                <BsPlusLg />
+              </EditDiv>
+            </label>
+            <MyPageEditImg
+              src={
+                !imgUrl
                   ? profData.profileUrl
-                  : baseProifle
-                : imgUrl
-            }
-            alt="이미지"
-          />
+                    ? profData.profileUrl
+                    : baseProifle
+                  : imgUrl
+              }
+              alt="이미지"
+            />
 
-          <MyPageImgEditInput
-            id="fileinput"
-            ref={imgRef}
-            type="file"
-            accept="image/*"
-            onChange={onChangeImageHandler}
-          />
-          <MyPageImgBtnWrap>
-            <MyPageInputBtn onClick={onSubmitImageHandler}>
-              수정하기
-            </MyPageInputBtn>
-          </MyPageImgBtnWrap>
-          <MyPageInputContainer>
-            <form>
-              <MyPageInputLabel>닉네임</MyPageInputLabel>
-              <MyPageInput
-                type="text"
-                value={newNickname}
-                placeholder="닉네임을 입력하세요"
-                onChange={(e) => setNewNickname(e.target.value)}
-              />
-              <MyPageEditBtnTwo type="submit" onClick={onChangeNicknameHandler}>
-                닉네임 변경
-              </MyPageEditBtnTwo>
-            </form>
-          </MyPageInputContainer>
-        </MyPageEditContainer>
-      </ExternalContainer>
-    </MyPageContentsContainer>
+            <MyPageImgEditInput
+              id="fileinput"
+              ref={imgRef}
+              type="file"
+              accept="image/*"
+              onChange={onChangeImageHandler}
+            />
+            <MyPageImgBtnWrap>
+              <MyPageInputBtn onClick={onSubmitImageHandler}>
+                수정하기
+              </MyPageInputBtn>
+            </MyPageImgBtnWrap>
+            <MyPageInputContainer>
+              <form>
+                <MyPageInputLabel>닉네임</MyPageInputLabel>
+                <MyPageInput
+                  type="text"
+                  value={newNickname}
+                  placeholder="닉네임을 입력하세요"
+                  onChange={(e) => setNewNickname(e.target.value)}
+                />
+                <MyPageEditBtnTwo
+                  type="submit"
+                  onClick={onChangeNicknameHandler}
+                >
+                  닉네임 변경
+                </MyPageEditBtnTwo>
+              </form>
+            </MyPageInputContainer>
+          </MyPageEditContainer>
+        </ExternalContainer>
+      </MyPageContentsContainer>
+    </>
   )
 }
 
