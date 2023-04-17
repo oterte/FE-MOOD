@@ -119,19 +119,27 @@
   <div markdown="2">
     <div>
       
-       1. <b>채팅방에서 무한 스크롤 구현 시 스크롤이 맨 위로 고정되는 문제 </b> 
+       1. 채팅방에서 무한 스크롤 구현 시 스크롤이 맨 위로 고정되는 문제
         스크롤을 최상단으로 올렸을 때, 새로운 데이터들이 로딩이 되면서
         스크롤의 위치가 최상단에서 이전 스크롤 위치로 변경돼야 한다.
          → 즉, 데이터가 로딩이 되고 스크롤의 위치가 맨 위로 되어 있어,
         보여지는 데이터의 값들이 순서대로 보여지지 않는데,
         스크롤의 위치를 변경하여 순서대로 보이도록 해야 한다.
-      2. <b>접근</b>
+      2. 접근
         1) prevScroll을 state 값으로 만들고, 들어왔을 때, scrollRef.current.scrollHeight 값으로 지정해준다.
         2) target이 들어왔을 때, 바뀐 scrollRef.current.scrollHeight 에서 prevScroll을 뺀 것을 scrollTop으로 옮겨준다.
         <br />  3) prevScroll을 scrollRef.current.scrollHeight로 지정해준다.
            -> 바로바로 적용이 될 줄 알았지만, prevScroll이 scrollRef.current.scrollHeight로 지정되었을 때, 채팅 방의 채팅 내역을               불러오기 전에 prevScroll이 지정되어 문제가 생겼다.
-      3. <b>해결</b>
-
+      3. 해결
+        prevScroll을 시간 차를 두어 prevScroll을 지정해주어 채팅방 내역이 들어왔을 때, 
+        prevScroll을 지정할 수 있도록 setTimeout을 사용하여 해결
+      4. 리팩토링
+        prevScroll을 setTimeout으로 시간을 지정했을 때, 지정한 시간보다 이전 채팅 방 내역을 받는 시간이 긴 경우 
+        prevScroll의 지정이 늦게 될 것 같다는 생각이 들어 다른 방법을 찾아보았음.
+        결국 prevScroll은 받아온 채팅 내역 즉, 설정해둔 state(beforeChatData)가 변경되었을 때, 
+        prevScroll을 다시 set하는 로직으로 구현하였다.
+        이로 인해 만약 채팅 방의 이전 내역들을 불러오는데, 시간이 걸리더라도 prevScroll이 
+        필요한 타이밍에 변경되도록 로직을 수정하였다. 
     </div>
   </div>
 </details>
