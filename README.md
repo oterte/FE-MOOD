@@ -11,11 +11,10 @@
 ## Contents (목차)
 1. [Feature](#Feature)
 2. [Architecture](#Architecture)
-3. [ERD 데이터 구조](#ERD-데이터-구조)
-4. [Stacks](#Stacks)
-5. [Trouble Shooting](#Trouble-Shooting)
-6. [Team](#Team)
-7. [FE Role](#FE-Role)
+3. [Stacks](#Stacks)
+4. [Trouble Shooting](#Trouble-Shooting)
+5. [Team](#Team)
+6. [FE Role](#FE-Role)
 
 
 # 🎹Feature 
