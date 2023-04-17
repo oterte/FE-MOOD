@@ -98,15 +98,39 @@
 기술적 의사 결정 
 <details>
   <summary>Typescript</summary>
-  <div>내용</div>
+  <div>
+    <div markdown="2">
+      - 높은 수준의 코드 탐색과 디버깅으로 버그 예방
+        → 코드의 목적을 명시하고 목적에 맞지 않는 타입의 변수나 함수들에서 에러를 발생시켜 버그를 사전에 제거
+        → 코드 자동 완성이나 실행 전 피드백을 제공하여 작업과 동시에 디버깅이 가능하여 생산성을 높일 수 있음
+  </div>
+</details>
+  
+<details>
+  <summary>React-Query</summary>
+  <div>
+    <div markdown="2">
+      - API 호출에 필요한 로직을 구현하는 것이 더욱 간단
+      - 데이터를 가져오는 데 필요한 로딩, 에러 및 캐싱 상태를 쉽게 관리
+      - API 호출을 자동으로 캐시하고, 일시적으로 인터넷 연결이 끊겼을 때에도 캐시된 데이터를 제공
+  </div>
 </details>
 <details>
-  <summary>Typescript</summary>
-  <div>내용</div>
-</details>
-<details>
-  <summary>Typescript</summary>
-  <div>내용</div>
+  <summary>Redux</summary>
+  <div>
+    <div markdown="2">
+      1. 요구사항
+        - 음악 플레이어 바를 구현하는데 있어 전역적으로 상태를 관리할 수 있어야 함
+      
+      2. 선택지
+        1안) Recoil을 사용하여 전역 상태를 관리
+        2안) Redux를 사용하여 전역 상태 관리
+      
+      3. 의사 결정
+        - 처음 잡은 전역으로 관리하려는 state가 적었지만, 추후에 플레이 리스트를 만들거나 
+          자신이 듣고 싶은 음악을 추가하는 등 음악 플레이어 바의 확장성이 넓어지고 커질 수 있어 
+          Redux를 사용하는 것으로 결정하게 됨
+  </div>
 </details>
 
 
@@ -130,8 +154,8 @@
         1) prevScroll을 state 값으로 만들고, 들어왔을 때, scrollRef.current.scrollHeight 값으로 지정해준다.
         2) target이 들어왔을 때, 바뀐 scrollRef.current.scrollHeight 에서 prevScroll을 뺀 것을 scrollTop으로 옮겨준다.
         3) prevScroll을 scrollRef.current.scrollHeight로 지정해준다.
-           -> 바로바로 적용이 될 줄 알았지만, prevScroll이 scrollRef.current.scrollHeight로 지정되었을 때, 
-              채팅 방의 채팅 내역을 불러오기 전에 prevScroll이 지정되어 문제가 생겼다.
+           → 바로바로 적용이 될 줄 알았지만, prevScroll이 scrollRef.current.scrollHeight로 지정되었을 때, 
+            채팅 방의 채팅 내역을 불러오기 전에 prevScroll이 지정되어 문제가 생겼다.
       
       3. 해결
         - prevScroll을 시간 차를 두어 prevScroll을 지정해주어 채팅방 내역이 들어왔을 때, 
@@ -207,7 +231,7 @@
 </details>
   
 <details>
-  <summary>Refresh Token</summary>
+  <summary>[김명주] Refresh Token</summary>
   <div>
     <div markdown="2">
       1. 액세스 토큰 만료 시, 요청을 보내면 토큰이 갱신되지않고 에러가 발생
