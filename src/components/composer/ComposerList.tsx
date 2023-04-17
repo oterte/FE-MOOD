@@ -49,7 +49,15 @@ interface MusicInfo {
     likeCount: number
   ) => void
 }
-
+interface Composer {
+  birthDeath:string
+  composer:string
+  describe:string
+  fullname:string
+  imageUrl:string
+  koreanFullname:string
+  tag:string
+}
 const ComposerList = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -77,12 +85,11 @@ const ComposerList = () => {
     setPlayingMusicId(musicId)
   }
 
-  const { data } = useQuery<{ composerInfo: any[]; music: MusicInfo[] }>(
+  const { data } = useQuery<{ composerInfo: Composer[]; music: MusicInfo[] }>(
     ['composerList', selectedComposer],
     () => composerList({ composer: selectedComposer }),
     { enabled: !!selectedComposer }
   )
-
   const composerInfo = data?.composerInfo[0]
 
   const toggleReplies = (musicIndex: number) => {
