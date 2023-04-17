@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 const useInput = (): [
   string,
@@ -6,9 +6,9 @@ const useInput = (): [
   () => void
 ] => {
   const [value, setValue] = useState<string>('')
-  const handler = (e: React.ChangeEvent<HTMLInputElement>): void => {
+  const handler = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
     setValue(e.target.value)
-  }
+  }, [])
   const clear = (): void => {
     setValue('')
   }

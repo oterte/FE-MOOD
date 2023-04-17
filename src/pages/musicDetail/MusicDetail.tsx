@@ -14,6 +14,8 @@ import {
   Ment,
   MusicDesc,
   MusicTitle,
+  PlayBtn,
+  TitleAndBtn,
 } from './MusicDetailSt'
 import { useDispatch } from 'react-redux'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
@@ -54,9 +56,8 @@ function MusicDetail() {
   )
 
   if (!data || !data.composer || !composer || isLoading || composerIsLoading)
-    return <h1>Loading...</h1>
-
-  if (isError) return <h1>Error!</h1>
+    return <div></div>
+  if (isError) return <div></div>
 
   return (
     <Wrapper>
@@ -65,9 +66,14 @@ function MusicDetail() {
       <Con>
         <ComposerImg src={composer} alt={`${data.composer} 이미지`} />
         <InfoContainer>
-          <MusicTitle onClick={() => onClickMusicChangeHandler(data)}>
-            {data.musicTitle}
-          </MusicTitle>
+          <TitleAndBtn>
+            <MusicTitle onClick={() => onClickMusicChangeHandler(data)}>
+              {data.musicTitle}
+            </MusicTitle>
+            <PlayBtn onClick={() => onClickMusicChangeHandler(data)}>
+              음악 재생
+            </PlayBtn>
+          </TitleAndBtn>
           <MusicDesc>{data.musicContent}</MusicDesc>
           <ComposerName>{data.composer}</ComposerName>
         </InfoContainer>

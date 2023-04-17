@@ -21,6 +21,12 @@ export const SignupContainer = styled.div`
     line-height: 46px;
     margin-bottom: 15px;
   }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    min-width: 600px;
+    margin: auto;
+    margin-top: 50px;
+  }
 `
 export const SignUpUpperDiv = styled.div`
   width: 100%;
@@ -28,6 +34,9 @@ export const SignUpUpperDiv = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`
+export const TitleDiv = styled.div`
+  margin-bottom: 50px;
 `
 
 export const SpanDiv = styled.div`
@@ -44,7 +53,7 @@ export const SpanDiv = styled.div`
 export const SignupForm = styled.form``
 export const SignupErrorDiv = styled.div`
   width: 100%;
-  margin-top: -10px;
+  margin-top: -23px;
   text-align: left;
   span {
     font-size: 13px;
@@ -74,6 +83,7 @@ export const SignupLabel = styled.label`
 export const SignupDiv = styled.div`
   width: 100%;
   height: 122px;
+  margin-bottom: 10px;
 `
 export const InputDiv = styled.div`
   width: 100%;
@@ -87,6 +97,7 @@ export const SignupInput = styled.input`
   background-color: #f4f4f4;
   border: 2px solid #8b7d76;
   margin-bottom: 25px;
+  padding-left: 10px;
 `
 export const SignupInputTwo = styled.input`
   width: 430px;
@@ -94,13 +105,14 @@ export const SignupInputTwo = styled.input`
   background-color: #f4f4f4;
   border: 2px solid #8b7d76;
   margin-bottom: 25px;
+  padding-left: 10px;
 `
 
 export const SignupErrorSpan = styled.span`
   font-size: 13px;
 `
 export const SignupCheckBtnDisabled = styled.button`
-  width: 144px;
+  width: 130px;
   height: 45px;
   background-color: gray;
   border: 1px solid #8b7d76;
@@ -108,7 +120,7 @@ export const SignupCheckBtnDisabled = styled.button`
   color: #ffffff;
 `
 export const SignupCheckBtn = styled.button`
-  width: 144px;
+  width: 130px;
   height: 45px;
   background-color: #8b7d76;
   border: 1px solid #8b7d76;

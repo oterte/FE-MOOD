@@ -50,7 +50,7 @@ export const expireToken = async () => {
   const res = await refreshInstance.post(`/api/user/refresh`)
   const data = res.data
   onSetLocalStorageHandler('accessToken', data.accessToken)
-  onDeletetHandler('authorization')
+  onDeletetHandler()
   onSetCookieHandler('accessToken', data.accessToken)
 }
 

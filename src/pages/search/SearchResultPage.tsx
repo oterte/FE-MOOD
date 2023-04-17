@@ -5,14 +5,12 @@ import { useLocation, useNavigate } from 'react-router-dom'
 import { scrapMusic } from '../../api/scrap'
 import { getSearch } from '../../api/search'
 import LikeCount from '../../components/like/LikeCount'
-import { H3 } from '../../components/composer/ComposerListSt'
 import { ShowRepliesBtn } from './SearchBarSt'
 import Header from '../../components/header/Header'
 import Wrapper from '../../components/Wrapper'
-import Down from '../../assets/icons/down_brown.png'
-import down_outline from '../../assets/icons/down_outline.png'
 import morebtn from '../../assets/icons/morebtn.png'
 import { BsBookmark, BsBookmarkFill } from 'react-icons/bs'
+import play from '../../assets/icons/music_play_brown.png'
 
 import {
   ComposerDesc,
@@ -30,10 +28,12 @@ import {
   Term,
   ToogleWrap,
   Wrap,
+  MusicTitle,
 } from './SearchBarSt'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
 import { RootState } from '../../redux/config/configStore'
 import { onGetLocalStorage } from '../../util/cookie'
+import CustomAlert from '../../components/alret/CustomAlert'
 
 interface ComposerInfo {
   composerId: number
@@ -76,6 +76,8 @@ function SearchResultPage() {
   const [musicInfos, setMusicInfos] = useState<ComposerSong[] | undefined>()
   const [scrapStatus, setScrapStatus] = useState<{ [key: number]: boolean }>({})
   const [playingMusicId, setPlayingMusicId] = useState<number | null>(null)
+  const [hasSearchResult, setHasSearchResult] = useState<boolean | null>(null)
+  const [showCustomAlert, setShowCustomAlert] = useState<boolean>(false)
 
   const handlePlayClick = (
     musicId: number,
@@ -102,15 +104,22 @@ function SearchResultPage() {
   }
 
   useEffect(() => {
+    setComposerInfo(null)
+    setComposerSongs([])
+
     if (searchTerm) {
       getSearch(searchTerm).then((data) => {
         setComposerInfo(data.composerInfo)
         if (data.composer.length > 0) {
           setComposerSongs(data.composer)
+          setHasSearchResult(true)
         } else {
           setComposerSongs(data.musicTitle)
+          setHasSearchResult(data.musicTitle.length > 0)
         }
       })
+    } else {
+      setHasSearchResult(null)
     }
   }, [searchTerm])
 
@@ -140,7 +149,7 @@ function SearchResultPage() {
   const handleScrapButtonClick = async (musicId: number) => {
     const token = onGetLocalStorage('accessToken')
     if (!token) {
-      alert('로그인 후 이용 가능합니다.')
+      setShowCustomAlert(true)
       return
     }
     try {
@@ -204,8 +213,21 @@ function SearchResultPage() {
     <Wrapper>
       <Header />
       <Wrap>
-        {searchTerm && <Term>"{searchTerm}"에 대한 검색 결과입니다.</Term>}
-        <Line />
+        <CustomAlert
+          showAlert={showCustomAlert}
+          onHide={() => setShowCustomAlert(false)}
+          message="로그인 후 이용 가능합니다."
+          loginState={true}
+        />
+        {searchTerm &&
+          (composerInfo || (composerSongs && composerSongs.length > 0) ? (
+            <>
+              <Term>"{searchTerm}"에 대한 검색 결과입니다.</Term>
+              <Line />
+            </>
+          ) : (
+            <p>검색어가 표시되지 않습니다.</p>
+          ))}
 
         {composerInfo && (
           <Inpo>
@@ -220,79 +242,94 @@ function SearchResultPage() {
           </Inpo>
         )}
         {musicInfos && musicInfos.length > 0 && (
-          <List>
-            <div>
-              <div>no</div>
-              <div>곡명</div>
-              <div>좋아요</div>
-              <div>스크랩</div>
-              <div>더보기</div>
-            </div>
-            {musicInfos.map((music, index) => (
-              <React.Fragment key={`music-fragment-${music.musicId}`}>
-                <div key={`music-${music.musicId}`}>
-                  <div>{index + 1}</div>
-                  <H3
-                    onClick={() =>
-                      handlePlayClick(
-                        music.musicId,
-                        music.musicTitle,
-                        music.composer,
-                        music.musicUrl
-                      )
-                    }
-                  >
-                    {music.musicTitle}
-                    {playingMusicId === music.musicId && <img src="" alt="" />}
-                  </H3>
-                  <LikeCount
-                    musicId={music.musicId}
-                    likeCount={music.likeCount}
-                    likeStatus={music.likeStatus}
-                    onLikeUpdate={handleLikeUpdate}
-                  />
-
-                  <button
-                    onClick={() => handleScrapButtonClick(music.musicId)}
-                    style={{ cursor: 'pointer', marginBottom: '-5px' }}
-                  >
-                    {scrapStatus[music.musicId] ? (
-                      <BsBookmarkFill size="23" color="#8b7d76" />
-                    ) : (
-                      <BsBookmark size="23" color="#8b7d76" />
-                    )}
-                  </button>
-
-                  <div>
-                    <ShowRepliesBtn
-                      onClick={() => toggleReplies(music.musicId)}
+          <div style={{ width: '65%' }}>
+            <List>
+              <div>
+                <div>no</div>
+                <div>곡명</div>
+                <div>재생</div>
+                <div>좋아요</div>
+                <div>스크랩</div>
+                <div>더보기</div>
+              </div>
+              {musicInfos.map((music, index) => (
+                <React.Fragment key={`music-fragment-${music.musicId}`}>
+                  <div key={`music-${music.musicId}`}>
+                    <div>{index + 1}</div>
+                    <MusicTitle
+                      onClick={() =>
+                        handlePlayClick(
+                          music.musicId,
+                          music.musicTitle,
+                          music.composer,
+                          music.musicUrl
+                        )
+                      }
                     >
-                      <img src={morebtn} alt="More" />
-                    </ShowRepliesBtn>
-                  </div>
-                </div>
-                {showReplies[music.musicId] && (
-                  <ToogleWrap key={`music-info-${music.musicId}`}>
-                    <ContentContainer>
-                      <SpanMusicTitle>{music.musicTitle}</SpanMusicTitle>
-                      <SpanMusicContent>{music.musicContent}</SpanMusicContent>
-                      <MusicDetailBtn
-                        onClick={() =>
-                          navigate(`/recommend/music/${music?.musicId}`)
-                        }
-                      >
-                        댓글 남기러 가기&nbsp;&nbsp;{'>'}
-                      </MusicDetailBtn>
-                    </ContentContainer>
-                  </ToogleWrap>
-                )}
-              </React.Fragment>
-            ))}
-          </List>
-        )}
+                      {music.musicTitle}
+                      {playingMusicId === music.musicId && (
+                        <img src="" alt="" />
+                      )}
+                    </MusicTitle>
+                    <img
+                      onClick={() =>
+                        handlePlayClick(
+                          music.musicId,
+                          music.musicTitle,
+                          music.composer,
+                          music.musicUrl
+                        )
+                      }
+                      src={play}
+                      alt="music_play"
+                    />
+                    <LikeCount
+                      musicId={music.musicId}
+                      likeCount={music.likeCount}
+                      likeStatus={music.likeStatus}
+                      onLikeUpdate={handleLikeUpdate}
+                    />
 
-        {!composerInfo && (!composerSongs || composerSongs.length === 0) && (
-          <p>검색에 대한 결과가 없습니다.</p>
+                    <button
+                      onClick={() => handleScrapButtonClick(music.musicId)}
+                      style={{ cursor: 'pointer', marginBottom: '-5px' }}
+                    >
+                      {scrapStatus[music.musicId] ? (
+                        <BsBookmarkFill size="23" color="#8b7d76" />
+                      ) : (
+                        <BsBookmark size="23" color="#8b7d76" />
+                      )}
+                    </button>
+
+                    <div>
+                      <ShowRepliesBtn
+                        onClick={() => toggleReplies(music.musicId)}
+                      >
+                        <img src={morebtn} alt="More" />
+                      </ShowRepliesBtn>
+                    </div>
+                  </div>
+                  {showReplies[music.musicId] && (
+                    <ToogleWrap key={`music-info-${music.musicId}`}>
+                      <ContentContainer>
+                        <SpanMusicTitle>{music.musicTitle}</SpanMusicTitle>
+                        <SpanMusicContent>
+                          {music.musicContent}
+                        </SpanMusicContent>
+                        <MusicDetailBtn
+                          onClick={() =>
+                            navigate(`/recommend/music/${music?.musicId}`)
+                          }
+                        >
+                          댓글 남기러 가기&nbsp;&nbsp;{'>'}
+                        </MusicDetailBtn>
+                      </ContentContainer>
+                    </ToogleWrap>
+                  )}
+                </React.Fragment>
+              ))}
+            </List>
+          </div>
         )}
       </Wrap>
     </Wrapper>

@@ -20,7 +20,7 @@ export const likedMusic = async (id: number) => {
   return response.data
 }
 
-export const editProfileImg = async (newProfile: any) => {
+export const editProfileImg = async (newProfile: FormData) => {
   await instance.patch('/api/user/uploadprofile', newProfile, {
     headers: {
       'Content-Type': 'multipart/form-data',
@@ -35,7 +35,7 @@ export const changeNickname = async (newNickname: string) => {
   await instance.patch('/api/user/changenickname', body)
 }
 
-export const deleteAccount = async (password:any) => {
-  const response = await instance.delete('/api/user/delete', {data:{password: password}})
+export const deleteAccount = async (password:string) => {
+  const response = await instance.delete('/api/user/delete', {data:{email: password}})
   return response
 }

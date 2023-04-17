@@ -33,3 +33,19 @@ export const checkNickname = async (nickname?: string) => {
   )
   return response
 }
+
+export const authEmail = async (email:string) => {
+  const body ={
+    email
+  }
+  const response  = await axios.post(`${process.env.REACT_APP_SERVER}/api/user/email`, body)
+  return response
+}
+export const checkAuthEmailNumber = async (email: string, password:string) => {
+  const body = {
+    email,
+    password
+  }
+  const response = await axios.post(`${process.env.REACT_APP_SERVER}/api/user/emailCheck`, body)
+  return response
+} 

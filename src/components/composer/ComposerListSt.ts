@@ -25,6 +25,10 @@ export const Contents = styled.div`
   display: flex;
   justify-content: center;
   justify-content: flex-start;
+  @media screen and (max-width:1200px){
+    width: 100%;
+    min-width: 600px;
+  }
 `
 
 export const Li = styled.li`
@@ -73,11 +77,14 @@ export const Desc = styled.div`
   width: 1180px;
   height: auto;
   min-height: 500px;
-  text-align: center;
-
+  text-align: left;
+  @media screen and (max-width:1200px){
+    width: 100%;
+    min-width: 600px;
+  }
   & > div {
     display: grid;
-    grid-template-columns: 1fr 5fr repeat(2, 1fr) 1fr;
+    grid-template-columns: 1.1fr 5fr 1fr 1fr 1fr 1fr;
     align-items: center;
     border-bottom: 1px solid #ddd;
     font-size: 1rem;
@@ -86,6 +93,8 @@ export const Desc = styled.div`
     img {
       width: 23px;
       cursor: pointer;
+      display: block;
+      margin: 0 auto;
     }
 
     button {
@@ -125,6 +134,10 @@ export const Inpo = styled.div`
   transform: translateX(-50%);
   text-align: center;
   background: #f6f6f6;
+  @media screen and (max-width:1200px){
+    width: 100%;
+    min-width: 600px;
+  }
 `
 
 export const ComposerImg = styled.img`

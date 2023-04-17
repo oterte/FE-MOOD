@@ -7,7 +7,7 @@ import {
   SearchInput,
 } from './SearchBarSt'
 import { BsSearch } from 'react-icons/bs'
-import { BsX } from "react-icons/bs";
+import { BsX } from 'react-icons/bs'
 
 function SearchBar() {
   const [showInput, setShowInput] = useState(false)
@@ -23,12 +23,14 @@ function SearchBar() {
   }
 
   const onClickSearchHandler = () => {
-    const query = encodeURIComponent(searchTerm)
-    navigate(`/SearchResultPage?query=${query}`)
+    if (searchTerm.trim()) {
+      const query = encodeURIComponent(searchTerm)
+      navigate(`/SearchResultPage?query=${query}`)
+    }
   }
 
   const onKeyDownHandler = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && searchTerm.trim()) {
       onClickSearchHandler()
     }
   }
@@ -38,8 +40,8 @@ function SearchBar() {
       <SearchInput className={showInput ? 'show' : ''}>
         <input
           type="text"
-          placeholder="검색어를 입력하세요"
-          style={{ paddingLeft: '1rem' }}
+          placeholder="작곡가, 곡명, 감정을 검색해 보세요."
+          style={{ paddingLeft: '1.4rem', fontSize: '0.9rem' }}
           value={searchTerm}
           onChange={onChangeHandler}
           onKeyDown={onKeyDownHandler}
@@ -47,8 +49,12 @@ function SearchBar() {
       </SearchInput>
       {showInput ? (
         <>
-          <SearchButton onClick={onClickSearchHandler}><BsSearch size="23"/></SearchButton>
-          <CloseButton onClick={handleClose}><BsX size="38"/></CloseButton>
+          <SearchButton onClick={onClickSearchHandler}>
+            <BsSearch size="23" />
+          </SearchButton>
+          <CloseButton onClick={handleClose}>
+            <BsX size="38" />
+          </CloseButton>
         </>
       ) : (
         <SearchButton onClick={() => setShowInput(true)}>

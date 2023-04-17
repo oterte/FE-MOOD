@@ -13,6 +13,9 @@ const StWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  @media screen and (max-width:1200px){
+    min-width: 600px;
+  }
 `
 
 export const Wrap = styled.div`

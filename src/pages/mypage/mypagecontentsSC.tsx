@@ -8,6 +8,9 @@ export const MyPageTab = styled.div`
   color: #888888;
   text-align: center;
   line-height: 45px;
+  @media screen and (max-width:768px){
+    width: 100%;
+  }
 `
 export const MyPageTabItem = styled.div`
   width: 129px;
@@ -19,6 +22,16 @@ export const MyPageTabItem = styled.div`
   &:hover {
     background-color: #4b372e;
     color: #ffffff;
+  }
+  &.focused{
+    background-color: #4b372e;
+    color: #ffffff;
+  }
+  &:last-child{
+    border-right: none;
+  }
+  @media screen and (max-width:768px){
+    width: 20%;
   }
 `
 export const MyPageScrapTab = styled.div`
@@ -91,6 +104,9 @@ export const MyPageContentsContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-top: 25px;
+  @media screen and (max-width:1300px){
+    width: 100%;
+  }
 `
 export const ExternalContainer = styled.div`
   display: flex;
@@ -169,15 +185,28 @@ export const MyPageInputBtn = styled.button`
   font-weight: 400;
   font-size: 16px;
   text-align: center;
+  cursor: pointer;
+`
+export const MyPageEditBtnTwo = styled.button`
+  width: 144px;
+  height: 45px;
+  background-color: #8b7d76;
+  border: 1px solid #8b7d76;
+  color: #ffffff;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  text-align: center;
   margin-left: 20px;
   cursor: pointer;
+
 `
 export const MyPageImgEditInput = styled.input`
   display: none;
 `
 
 export const MyPageDeleteDivOne = styled.div`
-  width: 1302px;
+  width: 100%;
   text-align: center;
 `
 export const POne = styled.p`
@@ -200,21 +229,37 @@ export const PThree = styled.p`
   color: #000000;
 `
 export const MyPageDeleteDivTwo = styled.div`
-  width: 1302px;
+  width: 100%;
   height: 300px;
   background-color: #ffffff;
   text-align: center;
+`
+export const MyPageEmailDiv = styled.div`
+  width: 100%;
+  margin-bottom: 25px;
 `
 export const MyPageDeleteInput = styled.input`
   width: 366px;
   height: 45px;
   background-color: #f4f4f4;
   border: 1px solid #888888;
+  padding-left: 10px;
 `
 export const MyPageDeleteBtnDiv = styled.div`
   margin-top: 50px;
 
 `
+export const MyPageEmailBtn = styled.button`
+  width: 144px;
+  height: 45px;
+  background-color: #4b372e;
+  border: 1px solid #4b372e;
+  cursor: pointer;
+  color: #ffffff;
+  margin-left: 25px;
+
+`
+
 export const MyPageDeleteBtn = styled.button`
   width: 144px;
   height: 45px;
@@ -223,6 +268,14 @@ export const MyPageDeleteBtn = styled.button`
   cursor: pointer;
   color: #ffffff;
 `
+export const MyPageDeleteBtnDisabled = styled.button`
+    width: 144px;
+  height: 45px;
+  background-color: gray;
+  border: none;
+  color: #ffffff;
+
+`
 export const MyPageDoneDiv = styled.div`
   width: 100%;
   height: 100%;
@@ -230,9 +283,12 @@ export const MyPageDoneDiv = styled.div`
   justify-content: center;
   align-items: center;
   text-align: center;
+  @media screen and (max-width:1300px){
+    width: 100%;
+  }
 `
 export const TextDiv = styled.div`
-  width: 500px;
+  width: auto;
   height: 500px;
   text-align: center;
   margin-top: 10%;

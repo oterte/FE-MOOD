@@ -1,20 +1,20 @@
-import angry from '../../assets/icons/angry_brown.png'
-import angryHover from '../../assets/icons/angry_white.png'
+import angry from '../../assets/icons/angry_brown.webp'
+import angryHover from '../../assets/icons/angry_white.webp'
 
-import sad from '../../assets/icons/sad_brown.png'
-import sadHover from '../../assets/icons/sad_white.png'
+import sad from '../../assets/icons/sad_brown.webp'
+import sadHover from '../../assets/icons/sad_white.webp'
 
-import happy from '../../assets/icons/happy_brown.png'
-import happyHover from '../../assets/icons/happy_white.png'
+import happy from '../../assets/icons/happy_brown.webp'
+import happyHover from '../../assets/icons/happy_white.webp'
 
-import bore from '../../assets/icons/boring_brown.png'
-import boreHover from '../../assets/icons/boring_white.png'
+import bore from '../../assets/icons/boring_brown.webp'
+import boreHover from '../../assets/icons/boring_white.webp'
 
-import embarrass from '../../assets/icons/embarrass_brown.png'
-import embarrassHover from '../../assets/icons/embarrass_white.png'
+import embarrass from '../../assets/icons/embarrass_brown.webp'
+import embarrassHover from '../../assets/icons/embarrass_white.webp'
 
-import surprise from '../../assets/icons/surprise_brown.png'
-import surpriseHover from '../../assets/icons/surprise_white.png'
+import surprise from '../../assets/icons/surprise_brown.webp'
+import surpriseHover from '../../assets/icons/surprise_white.webp'
 
 export const roomArray = [
   {

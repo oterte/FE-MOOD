@@ -17,6 +17,7 @@ import { setIsPlaying } from '../../redux/modules/isPlaying'
 function StreamingChart() {
   const [streamingList, setStreamingList] = useState<Music[]>([])
   const [visibleRankStart, setVisibleRankStart] = useState(0)
+  const [stopTimer, setStopTimer] = useState(false)
 
   useEffect(() => {
     const fetchStreamingList = async () => {
@@ -29,21 +30,29 @@ function StreamingChart() {
   }, [])
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setVisibleRankStart((prevVisibleRankStart) =>
-        prevVisibleRankStart === 0 ? 5 : 0
-      )
-    }, 5000)
-
-    return () => {
-      clearTimeout(timer)
+    if (!stopTimer) {
+      const timer = setTimeout(() => {
+        setVisibleRankStart((prevVisibleRankStart) =>
+          prevVisibleRankStart === 0 ? 5 : 0
+        )
+      }, 5000)
+      return () => {
+        clearTimeout(timer)
+      }
     }
-  }, [visibleRankStart])
+  }, [visibleRankStart, stopTimer])
 
   const dispatch = useDispatch()
   const onClickMusicChangeHandler = (music: Music) => {
     dispatch(setMusicPlay(music))
     dispatch(setIsPlaying())
+  }
+
+  const onMouseEnterHandler = () => {
+    setStopTimer(true)
+  }
+  const onMouseLeaveHandler = () => {
+    setStopTimer(false)
   }
 
   return (
@@ -52,6 +61,8 @@ function StreamingChart() {
         .slice(visibleRankStart, visibleRankStart + 5)
         .map((music, index) => (
           <Con
+            onMouseEnter={onMouseEnterHandler}
+            onMouseLeave={onMouseLeaveHandler}
             key={music.musicId}
             onClick={() => onClickMusicChangeHandler(music)}
           >
@@ -67,4 +78,4 @@ function StreamingChart() {
   )
 }
 
-export default React.memo(StreamingChart)
+export default StreamingChart

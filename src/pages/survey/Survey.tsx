@@ -18,7 +18,9 @@ import {
   StDivCarouselWrap,
   StDivMoveBtn,
   StSpanCurrentSlide,
+  StDivCarouselBtn,
 } from './SurveySt'
+import CustomAlert from '../../components/alret/CustomAlert'
 
 function Survey() {
   const [survey, setSurvey] = useState<SurveyData>({
@@ -34,9 +36,11 @@ function Survey() {
     number10: undefined,
   })
   const [modalState, setModalState] = useState<boolean>(false)
+  const [currentSlide, setCurrentSlide] = useState<number>(0)
+  const [showCustomAlert, setShowCustomAlert] = useState<boolean>(false)
+
   const slideRef = useRef<HTMLDivElement>(null)
   const containRef = useRef<HTMLDivElement>(null)
-  const [currentSlide, setCurrentSlide] = useState<number>(0)
 
   const nextSlide = () => {
     if (currentSlide < 9) setCurrentSlide(currentSlide + 1)
@@ -70,14 +74,20 @@ function Survey() {
     if (0 <= status1 && 0 <= status2) {
       setModalState(!modalState)
     } else {
-      alert('설문을 모두 선택해주세요!')
-    } 
+      setShowCustomAlert(true)
+    }
   }
 
   return (
     <>
       <Wrapper>
         <Header />
+        <CustomAlert
+          showAlert={showCustomAlert}
+          onHide={() => setShowCustomAlert(false)}
+          message="설문을 모두 선택해주세요!"
+          loginState={false}
+        />
         <StDivSurveyWrap>
           <div style={{ marginTop: '50px' }}>
             <StSpanSurveyTitle>
@@ -90,7 +100,7 @@ function Survey() {
             </StPSurveyExplanation>
           </div>
           <form onSubmit={onSubmitHandler}>
-            <div style={{ width: '1280px', overflow: 'hidden' }}>
+            <StDivCarouselWrap>
               <StDivSlide ref={slideRef}>
                 {questionArr.map((question) => {
                   return (
@@ -112,30 +122,23 @@ function Survey() {
                   )
                 })}
               </StDivSlide>
-            </div>
+            </StDivCarouselWrap>
 
             <StSpanCurrentSlide> {currentSlide + 1} / 10</StSpanCurrentSlide>
-            {currentSlide !== 9 ? (
-              <>
-                <StDivCarouselWrap>
-                  <StDivMoveBtn onClick={prevSlide} color="#cdcdcd">
-                    이전 문항으로
-                  </StDivMoveBtn>
-                  <StDivMoveBtn onClick={nextSlide} color="#4b372e">
-                    다음 문항으로
-                  </StDivMoveBtn>
-                </StDivCarouselWrap>
-              </>
-            ) : (
-              <StDivCarouselWrap>
-                <StDivMoveBtn onClick={prevSlide} color="#cdcdcd">
-                  이전 문항으로
+            <StDivCarouselBtn>
+              <StDivMoveBtn onClick={prevSlide} color="#8b7d76">
+                이전 문항으로
+              </StDivMoveBtn>
+              {currentSlide !== 9 ? (
+                <StDivMoveBtn onClick={nextSlide} color="#4b372e">
+                  다음 문항으로
                 </StDivMoveBtn>
+              ) : (
                 <StDivSubmit onClick={onClickModalOpenHandler}>
                   결과 확인하기
                 </StDivSubmit>
-              </StDivCarouselWrap>
-            )}
+              )}
+            </StDivCarouselBtn>
           </form>
         </StDivSurveyWrap>
         {modalState === true ? (

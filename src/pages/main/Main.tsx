@@ -30,6 +30,7 @@ import { HiArrowLongDown } from 'react-icons/hi2'
 import ButtonData from './ButtonData'
 import ScrollButton from './ScrollButton'
 import React, { useEffect, useState } from 'react'
+import { onGetLocalStorage } from '../../util/cookie'
 
 const Main: React.FC = () => {
   const navigate = useNavigate()
@@ -88,9 +89,9 @@ const Main: React.FC = () => {
           <br />
           MOOD는 여러분의 기분에 맞춰 클래식 음악을 추천해 드립니다.
         </Explain>
-        <MoveBtn onClick={() => navigate('/recommend')}>
-          음악 감상하러 가기
-        </MoveBtn>
+        {!onGetLocalStorage('accessToken') ? (
+          <MoveBtn onClick={() => navigate('/login')}>로그인</MoveBtn>
+        ) : <MoveBtn onClick={() => navigate('/recommend')}>음악 감상하러 가기</MoveBtn>}
         <Scroll>
           scroll &nbsp;
           <HiArrowLongDown />
