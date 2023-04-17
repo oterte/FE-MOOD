@@ -22,8 +22,14 @@
 # 🛠Architecture
 ![기술적 아키텍처 완](https://user-images.githubusercontent.com/103476685/232488401-21e8ec99-7748-460f-b92c-7357f0772e08.png)
 
+<br />
+<br />
+
 # 📖One Page Notion
 [📕 One page Notion 바로가기](https://www.notion.so/Mood-Classic-c51f26f6ce2f4442a747f01959dcbc94)
+
+<br />
+<br />
 
 # 🎹Feature 
 #### 🎻 아 오늘 행복한데 어떤 노래를 듣지??
@@ -63,6 +69,8 @@
   모차르트, 쇼팽, 비발디도 있어요!
   ```
 
+<br />
+<br />
 
 # 🎩Stacks
 ### Front End
@@ -135,9 +143,8 @@
   </div>
 </details>
 
-
-
-
+<br />
+<br />
 
 # 🩸Trouble Shooting
 <details>
@@ -259,10 +266,15 @@
   </div>
 </details>
 
+<br />
+<br />
+  
 # 📑 API 명세서
   [🔖 API 명세서 바로가기](https://www.notion.so/32ab485ea57e4ffdb7c2b90b0f251555?v=a4f5131a32a74d17971850d9afadabd7)
   
-
+<br />
+<br />
+  
 # 👨‍💻 Team
 
 | Name | Position | Github |
@@ -274,6 +286,8 @@
 | 신동윤 | Back End | https://github.com/zmtlzmtl |
 | 곽승민 | Back End | https://github.com/kwakseungmin23 |
 
+<br />
+<br />
 
 # 👩‍💻FE Role
 
