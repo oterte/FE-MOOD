@@ -9,12 +9,16 @@
 
 
 ## Contents (목차)
-1. [Feature](#Feature)
-2. [Architecture](#Architecture)
+1. [Architecture](#Architecture)
+2. [Feature](#Feature)
 3. [Stacks](#Stacks)
 4. [Trouble Shooting](#Trouble-Shooting)
 5. [Team](#Team)
 6. [FE Role](#FE-Role)
+
+
+# 🛠Architecture
+![기술적 아키텍처 완](https://user-images.githubusercontent.com/103476685/232488401-21e8ec99-7748-460f-b92c-7357f0772e08.png)
 
 
 # 🎹Feature 
@@ -54,12 +58,6 @@
   작곡가 별로 정리되어 있어 원하는 작곡가를 눌러 확인해보세요!!
   모차르트, 쇼팽, 비발디도 있어요!
   ```
-
-# 🛠Architecture
-![기술적 아키텍처 완](https://user-images.githubusercontent.com/103476685/232488401-21e8ec99-7748-460f-b92c-7357f0772e08.png)
-
-
-
 
 
 # 🎩Stacks
