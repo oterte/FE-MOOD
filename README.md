@@ -128,8 +128,9 @@
       2. 접근
         1) prevScroll을 state 값으로 만들고, 들어왔을 때, scrollRef.current.scrollHeight 값으로 지정해준다.
         2) target이 들어왔을 때, 바뀐 scrollRef.current.scrollHeight 에서 prevScroll을 뺀 것을 scrollTop으로 옮겨준다.
-        <br />  3) prevScroll을 scrollRef.current.scrollHeight로 지정해준다.
-           -> 바로바로 적용이 될 줄 알았지만, prevScroll이 scrollRef.current.scrollHeight로 지정되었을 때, 채팅 방의 채팅 내역을               불러오기 전에 prevScroll이 지정되어 문제가 생겼다.
+        3) prevScroll을 scrollRef.current.scrollHeight로 지정해준다.
+           -> 바로바로 적용이 될 줄 알았지만, prevScroll이 scrollRef.current.scrollHeight로 지정되었을 때, 
+              채팅 방의 채팅 내역을 불러오기 전에 prevScroll이 지정되어 문제가 생겼다.
       3. 해결
         prevScroll을 시간 차를 두어 prevScroll을 지정해주어 채팅방 내역이 들어왔을 때, 
         prevScroll을 지정할 수 있도록 setTimeout을 사용하여 해결
@@ -140,7 +141,7 @@
         prevScroll을 다시 set하는 로직으로 구현하였다.
         이로 인해 만약 채팅 방의 이전 내역들을 불러오는데, 시간이 걸리더라도 prevScroll이 
         필요한 타이밍에 변경되도록 로직을 수정하였다. 
-    </div>
+
   </div>
 </details>
 <details>
