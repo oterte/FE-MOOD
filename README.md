@@ -10,16 +10,20 @@
 
 ## Contents (목차)
 1. [Architecture](#Architecture)
-2. [Feature](#Feature)
-3. [Stacks](#Stacks)
-4. [Trouble Shooting](#Trouble-Shooting)
-5. [Team](#Team)
-6. [FE Role](#FE-Role)
+2. [One Page Notion](#One-Page-Notion)
+3. [Feature](#Feature)
+4. [Stacks](#Stacks)
+5. [Trouble Shooting](#Trouble-Shooting)
+6. [API 명세서] (#API-명세서)
+7. [Team](#Team)
+8. [FE Role](#FE-Role)
 
 
 # 🛠Architecture
 ![기술적 아키텍처 완](https://user-images.githubusercontent.com/103476685/232488401-21e8ec99-7748-460f-b92c-7357f0772e08.png)
 
+# 📖One Page Notion
+[One page Notion 바로가기](https://www.notion.so/Mood-Classic-c51f26f6ce2f4442a747f01959dcbc94)
 
 # 🎹Feature 
 #### 🎻 아 오늘 행복한데 어떤 노래를 듣지??
@@ -255,9 +259,11 @@
   </div>
 </details>
 
+# 📑 API 명세서
+  [🔖 API 명세서 바로가기](https://www.notion.so/32ab485ea57e4ffdb7c2b90b0f251555?v=a4f5131a32a74d17971850d9afadabd7)
+  
 
-
-# 👨‍💻Team
+# 👨‍💻 Team
 
 | Name | Position | Github |
 |:-:|:-:|:-:|
