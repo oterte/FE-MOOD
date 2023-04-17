@@ -115,7 +115,7 @@
 
 # 🩸Trouble Shooting
 <details>
-  <summary>채팅방 역방향 무한 스크롤[이재욱]</summary>
+  <summary>[이재욱]채팅방 역방향 무한 스크롤</summary>
   <div markdown="2">
     <div>
       
@@ -132,21 +132,52 @@
            -> 바로바로 적용이 될 줄 알았지만, prevScroll이 scrollRef.current.scrollHeight로 지정되었을 때, 
               채팅 방의 채팅 내역을 불러오기 전에 prevScroll이 지정되어 문제가 생겼다.
       3. 해결
-        prevScroll을 시간 차를 두어 prevScroll을 지정해주어 채팅방 내역이 들어왔을 때, 
+        - prevScroll을 시간 차를 두어 prevScroll을 지정해주어 채팅방 내역이 들어왔을 때, 
         prevScroll을 지정할 수 있도록 setTimeout을 사용하여 해결
+      
       4. 리팩토링
-        prevScroll을 setTimeout으로 시간을 지정했을 때, 지정한 시간보다 이전 채팅 방 내역을 받는 시간이 긴 경우 
+        1) prevScroll을 setTimeout으로 시간을 지정했을 때, 지정한 시간보다 이전 채팅 방 내역을 받는 시간이 긴 경우 
         prevScroll의 지정이 늦게 될 것 같다는 생각이 들어 다른 방법을 찾아보았음.
-        결국 prevScroll은 받아온 채팅 내역 즉, 설정해둔 state(beforeChatData)가 변경되었을 때, 
+        2) prevScroll은 받아온 채팅 내역 즉, 설정해둔 state(beforeChatData)가 변경되었을 때, 
         prevScroll을 다시 set하는 로직으로 구현하였다.
-        이로 인해 만약 채팅 방의 이전 내역들을 불러오는데, 시간이 걸리더라도 prevScroll이 
+        3) 이로 인해 만약 채팅 방의 이전 내역들을 불러오는데, 시간이 걸리더라도 prevScroll이 
         필요한 타이밍에 변경되도록 로직을 수정하였다. 
 
   </div>
 </details>
 <details>
-  <summary>Typescript</summary>
-  <div>내용</div>
+  <summary>[이재욱]Music Player Bar</summary>
+  <div markdown="2">
+    <div>
+      1. 많은 페이지에서 사용하는 Music Player Bar를 만들어야 하는 문제
+        많은 페이지에서 music player를 사용할 수 있는 컴포넌트를 만들어야 했다.
+        요구 사항:  페이지 이동을 해도 음악이 끊기지 않아야 함
+      
+      2. 선택 사항
+        1) Audio-h5-player 라이브러리를 사용하여 player bar을 구현
+        2) Music Player을 Custom하여 구현
+      
+        ⇒ 이미 구현해둔 streaming을 올리는 api에서 사용하는 onTimeUpdate 이벤트가 
+          Audio-h5-player에서 사용할 수 없고, 내가 원하는 대로 css를 사용하여 표현하기 어려워 
+          custom하여 사용하기로 결정
+      3. 접근 및 구현
+        1) music의 총 시간과 진행되고 있는 시간 
+          - audio에서 제공하는 currentTime 과 duration을 사용하여 
+            01 : 33 / 03 : 45 같은 음악의 시간을 계산하여 표시해주었음
+          → duration과 currentTime은 사용자가 알기 쉽게 알려주는 것이 아닌 
+            3분이면 180.43614 같이 소수점까지 나타내기 때문에 이를 해결하기 위해 
+            calcurate라는 함수를 만들어 분과 초를 나누어 표현해주었다.
+        2) prograss bar 구현
+          - 음악이 진행되고 있는 재생 바를 구현해야 하는데, dealt라는 state를 만듦
+          - 음악의 진행률울 %로 구하기 위해 currentTime을 duration으로 나누고 이를 100을 곱하였음
+          → 위의 값을 string으로 변환하여 setDealt로 dealt에 넣어줌
+            (dealt를 스타일 컴포넌트의 background-color로 prop를 내려 구현)
+        3) 전역으로 관리하며 페이지 이동 시에도 끊기지 않도록 구현
+          - 전역으로 관리 : redux를 통해 모든 컴포넌트에서 접근할 수 있도록 구현
+          - 페이지 이동시 음악이 끊기지 않도록 구현
+            : react-router-dom에서 제공하는 outlet 메서드를 통해 layout을 구상하여 해결
+    </div>
+  </div>
 </details>
 <details>
   <summary>Typescript</summary>
