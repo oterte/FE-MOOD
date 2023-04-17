@@ -114,13 +114,7 @@ function ChatRoom() {
     initSocketConnection()
     socket.emit('roomId', roomId)
     socket.on('userList', (data) => {
-      let beforeUserList: any = []
-      data.map((data: string[]) => {
-        if (data !== null) {
-          beforeUserList.push(data)
-        }
-        setUserList(beforeUserList)
-      })
+      setUserList(data)
     })
     if (!token) {
       socket.emit('newUser', undefined)
@@ -206,6 +200,7 @@ function ChatRoom() {
 
   useEffect(() => {
     socket.on('offUser', (nickname) => {
+      console.log(nickname)
       setUserList(
         userList.filter((userList: UserList) => userList.nickname !== nickname)
       )
