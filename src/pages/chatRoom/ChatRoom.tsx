@@ -200,7 +200,6 @@ function ChatRoom() {
 
   useEffect(() => {
     socket.on('offUser', (nickname) => {
-      console.log(nickname)
       setUserList(
         userList.filter((userList: UserList) => userList.nickname !== nickname)
       )
