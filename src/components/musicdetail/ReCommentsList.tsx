@@ -17,12 +17,21 @@ import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { BsFillPencilFill, BsCheck2All, BsTrashFill } from 'react-icons/bs'
 import { onGetLocalStorage } from '../../util/cookie'
 import { IoReturnDownForwardSharp } from 'react-icons/io5'
+interface RecommentData {
+  comment:string
+  createdAt:string
+  nickname:string
+  reCommentId:number
+  reviewId:number
+  updatedAt:string
+  userId:number
+}
 
 function ReCommentsList({ reviewId }: { reviewId: number }) {
   const queryClient = useQueryClient()
   const [edit, setEdit] = useState<number>(0)
   const [inputValues, setInputValues] = useState<{ [key: number]: string }>({})
-  const [recomments, setRecomments] = useState<any[]>([])
+  const [recomments, setRecomments] = useState<RecommentData[]>([])
 
   const {
     isLoading: isLoadingRecomments,
@@ -126,7 +135,7 @@ function ReCommentsList({ reviewId }: { reviewId: number }) {
     <ReCommentsListWrap>
       {recomments &&
         recomments.length > 0 &&
-        recomments.map((recomment: any) => {
+        recomments.map((recomment: RecommentData) => {
           if (recomment.reviewId === reviewId) {
             return (
               <ReCommentBox key={recomment.reCommentId}>
