@@ -21,6 +21,14 @@ import { useDispatch } from 'react-redux'
 import { setMusicPlay } from '../../redux/modules/musicPlayer'
 import { setIsPlaying } from '../../redux/modules/isPlaying'
 
+interface Music {
+  composer: string
+  musicId: number
+  musicTitle: string
+  musicUrl: string
+  musicContent: string
+}
+
 function MusicDetail() {
   const params = useParams()
   const musicId = Number(params.id)
@@ -34,7 +42,7 @@ function MusicDetail() {
     }
   )
 
-  const onClickMusicChangeHandler = (music: any) => {
+  const onClickMusicChangeHandler = (music: Music) => {
     dispatch(setMusicPlay(music))
     dispatch(setIsPlaying())
   }

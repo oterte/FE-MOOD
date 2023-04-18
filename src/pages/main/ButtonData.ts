@@ -10,7 +10,7 @@ import { StyledComponent } from 'styled-components'
 interface ButtonDataItem {
   text: string
   sectionId: string
-  styledComponent: StyledComponent<'button', any, {}, never>
+  styledComponent: StyledComponent<'button', HTMLElement, {}, never>
 }
 
 const ButtonData: ButtonDataItem[] = [
